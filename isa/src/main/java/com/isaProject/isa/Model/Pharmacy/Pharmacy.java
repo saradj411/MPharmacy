@@ -1,6 +1,7 @@
 package com.isaProject.isa.Model.Pharmacy;
 
 
+import com.isaProject.isa.Model.Drugs.DrugPricelist;
 import com.isaProject.isa.Model.Users.PharmacyAdmin;
 
 import javax.persistence.*;
@@ -29,6 +30,12 @@ public class Pharmacy {
 
     @OneToMany(mappedBy = "pharmacy", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<PharmacyAdmin> pharmacyAdmins = new HashSet<PharmacyAdmin>();
+
+    //cenovnik lekova
+    @OneToMany(mappedBy = "pharmacy", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Set<DrugPricelist> drugPricelist = new HashSet<DrugPricelist>();
+
+
 
     //spisak (Collection) dermatologa, farmaceuta, lekova
     //cenovnik lekova i pregleda

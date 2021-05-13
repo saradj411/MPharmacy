@@ -1,32 +1,67 @@
 package com.isaProject.isa.Model.Drugs;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table
 public class Drug {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
+    private Integer idDrug;
     @Column
     private String name;
+    //sifra
     @Column
     private String code;
+    //rezim izdavanja(na recept, bez recepta)
     @Column
-    private String issuanceRegime;
+    private boolean recipeNeed;
+    //vrsta
+    @Column
+    private String drugType;
+    //oblik lijeka
+    @Column
+    @Enumerated(EnumType.STRING)
+    private DrugFormat format;
+    //proizvodjac
+    @Column
+    private String manufacturer;
+
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinTable( name = "alternativeDrug", joinColumns = @JoinColumn(name="idDrug", referencedColumnName="idDrug"), inverseJoinColumns = @JoinColumn(name = "idAlternativeDrug", referencedColumnName = "idDrug"))
+    private Set<Drug> alternativeDrugs = new HashSet<Drug>();
+
+    //rezervisani lijekovi
+
 
     /*
-    * Lek od podataka treba da sadrži minimalno:
-● Šifru--
-● Vrstu leka
-● Oblik leka (prašak, kapsula, tableta, mast, pasta, gel, rastvor, sirup,...)
-● Sastav
-● Proizvođača
-● Režim izdavanja (na recept, bez recepta)---
-● Šifre zamenskih lekova
-● Dodatne napomene
-Podatke možete uzeti sa
-https://www.alims.gov.rs/ciril/lekovi/pretrazivanje-humanih-lekova/?text=Хумани
-%20лекови
+
+    ----popunjavaju šifarnik lekova.
+     lijekovi, rezervacija lijeka, sifarnik lijekova
+
+-listu lekova koje je rezervisao - otkazivanje rezervacije leka je moguće najkasnije 24 sata ranije,
+
+--Prilikom pretrage rezervacija, prikazuju se samo one koje su napravljene u istoj apoteci u
+kojoj je farmaceut zaposlen
+
+
+
+---Za svaku stavku rezultata prikazani su naziv, tip i ocena.
+Potrebno je prikazati listu apoteka u kojoj je lek dostupan,
+kao i cena leka u svakoj od apoteka.
+ Takođe za svaku stavku postoji opcija koje prikazuje specifikaciju leka
+
+ istu lekova koje je rezervisao - otkazivanje rezervacije leka je moguće najkasnije 24 sata ranije,
+
+ 3.19. Postupak rezervacije leka
+Korisnik pretragom pronalazi lek i bira iz koje apoteke rezerviše lek. Prilikom
+rezervacije, bira do kog datuma će preuzeti lek.
+Svaka potvrda koja se šalje korisniku na mail sadrži jedinstveni broj rezervacije.
+
+
+
+
 */
 }

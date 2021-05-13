@@ -1,7 +1,11 @@
 package com.isaProject.isa.Model.Users;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
+import com.isaProject.isa.Model.Drugs.Drug;
+import com.isaProject.isa.Model.Drugs.DrugReservation;
+
+import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class Patient extends User{
@@ -17,5 +21,14 @@ public class Patient extends User{
     private String loyaltyCategory;
 
     //Lijekovi na koje je alergican
+    @ManyToMany
+    @JoinTable(name = "allergies", joinColumns = @JoinColumn(name="patientId" ,  referencedColumnName  = "idUser"),
+            inverseJoinColumns = @JoinColumn(name = "drugId", referencedColumnName = "idDrug"))
+    private Set<Drug> allergies = new HashSet<Drug>();
+
+
+    @OneToMany(mappedBy = "patient")
+    private Set<DrugReservation> drugReservation=new HashSet<DrugReservation>();
+
     //posjeta, zalbe
 }
