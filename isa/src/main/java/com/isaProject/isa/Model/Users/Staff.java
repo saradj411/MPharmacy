@@ -1,5 +1,7 @@
 package com.isaProject.isa.Model.Users;
 
+import com.isaProject.isa.Model.Examination.Examination;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
@@ -17,6 +19,8 @@ public class Staff extends User{
     private Set<WorkTime> workTime = new HashSet<WorkTime>();
 
     //savetovanja farmacut,pregledi dermatolog
+    @OneToMany(mappedBy = "staff",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    private Set<Examination> examinations = new HashSet<Examination>();
 
     //odmor
     @OneToMany(mappedBy = "staff", fetch = FetchType.LAZY,cascade = CascadeType.ALL)

@@ -2,6 +2,7 @@ package com.isaProject.isa.Model.Users;
 
 import com.isaProject.isa.Model.Drugs.Drug;
 import com.isaProject.isa.Model.Drugs.DrugReservation;
+import com.isaProject.isa.Model.Examination.Examination;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -29,6 +30,9 @@ public class Patient extends User{
 
     @OneToMany(mappedBy = "patient")
     private Set<DrugReservation> drugReservation=new HashSet<DrugReservation>();
+
+    @OneToMany(mappedBy = "patient", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Set<Examination> examinations = new HashSet<Examination>();
 
     //posjeta, zalbe
 }

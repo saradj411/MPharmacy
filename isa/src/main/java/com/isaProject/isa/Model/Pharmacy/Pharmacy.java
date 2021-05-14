@@ -2,6 +2,7 @@ package com.isaProject.isa.Model.Pharmacy;
 
 
 import com.isaProject.isa.Model.Drugs.DrugPricelist;
+import com.isaProject.isa.Model.Examination.Examination;
 import com.isaProject.isa.Model.Users.PharmacyAdmin;
 
 import javax.persistence.*;
@@ -20,8 +21,6 @@ public class Pharmacy {
     private String address;
     @Column
     private String description;
-    @Column
-    private String freeExamination;
 
     //prosečnu ocenu apoteke,
     @Column
@@ -35,6 +34,8 @@ public class Pharmacy {
     @OneToMany(mappedBy = "pharmacy", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<DrugPricelist> drugPricelist = new HashSet<DrugPricelist>();
 
+    @OneToMany(mappedBy = "pharmacy", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Set<Examination> examinations = new HashSet<Examination>();
 
 
     //spisak (Collection) dermatologa, farmaceuta, lekova
