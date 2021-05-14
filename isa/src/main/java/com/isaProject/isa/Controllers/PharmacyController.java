@@ -4,7 +4,9 @@ import com.isaProject.isa.Model.Pharmacy.Pharmacy;
 import com.isaProject.isa.Services.IServices.IPharmacyService;
 import com.isaProject.isa.Services.Implementations.PharmacyService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -12,15 +14,18 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/pharmacy")
+@RequestMapping(value="/pharmacy")
 public class PharmacyController {
 
     @Autowired
-    IPharmacyService pharmacyService;
+    private PharmacyService pharmacyService;
 
-    @RequestMapping(value = {"/findAll"}, method = {RequestMethod.GET})
+    @GetMapping(value = "/findAll")
     public ResponseEntity<List<Pharmacy>> findAll() {
-        return null;
+        List<Pharmacy> pharmacies=pharmacyService.findAll();
+        return pharmacies == null ?
+                new ResponseEntity<>(HttpStatus.NOT_FOUND) :
+                ResponseEntity.ok(pharmacies);
     }
 
 }
