@@ -6,5 +6,8 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.stereotype.Repository;
 
 
-public interface PharmacyRepository extends JpaRepository<Pharmacy, Long>{
+public interface PharmacyRepository extends JpaRepository<Pharmacy, Integer>{
+
+    Pharmacy findOneByIdPharm(Integer idPharm);
+    Pharmacy findOneByName(String name);
 }
