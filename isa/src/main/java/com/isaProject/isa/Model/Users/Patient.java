@@ -3,6 +3,7 @@ package com.isaProject.isa.Model.Users;
 import com.isaProject.isa.Model.Drugs.Drug;
 import com.isaProject.isa.Model.Drugs.DrugReservation;
 import com.isaProject.isa.Model.Examination.Examination;
+import com.isaProject.isa.Model.Pharmacy.Complaint;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -11,14 +12,14 @@ import java.util.Set;
 @Entity
 public class Patient extends User{
 
-    @Column
+    @Column(nullable = true)
     private int penalty;
 
-    @Column
+    @Column(nullable = true)
     private int points;
 
     //kategorija korisnika (npr. Regular, Silver, Gold).
-    @Column
+    @Column(nullable = true)
     private String loyaltyCategory;
 
     //Lijekovi na koje je alergican
@@ -34,5 +35,11 @@ public class Patient extends User{
     @OneToMany(mappedBy = "patient", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Examination> examinations = new HashSet<Examination>();
 
-    //posjeta, zalbe
+    /*
+    //zalbe
+    @OneToMany(mappedBy = "patient", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Set<Complaint> complaints = new ArrayList<Complaint>();
+    */
+
 }
+//posjeta,

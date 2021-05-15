@@ -14,8 +14,7 @@ import java.util.Set;
 @Table
 public class Pharmacy {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(unique = true, nullable = false)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer idPharm;
     @Column
     private String name;

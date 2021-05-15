@@ -52,10 +52,12 @@ public class Examination {
 
     //kod dermatologa, kod farmaceuta
     @Column
+    @Enumerated(EnumType.STRING)
     private ExaminationType type;
 
     //CREATED,SCHEDULED,CANCELED,FINISHED,EXPIRED
     @Column
+    @Enumerated(EnumType.STRING)
     private ExaminationStatus status;
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)

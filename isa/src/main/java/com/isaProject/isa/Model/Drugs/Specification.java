@@ -16,7 +16,8 @@ public class Specification {
     @Column
     private String contraindications;
 
-    @Column(name = "structure", nullable = true)
+    //sastav lijeka
+    @Column
     private String structure;
 
     //preporučeni unos terapije na dnevnom nivou

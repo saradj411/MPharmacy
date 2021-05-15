@@ -11,7 +11,7 @@ public class Pharmacist extends Staff {
 
     //apoteka u kojoj je zaposlen
     @ManyToOne
-    @JoinColumn(name = "pharmacistPharmacy", referencedColumnName = "idPharm", nullable = false)
+    @JoinColumn(name = "pharmacistPharmacy", referencedColumnName = "idPharm", nullable = true)
     private Pharmacy pharmacy;
 
     /*

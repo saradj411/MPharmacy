@@ -12,7 +12,7 @@ public class Ingredient {
     private String name;
 
     @ManyToOne
-    @JoinColumn(name = "specId", referencedColumnName = "idSpec", nullable = false)
+    @JoinColumn(name = "specId", referencedColumnName = "idSpec")
     private Specification specification;
 
 

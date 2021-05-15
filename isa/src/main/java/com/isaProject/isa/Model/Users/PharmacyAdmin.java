@@ -11,7 +11,7 @@ import java.util.Set;
 public class PharmacyAdmin extends User{
 
     @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
-    @JoinColumn(name = "pharmacyId", referencedColumnName = "idPharm", nullable = true, unique = false)
+    @JoinColumn(name = "adminPharmacy", referencedColumnName = "idPharm", nullable = true, unique = false)
     private Pharmacy pharmacy;
 
     @OneToMany(mappedBy = "pharmacyAdmin", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
