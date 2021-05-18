@@ -53,7 +53,6 @@ public class PharmacyService implements IPharmacyService {
         Pharmacy pharm = pharmacyRepository.getOne(pharmacy.getIdPharm());
         Integer ids=pharm.getIdPharm();
 
-        log.info("dsds:"+ids);
         pharm.setName(pharmacy.getName());
         pharm.setDescription(pharmacy.getDescription());
         pharm.setAddress(pharmacy.getAddress());
