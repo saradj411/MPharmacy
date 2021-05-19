@@ -27,7 +27,12 @@ public class Pharmacy {
     @Column
     private double avgGrade;
 
+
+///
+///fsds
+
 //proba za grane
+
 
     @OneToMany(mappedBy = "pharmacy", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<PharmacyAdmin> pharmacyAdmins = new HashSet<PharmacyAdmin>();
