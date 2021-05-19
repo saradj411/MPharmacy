@@ -28,10 +28,14 @@ public class Pharmacy {
     private double avgGrade;
 
 
+//proba za grane eeeee
+
+
 ///
 ///fsds
 
 //proba za grane
+
 
 
     @OneToMany(mappedBy = "pharmacy", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
