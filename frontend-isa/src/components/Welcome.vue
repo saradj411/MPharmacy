@@ -3,11 +3,13 @@
   
         <h4 style="margin:20px">Pharmacies:</h4>
 
+ <button style="float:left;margin-left:20px;" v-on:click = "addDrug" >Dodaj lijek</button>
 
  <div  v-for="pharmacy in this.pharmacies"  v-bind:key="pharmacy.idPharm">
        <div v-if="showTable"  style="margin-left:300px; margin-top: 20px">
-          
+         
  <router-link :to="{ path: '/Home/'+pharmacy.idPharm}" v-slot="{href, navigate}" custom>
+ 
 <table  style="" id="table2" class="table" :href="href" @click="navigate"  elevation="1">
  
     <tbody>
@@ -33,13 +35,18 @@
     
   </tbody>
 </table>
+
         </router-link>
      
            </div>
 
       </div>     
-
+<div>
+                
+            
+        </div>
     </div>
+    
 </template>
 
 
@@ -55,6 +62,9 @@ export default {
     }
   },
   methods:{
+    addDrug : function(){
+          window.location.href = "/createDrugPage";
+      }
     
 },
 mounted() {

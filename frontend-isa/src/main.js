@@ -6,6 +6,8 @@ import App from './App.vue'
 import router from './router'
 import 'chart.js'
 //import 'hchs-vue-charts'
+import vuetify from './plugins/vuetify';
+
 
 //Vue.use(window.VueCharts)
 
@@ -17,5 +19,6 @@ if (typeof baseURL !== 'undefined') {
 }
 new Vue({
   router,
+  vuetify,
   render: h => h(App),
 }).$mount('#app')

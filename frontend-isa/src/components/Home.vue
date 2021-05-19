@@ -9,6 +9,7 @@
         <div class = "container" v-if="welcomePageShow">
                           <h1 style="font-size:50px;font-weight:bold;" align = "center">{{pharmacy.name}}</h1>
 
+      
       <div class="row" style = "margin: auto;">
                     <div style="font-size:25px;" class="row">Ocjena: {{pharmacy.avgGrade}}</div>
         </div>
@@ -17,6 +18,10 @@
                     <div style="font-size:30px;">{{pharmacy.description}}</div>
         </div>
              
+        </div>
+        <div>
+            <button name="dodaj lijek"></button>
+
         </div>
 
 
