@@ -25,10 +25,15 @@ public class PharmacyService implements IPharmacyService {
         return pharm;
     }
     @Override
-    public Pharmacy findByName(String name) {
+    public List<Pharmacy> findByName(String name) {
         //veki skontalaaa
-        Pharmacy pharm = pharmacyRepository.findOneByName(name);
-        return pharm;
+        return pharmacyRepository.findOneByName(name);
+
+    }
+
+    @Override
+    public List<Pharmacy> findByAddress(String city) {
+        return pharmacyRepository.findOneByAddress(city);
     }
 
     @Override
