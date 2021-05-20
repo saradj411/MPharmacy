@@ -269,25 +269,29 @@ public class PharmacyAdminController {
     private UserService userService;
 
     @GetMapping(value = "/findAll")
-
-    public ResponseEntity<List<User>> findAll() {
-        List<Pharmacy> pa=pharmacyService.findAll();
-        for(Pharmacy p:pa){
-
+    public ResponseEntity<List<PharmacyAdmin>> findAll() {
+        List<PharmacyAdmin> userss=pharmacyAdminService.findAll();
+        for (PharmacyAdmin u:userss){
+            u.getPharmacy();
+            u.getDrugOrder();
         }
-        users =userService.findAll();
 
-
-        for (User u :users){
-            System.out.println(u.getName());
-
-
-        }
         System.out.println("nestoo");
         return users == null ?
                 new ResponseEntity<>(HttpStatus.NOT_FOUND) :
-                ResponseEntity.ok(users);
+                ResponseEntity.ok(userss);
     }
+    @GetMapping(value = "/findPharm/{id}")
+    public ResponseEntity<Pharmacy> getPharm(@PathVariable Integer id) {
+
+        PharmacyAdmin pharmacyAdmin = pharmacyAdminService.findById(id);
+        return pharmacyAdmin.getPharmacy() == null ?
+                new ResponseEntity<>(HttpStatus.NOT_FOUND) :
+                ResponseEntity.ok(pharmacyAdmin.getPharmacy());
+
+    }
+
+
 
     @GetMapping(value = "/findById/{id}")
     public ResponseEntity<PharmacyAdmin> findById(@PathVariable Integer id) {

@@ -7,7 +7,7 @@
  <button style="float:left;margin-left:20px;" v-on:click = "profileAdmin" >Profil administratora apoteke</button>
 
  <div  v-for="pharmacy in this.pharmacies"  v-bind:key="pharmacy.idPharm">
-       <div v-if="showTable"  style="margin-left:300px; margin-top: 20px">
+       <div v-if="showTable"  style="margin-left:300px; margin-top: 20px"> 
          
  <router-link :to="{ path: '/Home/'+pharmacy.idPharm}" v-slot="{href, navigate}" custom>
  
@@ -67,7 +67,7 @@ export default {
           window.location.href = "/createDrugPage";
       },
       profileAdmin : function(){
-          window.location.href = "/profileAdmin";
+          window.location.href = "/ProfileAdmin";
       }
 },
 mounted() {

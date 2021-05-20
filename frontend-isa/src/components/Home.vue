@@ -11,7 +11,7 @@
 
       
       <div class="row" style = "margin: auto;">
-                    <div style="font-size:25px;" class="row">Ocjena: {{pharmacy.avgGrade}}</div>
+                    <div style="font-size:25px;" class="row">Ocjena: {{pharmacy.name}}</div>
         </div>
         <div class="row" style = "margin: auto;">
                         <h3 style="font-size:25px;" align = "center">O nama:</h3>
@@ -37,11 +37,7 @@ export default {
       
        id : this.$route.params.id,
        pharmacy : [],
-       
        welcomePageShow : true,
-       
-       
-       
     }
   },
   mounted() {

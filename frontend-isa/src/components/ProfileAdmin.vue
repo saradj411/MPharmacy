@@ -1,64 +1,90 @@
   <template>
-  <div  id="registration">
-        <div style="background: #B0B3D6; height: 90px;">
-            
-             <span style="float: left; margin-top: 20px;">
-                               
-                <a class = "btn btn-primary btn-xs" style="background:#474A8A" href="/updatePharmacyProfile">Update pharmacy</a>
-                                    
-             </span>
+  <div  id="registration" style="background-image: url(https://image.freepik.com/free-photo/pharmacists-showing-medicine-bottle-discussing-prescription-drug-pharmacy_8087-2630.jpg);background-repeat: no-repeat;
+  
+     background-size: 150% 111%;  height: 1100px">
+                     <label style="color:#474A8A;font-size:35px;" align = "center">Pharmacy administrator profile</label>
+
+        <div style="background: #B0B3D6; height: 80px;">
+
+            <span style="float: left; margin-top: 20px;">
+               <router-link :to="{ path: '/updatePharmacyProfile/'+pharmacy.idPharm}" v-slot="{href, navigate}" custom>
+
+                  <button class = "btn btn-primary btn-xs" style="margin:auto; background:#474A8A " :href="href" @click="navigate" elevation="1">Update profile</button>
+               </router-link>
+            </span>
                                   
         </div>
 
-        <label style="color:#474A8A;font-size:35px;" align = "left"><u>Admin of pharmacy {{pharmacy.name}}</u></label>
-
         <div style=" margin: auto; width: 50%;margin-top:45px;">
-            <h3 style="color: #0D184F"></h3>
+            <h3 style="color: #0D184F">About you</h3>
+            
                 <form>
-                        <h3 style="color:#474A8A;font-size:24px;" align = "center">About me:</h3>
+                      <table style="" id="table2" class="table" >
+                       <tbody>
+    <tr style="font-size:22px;color:#0D184F;">
+      <th ></th>
+      <td>Name:</td>
+      <td>{{user.name}} </td>
+    
+    </tr>
+    <tr style="font-size:22px;color:#0D184F;">
+      <th ></th>
+      <td>Address:</td>
+      <td>{{user.address}}</td>
 
-                    <div >
-                        <div  style="color:#474A8A">
-                        <label>Name:</label>
-                        <p style="font-size:25px;font-weight:bold;">{{user.name}}</p>
-                        </div>
-                        <div  style="color:#474A8A">
-                        <label>Surname:</label>
-                        <p style="font-size:25px;font-weight:bold;">{{user.surname}}</p>
-                        </div>
-                    </div>
-                    <div >
-                        <div  style="color:#474A8A">
-                        <label>Email:</label>
-                        <p style="font-size:25px;font-weight:bold;">{{user.email}}</p>
-                        </div>
-                        <div  style="color:#474A8A">
-                        <label>Phone number:</label>
-                        <p style="font-size:25px;font-weight:bold;">{{user.phoneNumber}}</p>
-                        </div>
-                    </div>
-                      <div style="color:#474A8A">
-                        <div >
-                        <label>Country:</label>
-                        <p style="font-size:25px;font-weight:bold;">{{user.address}}</p>
-                        </div>
-                        <div  style="color:#474A8A">
-                        <label>Town:</label>
-                        <p style="font-size:25px;font-weight:bold;">{{user.country}}</p>
-                        </div>
-                    </div>
-                     <div >
-                        <div  style="color:#474A8A">
-                        <label>Street:</label>
-                        <p style="font-size:25px;font-weight:bold;">{{user.city}}</p>
-                        </div>
-                        <div style="color:#474A8A">
-                        <label>Password:</label>
-                        <p style="font-size:25px;font-weight:bold;">{{user.password}}</p>
-                        </div>
-                    </div>
-                   
-                    <div style="height:30px;"></div>
+    </tr>
+    <tr style="font-size:22px;color:#0D184F;">
+      <th></th>
+      <td>Surname:</td>
+      <td>{{user.surname}} </td>
+     
+    </tr>
+     <tr style="font-size:22px;color:#0D184F;">
+      <th></th>
+      <td>Email:</td>
+      <td>{{user.email}} </td>
+     
+
+    </tr>
+    <tr style="font-size:22px;color:#0D184F;">
+      <th></th>
+      <td>Phone number:</td>
+      <td>{{user.phoneNumber}} </td>
+     
+
+    </tr>
+    
+    <tr style="font-size:22px;color:#0D184F;">
+      <th></th>
+      <td>Country:</td>
+      <td>{{user.country}} </td>
+      
+     
+
+    </tr>
+    <tr style="font-size:22px;color:#0D184F;">
+      <th></th>
+      <td>City:</td>
+      <td>{{user.city}} </td>
+     
+
+    </tr>
+    <tr style="font-size:22px;color:#0D184F;">
+      <th></th>
+      <td>Password:</td>
+      <td>{{user.password}} </td>
+     
+
+    </tr>
+    <tr style="font-size:22px;color:#0D184F;">
+      <th></th>
+      <td>Pharmacy:</td>
+      <td>{{pharmacy.name}} </td>
+     
+
+    </tr>
+  </tbody>
+                        </table>
                 </form>
 
         </div>
@@ -84,7 +110,14 @@ export default {
                 city : "",
                 country : ""
     },
-    pharmacy : {}
+    pharmacy : {
+             idPharm:"",
+             name: "",
+             address: "",
+             description: "opis 1",
+             avgGrade :""
+
+    }
     }
   },
   
@@ -97,7 +130,18 @@ export default {
          }).catch(res => {
                        alert("ne valja.");
                        console.log(res);
-                 });
+        });
+        this.axios.get('/adminstrator/findPharm/'+505,{ 
+             
+         }).then(response => {
+               this.pharmacy=response.data;
+
+         }).catch(res => {
+                       alert("ne valja.");
+                       console.log(res);
+        });
+        
+            
     
                             
                  

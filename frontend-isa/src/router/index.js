@@ -4,6 +4,8 @@ import Home from '../components/Home.vue'
 import Welcome from '../components/Welcome.vue'
 import createDrugPage from '../components/createDrugPage.vue'
 import ProfileAdmin from '../components/ProfileAdmin.vue'
+import updatePharmacyProfile from '../components/updatePharmacyProfile.vue'
+
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
 
 
@@ -34,6 +36,12 @@ const routes = [
         path: '/ProfileAdmin',
         name: 'ProfileAdmin',
         component: ProfileAdmin
+      }
+      ,
+      {
+        path: '/updatePharmacyProfile/:id',
+        name: 'updatePharmacyProfile',
+        component: updatePharmacyProfile
       }
     ]
 

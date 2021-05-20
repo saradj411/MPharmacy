@@ -21,6 +21,8 @@ public class PharmacyAdmin extends User {
     @OneToMany(mappedBy = "pharmacyAdmin", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<DrugOrder> drugOrder=new HashSet<DrugOrder>();
 
+
+
     public PharmacyAdmin() {
     }
 
@@ -49,4 +51,11 @@ public class PharmacyAdmin extends User {
         Napomena: Jedna apoteka može da ima više administratora, a jedan
         administrator može biti administrator samo jedne apoteke.
     */
+
+
+    public PharmacyAdmin(Integer idUser, String name, String surname, String email, String password, String address, String phoneNumber, String city, String country, Pharmacy pharmacy, Set<DrugOrder> drugOrder) {
+        super(idUser, name, surname, email, password, address, phoneNumber, city, country);
+        this.pharmacy = pharmacy;
+        this.drugOrder = drugOrder;
+    }
 }
