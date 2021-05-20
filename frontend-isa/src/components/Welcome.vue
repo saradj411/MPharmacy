@@ -1,5 +1,15 @@
 <template>
   <div id="registration" >
+  
+
+ <button style="float:left;margin-left:20px;" type="button" class="btn btn-primary btn-xs" v-on:click = "addDrug" >Dodaj lijek</button>
+ <button style="float:left;margin-left:20px;" type="button" class="btn btn-primary btn-xs" v-on:click = "profileDermatologist">Profil dermatologa</button>
+ <button style="float:left;margin-left:20px;" type="button" class="btn btn-primary btn-xs" v-on:click = "profilePharmacist">Profil farmaceuta</button>
+ 
+ 
+        <h4 style="float:left;margin-top:100px;margin-left:20px;">Pharmacies:</h4>
+        <h4 style="margin:20px">Pharmacies:</h4>
+
    <div style="background: #d1af71; height: 90px;">
       <span style="float:left; margin: 15px;">
           <button class="btn btn-danger btn-lg" style="float:left;margin-left:20px;margin-top:7px" v-on:click = "showPharmacies">Pharmacies</button>
@@ -40,6 +50,12 @@
             
   </div>
  <button style="float:left;margin-left:20px;" v-on:click = "addDrug" >Dodaj lijek</button>
+ <button style="float:left;margin-left:20px;" v-on:click = "profileAdmin" >Profil administratora apoteke</button>
+
+ <div  v-for="pharmacy in this.pharmacies"  v-bind:key="pharmacy.idPharm">
+       <div v-if="showTable"  style="margin-left:300px; margin-top: 20px"> 
+         
+ <router-link :to="{ path: '/Home/'+pharmacy.idPharm}" v-slot="{href, navigate}" custom>
 
  <div v-if="showTable"  style="margin-left:0px;">
      <h4 style="margin:30px">PHARMACIES:</h4>    
@@ -170,6 +186,16 @@ export default {
     addDrug : function(){
           window.location.href = "/createDrugPage";
       },
+      profileAdmin : function(){
+          window.location.href = "/ProfileAdmin";
+      }
+     ,profileDermatologist: function(){
+          window.location.href = "/profileDermatologist";
+      }  
+      ,profilePharmacist: function(){
+          window.location.href = "/profilePharmacist";
+      }  
+
         registrationForm : function(){
         window.location.href = "/registration";
       },

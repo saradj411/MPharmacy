@@ -1,5 +1,6 @@
 package com.isaProject.isa.Model.Users;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.isaProject.isa.Model.Drugs.Drug;
 import com.isaProject.isa.Model.Drugs.DrugReservation;
 import com.isaProject.isa.Model.Examination.Examination;
@@ -10,6 +11,9 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
+@DiscriminatorValue("PATIENT")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+
 public class Patient extends User{
 
     @Column(nullable = true)

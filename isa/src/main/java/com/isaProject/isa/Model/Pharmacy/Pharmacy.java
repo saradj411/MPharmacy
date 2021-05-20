@@ -7,12 +7,13 @@ import com.isaProject.isa.Model.Examination.Examination;
 import com.isaProject.isa.Model.Users.PharmacyAdmin;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
 @Table
-public class Pharmacy {
+public class  Pharmacy implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer idPharm;

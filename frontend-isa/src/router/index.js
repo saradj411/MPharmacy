@@ -5,7 +5,14 @@ import Welcome from '../components/Welcome.vue'
 import Login from '../components/Login.vue'
 import Registration from '../components/Registration.vue'
 import createDrugPage from '../components/createDrugPage.vue'
+import ProfileAdmin from '../components/ProfileAdmin.vue'
+import updatePharmacyProfile from '../components/updatePharmacyProfile.vue'
+
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
+import profileDermatologist from '../components/profileDermatologist.vue'
+import profilePharmacist from '../components/profilePharmacist.vue'
+
+
 import moment from 'moment'
 
 
@@ -37,6 +44,27 @@ const routes = [
         component: createDrugPage
       },
       {
+        path: '/ProfileAdmin',
+        name: 'ProfileAdmin',
+        component: ProfileAdmin
+      }
+      ,
+      {
+        path: '/updatePharmacyProfile/:id',
+        name: 'updatePharmacyProfile',
+        component: updatePharmacyProfile
+              },
+              {
+
+                   path: '/profileDermatologist',
+        name: 'profileDermatologist',
+        component: profileDermatologist
+      },
+      {
+        path: '/profilePharmacist',
+        name: 'profilePharmacist',
+        component: profilePharmacist
+
         path: '/login',
         name: 'Login',
         component: Login

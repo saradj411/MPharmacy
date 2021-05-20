@@ -10,6 +10,7 @@ import java.util.Set;
 @Table
 public class Staff extends User{
 
+
     //ocjena
     @Column
     private double avgGrade;
@@ -25,4 +26,16 @@ public class Staff extends User{
     //odmor
     @OneToMany(mappedBy = "staff", fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     private Set<Vacation> vacation = new HashSet<Vacation>();
+
+    public Staff(Integer idUser, String name, String surname, String email, String password, String address, String phoneNumber, String city, String country, double avgGrade, Set<WorkTime> workTime, Set<Examination> examinations, Set<Vacation> vacation) {
+        super(idUser, name, surname, email, password, address, phoneNumber, city, country);
+        this.avgGrade = avgGrade;
+        this.workTime = workTime;
+        this.examinations = examinations;
+        this.vacation = vacation;
+    }
+
+    public Staff() {
+
+    }
 }
