@@ -1,5 +1,6 @@
 package com.isaProject.isa.Model.Users;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.isaProject.isa.Model.Pharmacy.Pharmacy;
 
 import javax.persistence.*;
@@ -7,6 +8,9 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
+@DiscriminatorValue("DERMATOLOGIST")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+
 public class Dermatologist extends Staff{
 
     //apoteke u kojima je zaposlen

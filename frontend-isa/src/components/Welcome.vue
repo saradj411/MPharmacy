@@ -4,6 +4,7 @@
         <h4 style="margin:20px">Pharmacies:</h4>
 
  <button style="float:left;margin-left:20px;" v-on:click = "addDrug" >Dodaj lijek</button>
+ <button style="float:left;margin-left:20px;" v-on:click = "profileAdmin" >Profil administratora apoteke</button>
 
  <div  v-for="pharmacy in this.pharmacies"  v-bind:key="pharmacy.idPharm">
        <div v-if="showTable"  style="margin-left:300px; margin-top: 20px">
@@ -64,8 +65,10 @@ export default {
   methods:{
     addDrug : function(){
           window.location.href = "/createDrugPage";
+      },
+      profileAdmin : function(){
+          window.location.href = "/profileAdmin";
       }
-    
 },
 mounted() {
         this.axios.get('/pharmacy/findAll')
