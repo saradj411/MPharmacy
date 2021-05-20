@@ -29,6 +29,66 @@ public class DrugPricelist {
     @JoinColumn(name = "pharmacyId", referencedColumnName = "idPharm", nullable = true, unique = false)
     private Pharmacy pharmacy;
 
+    public DrugPricelist(Integer idPricelist, Drug drug, double price, Date start, Date end, Pharmacy pharmacy) {
+        this.idPricelist = idPricelist;
+        this.drug = drug;
+        this.price = price;
+        this.start = start;
+        this.end = end;
+        this.pharmacy = pharmacy;
+    }
+
+    public DrugPricelist() {
+    }
+
+    public Integer getIdPricelist() {
+        return idPricelist;
+    }
+
+    public void setIdPricelist(Integer idPricelist) {
+        this.idPricelist = idPricelist;
+    }
+
+    public Drug getDrug() {
+        return drug;
+    }
+
+    public void setDrug(Drug drug) {
+        this.drug = drug;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    public Date getStart() {
+        return start;
+    }
+
+    public void setStart(Date start) {
+        this.start = start;
+    }
+
+    public Date getEnd() {
+        return end;
+    }
+
+    public void setEnd(Date end) {
+        this.end = end;
+    }
+
+    public Pharmacy getPharmacy() {
+        return pharmacy;
+    }
+
+    public void setPharmacy(Pharmacy pharmacy) {
+        this.pharmacy = pharmacy;
+    }
+
     /* Postupak definisanja i izmene cenovnika
     Administrator apoteke ima mogućnost definisanja cenovnika za apoteku. Za
     svaki lek se navodi cena kao i period važenja cene.

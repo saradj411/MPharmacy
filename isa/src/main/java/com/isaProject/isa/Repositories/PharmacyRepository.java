@@ -5,9 +5,12 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 
 public interface PharmacyRepository extends JpaRepository<Pharmacy, Integer>{
 
     Pharmacy findOneByIdPharm(Integer idPharm);
-    Pharmacy findOneByName(String name);
+    List<Pharmacy> findOneByName(String name);
+    List<Pharmacy> findOneByAddress(String address);
 }
