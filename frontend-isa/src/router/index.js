@@ -2,6 +2,8 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../components/Home.vue'
 import Welcome from '../components/Welcome.vue'
+import Login from '../components/Login.vue'
+import Registration from '../components/Registration.vue'
 import createDrugPage from '../components/createDrugPage.vue'
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
 
@@ -28,6 +30,16 @@ const routes = [
         path: '/createDrugPage',
         name: 'createDrugPage',
         component: createDrugPage
+      },
+      {
+        path: '/login',
+        name: 'Login',
+        component: Login
+      },
+      {
+        path: '/registration',
+        name: 'Registration',
+        component: Registration
       }
     ]
 

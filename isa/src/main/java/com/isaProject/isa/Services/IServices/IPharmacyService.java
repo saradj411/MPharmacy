@@ -10,7 +10,8 @@ import java.util.List;
 public interface IPharmacyService {
 
     Pharmacy findById(Integer id);
-    Pharmacy findByName(String name);
+    List<Pharmacy> findByName(String name);
+    List<Pharmacy> findByAddress(String city);
     List<Pharmacy> findAll ();
     Pharmacy save(PharmacyDTO pharmacy);
     //Boolean savePharmacy(WorkingHoursDermatologistDTO dto);

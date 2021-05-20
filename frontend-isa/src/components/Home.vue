@@ -38,7 +38,7 @@ export default {
        id : this.$route.params.id,
        pharmacy : [],
        
-       welcomePageShow : true,
+       welcomePageShow : true
        
        
        

@@ -28,6 +28,14 @@ public class PharmacyController {
                 new ResponseEntity<>(HttpStatus.NOT_FOUND) :
                 ResponseEntity.ok(pharmacies);
     }
+
+    @GetMapping(value = "/findByCity/{city}")
+    public ResponseEntity<List<Pharmacy>> findByCity(@PathVariable String city) {
+        List<Pharmacy> pharmacies=pharmacyService.findByAddress(city);
+        return pharmacies == null ?
+                new ResponseEntity<>(HttpStatus.NOT_FOUND) :
+                ResponseEntity.ok(pharmacies);
+    }
     @GetMapping(value = "/findById/{id}")
     public ResponseEntity<Pharmacy> findById(@PathVariable Integer id) {
         //log.info("dsds:"+id);
@@ -38,9 +46,9 @@ public class PharmacyController {
     }
 
     @GetMapping(value = "/findByName/{name}")
-    public ResponseEntity<Pharmacy> findById(@PathVariable String name) {
+    public ResponseEntity<List<Pharmacy>> findById(@PathVariable String name) {
         //log.info("dsds:"+id);
-        Pharmacy pharm=pharmacyService.findByName(name);
+        List<Pharmacy> pharm=pharmacyService.findByName(name);
         return pharm == null ?
                 new ResponseEntity<>(HttpStatus.NOT_FOUND) :
                 ResponseEntity.ok(pharm);
