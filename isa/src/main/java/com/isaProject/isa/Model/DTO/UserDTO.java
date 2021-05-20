@@ -1,50 +1,29 @@
-package com.isaProject.isa.Model.Users;
+package com.isaProject.isa.Model.DTO;
 
+import javax.persistence.Column;
 
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
+public class UserDTO {
 
-import javax.persistence.*;
-import java.io.Serializable;
-import java.util.Collection;
-
-@Entity
-@Table
-
-public class User implements UserDetails, Serializable {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer idUser;
-
-    @Column
     private String name;
 
-    @Column
     private String surname;
 
-    @Column
     private String email;
 
-    @Column
     private String password;
 
-    @Column
     private String address;
 
-    @Column
     private String phoneNumber;
 
-    @Column
     private String city;
 
-    @Column
     private String country;
 
-    public User() {
+    public UserDTO() {
     }
 
-    public User(Integer idUser, String name, String surname, String email, String password, String address, String phoneNumber, String city, String country) {
-        this.idUser = idUser;
+    public UserDTO(String name, String surname, String email, String password, String address, String phoneNumber, String city, String country) {
         this.name = name;
         this.surname = surname;
         this.email = email;
@@ -53,14 +32,6 @@ public class User implements UserDetails, Serializable {
         this.phoneNumber = phoneNumber;
         this.city = city;
         this.country = country;
-    }
-
-    public Integer getIdUser() {
-        return idUser;
-    }
-
-    public void setIdUser(Integer idUser) {
-        this.idUser = idUser;
     }
 
     public String getName() {
@@ -87,38 +58,8 @@ public class User implements UserDetails, Serializable {
         this.email = email;
     }
 
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
-    }
-
     public String getPassword() {
         return password;
-    }
-
-    @Override
-    public String getUsername() {
-        return null;
-    }
-
-    @Override
-    public boolean isAccountNonExpired() {
-        return false;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return false;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return false;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return false;
     }
 
     public void setPassword(String password) {
