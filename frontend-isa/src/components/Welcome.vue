@@ -1,4 +1,5 @@
-<template>
+
+  <template>
   <div id="registration" >
    <div style="background: #d1af71; height: 90px;">
             
@@ -57,17 +58,23 @@
     <tbody>
       <tr>
         <th scope="row"></th>
-        <td>{{drug.name}}
+        <td style="font-size:25px;font-weight:bold;">{{drug.drug.name}}
            </td>
-      <td>Grade:{{drug.avgGrade}} </td>
+      <td style="font-weight:bold;">{{drug.price}}RSD</td>
       </tr>
     <tr>
       <th></th>
-      <td >Address  </td>   
-       <td>{{drug.address}}</td>
+      <td >Pharmacy:</td>   
+       <td>{{drug.pharmacy.name}}</td>
 
     </tr>
-   
+    <tr>
+      <th></th>
+      <td >Duration price:</td>   
+       <td>{{drug.start | formatDate}}-{{drug.end| formatDate}}</td>
+
+    </tr>
+ 
   </tbody>
 </table>
            </div>
@@ -117,7 +124,7 @@ export default {
       : function(){
         this.showTable=true
         this.showDrugTable=false
-      },
+      }
     
 },
 mounted() {
@@ -130,7 +137,7 @@ mounted() {
                 console.log(res);
         });
 
-        this.axios.get('/drug/findAll')
+        this.axios.get('/drugPricelist/findAll')
         .then(response => {
                 this.drugs = response.data;
                 
