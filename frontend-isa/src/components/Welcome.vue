@@ -55,7 +55,6 @@
  <div  v-for="pharmacy in this.pharmacies"  v-bind:key="pharmacy.idPharm">
        <div v-if="showTable"  style="margin-left:300px; margin-top: 20px"> 
          
- <router-link :to="{ path: '/Home/'+pharmacy.idPharm}" v-slot="{href, navigate}" custom>
 
  <div v-if="showTable"  style="margin-left:0px;">
      <h4 style="margin:30px">PHARMACIES:</h4>    
@@ -194,7 +193,7 @@ export default {
       }  
       ,profilePharmacist: function(){
           window.location.href = "/profilePharmacist";
-      }  
+      } ,
 
         registrationForm : function(){
         window.location.href = "/registration";
