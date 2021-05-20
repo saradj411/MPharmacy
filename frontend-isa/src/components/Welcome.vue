@@ -1,6 +1,13 @@
 <template>
   <div id="registration" >
   
+
+ <button style="float:left;margin-left:20px;" type="button" class="btn btn-primary btn-xs" v-on:click = "addDrug" >Dodaj lijek</button>
+ <button style="float:left;margin-left:20px;" type="button" class="btn btn-primary btn-xs" v-on:click = "profileDermatologist">Profil dermatologa</button>
+ <button style="float:left;margin-left:20px;" type="button" class="btn btn-primary btn-xs" v-on:click = "profilePharmacist">Profil farmaceuta</button>
+ 
+ 
+        <h4 style="float:left;margin-top:100px;margin-left:20px;">Pharmacies:</h4>
         <h4 style="margin:20px">Pharmacies:</h4>
 
  <button style="float:left;margin-left:20px;" v-on:click = "addDrug" >Dodaj lijek</button>
@@ -69,6 +76,12 @@ export default {
       profileAdmin : function(){
           window.location.href = "/ProfileAdmin";
       }
+     ,profileDermatologist: function(){
+          window.location.href = "/profileDermatologist";
+      }  
+      ,profilePharmacist: function(){
+          window.location.href = "/profilePharmacist";
+      }  
 },
 mounted() {
         this.axios.get('/pharmacy/findAll')

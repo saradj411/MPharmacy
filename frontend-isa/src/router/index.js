@@ -7,6 +7,9 @@ import ProfileAdmin from '../components/ProfileAdmin.vue'
 import updatePharmacyProfile from '../components/updatePharmacyProfile.vue'
 
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
+import profileDermatologist from '../components/profileDermatologist.vue'
+import profilePharmacist from '../components/profilePharmacist.vue'
+
 
 
 Vue.use(VueRouter)
@@ -42,6 +45,17 @@ const routes = [
         path: '/updatePharmacyProfile/:id',
         name: 'updatePharmacyProfile',
         component: updatePharmacyProfile
+              },
+              {
+
+                   path: '/profileDermatologist',
+        name: 'profileDermatologist',
+        component: profileDermatologist
+      },
+      {
+        path: '/profilePharmacist',
+        name: 'profilePharmacist',
+        component: profilePharmacist
       }
     ]
 
