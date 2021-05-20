@@ -27,6 +27,15 @@ public class UserController {
                 ResponseEntity.ok(user);
     }
 
+    @GetMapping(value = "/findAllDermatologist")
+    public ResponseEntity<List<User>> findAllDermatologist() {
+        List<User> user=userService.findAll();
+
+        return user == null ?
+                new ResponseEntity<>(HttpStatus.NOT_FOUND) :
+                ResponseEntity.ok(user);
+    }
+
     @GetMapping(value = "/findById/{id}")
     public ResponseEntity<User> findById(@PathVariable Integer id) {
         //log.info("dsds:"+id);
