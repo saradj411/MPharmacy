@@ -1,23 +1,44 @@
-
-  <template>
+<template>
   <div id="registration" >
    <div style="background: #d1af71; height: 90px;">
-            
-            <span style="float:left; margin: 15px;">
-              
-                <button class="btn btn-danger btn-lg" style="float:left;margin-left:20px;margin-top:7px" v-on:click = "showDrugs">Drugs</button>
-                <button class="btn btn-danger btn-lg" style="float:left;margin-left:20px;margin-top:7px" v-on:click = "showPharmacies">Pharmacies</button>
-                
-            </span>
-              <span  style="float:right;margin:15px">
-                    <button class="btn btn-info btn-lg" v-on:click = "loginForm">Login</button>
+      <span style="float:left; margin: 15px;">
+          <button class="btn btn-danger btn-lg" style="float:left;margin-left:20px;margin-top:7px" v-on:click = "showPharmacies">Pharmacies</button>
+           <button class="btn btn-danger btn-lg" style="float:left;margin-left:20px;margin-top:7px" v-on:click = "showDrugs">Drugs</button>
+           
+      </span>
+      <span  style="float:right;margin:15px">
+           <button class="btn btn-info btn-lg" v-on:click = "loginForm">Login</button>
+           <button class="btn btn-info btn-lg" style="margin:10px;" v-on:click = "registrationForm">Register</button>
+      </span>
 
-                    <button class="btn btn-info btn-lg" style="margin:10px;" v-on:click = "registrationForm">Register</button>
-                </span>
-
-        </div>
+    </div>
         
+    <div v-if="showSearchPharmacy"  style="background:#d1af71; height: 70px; margin-top: 10px">
+            
+      <span  style="float:right;margin:15px">
+                    
+          <div class="input-group mb-3">
+              <input type="text" v-model="pharmacyName" class="form-control" placeholder="Enter name" aria-label="Enter name" aria-describedby="addon-wrapping">
+              <div class="input-group-append">
+                  <button class="btn btn-outline-success" type="button"  v-on:click = "searchName(pharmacyName)" >Search</button>
+                </div>
+           </div>
+      </span>
 
+      <span  style="float:right;margin:15px">
+                    
+        <div class="input-group mb-3">
+             <input type="text" v-model="pharmacyCity" class="form-control" placeholder="Enter city" aria-label="Enter city" aria-describedby="addon-wrapping">
+              <div class="input-group-append">
+                  <button class="btn btn-outline-success" type="button"  v-on:click = "searchCity(pharmacyCity)" >Search</button>
+              </div>
+        </div>
+
+            
+      </span>
+             
+            
+  </div>
  <button style="float:left;margin-left:20px;" v-on:click = "addDrug" >Dodaj lijek</button>
 
  <div v-if="showTable"  style="margin-left:0px;">
@@ -48,6 +69,36 @@
            </div>
 
       </div>   
+<!-- PRETRAGA APOTEKA!-->
+<div v-if="showSearchPharmacyTable"  style="margin-left:0px;">
+     <h4 style="margin:30px">PHARMACIES1:</h4>    
+ <div style="background: #a7c1c9; width: 700px;margin-left:300px;"  v-for="pharmacy in this.pharmacies1"  v-bind:key="pharmacy.idPharm">
+      
+<table  style="" id="table2" class="table" >
+ 
+    <tbody>
+      <tr>
+        <th scope="row"></th>
+        <td><router-link :to="{ path: '/Home/'+pharmacy.idPharm}" v-slot="{href, navigate}" custom>
+           <b-link style="font-size: 30px;margin-left:50px;" :href="href" @click="navigate"  elevation="1">
+              {{pharmacy.name}}
+            </b-link >
+         </router-link></td>
+      <td>Grade:{{pharmacy.avgGrade}} </td>
+      </tr>
+    <tr>
+      <th></th>
+      <td >Address  </td>   
+       <td>{{pharmacy.address}}</td>
+
+    </tr>
+   
+  </tbody>
+</table>
+           </div>
+
+      </div>   
+<!--prikaz lijekova!-->
 <div v-if="showDrugTable"  style="margin-left:0px;">
   <h4 style="margin:30px">DRUGS:</h4>
       <div style="background: #a7c1c9; width: 700px;margin-left:300px;"  v-for="drug in this.drugs"  v-bind:key="drug.idDrug">
@@ -70,7 +121,7 @@
     </tr>
     <tr>
       <th></th>
-      <td >Duration price:</td>   
+      <td >Price duration:</td>   
        <td>{{drug.start | formatDate}}-{{drug.end| formatDate}}</td>
 
     </tr>
@@ -97,11 +148,20 @@ export default {
   data() {
     return {
        pharmacies : [],
+       pharmacies1 : [],
        drugs:[],
+
        showTable: true,
        showDrugTable: false,
-       showShearchPharmacy:true,
-       showShearchDrug:false
+
+       showSearchPharmacyTable:false,
+       showSearchDrugTable:false,
+
+       pharmacyName: null,
+       pharmacyCity: null,
+
+       showSearchPharmacy:true,
+       showSearchDrug:false
       
        
     }
@@ -119,12 +179,45 @@ export default {
       showDrugs: function(){
         this.showTable=false
         this.showDrugTable=true
+        this.showSearchPharmacy=false
+        this.showSearchPharmacyTable=false
       },
       showPharmacies
       : function(){
         this.showTable=true
         this.showDrugTable=false
-      }
+        this.showSearchPharmacy=true
+      },
+      searchName: function(pharmacyName){
+           
+             this.pharmacyName = pharmacyName
+      this.axios.get('/pharmacy/findByName/'+ this.pharmacyName)
+          .then(response => {
+              this.showTable = false;
+              this.showSearchPharmacyTable = true;
+                this.pharmacies1= response.data;
+               console.log(this.pharmacies1);
+                //if(this.pharmacies1.length == null){
+                     //this.showSecondTable = false;
+                //}
+              
+          })
+      },
+      searchCity: function(pharmacyCity){
+           
+             this.pharmacyCity = pharmacyCity
+      this.axios.get('/pharmacy/findByCity/'+ this.pharmacyCity)
+          .then(response => {
+              this.showTable = false;
+              this.showSearchPharmacyTable = true;
+                this.pharmacies1= response.data;
+               console.log(this.pharmacies1);
+                if(this.pharmacies1.length == null){
+                     this.showSecondTable = false;
+                }
+              
+          })
+      },
     
 },
 mounted() {
