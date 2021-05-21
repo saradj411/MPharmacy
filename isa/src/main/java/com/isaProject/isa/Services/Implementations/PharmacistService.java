@@ -1,5 +1,8 @@
 package com.isaProject.isa.Services.Implementations;
 
+import com.isaProject.isa.Model.DTO.DrugDTO;
+import com.isaProject.isa.Model.DTO.PharmaceutDTO;
+import com.isaProject.isa.Model.Drugs.Drug;
 import com.isaProject.isa.Model.Users.Dermatologist;
 import com.isaProject.isa.Model.Users.Pharmacist;
 import com.isaProject.isa.Repositories.DermatologistRepository;
@@ -36,6 +39,27 @@ public class PharmacistService implements IPharamacistService {
     public List<Pharmacist> findAll() {
 
         return pharmacistRepository.findAll();
+    }
+
+
+    @Override
+    public Pharmacist save(PharmaceutDTO dto) {
+        Pharmacist d = new Pharmacist();
+        d.setName(dto.getName());
+        d.setSurname(dto.getSurname());
+        d.setEmail(dto.getEmail());
+        d.setPassword(null);
+        d.setAddress(dto.getAddress());
+        d.setPhoneNumber(dto.getPhoneNumber());
+        d.setCity(dto.getCity());
+        d.setCountry(dto.getCountry());
+        d.setAvgGrade(0.0);
+        d.setVacation(null);
+        d.setWorkTime(null);
+        d.setExaminations(null);
+        d.setPharmacy(dto.getPharmacy());
+
+        return pharmacistRepository.save(d);
     }
 
     }

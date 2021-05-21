@@ -1,5 +1,8 @@
 package com.isaProject.isa.Services.Implementations;
 
+import com.isaProject.isa.Model.DTO.DermatologistDTO;
+import com.isaProject.isa.Model.DTO.DrugDTO;
+import com.isaProject.isa.Model.Drugs.Drug;
 import com.isaProject.isa.Model.Pharmacy.Pharmacy;
 import com.isaProject.isa.Model.Users.Dermatologist;
 import com.isaProject.isa.Repositories.DermatologistRepository;
@@ -27,12 +30,28 @@ public class DermatologistService implements IDermatologistService {
     }
 
 
-
-
-
     @Override
     public List<Dermatologist> findAll() {
 
         return dermatologistRepository.findAll();
+    }
+
+    @Override
+    public Dermatologist save(DermatologistDTO dermatologist) {
+        Dermatologist d = new Dermatologist();
+        d.setName(dermatologist.getName());
+        d.setSurname(dermatologist.getSurname());
+        d.setEmail(dermatologist.getSurname());
+        d.setPassword(dermatologist.getPassword());
+        d.setAddress(dermatologist.getPhoneNumber());
+        d.setPhoneNumber(dermatologist.getPhoneNumber());
+        d.setCity(dermatologist.getCity());
+        d.setCountry(dermatologist.getCountry());
+        d.setAvgGrade(dermatologist.getAvgGrade());
+        d.setWorkTime(null);
+        d.setExaminations(null);
+        d.setVacation(null);
+        d.setPharmacies(null);
+        return dermatologistRepository.save(d);
     }
 }

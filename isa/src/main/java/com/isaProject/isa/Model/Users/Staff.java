@@ -38,4 +38,36 @@ public class Staff extends User{
     public Staff() {
 
     }
+
+    public double getAvgGrade() {
+        return avgGrade;
+    }
+
+    public Set<WorkTime> getWorkTime() {
+        return workTime;
+    }
+
+    public Set<Examination> getExaminations() {
+        return examinations;
+    }
+
+    public Set<Vacation> getVacation() {
+        return vacation;
+    }
+
+    public void setAvgGrade(double avgGrade) {
+        this.avgGrade = avgGrade;
+    }
+
+    public void setWorkTime(Set<WorkTime> workTime) {
+        this.workTime = workTime;
+    }
+
+    public void setExaminations(Set<Examination> examinations) {
+        this.examinations = examinations;
+    }
+
+    public void setVacation(Set<Vacation> vacation) {
+        this.vacation = vacation;
+    }
 }
