@@ -1,5 +1,7 @@
 package com.isaProject.isa.Controllers;
 
+import com.isaProject.isa.Model.DTO.DrugDTO;
+import com.isaProject.isa.Model.Drugs.Drug;
 import com.isaProject.isa.Model.Users.Patient;
 import com.isaProject.isa.Services.Implementations.PatientService;
 import lombok.extern.slf4j.Slf4j;
@@ -10,7 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@CrossOrigin
+@CrossOrigin("*")
 @RequestMapping(value="/patient", produces = MediaType.APPLICATION_JSON_VALUE)
 @Slf4j
 public class PatientController {
@@ -25,5 +27,13 @@ public class PatientController {
         return d == null ?
                 new ResponseEntity<>(HttpStatus.NOT_FOUND) :
                 ResponseEntity.ok(d);
+    }
+
+    @GetMapping("/addAllergy/{id}/{idPatient}")
+    public ResponseEntity<String> addDrug(@PathVariable(value = "id") Integer id,
+                                          @PathVariable(value = "idPatient") Integer idPatient ) {
+
+        patientService.saveAllergy(id,idPatient);
+        return new ResponseEntity<>("Allergy is added", HttpStatus.CREATED);
     }
 }

@@ -220,10 +220,7 @@ export default {
               this.showTable = false;
               this.showSearchPharmacyTable = true;
                 this.pharmacies1= response.data;
-               console.log(this.pharmacies1);
-                //if(this.pharmacies1.length == null){
-                     //this.showSecondTable = false;
-                //}
+                
               
           })
       },
@@ -235,10 +232,7 @@ export default {
               this.showTable = false;
               this.showSearchPharmacyTable = true;
                 this.pharmacies1= response.data;
-               console.log(this.pharmacies1);
-                if(this.pharmacies1.length == null){
-                     this.showSecondTable = false;
-                }
+                
               
           })
       },

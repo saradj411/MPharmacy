@@ -7,4 +7,5 @@ import java.util.List;
 public interface IPatientService {
     Patient findById(Integer id);
     List<Patient> findAll ();
+    void saveAllergy(Integer idDrug,Integer idPatient);
 }

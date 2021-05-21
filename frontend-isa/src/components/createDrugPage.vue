@@ -91,7 +91,8 @@ export default {
       },
       typeIsSelected : function(event, type) { 
            this.choosenType = type;
-      }
+      },
+      
 },
  mounted() {
      
