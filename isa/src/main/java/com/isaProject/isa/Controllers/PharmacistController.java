@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -34,6 +35,22 @@ public class PharmacistController {
         return pharmacists == null ?
                 new ResponseEntity<>(HttpStatus.NOT_FOUND) :
                 ResponseEntity.ok(pharmacists);
+    }
+    @GetMapping(value = "/getPharmacist/{id}")
+    public ResponseEntity<List<Pharmacist>> findAll(@PathVariable Integer id) {
+        List<Pharmacist> pharmacists=pharmacistService.findAll();
+        ArrayList<Pharmacist> newP = new ArrayList<>();
+
+        for (Pharmacist d:pharmacists){
+            if(d.getPharmacy().getIdPharm().equals(id)){
+                System.out.println("eee"+d.getPharmacy().getIdPharm());
+
+                newP.add(d);
+            }
+        }
+        return newP == null ?
+                new ResponseEntity<>(HttpStatus.NOT_FOUND) :
+                ResponseEntity.ok(newP);
     }
 
     @GetMapping(value = "/findById/{id}")
