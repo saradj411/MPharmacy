@@ -47,14 +47,7 @@ public class PatientController {
         return new ResponseEntity<>("ajdeee", HttpStatus.CREATED);
 
     }
-    @PostMapping("/changePass")
-    ResponseEntity<String> changePass(@RequestBody ChangePasswordDTO changePasswordDTO)
-    {
-
-        patientService.changePass(changePasswordDTO);
-        return new ResponseEntity<>("ajdeee", HttpStatus.CREATED);
-
-    }
+    
 
 
 }

@@ -3,6 +3,8 @@ import VueRouter from 'vue-router'
 import Home from '../components/Home.vue'
 import Welcome from '../components/Welcome.vue'
 import createDrugPage from '../components/createDrugPage.vue'
+import Login from '../components/Login.vue'
+import Registration from '../components/Registration.vue'
 
 import ProfileAdmin from '../components/ProfileAdmin.vue'
 import ProfilePatient from '../components/ProfilePatient.vue'
@@ -14,9 +16,17 @@ import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
 import profileDermatologist from '../components/profileDermatologist.vue'
 import profilePharmacist from '../components/profilePharmacist.vue'
 
+import moment from 'moment'
+
 Vue.use(VueRouter)
 Vue.use(BootstrapVue)
 Vue.use(IconsPlugin)
+
+Vue.filter('formatDate', function(value) {
+  if (value) {
+      return moment(String(value)).format('DD/MM/YYYY')
+  }
+});
 
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
