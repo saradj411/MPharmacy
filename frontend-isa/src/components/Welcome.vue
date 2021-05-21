@@ -1,18 +1,22 @@
 <template>
 
+
   <div  id="registration" style="background-image: url(https://image.freepik.com/free-photo/pharmacists-showing-medicine-bottle-discussing-prescription-drug-pharmacy_8087-2630.jpg);background-repeat: no-repeat;
   background-size: 150% 111%;  height: 1100px">
-  
-<div  style="background: #c9ccf0; height: 40px;">
+
+<div  style="background: #d1af71; height: 90px;">
+
  <button style="float:left;margin-left:20px;" type="button" class="btn btn-primary btn-xs" v-on:click = "addDrug" >Dodaj lijek</button>
  <button style="float:left;margin-left:20px;" type="button" class="btn btn-primary btn-xs" v-on:click = "profileDermatologist">Profil dermatologa</button>
  <button style="float:left;margin-left:20px;" type="button" class="btn btn-primary btn-xs" v-on:click = "profilePharmacist">Profil farmaceuta</button>
  <button style="float:left;margin-left:20px;" v-on:click = "addDrug" >Dodaj lijek</button>
  <button style="float:left;margin-left:20px;" v-on:click = "profileAdmin" >Profil administratora apoteke</button>
+
 <button style="float:left;margin-left:20px;" v-on:click = "profilePatient" >Patinet profil</button>
 
 </div>
    <div style="background: #676982; height: 90px;margin-top: 15px;">
+
       <span style="float:left; margin: 15px;">
           <button class="btn btn-danger btn-lg" style="float:left;margin-left:20px;margin-top:7px" v-on:click = "showPharmacies">Pharmacies</button>
            <button class="btn btn-danger btn-lg" style="float:left;margin-left:20px;margin-top:7px" v-on:click = "showDrugs">Drugs</button>
