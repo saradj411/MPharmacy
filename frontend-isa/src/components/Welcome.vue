@@ -1,16 +1,22 @@
 <template>
 
-  <div id="registration" >
-  
+
+  <div  id="registration" style="background-image: url(https://image.freepik.com/free-photo/pharmacists-showing-medicine-bottle-discussing-prescription-drug-pharmacy_8087-2630.jpg);background-repeat: no-repeat;
+  background-size: 150% 111%;  height: 1100px">
+
 <div  style="background: #d1af71; height: 90px;">
+
  <button style="float:left;margin-left:20px;" type="button" class="btn btn-primary btn-xs" v-on:click = "addDrug" >Dodaj lijek</button>
  <button style="float:left;margin-left:20px;" type="button" class="btn btn-primary btn-xs" v-on:click = "profileDermatologist">Profil dermatologa</button>
  <button style="float:left;margin-left:20px;" type="button" class="btn btn-primary btn-xs" v-on:click = "profilePharmacist">Profil farmaceuta</button>
  <button style="float:left;margin-left:20px;" v-on:click = "addDrug" >Dodaj lijek</button>
  <button style="float:left;margin-left:20px;" v-on:click = "profileAdmin" >Profil administratora apoteke</button>
 
+<button style="float:left;margin-left:20px;" v-on:click = "profilePatient" >Patinet profil</button>
+
 </div>
-   <div style="background: #d1af71; height: 90px;margin-top: 15px;">
+   <div style="background: #676982; height: 90px;margin-top: 15px;">
+
       <span style="float:left; margin: 15px;">
           <button class="btn btn-danger btn-lg" style="float:left;margin-left:20px;margin-top:7px" v-on:click = "showPharmacies">Pharmacies</button>
            <button class="btn btn-danger btn-lg" style="float:left;margin-left:20px;margin-top:7px" v-on:click = "showDrugs">Drugs</button>
@@ -23,14 +29,14 @@
 
     </div>
         
-    <div v-if="showSearchPharmacy"  style="background:#d1af71; height: 70px; margin-top: 10px">
+    <div v-if="showSearchPharmacy"  style="background:#B0B3D6; height: 70px; margin-top: 10px">
             
       <span  style="float:right;margin:15px">
                     
           <div class="input-group mb-3">
               <input type="text" v-model="pharmacyName" class="form-control" placeholder="Enter name" aria-label="Enter name" aria-describedby="addon-wrapping">
               <div class="input-group-append">
-                  <button class="btn btn-outline-success" type="button"  v-on:click = "searchName(pharmacyName)" >Search</button>
+                  <button class="btn btn-info" type="button"  v-on:click = "searchName(pharmacyName)" >Search</button>
                 </div>
            </div>
       </span>
@@ -40,7 +46,7 @@
         <div class="input-group mb-3">
              <input type="text" v-model="pharmacyCity" class="form-control" placeholder="Enter city" aria-label="Enter city" aria-describedby="addon-wrapping">
               <div class="input-group-append">
-                  <button class="btn btn-outline-success" type="button"  v-on:click = "searchCity(pharmacyCity)" >Search</button>
+                  <button class="btn btn-info" type="button"  v-on:click = "searchCity(pharmacyCity)" >Search</button>
               </div>
         </div>
 
@@ -182,6 +188,9 @@ export default {
       },
       profileAdmin : function(){
           window.location.href = "/ProfileAdmin";
+      },
+       profilePatient : function(){
+          window.location.href = "/ProfilePatient";
       }
      ,profileDermatologist: function(){
           window.location.href = "/profileDermatologist";
@@ -215,10 +224,7 @@ export default {
               this.showTable = false;
               this.showSearchPharmacyTable = true;
                 this.pharmacies1= response.data;
-               console.log(this.pharmacies1);
-                //if(this.pharmacies1.length == null){
-                     //this.showSecondTable = false;
-                //}
+                
               
           })
       },
@@ -230,10 +236,7 @@ export default {
               this.showTable = false;
               this.showSearchPharmacyTable = true;
                 this.pharmacies1= response.data;
-               console.log(this.pharmacies1);
-                if(this.pharmacies1.length == null){
-                     this.showSecondTable = false;
-                }
+                
               
           })
       },

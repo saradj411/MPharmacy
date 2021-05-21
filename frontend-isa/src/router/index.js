@@ -3,6 +3,13 @@ import VueRouter from 'vue-router'
 import Home from '../components/Home.vue'
 import Welcome from '../components/Welcome.vue'
 import createDrugPage from '../components/createDrugPage.vue'
+
+import ProfileAdmin from '../components/ProfileAdmin.vue'
+import ProfilePatient from '../components/ProfilePatient.vue'
+import updatePharmacyProfile from '../components/updatePharmacyProfile.vue'
+import UpdatePatientProfil from '../components/UpdatePatientProfil.vue'
+import AddAllergies from '../components/AddAllergies.vue'
+
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
 import profileDermatologist from '../components/profileDermatologist.vue'
 import profilePharmacist from '../components/profilePharmacist.vue'
@@ -29,9 +36,32 @@ const routes = [
         path: '/createDrugPage',
         name: 'createDrugPage',
         component: createDrugPage
-      }
-      ,
+
+      },
       {
+        path: '/ProfileAdmin',
+        name: 'ProfileAdmin',
+        component: ProfileAdmin
+      },
+      {
+        path: '/ProfilePatient',
+        name: 'ProfilePatient',
+        component: ProfilePatient
+      },
+      {
+        path: '/updatePharmacyProfile/:id',
+        name: 'updatePharmacyProfile',
+        component: updatePharmacyProfile
+      },
+      {
+        path: '/UpdatePatientProfil/:id',
+        name: 'UpdatePatientProfil',
+        component: UpdatePatientProfil
+      },
+     
+      
+      {
+
         path: '/profileDermatologist',
         name: 'profileDermatologist',
         component: profileDermatologist
@@ -40,7 +70,25 @@ const routes = [
         path: '/profilePharmacist',
         name: 'profilePharmacist',
         component: profilePharmacist
+
+      },
+      {
+        path: '/login',
+        name: 'Login',
+        component: Login
+      },
+      {
+        path: '/registration',
+        name: 'Registration',
+        component: Registration
+      },
+      {
+        path: '/AddAllergies/:id',
+        name: 'AddAllergies',
+        component: AddAllergies
+
       }
+
     ]
 
 
