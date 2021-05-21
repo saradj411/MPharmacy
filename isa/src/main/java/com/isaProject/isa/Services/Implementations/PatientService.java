@@ -1,7 +1,9 @@
 package com.isaProject.isa.Services.Implementations;
 
+import com.isaProject.isa.Model.DTO.ChangePasswordDTO;
 import com.isaProject.isa.Model.DTO.DrugDTO;
 import com.isaProject.isa.Model.Drugs.Drug;
+import com.isaProject.isa.Model.Pharmacy.Pharmacy;
 import com.isaProject.isa.Model.Users.Patient;
 import com.isaProject.isa.Repositories.DrugRepository;
 import com.isaProject.isa.Repositories.PatientRepository;
@@ -44,5 +46,22 @@ public class PatientService implements IPatientService {
         patientRepository.save(patient);
 
     }
+
+    @Override
+    public void update(Patient patient) {
+        Patient pat = patientRepository.getOne(patient.getIdUser());
+        Integer ids=pat.getIdUser();
+
+        pat.setName(patient.getName());
+        pat.setSurname(patient.getSurname());
+        pat.setAddress(patient.getAddress());
+        pat.setCity(patient.getCity());
+        pat.setCountry(patient.getCountry());
+        pat.setPhoneNumber(patient.getPhoneNumber());
+        pat.setPassword(patient.getPassword());
+
+        patientRepository.save(pat);
+    }
+
 }
 

@@ -1,7 +1,9 @@
 package com.isaProject.isa.Controllers;
 
+import com.isaProject.isa.Model.DTO.ChangePasswordDTO;
 import com.isaProject.isa.Model.DTO.DrugDTO;
 import com.isaProject.isa.Model.Drugs.Drug;
+import com.isaProject.isa.Model.Pharmacy.Pharmacy;
 import com.isaProject.isa.Model.Users.Patient;
 import com.isaProject.isa.Services.Implementations.PatientService;
 import lombok.extern.slf4j.Slf4j;
@@ -36,4 +38,23 @@ public class PatientController {
         patientService.saveAllergy(id,idPatient);
         return new ResponseEntity<>("Allergy is added", HttpStatus.CREATED);
     }
+
+    @PostMapping("/updatePatient")
+    ResponseEntity<String> update(@RequestBody Patient patient)
+    {
+
+        patientService.update(patient);
+        return new ResponseEntity<>("ajdeee", HttpStatus.CREATED);
+
+    }
+    @PostMapping("/changePass")
+    ResponseEntity<String> changePass(@RequestBody ChangePasswordDTO changePasswordDTO)
+    {
+
+        patientService.changePass(changePasswordDTO);
+        return new ResponseEntity<>("ajdeee", HttpStatus.CREATED);
+
+    }
+
+
 }
