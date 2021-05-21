@@ -142,8 +142,9 @@ public class DermatologistDTO {
     public void setPharmacies(Set<Pharmacy> pharmacies) {
         this.pharmacies = pharmacies;
     }
+    Pharmacy pharmacy;
 
-    public DermatologistDTO(String name, String surname, String email, String password, String address, String phoneNumber, String city, String country, double avgGrade, Set<WorkTime> workTime, Set<Examination> examinations, Set<Vacation> vacation, Set<Pharmacy> pharmacies) {
+    public DermatologistDTO(String name, String surname, String email, String password, String address, String phoneNumber, String city, String country, double avgGrade, Set<WorkTime> workTime, Set<Examination> examinations, Set<Vacation> vacation,Pharmacy pharmacy) {
         this.name = name;
         this.surname = surname;
         this.email = email;
@@ -156,6 +157,14 @@ public class DermatologistDTO {
         this.workTime = workTime;
         this.examinations = examinations;
         this.vacation = vacation;
-        this.pharmacies = pharmacies;
+        this.pharmacy = pharmacy;
+    }
+
+    public Pharmacy getPharmacy() {
+        return pharmacy;
+    }
+
+    public void setPharmacy(Pharmacy pharmacy) {
+        this.pharmacy = pharmacy;
     }
 }

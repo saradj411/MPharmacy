@@ -5,6 +5,7 @@ import com.isaProject.isa.Model.DTO.DrugDTO;
 import com.isaProject.isa.Model.Drugs.Drug;
 import com.isaProject.isa.Model.Pharmacy.Pharmacy;
 import com.isaProject.isa.Model.Users.Dermatologist;
+import com.isaProject.isa.Model.Users.WorkTime;
 import com.isaProject.isa.Repositories.DermatologistRepository;
 import com.isaProject.isa.Repositories.PharmacyRepository;
 import com.isaProject.isa.Services.IServices.IDermatologistService;
@@ -12,8 +13,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+
 @Service
 @Slf4j
 public class DermatologistService implements IDermatologistService {
@@ -21,6 +25,11 @@ public class DermatologistService implements IDermatologistService {
 
     public @Autowired
     DermatologistRepository dermatologistRepository;
+
+
+    Set<WorkTime> tajm = new HashSet<WorkTime>();
+
+    Set<Pharmacy> pharmOfDerm = new HashSet<Pharmacy>();
 
     @Override
     public Dermatologist findById(Integer id) {
@@ -51,7 +60,8 @@ public class DermatologistService implements IDermatologistService {
         d.setWorkTime(null);
         d.setExaminations(null);
         d.setVacation(null);
-        d.setPharmacies(null);
+        pharmOfDerm.add(dermatologist.getPharmacy());
+        d.setPharmacies(pharmOfDerm);
         return dermatologistRepository.save(d);
     }
 }

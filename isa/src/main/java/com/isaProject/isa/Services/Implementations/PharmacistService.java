@@ -55,7 +55,7 @@ public class PharmacistService implements IPharamacistService {
         d.setCountry(dto.getCountry());
         d.setAvgGrade(0.0);
         d.setVacation(null);
-        d.setWorkTime(null);
+        d.setWorkTime(dto.getWorkTime());
         d.setExaminations(null);
         d.setPharmacy(dto.getPharmacy());
 
