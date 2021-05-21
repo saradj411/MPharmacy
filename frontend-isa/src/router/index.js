@@ -12,6 +12,8 @@ import profileDermatologist from '../components/profileDermatologist.vue'
 import profilePharmacist from '../components/profilePharmacist.vue'
 import DermatologistsPharmacy from '../components/DermatologistsPharmacy.vue'
 import PharmacistsPharmacy from '../components/PharmacistsPharmacy.vue'
+import DrugPricelist from '../components/DrugPricelist.vue'
+import DrugsPharmacy from '../components/DrugsPharmacy.vue'
 
 
 import moment from 'moment'
@@ -86,6 +88,16 @@ const routes = [
         path: '/PharmacistsPharmacy/:id',
         name: 'PharmacistsPharmacy',
         component: PharmacistsPharmacy
+      },
+      {
+        path: '/DrugPricelist/:id',
+        name: 'DrugPricelist',
+        component: DrugPricelist
+      },
+      {
+        path: '/DrugsPharmacy/:id',
+        name: 'DrugsPharmacy',
+        component: DrugsPharmacy
       }
     ]
 

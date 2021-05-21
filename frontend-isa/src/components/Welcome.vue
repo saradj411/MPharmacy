@@ -83,7 +83,7 @@
 <!-- PRETRAGA APOTEKA!-->
 <div v-if="showSearchPharmacyTable"  style="margin-left:0px;">
      <h4 style="margin:30px">PHARMACIES1:</h4>    
- <div style="background: #a7c1c9; width: 700px;margin-left:300px;"  v-for="pharmacy in this.pharmacies1"  v-bind:key="pharmacy.idPharm">
+ <div style="background: #a7c1c9; width: 700px;margin-left:300px;"  v-for="pharmacy1 in this.pharmacies1"  v-bind:key="pharmacy1.idPharm">
       
 <table  style="" id="table2" class="table" >
  
@@ -92,7 +92,7 @@
         <th scope="row"></th>
         <td><router-link :to="{ path: '/Home/'+pharmacy.idPharm}" v-slot="{href, navigate}" custom>
            <b-link style="font-size: 30px;margin-left:50px;" :href="href" @click="navigate"  elevation="1">
-              {{pharmacy.name}}
+              {{pharmacy1.name}}
             </b-link >
          </router-link></td>
       <td>Grade:{{pharmacy.avgGrade}} </td>
@@ -100,7 +100,7 @@
     <tr>
       <th></th>
       <td >Address  </td>   
-       <td>{{pharmacy.address}}</td>
+       <td>{{pharmacy1.address}}</td>
 
     </tr>
    

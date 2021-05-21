@@ -27,6 +27,7 @@ insert into pharmacy_drugs values (504,9,506,504);
 insert into pharmacy_drugs values (505,3,507,502);
 insert into pharmacy_drugs values (506,5,503,500);
 insert into pharmacy_drugs values (507,8,504,502);
+insert into pharmacy_drugs values (508,8,507,501);
 
 
 

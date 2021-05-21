@@ -1,9 +1,13 @@
 package com.isaProject.isa.Controllers;
 
 
+import com.isaProject.isa.Model.Drugs.Drug;
+import com.isaProject.isa.Model.Drugs.DrugPricelist;
 import com.isaProject.isa.Model.Users.Dermatologist;
 import com.isaProject.isa.Model.Users.Pharmacist;
 import com.isaProject.isa.Services.Implementations.DermatologistService;
+import com.isaProject.isa.Services.Implementations.DrugPricelistService;
+import com.isaProject.isa.Services.Implementations.DrugService;
 import com.isaProject.isa.Services.Implementations.PharmacistService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +26,7 @@ public class PharmacistController {
 
     @Autowired
     private PharmacistService pharmacistService;
+
 
     @GetMapping(value = "/findAll")
     public ResponseEntity<List<Pharmacist>> findAll() {
@@ -52,6 +57,12 @@ public class PharmacistController {
                 new ResponseEntity<>(HttpStatus.NOT_FOUND) :
                 ResponseEntity.ok(newP);
     }
+
+
+
+
+
+
 
     @GetMapping(value = "/findById/{id}")
     public ResponseEntity<Pharmacist> findById(@PathVariable Integer id) {

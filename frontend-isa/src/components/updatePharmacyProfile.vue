@@ -31,14 +31,22 @@
                                     <b-dropdown-item >Update pharmacist</b-dropdown-item>   
                                      <b-dropdown-item>Delete pharmacist</b-dropdown-item>      
    
-                                </b-dropdown>     
+                                </b-dropdown> 
+
                                 <b-dropdown id="ddCommodity" name="ddCommodity" text="Drugs" style="margin-left:50px; color:white;"  >
+                                    
                                     <b-dropdown-item>
                                       <router-link :to="{ path: '/DrugsPharmacy/'+pharmacy.idPharm}" v-slot="{href, navigate}" custom>
            <b-link style="font-size:20px;color:black;" :href="href" @click="navigate"  elevation="1">List of drugs
              </b-link></router-link>
            </b-dropdown-item>
+                                    <b-dropdown-item>
 
+                                      <router-link :to="{ path: '/DrugPricelist/'+pharmacy.idPharm}" v-slot="{href, navigate}" custom>
+           <b-link style="font-size:20px;color:black;" :href="href" @click="navigate"  elevation="1">Drug price list
+             </b-link></router-link>
+           </b-dropdown-item>
+       
                                 </b-dropdown>
             </span>
                                   
