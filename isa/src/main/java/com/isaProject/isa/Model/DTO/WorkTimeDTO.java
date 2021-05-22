@@ -1,39 +1,33 @@
-package com.isaProject.isa.Model.Users;
+package com.isaProject.isa.Model.DTO;
 
 import com.isaProject.isa.Model.Pharmacy.Pharmacy;
+import com.isaProject.isa.Model.Users.Staff;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import java.time.LocalTime;
 import java.util.Date;
 
-@Entity
-@Table
-public class WorkTime {
+public class WorkTimeDTO {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
 
-    @Column
+
+
     private Date date;
 
-    @Column
+
     private LocalTime startTime;
 
-    @Column
+
     private LocalTime endTime;
 
-    @ManyToOne
-    @JoinColumn(name = "staffId", referencedColumnName = "idUser", nullable = false)
+
     private Staff staff;
 
-    @ManyToOne
-    @JoinColumn(name = "pharmacyId", referencedColumnName = "idPharm", nullable = false)
     private Pharmacy pharmacy;
 
-    public Integer getId() {
-        return id;
-    }
+
 
     public Date getDate() {
         return date;
@@ -53,10 +47,6 @@ public class WorkTime {
 
     public Pharmacy getPharmacy() {
         return pharmacy;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
     }
 
     public void setDate(Date date) {
@@ -79,16 +69,11 @@ public class WorkTime {
         this.pharmacy = pharmacy;
     }
 
-    public WorkTime(Integer id, Date date, LocalTime startTime, LocalTime endTime, Staff staff, Pharmacy pharmacy) {
-        this.id = id;
+    public WorkTimeDTO(Date date, LocalTime startTime, LocalTime endTime, Staff staff, Pharmacy pharmacy) {
         this.date = date;
         this.startTime = startTime;
         this.endTime = endTime;
         this.staff = staff;
         this.pharmacy = pharmacy;
-    }
-
-    public  WorkTime(){
-
     }
 }

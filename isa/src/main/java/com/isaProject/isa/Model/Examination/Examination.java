@@ -21,6 +21,9 @@ public class Examination {
     private Date date;
 
     @Column
+    private boolean canceled;
+
+    @Column
     private LocalTime startTime;
 
     @Column
@@ -38,15 +41,18 @@ public class Examination {
     @Column
     private Boolean isScheduled;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+
+
+
+    @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.MERGE)
     @JoinColumn(name = "pharmacyId", referencedColumnName = "idPharm")
     private Pharmacy pharmacy;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     @JoinColumn(name = "patient", referencedColumnName = "idUser")
     private Patient patient;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "staffId", referencedColumnName = "idUser")
     private Staff staff;
 
@@ -60,9 +66,157 @@ public class Examination {
     @Enumerated(EnumType.STRING)
     private ExaminationStatus status;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     @JoinColumn(name = "therapyId", referencedColumnName = "idTherapy")
     private Therapy therapy;
+
+    public Integer getIdExamination() {
+        return idExamination;
+    }
+
+    public boolean isCanceled() {
+        return canceled;
+    }
+
+    public void setCanceled(boolean canceled) {
+        this.canceled = canceled;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public LocalTime getStartTime() {
+        return startTime;
+    }
+
+    public LocalTime getEndTime() {
+        return endTime;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public String getReport() {
+        return report;
+    }
+
+    public Boolean getScheduled() {
+        return isScheduled;
+    }
+
+    public Pharmacy getPharmacy() {
+        return pharmacy;
+    }
+
+    public Patient getPatient() {
+        return patient;
+    }
+
+    public Staff getStaff() {
+        return staff;
+    }
+
+    public ExaminationType getType() {
+        return type;
+    }
+
+    public ExaminationStatus getStatus() {
+        return status;
+    }
+
+    public Therapy getTherapy() {
+        return therapy;
+    }
+
+    public void setIdExamination(Integer idExamination) {
+        this.idExamination = idExamination;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    public void setStartTime(LocalTime startTime) {
+        this.startTime = startTime;
+    }
+
+    public void setEndTime(LocalTime endTime) {
+        this.endTime = endTime;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    public void setReport(String report) {
+        this.report = report;
+    }
+
+    public void setScheduled(Boolean scheduled) {
+        isScheduled = scheduled;
+    }
+
+    public void setPharmacy(Pharmacy pharmacy) {
+        this.pharmacy = pharmacy;
+    }
+
+    public void setPatient(Patient patient) {
+        this.patient = patient;
+    }
+
+    public void setStaff(Staff staff) {
+        this.staff = staff;
+    }
+
+    public void setType(ExaminationType type) {
+        this.type = type;
+    }
+
+    public void setStatus(ExaminationStatus status) {
+        this.status = status;
+    }
+
+    public void setTherapy(Therapy therapy) {
+        this.therapy = therapy;
+    }
+
+    public Examination(Integer idExamination, Date date, LocalTime startTime, LocalTime endTime, double price, String report, Boolean isScheduled, Pharmacy pharmacy, Patient patient, Staff staff, ExaminationType type, ExaminationStatus status, Therapy therapy) {
+        this.idExamination = idExamination;
+        this.date = date;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.price = price;
+        this.report = report;
+        this.isScheduled = isScheduled;
+        this.pharmacy = pharmacy;
+        this.patient = patient;
+        this.staff = staff;
+        this.type = type;
+        this.status = status;
+        this.therapy = therapy;
+    }
+
+    public Examination(Integer idExamination, Date date, boolean canceled, LocalTime startTime, LocalTime endTime, double price, String report, Boolean isScheduled, Pharmacy pharmacy, Patient patient, Staff staff, ExaminationType type, ExaminationStatus status, Therapy therapy) {
+        this.idExamination = idExamination;
+        this.date = date;
+        this.canceled = canceled;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.price = price;
+        this.report = report;
+        this.isScheduled = isScheduled;
+        this.pharmacy = pharmacy;
+        this.patient = patient;
+        this.staff = staff;
+        this.type = type;
+        this.status = status;
+        this.therapy = therapy;
+    }
+    public Examination(){
+
+    }
 
 }
   /*

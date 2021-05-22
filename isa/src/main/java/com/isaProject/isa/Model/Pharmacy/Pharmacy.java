@@ -96,4 +96,20 @@ public class  Pharmacy implements Serializable {
    //listu svih termina za preglede kod dermatologa koje može da zakaže,
 
 
+    public void setPharmacyAdmins(Set<PharmacyAdmin> pharmacyAdmins) {
+        this.pharmacyAdmins = pharmacyAdmins;
+    }
+
+    public void setDrugPricelist(Set<DrugPricelist> drugPricelist) {
+        this.drugPricelist = drugPricelist;
+    }
+
+    public void setExaminations(Set<Examination> examinations) {
+        this.examinations = examinations;
+    }
+
+    public Set<PharmacyAdmin> getPharmacyAdmins() {
+        return pharmacyAdmins;
+    }
+
 }
