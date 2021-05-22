@@ -302,5 +302,16 @@ public class PharmacyAdminController {
                 ResponseEntity.ok(d);
     }
 
+    @PostMapping("/updateAdmin")
+    ResponseEntity<String> update(@RequestBody PharmacyAdmin pharmacyAdmin)
+    {
+
+        pharmacyAdminService.update(pharmacyAdmin);
+        return new ResponseEntity<>("ajdeee", HttpStatus.CREATED);
+
+    }
+
+
+
 
 }

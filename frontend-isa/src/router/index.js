@@ -14,6 +14,7 @@ import DermatologistsPharmacy from '../components/DermatologistsPharmacy.vue'
 import PharmacistsPharmacy from '../components/PharmacistsPharmacy.vue'
 import DrugPricelist from '../components/DrugPricelist.vue'
 import DrugsPharmacy from '../components/DrugsPharmacy.vue'
+import updateMyProfile from '../components/updateMyProfile.vue'
 
 
 import moment from 'moment'
@@ -98,6 +99,11 @@ const routes = [
         path: '/DrugsPharmacy/:id',
         name: 'DrugsPharmacy',
         component: DrugsPharmacy
+      },
+      {
+        path: '/updateMyProfile/:id',
+        name: 'updateMyProfile',
+        component: updateMyProfile
       }
     ]
 
