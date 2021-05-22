@@ -9,6 +9,7 @@ import java.util.List;
 public interface IPharamacistService {
     Pharmacist findById(Integer id);
     List<Pharmacist> findAll ();
+    String delete(Pharmacist pharmacist);
 
     Pharmacist save(PharmaceutDTO dto);
 }

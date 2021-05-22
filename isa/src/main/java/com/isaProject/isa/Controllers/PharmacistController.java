@@ -231,4 +231,12 @@ public class PharmacistController {
     }
 
 
+    @GetMapping("/delete/{id}")
+    public ResponseEntity<String> deletePharmacist(@PathVariable Integer id) {
+        Pharmacist pharmacist = pharmacistService.findById(id);
+        String answer = pharmacistService.delete(pharmacist);
+        return new ResponseEntity<>(answer, HttpStatus.ACCEPTED);
+    }
+
+
 }
