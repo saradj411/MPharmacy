@@ -259,6 +259,12 @@ mounted() {
                 alert("Nesto ne valja");
                 console.log(res);
         });
+
+        this.axios.get('/user/updatePenality')
+        .catch(res => {
+                alert("Nesto ne valja");
+                console.log(res);
+        });
         
     }
      

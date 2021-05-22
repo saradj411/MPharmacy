@@ -9,4 +9,5 @@ public interface IPatientService {
     List<Patient> findAll ();
     void saveAllergy(Integer idDrug,Integer idPatient);
     void update(Patient patient);
+
 }

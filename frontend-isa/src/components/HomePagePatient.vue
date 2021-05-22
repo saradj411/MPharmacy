@@ -74,9 +74,9 @@
     </tr>
      <tr>
       <th></th>
-      <td >Address  </td>   
+      <td ></td>   
     <td><button class="btn btn-danger btn-sm" v-on:click = "showRes(reservation.idReservation)">Cancel</button></td>
-<td>{{jel}}</td>
+
     </tr>
   </tbody>
 </table>

@@ -45,7 +45,7 @@ public class DrugReservationService implements IDrugReservationService {
         LocalDate now=LocalDate.now();
         //jedan dan manje nego danas
         LocalDate day=now.minusDays(1);
-
+          int dan= dateRes.getDayOfMonth();
         //poredim dan manje sa danom kad se mora pokupiti rez
         int res=dateRes.compareTo(day);
         if(res==0){
@@ -61,6 +61,7 @@ public class DrugReservationService implements IDrugReservationService {
         //System.out.println(wd);
         //System.out.println(dsd);
         System.out.println(res);
+        System.out.println(dan);
         return rez;
 
     }
