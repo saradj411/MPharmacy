@@ -5,6 +5,7 @@ import Welcome from '../components/Welcome.vue'
 import createDrugPage from '../components/createDrugPage.vue'
 import Login from '../components/Login.vue'
 import Registration from '../components/Registration.vue'
+import HomePagePatient from '../components/HomePagePatient.vue'
 
 import ProfileAdmin from '../components/ProfileAdmin.vue'
 import ProfilePatient from '../components/ProfilePatient.vue'
@@ -97,7 +98,14 @@ const routes = [
         name: 'AddAllergies',
         component: AddAllergies
 
+      },
+      {
+        path: '/HomePagePatient/:id',
+        name: 'HomePagePatient',
+        component: HomePagePatient
+
       }
+      
 
     ]
 
