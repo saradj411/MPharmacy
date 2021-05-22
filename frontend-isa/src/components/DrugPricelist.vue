@@ -21,7 +21,11 @@
                       <table style="" id="table2" class="table" >
 
                        <tbody>
-
+<tr style="font-size:22px;color:#0D184F;">
+      <th></th>
+      <td >Name:</td>   
+       <td>{{d.drug.name}} </td>
+    </tr>
     <tr style="font-size:22px;color:#0D184F;">
       <th></th>
       <td >Price:</td>   
@@ -42,22 +46,6 @@
 
 
 
-  <div style="background:#B0B3D6; width:650px;margin-left:38px;margin-top:60px;"  v-for="dd in this.drugs"  v-bind:key="dd.idDrug">
-                   <form>
-                      <table style="" id="table2" class="table" >
-                       <tbody>
-    <tr style="font-size:22px;color:#0D184F;">
-      <th></th>
-      <td >Name:</td>   
-       <td>{{dd.name}} </td>
-    </tr>
-    
-  </tbody>
-                        </table>
-                </form>
-      
-                    </div>
-        
         
         </div>
         
