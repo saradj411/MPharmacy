@@ -1,5 +1,6 @@
 package com.isaProject.isa.Model.Drugs;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.isaProject.isa.Model.Pharmacy.Pharmacy;
 import com.isaProject.isa.Model.Users.Patient;
 
@@ -26,14 +27,17 @@ public class DrugReservation {
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "patientId", referencedColumnName = "idUser", nullable = true, unique = false)
+    @JsonBackReference
     private Patient patient;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonBackReference
     @JoinColumn(name = "drugId", referencedColumnName = "idDrug", nullable = true, unique = false)
     private Drug drug;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "pharmacyId", referencedColumnName = "idPharm", nullable = true, unique = false)
+    @JsonBackReference
     private Pharmacy pharmacy;
 
 

@@ -1,5 +1,7 @@
 package com.isaProject.isa.Model.Drugs;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 
 @Entity
@@ -13,6 +15,7 @@ public class Ingredient {
 
     @ManyToOne
     @JoinColumn(name = "specId", referencedColumnName = "idSpec")
+    @JsonBackReference
     private Specification specification;
 
 

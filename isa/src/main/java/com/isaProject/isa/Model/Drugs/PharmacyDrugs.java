@@ -1,5 +1,6 @@
 package com.isaProject.isa.Model.Drugs;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.isaProject.isa.Model.Pharmacy.Pharmacy;
 
 import javax.persistence.*;
@@ -14,10 +15,12 @@ public class PharmacyDrugs {
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "drugId", referencedColumnName = "idDrug", nullable = false)
+    @JsonBackReference
     private Drug drug;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "pharmacyId", referencedColumnName = "idPharm", nullable = false)
+    @JsonBackReference
     private Pharmacy pharmacy;
 
     @Column

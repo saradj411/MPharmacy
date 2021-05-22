@@ -1,5 +1,7 @@
 package com.isaProject.isa.Model.Drugs;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
@@ -29,6 +31,7 @@ public class Specification {
     private Drug drug;
 
     @OneToMany(mappedBy = "specification", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JsonManagedReference
     private Set<Ingredient> ingredients=new HashSet<Ingredient>();
 
 

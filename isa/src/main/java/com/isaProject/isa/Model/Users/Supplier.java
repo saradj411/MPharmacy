@@ -1,5 +1,6 @@
 package com.isaProject.isa.Model.Users;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.isaProject.isa.Model.Drugs.Offer;
 
 import javax.persistence.CascadeType;
@@ -14,6 +15,8 @@ public class Supplier extends  User{
 
     //ponuda za narudzbu
 
+
     @OneToMany(mappedBy = "supplier", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JsonManagedReference
     private Set<Offer> offers=new HashSet<Offer>();
 }

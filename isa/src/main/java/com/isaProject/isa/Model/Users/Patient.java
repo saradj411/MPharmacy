@@ -1,6 +1,7 @@
 package com.isaProject.isa.Model.Users;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.isaProject.isa.Model.Drugs.Drug;
 import com.isaProject.isa.Model.Drugs.DrugReservation;
 import com.isaProject.isa.Model.Examination.Examination;
@@ -34,9 +35,11 @@ public class Patient extends User{
 
 
     @OneToMany(mappedBy = "patient")
+    @JsonManagedReference
     private Set<DrugReservation> drugReservation=new HashSet<DrugReservation>();
 
     @OneToMany(mappedBy = "patient", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JsonManagedReference
     private Set<Examination> examinations = new HashSet<Examination>();
 
     public Patient() {

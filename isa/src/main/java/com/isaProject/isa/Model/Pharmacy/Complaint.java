@@ -1,5 +1,6 @@
 package com.isaProject.isa.Model.Pharmacy;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.isaProject.isa.Model.Users.Patient;
 
 import javax.persistence.*;
@@ -23,6 +24,7 @@ public class Complaint {
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "patientId", referencedColumnName = "idUser")
+    @JsonBackReference
     private Patient patient;
 
     //staff
