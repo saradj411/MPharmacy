@@ -15,7 +15,7 @@ import PharmacistsPharmacy from '../components/PharmacistsPharmacy.vue'
 import DrugPricelist from '../components/DrugPricelist.vue'
 import DrugsPharmacy from '../components/DrugsPharmacy.vue'
 import updateMyProfile from '../components/updateMyProfile.vue'
-
+import updateDrug from '../components/updateDrug.vue'
 
 import moment from 'moment'
 
@@ -104,6 +104,12 @@ const routes = [
         path: '/updateMyProfile/:id',
         name: 'updateMyProfile',
         component: updateMyProfile
+      }
+      ,
+      {
+        path: '/updateDrug/:id',
+        name: 'updateDrug',
+        component: updateDrug
       }
     ]
 

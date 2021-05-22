@@ -30,7 +30,7 @@ public class Drug {
     private String manufacturer;
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinTable( name = "alternativeDrug", joinColumns = @JoinColumn(name="idDrug", referencedColumnName="idDrug"), inverseJoinColumns = @JoinColumn(name = "idAlternativeDrug", referencedColumnName = "idDrug"))
+    @JoinTable( name = "alternativeDrug", joinColumns = @JoinColumn(name="idDrug", nullable = true,referencedColumnName="idDrug"), inverseJoinColumns = @JoinColumn(name = "idAlternativeDrug", referencedColumnName = "idDrug"))
     private Set<Drug> alternativeDrugs = new HashSet<Drug>();
 
     public Drug() {

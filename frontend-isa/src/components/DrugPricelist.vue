@@ -7,14 +7,6 @@
         
                      <label style="color:#474A8A;font-size:35px;" align = "center">Drug price list:</label>
 
-
-
-
-       
-
-
-
-
         <div style="background:#B0B3D6; width:650px;margin-left:38px;"  v-for="d in this.drug"  v-bind:key="d.idDrug">
 
                    <form>

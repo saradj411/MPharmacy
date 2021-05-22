@@ -16,38 +16,38 @@
     <form>
                     <div class="form-row">
                         <div class="form-group col-md-6">
-                        <label>Name:</label>
+                        <label style="color: #0D184F">Name:</label>
                         <input type="text" class="form-control" v-model = "admin.name" >
                         </div>
                         <div class="form-group col-md-6">
-                        <label>Surname:</label>
+                        <label style="color: #0D184F">Surname:</label>
                         <input type="text"  class="form-control" v-model = "admin.surname">
                         </div>
                          <div class="form-group col-md-6">
-                        <label>Email:</label>
+                        <label style="color: #0D184F">Email:</label>
                         
                         <input type="text"  class="form-control" v-model= "admin.email" >
                         </div>
                          <div class="form-group col-md-6">
-                        <label>Phone number:</label>
+                        <label style="color: #0D184F">Phone number:</label>
                         <input type="text"  class="form-control" v-model= "admin.phoneNumber" >
                         </div>
                     </div>
                       <div class="form-row">
                         <div class="form-group col-md-6">
-                        <label>Country:</label>
+                        <label style="color: #0D184F">Country:</label>
                         <input type="text"  class="form-control" v-model= "admin.country" >
                         </div>
                         <div class="form-group col-md-6">
-                        <label>City:</label>
+                        <label style="color: #0D184F">City:</label>
                         <input type="text" class="form-control" v-model= "admin.city" >
                         </div>
                         <div class="form-group col-md-6">
-                        <label>Address:</label>
+                        <label style="color: #0D184F">Address:</label>
                         <input type="text"  class="form-control" v-model= "admin.address">
                         </div>
                          <div class="form-group  col-md-6">
-                            <label>Current Password:</label>
+                            <label style="color: #0D184F">Current Password:</label>
                             <input type="password" class="form-control" v-model= "currentPassword" placeholder="Current password">
                         </div>
                     </div>
@@ -55,18 +55,18 @@
            
                        <div class="form-row">
                         <div class="form-group  col-md-6">
-                            <label>New password:</label>
+                            <label style="color: #0D184F">New password:</label>
                             <input type="password" class="form-control" v-model= "newPassword" placeholder=" New password">
                         </div>
                         <div class="form-group  col-md-6">
-                            <label>Repeat new password:</label>
+                            <label style="color: #0D184F">Repeat new password:</label>
                             <input type="password" class="form-control" v-model= "newPasswordRepeat" placeholder="Repeat new password">
                         </div>
                        </div>
                          
                          
               
-                    <button class="btn btn-primary btn-lg" v-on:click = "update">Change</button>
+                    <button class="btn btn-primary btn-lg" style="background:#474A8A" v-on:click = "update">Change</button>
                    
                 </form>
 

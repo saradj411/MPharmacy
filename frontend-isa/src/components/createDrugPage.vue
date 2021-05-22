@@ -37,8 +37,8 @@
 
                         <div style="color:#0D184F;">
                        
-                            <b-dropdown id="ddCommodity" name="ddCommodity" text="Choose drug type"  >
-                                <b-dropdown-item v-for="item in this.types" v-on:click ="typeIsSelected($event, item.drugType)" v-bind:key="item.drugType"> {{item.drugType }}</b-dropdown-item>
+                            <b-dropdown id="ddCommodity"  name="ddCommodity" text="Choose drug type"  >
+                                <b-dropdown-item  v-for="item in this.types" v-on:click ="typeIsSelected($event, item.drugType)" v-bind:key="item.drugType"> {{item.drugType }}</b-dropdown-item>
                             </b-dropdown> 
                         </div>
                          <div >
@@ -61,7 +61,7 @@
                   
             </div>
   
-                           <button class="btn btn-primary btn-lg" v-on:click = "addDrug" style="margin-left:-800px; margin-top:50px;background:#474A8A">Add drug</button>
+                           <button class="btn btn-primary btn-lg" style="margin-left:-800px; margin-top:50px;background:#474A8A">Add drug</button>
 
     
     </div>
@@ -107,7 +107,7 @@ export default {
                recipeNeed : this.recipeNeed,
                drugType : this.choosenType,
                format : this.choosenFormat,  
-               manufacturer : this.manufacturer,
+               manufacturer : this.manufacturer
           }
           this.axios.post('/drug/create',medicationInfo,{ 
              headers: {

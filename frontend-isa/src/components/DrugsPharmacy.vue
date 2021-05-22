@@ -5,10 +5,9 @@
      background-size: 150% 111%;  height: 1100px">
         
         
-                     <label style="color:#474A8A;font-size:35px;" align = "center">Pharmacy drugs 
-:</label>
+                     <label style="color:#474A8A;font-size:35px;" align = "center">Pharmacy drugs:</label>
 
-        <div align = "center" style="background:#B0B3D6; width:650px;margin-left:38px;margin-top:60px;"  v-for="d in this.drugs"  v-bind:key="d.idDrug">
+        <div align = "center" style="width:650px;margin-left:400px;margin-top:60px;"  v-for="d in this.drugs"  v-bind:key="d.idDrug">
                    <form align = "center">
                       <table align = "center" id="table2" class="table"  >
 
@@ -51,8 +50,20 @@
        <td>{{d.manufacturer}}</td>
     
     </tr>
+
    </tbody>
+
                         </table>
+
+<router-link :to="{ path: '/updateDrug/'+d.idDrug}" v-slot="{href, navigate}" custom>
+           <b-link style="font-size: 30px;margin-left:50px;" :href="href" @click="navigate"  elevation="1">
+<button class="btn btn-primary btn-lg"  style="margin-left:60px; margin-top:50px;background:#474A8A">Update drug</button>
+            </b-link >
+         </router-link>
+
+
+<button class="btn btn-primary btn-lg" v-on:click = "addDrug" style="margin-left:60px; margin-top:42px;background:#474A8A">Delete drug</button>
+
                 </form>
       
       

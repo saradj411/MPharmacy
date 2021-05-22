@@ -49,7 +49,6 @@ public class DrugService implements IDrugService {
     @Override
     public void update(Drug drug) {
         Drug d = drugRepository.getOne(drug.getIdDrug());
-
         d.setName(drug.getName());
         d.setCode(drug.getCode());
         d.setDrugType(drug.getDrugType());
