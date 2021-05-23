@@ -120,7 +120,8 @@
       <td >Code:</td>   
        <td>{{dd.code}}</td>
     
-    </tr>
+    </tr>   
+    
     <tr style="font-size:22px;color:#0D184F;">
       <th></th>
       <td >Recipe need:</td>   
@@ -203,7 +204,7 @@ export default {
       methods:{
 
           searchName: function(drugName){
-          this.drugName = drugName;
+          this.drugName = drugName
 
           this.axios.get('/drugPricelist/searchDrugName/'+ this.id+"/"+this.drugName,{
       }).then(response => {
