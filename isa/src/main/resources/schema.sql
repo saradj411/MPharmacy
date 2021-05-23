@@ -114,12 +114,18 @@ insert into drug_order values(504,true,4,'2021-10-20',503);
 #drug_reservation
 #id,cancelled,datum rez,ispicked -da li je preuzet,pick_up_date -do kog,kolicina,id drug,id pattient,id pharmacy
 
-insert into drug_reservation values(500,false,'2021-04-20',false,'2021-05-20',3,503,510,503);
+insert into drug_reservation values(500,false,'2021-04-20',false,'2021-06-20',3,503,510,503);
 insert into drug_reservation values(501,true,'2021-05-25',false,'2021-06-15',3,504,510,501);
-insert into drug_reservation values(502,false,'2021-04-20',true,'2021-05-20',3,505,508,503);
-insert into drug_reservation values(503,false,'2021-05-18',true,'2021-07-20',3,506,508,504);
-insert into drug_reservation values(504,true,'2021-04-20',false,'2021-05-20',3,507,507,502);
+insert into drug_reservation values(502,false,'2021-04-20',false,'2021-07-20',3,505,508,503);
+insert into drug_reservation values(503,false,'2021-05-18',true,'2021-07-20',3,506,510,504);
+insert into drug_reservation values(504,true,'2021-04-20',false,'2021-09-20',3,507,507,502);
+insert into drug_reservation values(505,false,'2021-04-20',false,'2021-09-20',3,503,510,503);
+insert into drug_reservation values(506,true,'2021-05-25',false,'2021-06-15',3,504,508,501);
+insert into drug_reservation values(507,false,'2021-04-20',true,'2021-08-20',3,505,507,503);
+insert into drug_reservation values(508,false,'2021-05-18',true,'2021-07-20',3,506,508,504);
+insert into drug_reservation values(509,false,'2021-04-20',false,'2021-05-24',3,507,507,502);
 
+insert into drug_reservation values(510,false,'2021-04-20',false,'2021-05-24',3,507,508,502);
 
 #therapy
 insert into therapy values(500,504);

@@ -59,6 +59,7 @@ public class PatientService implements IPatientService {
         pat.setCountry(patient.getCountry());
         pat.setPhoneNumber(patient.getPhoneNumber());
         pat.setPassword(patient.getPassword());
+        pat.setPenalty(patient.getPenalty());
 
         patientRepository.save(pat);
     }

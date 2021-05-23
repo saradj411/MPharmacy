@@ -190,7 +190,7 @@ export default {
           window.location.href = "/ProfileAdmin";
       },
        profilePatient : function(){
-          window.location.href = "/ProfilePatient";
+          window.location.href = "/HomePagePatient/508";
       }
      ,profileDermatologist: function(){
           window.location.href = "/profileDermatologist";
@@ -210,8 +210,7 @@ export default {
         this.showSearchPharmacy=false
         this.showSearchPharmacyTable=false
       },
-      showPharmacies
-      : function(){
+      showPharmacies: function(){
         this.showTable=true
         this.showDrugTable=false
         this.showSearchPharmacy=true
@@ -257,6 +256,12 @@ mounted() {
                 this.drugs = response.data;
                 
          }).catch(res => {
+                alert("Nesto ne valja");
+                console.log(res);
+        });
+
+        this.axios.get('/user/updatePenality')
+        .catch(res => {
                 alert("Nesto ne valja");
                 console.log(res);
         });
