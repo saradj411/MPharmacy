@@ -61,7 +61,7 @@
                   
             </div>
   
-                           <button class="btn btn-primary btn-lg" style="margin-left:-800px; margin-top:50px;background:#474A8A">Add drug</button>
+                           <button class="btn btn-primary btn-lg" v-on:click ="addDrug" style="margin-left:-800px; margin-top:50px;background:#474A8A">Add drug</button>
 
     
     </div>
@@ -93,6 +93,7 @@ export default {
       code : "",
       recipeNeed : true,
       manufacturer :"",
+      nesto:"",
       choosenType : ""  ,
       choosenFormat : ""  
     }
@@ -113,6 +114,8 @@ export default {
              headers: {
              }}).then(response => {
                        alert("Lijek je dodat!");
+                        this.nesto=response.data;
+
                         console.log(response.data);
                 })
                 .catch(res => {
@@ -127,7 +130,6 @@ export default {
       }
 },
  mounted() {
-     
     }
 }
 </script>  
