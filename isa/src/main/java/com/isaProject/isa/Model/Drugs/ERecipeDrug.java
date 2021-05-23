@@ -1,6 +1,7 @@
 package com.isaProject.isa.Model.Drugs;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.isaProject.isa.Model.Pharmacy.Pharmacy;
 
 import javax.persistence.*;
@@ -24,7 +25,7 @@ public class ERecipeDrug {
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "erecipeId", referencedColumnName = "idRecipe")
-    @JsonBackReference
+    @JsonManagedReference
     private ERecipe eRecipe;
 }
 /*

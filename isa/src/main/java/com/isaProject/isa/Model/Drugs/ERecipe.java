@@ -35,17 +35,17 @@ public class ERecipe {
     private Date dateOfIssue;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JsonManagedReference
+    @JsonBackReference
     private Set<ERecipeDrug> eRecipeDrug = new HashSet<ERecipeDrug>();
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "pharmacyId", referencedColumnName = "idPharm")
-    @JsonBackReference
+    @JsonManagedReference
     private Pharmacy pharmacy;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "patientId", referencedColumnName = "idUser")
-    @JsonBackReference
+    @JsonManagedReference
     private Patient patient;
 
     @Column

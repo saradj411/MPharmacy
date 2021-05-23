@@ -1,5 +1,6 @@
 package com.isaProject.isa.Controllers;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.isaProject.isa.Model.DTO.ChangePasswordDTO;
 import com.isaProject.isa.Model.DTO.DrugDTO;
 import com.isaProject.isa.Model.Drugs.Drug;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin("*")
 @RequestMapping(value="/patient", produces = MediaType.APPLICATION_JSON_VALUE)
 @Slf4j
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class PatientController {
 
     @Autowired
@@ -39,7 +41,7 @@ public class PatientController {
         return new ResponseEntity<>("Allergy is added", HttpStatus.CREATED);
     }
 
-    @PostMapping("/updatePatient")
+    @PostMapping(value="/updatePatient",consumes = MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity<String> update(@RequestBody Patient patient)
     {
 

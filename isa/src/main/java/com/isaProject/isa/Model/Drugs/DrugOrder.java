@@ -29,16 +29,16 @@ public class DrugOrder {
     private Boolean processed;
 
     @OneToMany(mappedBy = "drugOrder", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JsonManagedReference
+    @JsonBackReference
     private Set<OrderItem> orderItems = new HashSet<OrderItem>();
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "admin", referencedColumnName = "idUser")
-    @JsonBackReference
+    @JsonManagedReference
     private PharmacyAdmin pharmacyAdmin;
 
     @OneToMany(mappedBy = "drugOrder", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JsonManagedReference
+    @JsonBackReference
     private Set<Offer> offers = new HashSet<Offer>();
 }
 

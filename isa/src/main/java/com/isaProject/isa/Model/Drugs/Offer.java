@@ -1,6 +1,7 @@
 package com.isaProject.isa.Model.Drugs;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.isaProject.isa.Model.Users.Supplier;
 
 import javax.persistence.*;
@@ -26,12 +27,12 @@ public class Offer {
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "orderId", referencedColumnName = "idOrder")
-    @JsonBackReference
+    @JsonManagedReference
     private DrugOrder drugOrder;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "supplier", referencedColumnName = "idUser")
-    @JsonBackReference
+    @JsonManagedReference
     private Supplier supplier;
 
 }

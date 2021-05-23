@@ -2,6 +2,7 @@ package com.isaProject.isa.Model.Examination;
 
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.isaProject.isa.Model.Pharmacy.Pharmacy;
 import com.isaProject.isa.Model.Users.Patient;
 import com.isaProject.isa.Model.Users.Staff;
@@ -47,17 +48,17 @@ public class Examination {
 
     @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.MERGE)
     @JoinColumn(name = "pharmacyId", referencedColumnName = "idPharm")
-    @JsonBackReference
+    @JsonManagedReference
     private Pharmacy pharmacy;
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     @JoinColumn(name = "patient", referencedColumnName = "idUser")
-    @JsonBackReference
+    @JsonManagedReference
     private Patient patient;
 
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "staffId", referencedColumnName = "idUser")
-    @JsonBackReference
+    @JsonManagedReference
     private Staff staff;
 
     //kod dermatologa, kod farmaceuta
@@ -72,7 +73,7 @@ public class Examination {
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     @JoinColumn(name = "therapyId", referencedColumnName = "idTherapy")
-    @JsonBackReference
+    @JsonManagedReference
     private Therapy therapy;
 
     public Integer getIdExamination() {

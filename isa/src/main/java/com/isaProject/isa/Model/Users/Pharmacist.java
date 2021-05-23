@@ -2,6 +2,7 @@ package com.isaProject.isa.Model.Users;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.isaProject.isa.Model.Examination.Examination;
 import com.isaProject.isa.Model.Pharmacy.Pharmacy;
 
@@ -20,7 +21,7 @@ public class Pharmacist extends Staff {
     //apoteka u kojoj je zaposlen
     @ManyToOne
     @JoinColumn(name = "pharmacistPharmacy", referencedColumnName = "idPharm", nullable = true)
-    @JsonBackReference
+    @JsonManagedReference
     private Pharmacy pharmacy;
 
     /*
