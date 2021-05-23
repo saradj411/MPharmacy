@@ -96,12 +96,12 @@
     <tbody>
       <tr>
         <th scope="row"></th>
-        <td><router-link :to="{ path: '/Home/'+pharmacy.idPharm}" v-slot="{href, navigate}" custom>
+        <td><router-link :to="{ path: '/Home/'+pharmacy1.idPharm}" v-slot="{href, navigate}" custom>
            <b-link style="font-size: 30px;margin-left:50px;" :href="href" @click="navigate"  elevation="1">
               {{pharmacy1.name}}
             </b-link >
          </router-link></td>
-      <td>Grade:{{pharmacy.avgGrade}} </td>
+      <td>Grade:{{pharmacy1.avgGrade}} </td>
       </tr>
     <tr>
       <th></th>
