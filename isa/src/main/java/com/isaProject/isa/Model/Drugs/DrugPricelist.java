@@ -16,7 +16,7 @@ public class DrugPricelist {
 
     @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
     @JoinColumn(name = "drugId", referencedColumnName = "idDrug", nullable = true, unique = false)
-    @JsonManagedReference
+    //@JsonManagedReference
     private Drug drug;
 
     @Column
@@ -30,7 +30,7 @@ public class DrugPricelist {
 
     @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
     @JoinColumn(name = "pharmacyId", referencedColumnName = "idPharm", nullable = true, unique = false)
-    @JsonManagedReference
+    //@JsonManagedReference
     private Pharmacy pharmacy;
 
     public DrugPricelist(Integer idPricelist, Drug drug, double price, Date start, Date end, Pharmacy pharmacy) {

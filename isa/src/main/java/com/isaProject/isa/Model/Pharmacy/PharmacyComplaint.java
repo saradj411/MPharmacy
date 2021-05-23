@@ -12,6 +12,6 @@ public class PharmacyComplaint extends Complaint{
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "pharmacyId", referencedColumnName = "idPharm",nullable = true)
-    @JsonManagedReference
+    //@JsonManagedReference
     private Pharmacy pharmacy;
 }

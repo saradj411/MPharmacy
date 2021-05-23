@@ -16,12 +16,12 @@ public class PharmacyDrugs {
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "drugId", referencedColumnName = "idDrug", nullable = false)
-    @JsonManagedReference
+   // @JsonManagedReference
     private Drug drug;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "pharmacyId", referencedColumnName = "idPharm", nullable = false)
-    @JsonManagedReference
+    //@JsonManagedReference
     private Pharmacy pharmacy;
 
     @Column

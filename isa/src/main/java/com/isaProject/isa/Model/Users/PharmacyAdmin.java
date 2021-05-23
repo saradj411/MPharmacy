@@ -19,12 +19,12 @@ public class PharmacyAdmin extends User {
 
     @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
     @JoinColumn(name = "adminPharmacy", referencedColumnName = "idPharm", nullable = true, unique = false)
-    @JsonManagedReference
+    //@JsonManagedReference
     private Pharmacy pharmacy;
 
 
     @OneToMany(mappedBy = "pharmacyAdmin", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JsonBackReference
+    //@JsonBackReference
     private Set<DrugOrder> drugOrder=new HashSet<DrugOrder>();
 
 

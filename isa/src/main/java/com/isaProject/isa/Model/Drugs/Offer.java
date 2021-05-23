@@ -27,12 +27,12 @@ public class Offer {
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "orderId", referencedColumnName = "idOrder")
-    @JsonManagedReference
+    //@JsonManagedReference
     private DrugOrder drugOrder;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "supplier", referencedColumnName = "idUser")
-    @JsonManagedReference
+    //@JsonManagedReference
     private Supplier supplier;
 
 }

@@ -12,6 +12,6 @@ public class StaffComplaint extends Complaint{
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "staffId", referencedColumnName = "idUser",nullable = true)
-    @JsonManagedReference
+    //@JsonManagedReference
     private Staff staff;
 }

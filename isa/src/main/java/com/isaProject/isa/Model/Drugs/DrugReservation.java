@@ -29,17 +29,17 @@ public class DrugReservation {
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "patientId", referencedColumnName = "idUser", nullable = true, unique = false)
-    @JsonManagedReference
+    //@JsonManagedReference
     private Patient patient;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JsonManagedReference
+    //@JsonManagedReference
     @JoinColumn(name = "drugId", referencedColumnName = "idDrug", nullable = true, unique = false)
     private Drug drug;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "pharmacyId", referencedColumnName = "idPharm", nullable = true, unique = false)
-    @JsonManagedReference
+    //@JsonManagedReference
     private Pharmacy pharmacy;
 
 

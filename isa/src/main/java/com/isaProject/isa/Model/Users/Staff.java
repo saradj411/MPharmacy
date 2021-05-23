@@ -19,12 +19,12 @@ public class Staff extends User{
 
     //radno vrijeme
     @OneToMany(mappedBy = "staff", fetch = FetchType.LAZY,cascade = CascadeType.ALL)
-    @JsonBackReference
+    //@JsonBackReference
     private Set<WorkTime> workTime = new HashSet<WorkTime>();
 
     //savetovanja farmacut,pregledi dermatolog
     @OneToMany(mappedBy = "staff",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
-    @JsonBackReference
+    //@JsonBackReference
     private Set<Examination> examinations = new HashSet<Examination>();
 
     //odmor

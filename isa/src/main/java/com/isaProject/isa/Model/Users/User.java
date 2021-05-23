@@ -1,6 +1,8 @@
 package com.isaProject.isa.Model.Users;
 
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -10,7 +12,7 @@ import java.util.Collection;
 
 @Entity
 @Table
-
+@JsonIdentityInfo(generator= ObjectIdGenerators.PropertyGenerator.class, property="idUser")
 public class User implements UserDetails, Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

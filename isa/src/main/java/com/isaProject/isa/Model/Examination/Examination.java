@@ -48,17 +48,17 @@ public class Examination {
 
     @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.MERGE)
     @JoinColumn(name = "pharmacyId", referencedColumnName = "idPharm")
-    @JsonManagedReference
+    //@JsonManagedReference
     private Pharmacy pharmacy;
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     @JoinColumn(name = "patient", referencedColumnName = "idUser")
-    @JsonManagedReference
+    //@JsonManagedReference
     private Patient patient;
 
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "staffId", referencedColumnName = "idUser")
-    @JsonManagedReference
+    //@JsonManagedReference
     private Staff staff;
 
     //kod dermatologa, kod farmaceuta
@@ -73,7 +73,7 @@ public class Examination {
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     @JoinColumn(name = "therapyId", referencedColumnName = "idTherapy")
-    @JsonManagedReference
+//@JsonManagedReference
     private Therapy therapy;
 
     public Integer getIdExamination() {

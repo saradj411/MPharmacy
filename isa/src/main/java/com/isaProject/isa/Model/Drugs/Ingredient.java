@@ -16,7 +16,7 @@ public class Ingredient {
 
     @ManyToOne
     @JoinColumn(name = "specId", referencedColumnName = "idSpec")
-    @JsonManagedReference
+    //@JsonManagedReference
     private Specification specification;
 
 

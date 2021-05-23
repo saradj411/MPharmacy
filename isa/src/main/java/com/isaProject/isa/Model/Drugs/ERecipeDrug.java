@@ -25,7 +25,7 @@ public class ERecipeDrug {
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "erecipeId", referencedColumnName = "idRecipe")
-    @JsonManagedReference
+    //@JsonManagedReference
     private ERecipe eRecipe;
 }
 /*

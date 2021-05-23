@@ -32,7 +32,7 @@ public class Specification {
     private Drug drug;
 
     @OneToMany(mappedBy = "specification", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JsonBackReference
+    //@JsonBackReference
     private Set<Ingredient> ingredients=new HashSet<Ingredient>();
 
 

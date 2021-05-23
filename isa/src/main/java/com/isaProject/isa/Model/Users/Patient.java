@@ -36,11 +36,11 @@ public class Patient extends User{
 
 
     @OneToMany(mappedBy = "patient")
-    @JsonBackReference
+    //@JsonBackReference
     private Set<DrugReservation> drugReservation=new HashSet<DrugReservation>();
 
     @OneToMany(mappedBy = "patient", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JsonBackReference
+    //@JsonBackReference
     private Set<Examination> examinations = new HashSet<Examination>();
 
     public Patient() {

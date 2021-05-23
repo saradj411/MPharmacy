@@ -25,7 +25,7 @@ public class Complaint {
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "patientId", referencedColumnName = "idUser")
-    @JsonManagedReference
+    //@JsonManagedReference
     private Patient patient;
 
     //staff

@@ -16,7 +16,7 @@ public class Therapy {
 
     @ManyToOne
     @JoinColumn(name = "drugId", referencedColumnName = "idDrug")
-    @JsonManagedReference
+    //@JsonManagedReference
     private Drug drug;
 
 }

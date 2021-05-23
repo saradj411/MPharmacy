@@ -136,7 +136,8 @@ export default {
                     address: this.patient.address,
                     city:this.patient.city,
                     country:this.patient.country,
-                    password: this.sifra
+                    password: this.sifra,
+                    penalty:this.patient.penalty
           }
     this.axios.post('/patient/updatePatient',patientInfo,{
       }).then(response => {

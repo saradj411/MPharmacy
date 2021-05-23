@@ -31,12 +31,12 @@ public class RequestForVacation {
 
     @ManyToOne
     @JoinColumn(name = "staffId", referencedColumnName = "idUser", nullable = false)
-    @JsonManagedReference
+    //@JsonManagedReference
     private Staff staff;
 
     @ManyToOne
     @JoinColumn(name = "pharmacyId", referencedColumnName = "idPharm", nullable = false)
-    @JsonManagedReference
+    //@JsonManagedReference
     private Pharmacy pharmacy;
 
 

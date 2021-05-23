@@ -18,6 +18,6 @@ public class Supplier extends  User{
 
 
     @OneToMany(mappedBy = "supplier", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JsonBackReference
+    //@JsonBackReference
     private Set<Offer> offers=new HashSet<Offer>();
 }

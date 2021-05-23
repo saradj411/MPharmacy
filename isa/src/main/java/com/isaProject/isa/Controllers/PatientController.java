@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @CrossOrigin("*")
-@RequestMapping(value="/patient", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value="/patient")
 @Slf4j
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class PatientController {
@@ -41,7 +41,7 @@ public class PatientController {
         return new ResponseEntity<>("Allergy is added", HttpStatus.CREATED);
     }
 
-    @PostMapping(value="/updatePatient",consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping("/updatePatient")
     ResponseEntity<String> update(@RequestBody Patient patient)
     {
 
