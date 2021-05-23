@@ -3,11 +3,7 @@ import VueRouter from 'vue-router'
 import Home from '../components/Home.vue'
 import Welcome from '../components/Welcome.vue'
 import Login from '../components/Login.vue'
-import Registration from '../components/Registration.vue'
 import createDrugPage from '../components/createDrugPage.vue'
-import ProfileAdmin from '../components/ProfileAdmin.vue'
-import updatePharmacyProfile from '../components/updatePharmacyProfile.vue'
-import Login from '../components/Login.vue'
 import Registration from '../components/Registration.vue'
 import HomePagePatient from '../components/HomePagePatient.vue'
 
@@ -26,9 +22,6 @@ import DrugPricelist from '../components/DrugPricelist.vue'
 import DrugsPharmacy from '../components/DrugsPharmacy.vue'
 import updateMyProfile from '../components/updateMyProfile.vue'
 import updateDrug from '../components/updateDrug.vue'
-
-import moment from 'moment'
-
 
 import moment from 'moment'
 
@@ -66,15 +59,6 @@ const routes = [
       }
       ,
       {
-        path: '/updatePharmacyProfile/:id',
-        name: 'updatePharmacyProfile',
-        component: updatePharmacyProfile
-              },
-              {
-
-                   path: '/profileDermatologist',
-      },
-      {
         path: '/ProfilePatient',
         name: 'ProfilePatient',
         component: ProfilePatient
@@ -101,8 +85,6 @@ const routes = [
         path: '/profilePharmacist',
         name: 'profilePharmacist',
         component: profilePharmacist
-      },{
-
       },
       {
         path: '/login',
@@ -145,6 +127,7 @@ const routes = [
         path: '/updateDrug/:id',
         name: 'updateDrug',
         component: updateDrug
+      },{
         path: '/AddAllergies/:id',
         name: 'AddAllergies',
         component: AddAllergies
@@ -161,6 +144,8 @@ const routes = [
     ]
 
 
+
+    
 const router = new VueRouter({
     mode: 'history',
     base: process.env.BASE_URL,

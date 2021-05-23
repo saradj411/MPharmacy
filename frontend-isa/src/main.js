@@ -12,6 +12,7 @@ import vuetify from './plugins/vuetify';
 //Vue.use(window.VueCharts)
 
 Vue.config.productionTip = false
+
 Vue.use(VueAxios, axios)
 const baseURL = 'http://localhost:8083';
 if (typeof baseURL !== 'undefined') {

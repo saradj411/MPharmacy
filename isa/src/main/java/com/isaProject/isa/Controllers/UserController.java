@@ -5,7 +5,6 @@ import com.isaProject.isa.Model.Users.Patient;
 import com.isaProject.isa.Model.Users.User;
 import com.isaProject.isa.Services.Implementations.PatientService;
 import com.isaProject.isa.Services.Implementations.UserService;
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
