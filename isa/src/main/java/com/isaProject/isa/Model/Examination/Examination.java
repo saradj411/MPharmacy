@@ -23,7 +23,7 @@ public class Examination {
     private Date date;
 
     @Column
-    private boolean canceled;
+    private Boolean canceled;
 
     @Column
     private LocalTime startTime;

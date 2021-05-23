@@ -24,12 +24,12 @@ public class Staff extends User{
 
     //savetovanja farmacut,pregledi dermatolog
     @OneToMany(mappedBy = "staff",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
-    //@JsonBackReference
+    @JsonBackReference
     private Set<Examination> examinations = new HashSet<Examination>();
 
     //odmor
     @OneToMany(mappedBy = "staff", fetch = FetchType.LAZY,cascade = CascadeType.ALL)
-    @JsonBackReference
+    @JsonManagedReference
     private Set<Vacation> vacation = new HashSet<Vacation>();
 
     public Staff(Integer idUser, String name, String surname, String email, String password, String address, String phoneNumber, String city, String country, double avgGrade, Set<WorkTime> workTime, Set<Examination> examinations, Set<Vacation> vacation) {
