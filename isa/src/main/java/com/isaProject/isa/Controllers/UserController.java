@@ -15,6 +15,8 @@ import java.util.List;
 @CrossOrigin
 @RequestMapping(value="/user")
 @Slf4j
+
+
 public class UserController {
     @Autowired
     private UserService userService;
@@ -26,6 +28,8 @@ public class UserController {
                 new ResponseEntity<>(HttpStatus.NOT_FOUND) :
                 ResponseEntity.ok(user);
     }
+
+    
 
     @GetMapping(value = "/findAllDermatologist")
     public ResponseEntity<List<User>> findAllDermatologist() {

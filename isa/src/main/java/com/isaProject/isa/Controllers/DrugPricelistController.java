@@ -45,6 +45,8 @@ public class DrugPricelistController {
     }
 
 
+
+
     @GetMapping(value = "/getDrugsPharmacy/{id}")
     public ResponseEntity<List<DrugPricelist>> findAll(@PathVariable Integer id) {
         List<DrugPricelist> drugs=drugService.findAllDrugsByPharmacy(id);
@@ -53,6 +55,8 @@ public class DrugPricelistController {
                 new ResponseEntity<>(HttpStatus.NOT_FOUND) :
                 ResponseEntity.ok(drugs);
     }
+
+
 
     @GetMapping(value = "/searchDrugName/{id}/{name}")
     public ResponseEntity<List<DrugPricelist>> searchName(@PathVariable (value = "id") Integer id,@PathVariable (value = "name") String name) {
