@@ -57,16 +57,13 @@ public class PharmacyAdminService implements IPharmacyAdminService {
     public void update(PharmacyAdmin pharmacyAdmin) {
         PharmacyAdmin pa = pharmacyAdminRepository.getOne(pharmacyAdmin.getIdUser());
         pa.setName(pharmacyAdmin.getName());
+        pa.setSurname(pharmacyAdmin.getSurname());
         pa.setAddress(pharmacyAdmin.getAddress());
         pa.setCity(pharmacyAdmin.getCity());
-
-
         pa.setCountry(pharmacyAdmin.getCountry());
-        pa.setEmail(pharmacyAdmin.getEmail());
-        pa.setPassword(pharmacyAdmin.getPassword());
         pa.setPhoneNumber(pharmacyAdmin.getPhoneNumber());
-        pa.setSurname(pharmacyAdmin.getSurname());
-
+        pa.setPassword(pharmacyAdmin.getPassword());
+        pa.setEmail(pharmacyAdmin.getEmail());
         pharmacyAdminRepository.save(pa);
     }
 }

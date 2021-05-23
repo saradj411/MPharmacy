@@ -9,7 +9,11 @@
             <span style="float: left; margin-top: 20px;">
                <router-link :to="{ path: '/updatePharmacyProfile/'+pharmacy.idPharm}" v-slot="{href, navigate}" custom>
 
-                  <button class = "btn btn-primary btn-xs" style="margin:auto; background:#474A8A " :href="href" @click="navigate" elevation="1">Update profile</button>
+                  <button class = "btn btn-primary btn-xs" style="margin:auto; margin-left:38px;background:#474A8A " :href="href" @click="navigate" elevation="1">Update pharmacy</button>
+               </router-link>
+               <router-link :to="{ path: '/updateMyProfile/'+user.idUser}" v-slot="{href, navigate}" custom>
+
+                  <button class = "btn btn-primary btn-xs" style="margin:auto; margin-left:38px;background:#474A8A " :href="href" @click="navigate" elevation="1">Update profile</button>
                </router-link>
             </span>
                                   
@@ -101,14 +105,7 @@ export default {
   data() {
     return {
         user: {
-                name : "",
-                surname : "",
-                email : "",
-                password : "",
-                address : "",
-                phoneNumber :"",
-                city : "",
-                country : ""
+                
     },
     pharmacy : {
              idPharm:"",
@@ -122,7 +119,7 @@ export default {
   },
   
   mounted() {
-        this.axios.get('/user/findById/'+502,{ 
+        this.axios.get('/adminstrator/findById/'+505,{ 
              
          }).then(response => {
                this.user=response.data;

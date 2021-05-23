@@ -1,8 +1,12 @@
 package com.isaProject.isa.Controllers;
 
 import com.isaProject.isa.Model.DTO.PharmacyDTO;
+import com.isaProject.isa.Model.Drugs.Drug;
+import com.isaProject.isa.Model.Drugs.DrugPricelist;
 import com.isaProject.isa.Model.Pharmacy.Pharmacy;
 import com.isaProject.isa.Services.IServices.IPharmacyService;
+import com.isaProject.isa.Services.Implementations.DrugPricelistService;
+import com.isaProject.isa.Services.Implementations.DrugService;
 import com.isaProject.isa.Services.Implementations.PharmacyService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -20,6 +25,11 @@ public class PharmacyController {
 
     @Autowired
     private PharmacyService pharmacyService;
+    @Autowired
+    private DrugService drugService;
+
+    @Autowired
+    private DrugPricelistService drugPricelistService;
 
     @GetMapping(value = "/findAll")
     public ResponseEntity<List<Pharmacy>> findAll() {
@@ -44,6 +54,64 @@ public class PharmacyController {
                 new ResponseEntity<>(HttpStatus.NOT_FOUND) :
                 ResponseEntity.ok(pharm);
     }
+    @GetMapping(value = "/getDrugsPharmacy/{id}")
+    public ResponseEntity<List<Drug>> findDrugs(@PathVariable Integer id) {
+        List<Drug> drugs=drugService.findAll();
+        List<DrugPricelist> drugPricelists=drugPricelistService.findAll();
+
+        ArrayList<Drug> listDrugs = new ArrayList<>();
+
+        for (DrugPricelist dp:drugPricelists){
+            for (Drug dd:drugs){
+                if(dp.getPharmacy().getIdPharm().equals(id)){
+                    System.out.println("eee"+dp.getPharmacy().getIdPharm());
+                    if(dd.getIdDrug().equals(dp.getDrug().getIdDrug())){
+                        listDrugs.add(dd);
+                    }
+
+                }
+            }
+
+        }
+        return listDrugs == null ?
+                new ResponseEntity<>(HttpStatus.NOT_FOUND) :
+                ResponseEntity.ok(listDrugs);
+    }
+
+
+
+    @GetMapping(value = "/findDrugByName/{name}/{id}")
+    public ResponseEntity<List<Drug>> findDrugByName(@PathVariable String name,Integer id) {
+        List<Drug> drugs=drugService.findAll();
+        List<DrugPricelist> drugPricelists=drugPricelistService.findAll();
+
+        ArrayList<Drug> listDrugs = new ArrayList<>();
+        ArrayList<Drug> idemoo = new ArrayList<>();
+
+        for (DrugPricelist dp:drugPricelists){
+            for (Drug dd:drugs){
+                if(dd.getIdDrug().equals(dp.getDrug().getIdDrug())){
+                    System.out.println("eee"+dp.getPharmacy().getIdPharm());
+                    if(dp.getPharmacy().getIdPharm().equals(id)){
+
+                        if(dd.getName().equals(name)){
+                            listDrugs.add(dd);
+                            System.out.println("Naziv trazenog lijeka jeee   "+dd.getName());
+
+                        }
+                    }
+
+                }
+            }
+
+        }
+
+        return listDrugs == null ?
+                new ResponseEntity<>(HttpStatus.NOT_FOUND) :
+                ResponseEntity.ok(listDrugs);
+    }
+
+
 
     @GetMapping(value = "/findByName/{name}")
     public ResponseEntity<List<Pharmacy>> findById(@PathVariable String name) {

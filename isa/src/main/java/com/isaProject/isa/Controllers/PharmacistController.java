@@ -1,6 +1,14 @@
 package com.isaProject.isa.Controllers;
 
 
+import com.isaProject.isa.Model.Drugs.Drug;
+import com.isaProject.isa.Model.Drugs.DrugPricelist;
+import com.isaProject.isa.Model.Users.Dermatologist;
+import com.isaProject.isa.Model.Users.Pharmacist;
+import com.isaProject.isa.Services.Implementations.DermatologistService;
+import com.isaProject.isa.Services.Implementations.DrugPricelistService;
+import com.isaProject.isa.Services.Implementations.DrugService;
+import com.isaProject.isa.Services.Implementations.PharmacistService;
 import com.isaProject.isa.Model.DTO.DrugDTO;
 import com.isaProject.isa.Model.DTO.PharmaceutDTO;
 import com.isaProject.isa.Model.DTO.WorkTimeDTO;
@@ -15,6 +23,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.nio.file.FileSystemNotFoundException;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -48,6 +57,7 @@ public class PharmacistController {
     Set<WorkTime> tajm = new HashSet<WorkTime>();
 
 
+
     @GetMapping(value = "/findAll")
     public ResponseEntity<List<Pharmacist>> findAll() {
         List<Pharmacist> pharmacists=pharmacistService.findAll();
@@ -61,6 +71,28 @@ public class PharmacistController {
                 new ResponseEntity<>(HttpStatus.NOT_FOUND) :
                 ResponseEntity.ok(pharmacists);
     }
+    @GetMapping(value = "/getPharmacist/{id}")
+    public ResponseEntity<List<Pharmacist>> findAll(@PathVariable Integer id) {
+        List<Pharmacist> pharmacists=pharmacistService.findAll();
+        ArrayList<Pharmacist> newP = new ArrayList<>();
+
+        for (Pharmacist d:pharmacists){
+            if(d.getPharmacy().getIdPharm().equals(id)){
+                System.out.println("eee"+d.getPharmacy().getIdPharm());
+
+                newP.add(d);
+            }
+        }
+        return newP == null ?
+                new ResponseEntity<>(HttpStatus.NOT_FOUND) :
+                ResponseEntity.ok(newP);
+    }
+
+
+
+
+
+
 
     @GetMapping(value = "/findById/{id}")
     public ResponseEntity<Pharmacist> findById(@PathVariable Integer id) {

@@ -3,6 +3,7 @@ package com.isaProject.isa.Controllers;
 
 import com.isaProject.isa.Model.DTO.DrugDTO;
 import com.isaProject.isa.Model.Drugs.Drug;
+import com.isaProject.isa.Model.Users.PharmacyAdmin;
 import com.isaProject.isa.Services.Implementations.DrugService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,19 +44,26 @@ public class DrugContorller {
                 new ResponseEntity<>(HttpStatus.NOT_FOUND) :
                 ResponseEntity.ok(d);
     }
-    @GetMapping(value = "/findByName/{name}")
-    public ResponseEntity<Drug> findById(@PathVariable String name) {
-
-        Drug d=drugService.findByName(name);
-        return d == null ?
+    @GetMapping(value = "/findByName/{name}}")
+    public ResponseEntity<List<Drug>> findByName(@PathVariable String name) {
+        //log.info("dsds:"+id);
+        List<Drug> pharm=drugService.findByName(name);
+        return pharm == null ?
                 new ResponseEntity<>(HttpStatus.NOT_FOUND) :
-                ResponseEntity.ok(d);
+                ResponseEntity.ok(pharm);
     }
     @PostMapping("/create")
     public ResponseEntity<String> addDrug(@RequestBody DrugDTO drugDTO) {
 
         Drug drug = drugService.save(drugDTO);
         return new ResponseEntity<>("kreirano", HttpStatus.CREATED);
+    }
+    @PostMapping("/updateDrug")
+    ResponseEntity<String> update(@RequestBody Drug drug)
+    {
+        drugService.update(drug);
+        return new ResponseEntity<>("ajdeee", HttpStatus.CREATED);
+
     }
 
 
