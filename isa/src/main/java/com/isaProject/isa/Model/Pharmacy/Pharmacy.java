@@ -1,7 +1,9 @@
 package com.isaProject.isa.Model.Pharmacy;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.isaProject.isa.Model.Drugs.DrugPricelist;
 import com.isaProject.isa.Model.Examination.Examination;
 import com.isaProject.isa.Model.Users.PharmacyAdmin;
@@ -40,13 +42,19 @@ public class  Pharmacy implements Serializable {
 
 
     @OneToMany(mappedBy = "pharmacy", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JsonBackReference
+
     private Set<PharmacyAdmin> pharmacyAdmins = new HashSet<PharmacyAdmin>();
 
     //cenovnik lekova
     @OneToMany(mappedBy = "pharmacy", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JsonBackReference
+
     private Set<DrugPricelist> drugPricelist = new HashSet<DrugPricelist>();
 
     @OneToMany(mappedBy = "pharmacy", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JsonBackReference
+
     private Set<Examination> examinations = new HashSet<Examination>();
 
     public Integer getIdPharm() {

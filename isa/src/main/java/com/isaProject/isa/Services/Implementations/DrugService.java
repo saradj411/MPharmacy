@@ -9,7 +9,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
+
 
 @Service
 @Slf4j
@@ -18,15 +22,134 @@ public class DrugService implements IDrugService {
     @Autowired
     DrugRepository drugRepository;
 
+    List<Drug> d=new List<Drug>() {
+        @Override
+        public int size() {
+            return 0;
+        }
+
+        @Override
+        public boolean isEmpty() {
+            return false;
+        }
+
+        @Override
+        public boolean contains(Object o) {
+            return false;
+        }
+
+        @Override
+        public Iterator<Drug> iterator() {
+            return null;
+        }
+
+        @Override
+        public Object[] toArray() {
+            return new Object[0];
+        }
+
+        @Override
+        public <T> T[] toArray(T[] a) {
+            return null;
+        }
+
+        @Override
+        public boolean add(Drug drug) {
+            return false;
+        }
+
+        @Override
+        public boolean remove(Object o) {
+            return false;
+        }
+
+        @Override
+        public boolean containsAll(Collection<?> c) {
+            return false;
+        }
+
+        @Override
+        public boolean addAll(Collection<? extends Drug> c) {
+            return false;
+        }
+
+        @Override
+        public boolean addAll(int index, Collection<? extends Drug> c) {
+            return false;
+        }
+
+        @Override
+        public boolean removeAll(Collection<?> c) {
+            return false;
+        }
+
+        @Override
+        public boolean retainAll(Collection<?> c) {
+            return false;
+        }
+
+        @Override
+        public void clear() {
+
+        }
+
+        @Override
+        public Drug get(int index) {
+            return null;
+        }
+
+        @Override
+        public Drug set(int index, Drug element) {
+            return null;
+        }
+
+        @Override
+        public void add(int index, Drug element) {
+
+        }
+
+        @Override
+        public Drug remove(int index) {
+            return null;
+        }
+
+        @Override
+        public int indexOf(Object o) {
+            return 0;
+        }
+
+        @Override
+        public int lastIndexOf(Object o) {
+            return 0;
+        }
+
+        @Override
+        public ListIterator<Drug> listIterator() {
+            return null;
+        }
+
+        @Override
+        public ListIterator<Drug> listIterator(int index) {
+            return null;
+        }
+
+        @Override
+        public List<Drug> subList(int fromIndex, int toIndex) {
+            return null;
+        }
+    };
+
     @Override
     public Drug findById(Integer id) {
         Drug drugg = drugRepository.findOneByIdDrug(id);
         return drugg;
     }
     @Override
-    public Drug findByName(String name) {
-        Drug drugg = drugRepository.findOneByName(name);
-        return drugg;
+    public List<Drug> findByName(String name) {
+        //veki skontalaaa
+        d=drugRepository.findOneByName(name);
+        return d;
+
     }
 
     @Override

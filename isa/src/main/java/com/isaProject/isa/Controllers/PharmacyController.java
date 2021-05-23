@@ -78,6 +78,41 @@ public class PharmacyController {
                 ResponseEntity.ok(listDrugs);
     }
 
+
+
+    @GetMapping(value = "/findDrugByName/{name}/{id}")
+    public ResponseEntity<List<Drug>> findDrugByName(@PathVariable String name,Integer id) {
+        List<Drug> drugs=drugService.findAll();
+        List<DrugPricelist> drugPricelists=drugPricelistService.findAll();
+
+        ArrayList<Drug> listDrugs = new ArrayList<>();
+        ArrayList<Drug> idemoo = new ArrayList<>();
+
+        for (DrugPricelist dp:drugPricelists){
+            for (Drug dd:drugs){
+                if(dd.getIdDrug().equals(dp.getDrug().getIdDrug())){
+                    System.out.println("eee"+dp.getPharmacy().getIdPharm());
+                    if(dp.getPharmacy().getIdPharm().equals(id)){
+
+                        if(dd.getName().equals(name)){
+                            listDrugs.add(dd);
+                            System.out.println("Naziv trazenog lijeka jeee   "+dd.getName());
+
+                        }
+                    }
+
+                }
+            }
+
+        }
+
+        return listDrugs == null ?
+                new ResponseEntity<>(HttpStatus.NOT_FOUND) :
+                ResponseEntity.ok(listDrugs);
+    }
+
+
+
     @GetMapping(value = "/findByName/{name}")
     public ResponseEntity<List<Pharmacy>> findById(@PathVariable String name) {
         //log.info("dsds:"+id);

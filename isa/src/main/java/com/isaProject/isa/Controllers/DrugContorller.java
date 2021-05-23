@@ -38,13 +38,13 @@ public class DrugContorller {
                 new ResponseEntity<>(HttpStatus.NOT_FOUND) :
                 ResponseEntity.ok(d);
     }
-    @GetMapping(value = "/findByName/{name}")
-    public ResponseEntity<Drug> findById(@PathVariable String name) {
-
-        Drug d=drugService.findByName(name);
-        return d == null ?
+    @GetMapping(value = "/findByName/{name}}")
+    public ResponseEntity<List<Drug>> findByName(@PathVariable String name) {
+        //log.info("dsds:"+id);
+        List<Drug> pharm=drugService.findByName(name);
+        return pharm == null ?
                 new ResponseEntity<>(HttpStatus.NOT_FOUND) :
-                ResponseEntity.ok(d);
+                ResponseEntity.ok(pharm);
     }
     @PostMapping("/create")
     public ResponseEntity<String> addDrug(@RequestBody DrugDTO drugDTO) {

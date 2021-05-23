@@ -1,5 +1,6 @@
 package com.isaProject.isa.Model.Drugs;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.isaProject.isa.Model.Pharmacy.Pharmacy;
 
 import javax.persistence.*;
@@ -12,8 +13,10 @@ public class DrugPricelist {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer idPricelist;
 
+
     @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
     @JoinColumn(name = "drugId", referencedColumnName = "idDrug", nullable = true, unique = false)
+    @JsonManagedReference
     private Drug drug;
 
     @Column
@@ -27,6 +30,7 @@ public class DrugPricelist {
 
     @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
     @JoinColumn(name = "pharmacyId", referencedColumnName = "idPharm", nullable = true, unique = false)
+    @JsonManagedReference
     private Pharmacy pharmacy;
 
     public DrugPricelist(Integer idPricelist, Drug drug, double price, Date start, Date end, Pharmacy pharmacy) {

@@ -9,7 +9,7 @@ import java.util.List;
 public interface IDrugService {
 
     Drug findById(Integer id);
-    Drug findByName(String name);
+    List<Drug> findByName(String name);
     List<Drug> findAll ();
     Drug save(DrugDTO drug);
     void update(Drug drug);

@@ -16,10 +16,13 @@ insert into drug values (504,'sifra 4','kapsula','CAPSULE','proizvodjac 4','ampr
 insert into drug values (505,'sifra 5','prasak','INJECTION','proizvodjac 5','aspirin',false);
 insert into drug values (506,'sifra 6','tableta','TABLET','proizvodjac 6','brufen',false);
 insert into drug values (507,'sifra 7','sprej','GEL','proizvodjac 7','mometazonfuorat',true);
+insert into drug values (508,'sifra 8','sprej','GEL','proizvodjac 8','andol',true);
+
 
 #pharmacy_drugs
 #id,kolicina,drug_id,pharmacy_id
 
+insert into pharmacy_drugs values (509,5,508,501);
 insert into pharmacy_drugs values (501,5,503,503);
 insert into pharmacy_drugs values (502,8,504,501);
 insert into pharmacy_drugs values (503,6,505,503);
@@ -41,6 +44,8 @@ insert into drug_pricelist values (504,'2021-07-12',180,'2020-02-02',506,504);
 insert into drug_pricelist values (505,'2021-12-01',300,'2020-04-07',507,502);
 insert into drug_pricelist values (506,'2021-09-09',280,'2020-04-01',503,500);
 insert into drug_pricelist values (507,'2021-11-01',300,'2020-07-07',504,502);
+insert into drug_pricelist values (508,'2021-11-01',286,'2020-07-07',508,501);
+insert into drug_pricelist values (509,'2021-11-01',300,'2020-07-07',507,501);
 
 #specification
 #id,contraindikacija,doza,struktura,code

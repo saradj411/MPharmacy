@@ -44,21 +44,53 @@ public class DrugPricelistController {
                 ResponseEntity.ok(pharm);
     }
 
+
     @GetMapping(value = "/getDrugsPharmacy/{id}")
     public ResponseEntity<List<DrugPricelist>> findAll(@PathVariable Integer id) {
+        List<DrugPricelist> drugs=drugService.findAllDrugsByPharmacy(id);
+
+        return drugs == null ?
+                new ResponseEntity<>(HttpStatus.NOT_FOUND) :
+                ResponseEntity.ok(drugs);
+    }
+
+    @GetMapping(value = "/searchDrugName/{id}/{name}")
+    public ResponseEntity<List<DrugPricelist>> searchName(@PathVariable (value = "id") Integer id,@PathVariable (value = "name") String name) {
         List<DrugPricelist> drugs=drugService.findAll();
         ArrayList<DrugPricelist> newP = new ArrayList<>();
 
         for (DrugPricelist d:drugs){
             if(d.getPharmacy().getIdPharm().equals(id)){
-                System.out.println("eee"+d.getPharmacy().getIdPharm());
+                System.out.println("Id apoteke u kojoj su lijekovi je "+d.getPharmacy().getIdPharm());
+                System.out.println("Ime lijeka je "+d.getDrug().getName());
+                if(d.getDrug().getName().equals(name)){
+                    System.out.println("ime je "+name);
+                    System.out.println("usao u if");
+                    newP.add(d);
+                }
 
-                newP.add(d);
             }
+        }
+
+        for(DrugPricelist d:newP){
+            System.out.println("usao");
+
+
         }
         return newP == null ?
                 new ResponseEntity<>(HttpStatus.NOT_FOUND) :
                 ResponseEntity.ok(newP);
+    }
+
+
+
+    @GetMapping(value = "/serachName/{id}/{name}")
+    public ResponseEntity<List<DrugPricelist>> findById(@PathVariable Integer id,String name) {
+        List<DrugPricelist> drugs=drugService.getSearchDrugs(id,name);
+
+        return drugs == null ?
+                new ResponseEntity<>(HttpStatus.NOT_FOUND) :
+                ResponseEntity.ok(drugs);
     }
 
 
