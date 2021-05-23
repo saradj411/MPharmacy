@@ -9,4 +9,5 @@ import java.util.List;
 public interface DrugReservationRepository extends JpaRepository<DrugReservation, Integer> {
     List<DrugReservation> findAllByPatient(Patient idPatient);
     DrugReservation findOneByIdReservation(Integer idRes);
+    List<DrugReservation> findAllByIsPickedUp(Boolean isPickedUp);
 }

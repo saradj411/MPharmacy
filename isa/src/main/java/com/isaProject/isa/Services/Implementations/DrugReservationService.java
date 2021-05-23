@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import java.text.DateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Date;
 import java.util.List;
 
@@ -33,11 +34,17 @@ public class DrugReservationService implements IDrugReservationService {
         List<DrugReservation> drugg = drugRepository.findAllByPatient(id);
         return drugg;
     }
+    @Override
+    public  List<DrugReservation> findByIsPickedUp(Boolean isPickedUp) {
+        List<DrugReservation> drugg = drugRepository.findAllByIsPickedUp(isPickedUp);
+        return drugg;
+    }
 
     @Override
     public DrugReservation findById(Integer id) {
         return drugRepository.findOneByIdReservation(id);
     }
+
 
     public Boolean possibleCancel(LocalDate dateRes){
         Boolean rez=false;
@@ -60,9 +67,19 @@ public class DrugReservationService implements IDrugReservationService {
         }
         //System.out.println(wd);
         //System.out.println(dsd);
-        System.out.println(res);
-        System.out.println(dan);
+        System.out.println("res:"+res);
+        System.out.println("dan:"+dan);
         return rez;
 
+    }
+    @Override
+    public void update(DrugReservation drugReservation) {
+        DrugReservation pat = drugRepository.getOne(drugReservation.getIdReservation());
+
+
+        pat.setCancelled(true);
+
+
+        drugRepository.save(pat);
     }
 }
