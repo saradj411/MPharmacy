@@ -14,6 +14,5 @@ public interface IPharmacyService {
     List<Pharmacy> findByAddress(String city);
     List<Pharmacy> findAll ();
     Pharmacy save(PharmacyDTO pharmacy);
-    //Boolean savePharmacy(WorkingHoursDermatologistDTO dto);
     void update(Pharmacy pharmacy);
 }

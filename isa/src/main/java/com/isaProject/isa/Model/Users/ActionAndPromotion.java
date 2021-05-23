@@ -1,5 +1,6 @@
 package com.isaProject.isa.Model.Users;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.isaProject.isa.Model.Pharmacy.Pharmacy;
 
 import javax.persistence.*;
@@ -25,6 +26,7 @@ public class ActionAndPromotion {
 
     @ManyToOne
     @JoinColumn(name = "pharmacyId", referencedColumnName = "idPharm")
+    @JsonBackReference
     private Pharmacy pharmacy;
 
 }

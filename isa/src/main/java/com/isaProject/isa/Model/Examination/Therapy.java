@@ -1,5 +1,7 @@
 package com.isaProject.isa.Model.Examination;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.isaProject.isa.Model.Drugs.Drug;
 
 import javax.persistence.*;
@@ -14,6 +16,7 @@ public class Therapy {
 
     @ManyToOne
     @JoinColumn(name = "drugId", referencedColumnName = "idDrug")
+    //@JsonManagedReference
     private Drug drug;
 
 }

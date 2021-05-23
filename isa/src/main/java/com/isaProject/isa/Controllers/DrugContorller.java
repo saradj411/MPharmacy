@@ -29,7 +29,13 @@ public class DrugContorller {
                 new ResponseEntity<>(HttpStatus.NOT_FOUND) :
                 ResponseEntity.ok(drugs);
     }
-
+    @GetMapping(value = "/findAllNames")
+    public ResponseEntity<List<Drug>> findAllNames() {
+        List<Drug> drugs=drugService.findAll();
+        return drugs == null ?
+                new ResponseEntity<>(HttpStatus.NOT_FOUND) :
+                ResponseEntity.ok(drugs);
+    }
     @GetMapping(value = "/findById/{id}")
     public ResponseEntity<Drug> findById(@PathVariable Integer id) {
 

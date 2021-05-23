@@ -1,5 +1,7 @@
 package com.isaProject.isa.Model.Users;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.isaProject.isa.Model.Pharmacy.Pharmacy;
 
 import javax.persistence.*;
@@ -25,11 +27,72 @@ public class WorkTime {
 
     @ManyToOne
     @JoinColumn(name = "staffId", referencedColumnName = "idUser", nullable = false)
+    //@JsonManagedReference
     private Staff staff;
 
     @ManyToOne
     @JoinColumn(name = "pharmacyId", referencedColumnName = "idPharm", nullable = false)
+    //@JsonManagedReference
     private Pharmacy pharmacy;
 
+    public Integer getId() {
+        return id;
+    }
 
+    public Date getDate() {
+        return date;
+    }
+
+    public LocalTime getStartTime() {
+        return startTime;
+    }
+
+    public LocalTime getEndTime() {
+        return endTime;
+    }
+
+    public Staff getStaff() {
+        return staff;
+    }
+
+    public Pharmacy getPharmacy() {
+        return pharmacy;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    public void setStartTime(LocalTime startTime) {
+        this.startTime = startTime;
+    }
+
+    public void setEndTime(LocalTime endTime) {
+        this.endTime = endTime;
+    }
+
+    public void setStaff(Staff staff) {
+        this.staff = staff;
+    }
+
+    public void setPharmacy(Pharmacy pharmacy) {
+        this.pharmacy = pharmacy;
+    }
+
+    public WorkTime(Integer id, Date date, LocalTime startTime, LocalTime endTime, Staff staff, Pharmacy pharmacy) {
+        this.id = id;
+        this.date = date;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.staff = staff;
+        this.pharmacy = pharmacy;
+    }
+
+    public  WorkTime(){
+
+    }
 }

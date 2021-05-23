@@ -7,6 +7,16 @@ import Registration from '../components/Registration.vue'
 import createDrugPage from '../components/createDrugPage.vue'
 import ProfileAdmin from '../components/ProfileAdmin.vue'
 import updatePharmacyProfile from '../components/updatePharmacyProfile.vue'
+import Login from '../components/Login.vue'
+import Registration from '../components/Registration.vue'
+import HomePagePatient from '../components/HomePagePatient.vue'
+
+import ProfileAdmin from '../components/ProfileAdmin.vue'
+import ProfilePatient from '../components/ProfilePatient.vue'
+import updatePharmacyProfile from '../components/updatePharmacyProfile.vue'
+import UpdatePatientProfil from '../components/UpdatePatientProfil.vue'
+import AddAllergies from '../components/AddAllergies.vue'
+
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
 import profileDermatologist from '../components/profileDermatologist.vue'
 import profilePharmacist from '../components/profilePharmacist.vue'
@@ -19,6 +29,8 @@ import updateDrug from '../components/updateDrug.vue'
 
 import moment from 'moment'
 
+
+import moment from 'moment'
 
 Vue.use(VueRouter)
 Vue.use(BootstrapVue)
@@ -61,6 +73,27 @@ const routes = [
               {
 
                    path: '/profileDermatologist',
+      },
+      {
+        path: '/ProfilePatient',
+        name: 'ProfilePatient',
+        component: ProfilePatient
+      },
+      {
+        path: '/updatePharmacyProfile/:id',
+        name: 'updatePharmacyProfile',
+        component: updatePharmacyProfile
+      },
+      {
+        path: '/UpdatePatientProfil/:id',
+        name: 'UpdatePatientProfil',
+        component: UpdatePatientProfil
+      },
+     
+      
+      {
+
+        path: '/profileDermatologist',
         name: 'profileDermatologist',
         component: profileDermatologist
       },
@@ -70,6 +103,8 @@ const routes = [
         component: profilePharmacist
       },{
 
+      },
+      {
         path: '/login',
         name: 'Login',
         component: Login
@@ -110,7 +145,19 @@ const routes = [
         path: '/updateDrug/:id',
         name: 'updateDrug',
         component: updateDrug
+        path: '/AddAllergies/:id',
+        name: 'AddAllergies',
+        component: AddAllergies
+
+      },
+      {
+        path: '/HomePagePatient/:id',
+        name: 'HomePagePatient',
+        component: HomePagePatient
+
       }
+      
+
     ]
 
 

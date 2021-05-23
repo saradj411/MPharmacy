@@ -1,6 +1,8 @@
 package com.isaProject.isa.Model.Users;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.isaProject.isa.Model.Drugs.Drug;
 import com.isaProject.isa.Model.Drugs.DrugReservation;
 import com.isaProject.isa.Model.Examination.Examination;
@@ -34,10 +36,73 @@ public class Patient extends User{
 
 
     @OneToMany(mappedBy = "patient")
+    //@JsonBackReference
     private Set<DrugReservation> drugReservation=new HashSet<DrugReservation>();
 
     @OneToMany(mappedBy = "patient", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    //@JsonBackReference
     private Set<Examination> examinations = new HashSet<Examination>();
+
+    public Patient() {
+    }
+
+    public Patient(Integer idUser, String name, String surname, String email, String password, String address, String phoneNumber, String city, String country, int penalty, int points, String loyaltyCategory, Set<Drug> allergies, Set<DrugReservation> drugReservation, Set<Examination> examinations) {
+        super(idUser, name, surname, email, password, address, phoneNumber, city, country);
+        this.penalty = penalty;
+        this.points = points;
+        this.loyaltyCategory = loyaltyCategory;
+        this.allergies = allergies;
+        this.drugReservation = drugReservation;
+        this.examinations = examinations;
+    }
+
+    public int getPenalty() {
+        return penalty;
+    }
+
+    public void setPenalty(int penalty) {
+        this.penalty = penalty;
+    }
+
+    public int getPoints() {
+        return points;
+    }
+
+    public void setPoints(int points) {
+        this.points = points;
+    }
+
+    public String getLoyaltyCategory() {
+        return loyaltyCategory;
+    }
+
+    public void setLoyaltyCategory(String loyaltyCategory) {
+        this.loyaltyCategory = loyaltyCategory;
+    }
+
+    public Set<Drug> getAllergies() {
+        return allergies;
+    }
+
+    public void setAllergies(Set<Drug> allergies) {
+        this.allergies = allergies;
+    }
+
+    public Set<DrugReservation> getDrugReservation() {
+        return drugReservation;
+    }
+
+    public void setDrugReservation(Set<DrugReservation> drugReservation) {
+        this.drugReservation = drugReservation;
+    }
+
+    public Set<Examination> getExaminations() {
+        return examinations;
+    }
+
+    public void setExaminations(Set<Examination> examinations) {
+        this.examinations = examinations;
+    }
 
     /*
     //zalbe

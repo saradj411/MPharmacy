@@ -1,5 +1,7 @@
 package com.isaProject.isa.Model.Drugs;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.isaProject.isa.Model.Users.PharmacyAdmin;
 
 import javax.persistence.*;
@@ -27,13 +29,16 @@ public class DrugOrder {
     private Boolean processed;
 
     @OneToMany(mappedBy = "drugOrder", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    //@JsonBackReference
     private Set<OrderItem> orderItems = new HashSet<OrderItem>();
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "admin", referencedColumnName = "idUser")
+    //@JsonManagedReference
     private PharmacyAdmin pharmacyAdmin;
 
     @OneToMany(mappedBy = "drugOrder", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    //@JsonBackReference
     private Set<Offer> offers = new HashSet<Offer>();
 }
 

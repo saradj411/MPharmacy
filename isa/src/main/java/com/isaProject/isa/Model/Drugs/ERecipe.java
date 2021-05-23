@@ -1,6 +1,8 @@
 package com.isaProject.isa.Model.Drugs;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.isaProject.isa.Model.Pharmacy.Pharmacy;
 import com.isaProject.isa.Model.Users.Patient;
 
@@ -33,14 +35,17 @@ public class ERecipe {
     private Date dateOfIssue;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    //@JsonBackReference
     private Set<ERecipeDrug> eRecipeDrug = new HashSet<ERecipeDrug>();
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "pharmacyId", referencedColumnName = "idPharm")
+    //@JsonManagedReference
     private Pharmacy pharmacy;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "patientId", referencedColumnName = "idUser")
+    //@JsonManagedReference
     private Patient patient;
 
     @Column

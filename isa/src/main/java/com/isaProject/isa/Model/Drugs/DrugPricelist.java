@@ -1,5 +1,6 @@
 package com.isaProject.isa.Model.Drugs;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.isaProject.isa.Model.Pharmacy.Pharmacy;
 
@@ -17,6 +18,7 @@ public class DrugPricelist {
     @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
     @JoinColumn(name = "drugId", referencedColumnName = "idDrug", nullable = true, unique = false)
     @JsonManagedReference
+    //@JsonManagedReference
     private Drug drug;
 
     @Column
@@ -31,6 +33,7 @@ public class DrugPricelist {
     @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
     @JoinColumn(name = "pharmacyId", referencedColumnName = "idPharm", nullable = true, unique = false)
     @JsonManagedReference
+    //@JsonManagedReference
     private Pharmacy pharmacy;
 
     public DrugPricelist(Integer idPricelist, Drug drug, double price, Date start, Date end, Pharmacy pharmacy) {

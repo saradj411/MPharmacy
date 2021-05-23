@@ -44,6 +44,7 @@ public class  Pharmacy implements Serializable {
     @OneToMany(mappedBy = "pharmacy", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JsonBackReference
 
+    //@JsonBackReference
     private Set<PharmacyAdmin> pharmacyAdmins = new HashSet<PharmacyAdmin>();
 
     //cenovnik lekova
@@ -54,7 +55,11 @@ public class  Pharmacy implements Serializable {
 
     @OneToMany(mappedBy = "pharmacy", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JsonBackReference
+    //@JsonBackReference
+    private Set<DrugPricelist> drugPricelist = new HashSet<DrugPricelist>();
 
+    @OneToMany(mappedBy = "pharmacy", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    //@JsonBackReference
     private Set<Examination> examinations = new HashSet<Examination>();
 
     public Integer getIdPharm() {
@@ -103,5 +108,21 @@ public class  Pharmacy implements Serializable {
    //adresu apoteke (dodatno prikaz adrese na mapi),
    //listu svih termina za preglede kod dermatologa koje može da zakaže,
 
+
+    public void setPharmacyAdmins(Set<PharmacyAdmin> pharmacyAdmins) {
+        this.pharmacyAdmins = pharmacyAdmins;
+    }
+
+    public void setDrugPricelist(Set<DrugPricelist> drugPricelist) {
+        this.drugPricelist = drugPricelist;
+    }
+
+    public void setExaminations(Set<Examination> examinations) {
+        this.examinations = examinations;
+    }
+
+    public Set<PharmacyAdmin> getPharmacyAdmins() {
+        return pharmacyAdmins;
+    }
 
 }
