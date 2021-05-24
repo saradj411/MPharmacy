@@ -3,6 +3,7 @@ package com.isaProject.isa.Services.Implementations;
 import com.isaProject.isa.Model.DTO.DrugDTO;
 import com.isaProject.isa.Model.DTO.PharmaceutDTO;
 import com.isaProject.isa.Model.Drugs.Drug;
+import com.isaProject.isa.Model.Drugs.DrugPricelist;
 import com.isaProject.isa.Model.Examination.Examination;
 import com.isaProject.isa.Model.Users.Dermatologist;
 import com.isaProject.isa.Model.Users.Pharmacist;
@@ -79,7 +80,6 @@ public class PharmacistService implements IPharamacistService {
         Pharmacist pharmacist=pharmacistRepository.findById(id).get();
         return pharmacist;
     }
-
 
 
 

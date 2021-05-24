@@ -1,6 +1,7 @@
 package com.isaProject.isa.Controllers;
 
 
+import com.isaProject.isa.Model.DTO.SearchPharmacistsDTO;
 import com.isaProject.isa.Model.Drugs.Drug;
 import com.isaProject.isa.Model.Drugs.DrugPricelist;
 import com.isaProject.isa.Model.Users.Dermatologist;
@@ -23,16 +24,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
+import java.util.*;
 import java.nio.file.FileSystemNotFoundException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalTime;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
 @RestController
 @CrossOrigin
@@ -88,7 +85,26 @@ public class PharmacistController {
                 ResponseEntity.ok(newP);
     }
 
+    @PostMapping("/searchPharmacistName/{id}")
+    public ResponseEntity<List<Pharmacist>> findAllP(@PathVariable Integer id, @RequestBody SearchPharmacistsDTO dto) {
+        List<Pharmacist> pharmacists=pharmacistService.findAll();
+        System.out.println("ime sa fronta je "+dto.getName());
+        System.out.println("prezime sa fronta je "+dto.getSurame());
 
+        ArrayList<Pharmacist> newP = new ArrayList<>();
+
+        for (Pharmacist d:pharmacists){
+            if(d.getPharmacy().getIdPharm().equals(id)){
+                if(d.getSurname().toLowerCase().contains(dto.getSurame().toLowerCase()) && d.getName().toLowerCase().contains(dto.getName().toLowerCase())){
+                    newP.add(d);
+                }
+
+            }
+        }
+        return newP == null ?
+                new ResponseEntity<>(HttpStatus.NOT_FOUND) :
+                ResponseEntity.ok(newP);
+    }
 
 
 

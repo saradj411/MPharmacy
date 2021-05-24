@@ -73,7 +73,7 @@ public class DrugPricelistController {
             if(d.getPharmacy().getIdPharm().equals(id)){
                 System.out.println("Id apoteke u kojoj su lijekovi je "+d.getPharmacy().getIdPharm());
                 System.out.println("Ime lijeka je "+d.getDrug().getName());
-                if(d.getDrug().getName().equals(name)){
+                if(d.getDrug().getName().contains(name)){
                     System.out.println("ime je "+name);
                     System.out.println("usao u if");
                     newP.add(d);
@@ -95,7 +95,7 @@ public class DrugPricelistController {
 
 
     @GetMapping(value = "/serachName/{id}/{name}")
-    public ResponseEntity<List<DrugPricelist>> findById(@PathVariable Integer id,String name) {
+    public ResponseEntity<List<DrugPricelist>> findByNameDrug(@PathVariable (value = "id") Integer id,@PathVariable (value = "name") String name) {
         List<DrugPricelist> drugs=drugService.getSearchDrugs(id,name);
 
         return drugs == null ?
