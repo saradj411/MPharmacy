@@ -60,6 +60,9 @@
     
   </tbody>
                         </table>
+
+                        <button class="btn btn-primary btn-lg" v-on:click = "canceling(d.idUser)" style="margin-left:30px; margin-top:42px;background:#474A8A">Delete dermatolog</button>
+
                 </form>
       
       
@@ -76,7 +79,7 @@ export default {
       
        id : this.$route.params.id,
        dermatolog : {},
-       welcomePageShow : true
+       jeste:""
 
        
     }
@@ -95,6 +98,29 @@ export default {
     }
      ,
       methods:{
+
+      canceling:
+       function(date){
+       this.axios.get('/dermatologist/delete/'+date)
+        .then(response => {
+                this.jeste = response.data;
+                if(this.jeste=="Dermatoloist is not deleted!"){
+                                      alert("Dermatoloist is not deleted!") 
+
+                }
+                if(this.jeste=="Dermatoloist is deleted!"){
+                                      alert("Dermatoloist is deleted!") 
+
+                }
+                
+
+         }).catch(res => {
+                alert("Nesto ne valja");
+                console.log(res);
+        });
+
+
+       }
     
       
       }

@@ -13,4 +13,8 @@ public interface IDermatologistService {
     List<Dermatologist> findAll ();
 
     Dermatologist save(DermatologistDTO dermatologist);
+    String delete(Dermatologist dermatologist);
+
+
+
 }

@@ -32,6 +32,7 @@ import java.util.*;
 @Slf4j
 public class DermatologistControler {
 
+
     @Autowired
     private DermatologistService dermatologistService;
 
@@ -76,6 +77,12 @@ public class DermatologistControler {
         return d == null ?
                 new ResponseEntity<>(HttpStatus.NOT_FOUND) :
                 ResponseEntity.ok(d);
+    }
+    @GetMapping("/delete/{id}")
+    public ResponseEntity<String> deleteDermatologist(@PathVariable Integer id) {
+        Dermatologist dermatologist = dermatologistService.findById(id);
+        String answer = dermatologistService.delete(dermatologist);
+        return new ResponseEntity<>(answer, HttpStatus.ACCEPTED);
     }
 
     @GetMapping(value = "/getDermatologists/{id}")
