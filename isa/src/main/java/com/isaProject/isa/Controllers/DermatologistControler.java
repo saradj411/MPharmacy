@@ -1,8 +1,6 @@
 package com.isaProject.isa.Controllers;
 
-import com.isaProject.isa.Model.DTO.DermatologistDTO;
-import com.isaProject.isa.Model.DTO.PharmaceutDTO;
-import com.isaProject.isa.Model.DTO.WorkTimeDTO;
+import com.isaProject.isa.Model.DTO.*;
 import com.isaProject.isa.Model.Drugs.Drug;
 import com.isaProject.isa.Model.Pharmacy.Pharmacy;
 import com.isaProject.isa.Model.Users.Dermatologist;
@@ -56,6 +54,36 @@ public class DermatologistControler {
     Set<Pharmacy> pharmOfDerm = new HashSet<Pharmacy>();
 
 
+    @PostMapping("/searchDermatologistName/{id}")
+    public ResponseEntity<List<Dermatologist>> findAllP(@PathVariable Integer id, @RequestBody SearchDermatologistDTO dto) {
+        List<Dermatologist> dermatologists = dermatologistService.findAll();
+        System.out.println("ime sa fronta je " + dto.getName());
+        System.out.println("prezime sa fronta je " + dto.getSurame());
+
+        ArrayList<Dermatologist> newP = new ArrayList<>();
+
+        for (Dermatologist d : dermatologists) {
+            for (Pharmacy p : d.getPharmacies()) {
+                if (p.getIdPharm().equals(id)) {
+                    if (d.getSurname().toLowerCase().contains(dto.getSurame().toLowerCase()) && d.getName().toLowerCase().contains(dto.getName().toLowerCase())) {
+                        newP.add(d);
+                    }
+                  }
+
+                }
+            }
+            return newP == null ?
+                    new ResponseEntity<>(HttpStatus.NOT_FOUND) :
+                    ResponseEntity.ok(newP);
+        }
+
+
+
+
+
+
+
+
     @GetMapping(value = "/findAll")
     public ResponseEntity<List<Dermatologist>> findAll() {
         List<Dermatologist> dermatologists=dermatologistService.findAll();
@@ -84,6 +112,7 @@ public class DermatologistControler {
         String answer = dermatologistService.delete(dermatologist);
         return new ResponseEntity<>(answer, HttpStatus.ACCEPTED);
     }
+
 
     @GetMapping(value = "/getDermatologists/{id}")
     public ResponseEntity<List<Dermatologist>> findAll(@PathVariable Integer id) {
@@ -166,4 +195,14 @@ public class DermatologistControler {
 
         return new ResponseEntity<>("kreirano", HttpStatus.CREATED);
     }
+
+
+
+
+
+
+
+
+
+
 }

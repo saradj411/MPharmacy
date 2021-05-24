@@ -72,6 +72,7 @@ public class Staff extends User{
         this.examinations = examinations;
     }
 
+
     public void setVacation(Set<Vacation> vacation) {
         this.vacation = vacation;
     }
