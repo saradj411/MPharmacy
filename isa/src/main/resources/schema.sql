@@ -155,6 +155,14 @@ insert into examination values(504,false,'2021-07-22','2021-07-22 11:00:00',true
 insert into work_time values(500,'2021-07-22','11:00:00','09:30:00',500,502);
 insert into work_time values(501,'2021-07-22','11:00:00','09:30:00',504,506);//-------------------------
 
+insert into action_patient_pharmacy values(507,501);
+insert into action_patient_pharmacy values(507,503);
+insert into action_patient_pharmacy values(507,504);
+insert into action_patient_pharmacy values(508,501);
+insert into action_patient_pharmacy values(508,504);
+insert into action_patient_pharmacy values(510,502);
+insert into action_patient_pharmacy values(510,501);
+insert into action_patient_pharmacy values(510,500);
 
 
 

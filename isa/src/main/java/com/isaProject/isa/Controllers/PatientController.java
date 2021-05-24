@@ -7,12 +7,18 @@ import com.isaProject.isa.Model.Drugs.Drug;
 import com.isaProject.isa.Model.Pharmacy.Pharmacy;
 import com.isaProject.isa.Model.Users.Patient;
 import com.isaProject.isa.Services.Implementations.PatientService;
+import com.isaProject.isa.Services.Implementations.PharmacyService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @RestController
 @CrossOrigin("*")
@@ -23,6 +29,9 @@ public class PatientController {
 
     @Autowired
     private PatientService patientService;
+
+    @Autowired
+    private PharmacyService pharmacyService;
 
     @GetMapping(value = "/findById/{id}")
     public ResponseEntity<Patient> findById(@PathVariable Integer id) {
@@ -48,6 +57,16 @@ public class PatientController {
         patientService.update(patient);
         return new ResponseEntity<>("ajdeee", HttpStatus.CREATED);
 
+    }
+    @GetMapping(value = "/findActionPharmacy/{id}")
+    public ResponseEntity<Set<Pharmacy>> findActionPharmacy(@PathVariable Integer id) {
+
+        Patient d= patientService.findById(id);
+        Set<Pharmacy> pharmacies=new HashSet<>();
+        pharmacies=d.getActionPharmacies();
+        return d == null ?
+                new ResponseEntity<>(HttpStatus.NOT_FOUND) :
+                ResponseEntity.ok(pharmacies);
     }
     
 

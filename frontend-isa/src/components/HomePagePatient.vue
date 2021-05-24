@@ -5,17 +5,18 @@
                      <label style="color:#474A8A;font-size:35px;" align = "center">Patient profile</label>
 
         <div style="background: #B0B3D6; height: 80px;">
-            <button class="btn btn-danger btn-lg" style="float:left;margin-left:20px;margin:10px;margin-top:15px" v-on:click = "myProfile">Profile</button>
-           <button class="btn btn-danger btn-lg" style="float:left;margin-top:15px" v-on:click = "showPharmacies">Pharmacies</button>
+          <button class="btn btn-danger btn-lg" style="float:left;margin-left:20px;margin-top:15px" v-on:click = "showPharmacies">Home</button>
+            <button class="btn btn-danger btn-lg" style="float:left;margin-top:15px;margin-left:10px" v-on:click = "myProfile">Profile</button>
+           
            <button class="btn btn-danger btn-lg" style="float:left;margin-top:15px;margin-left:10px" v-on:click = "showReservation">Drug reservation</button>
            
                                   
         </div>
 
-<!--PHARMACIES!-->
-  <div v-if="showTable"  style="margin-left:0px;">
-     <h4 style="margin:30px">PHARMACIES:</h4>    
- <div style="background: #a7c1c9; width: 700px;margin-left:300px;"  v-for="pharmacy in this.pharmacies"  v-bind:key="pharmacy.idPharm">
+<!-- all PHARMACIES!-->
+  <div v-if="showTable"  style="float:left;margin-left:30px;">
+     <h4 style="margin:30px">ALL PHARMACIES:</h4>    
+ <div style="background: #a7c1c9; width: 500px;margin-left:50px;"  v-for="pharmacy in this.pharmacies"  v-bind:key="pharmacy.idPharm">
       
 <table  style="" id="table2" class="table" >
  
@@ -41,6 +42,35 @@
            </div>
 
       </div>   
+      <!--PHARMACIES TO WHICH YOU SUBSCRIBE-->
+  <div v-if="showTable"  style="float:right;margin-left:30px;">
+     <h4 style="margin-bottom:30px;margin-top:30px;margin-right:60px">PHARMACIES TO WHICH YOU SUBSCRIBE:</h4>    
+ <div style="background: #a7c1c9; width: 500px;margin-right:50px;"  v-for="pharmacy in this.pharmacies1"  v-bind:key="pharmacy.idPharm">
+      
+<table  style="" id="table2" class="table" >
+ 
+    <tbody>
+      <tr>
+        <th scope="row"></th>
+        <td><router-link :to="{ path: '/Home/'+pharmacy.idPharm}" v-slot="{href, navigate}" custom>
+           <b-link style="font-size: 30px;margin-left:50px;" :href="href" @click="navigate"  elevation="1">
+              {{pharmacy.name}}
+            </b-link >
+         </router-link></td>
+      <td>Grade:{{pharmacy.avgGrade}} </td>
+      </tr>
+    <tr>
+      <th></th>
+      <td >Address  </td>   
+       <td>{{pharmacy.address}}</td>
+
+    </tr>
+   
+  </tbody>
+</table>
+           </div>
+
+      </div> 
 <!--ACTUAL Reservation!-->
   <div v-if="showReserveTable"  style="float:left;margin-left:30px;">
      <h4 style="margin:30px">ACTUAL RESERVATION:</h4>    
@@ -173,9 +203,10 @@ export default {
     return {
         patient: {},
 
-        showTable:false,
+        showTable:true,
         showReserveTable:false,
         pharmacies : [],
+        pharmacies1 : [],
         reservations:[],
         pickedReservations:[],
         canceledReservations:[],
@@ -189,6 +220,14 @@ export default {
     this.axios.get('/pharmacy/findAll')
         .then(response => {
                 this.pharmacies = response.data;
+                
+         }).catch(res => {
+                alert("Nesto ne valja");
+                console.log(res);
+        });
+         this.axios.get('/patient/findActionPharmacy/'+this.id)
+        .then(response => {
+                this.pharmacies1 = response.data;
                 
          }).catch(res => {
                 alert("Nesto ne valja");

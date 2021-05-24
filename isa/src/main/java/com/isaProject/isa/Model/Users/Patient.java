@@ -7,6 +7,7 @@ import com.isaProject.isa.Model.Drugs.Drug;
 import com.isaProject.isa.Model.Drugs.DrugReservation;
 import com.isaProject.isa.Model.Examination.Examination;
 import com.isaProject.isa.Model.Pharmacy.Complaint;
+import com.isaProject.isa.Model.Pharmacy.Pharmacy;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -43,6 +44,13 @@ public class Patient extends User{
     //@JsonBackReference
     private Set<Examination> examinations = new HashSet<Examination>();
 
+    //apoteke na koje je pretplacen
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "action_patient_pharmacy",
+            joinColumns = @JoinColumn(name = "patientId", referencedColumnName = "idUser"),
+            inverseJoinColumns = @JoinColumn(name = "pharmacyId", referencedColumnName = "idPharm"))
+    private Set<Pharmacy> actionPharmacies = new HashSet<>();
+
     public Patient() {
     }
 
@@ -54,6 +62,17 @@ public class Patient extends User{
         this.allergies = allergies;
         this.drugReservation = drugReservation;
         this.examinations = examinations;
+    }
+
+    public Patient(Integer idUser, String name, String surname, String email, String password, String address, String phoneNumber, String city, String country, int penalty, int points, String loyaltyCategory, Set<Drug> allergies, Set<DrugReservation> drugReservation, Set<Examination> examinations, Set<Pharmacy> actionPharmacies) {
+        super(idUser, name, surname, email, password, address, phoneNumber, city, country);
+        this.penalty = penalty;
+        this.points = points;
+        this.loyaltyCategory = loyaltyCategory;
+        this.allergies = allergies;
+        this.drugReservation = drugReservation;
+        this.examinations = examinations;
+        this.actionPharmacies = actionPharmacies;
     }
 
     public int getPenalty() {
@@ -102,6 +121,14 @@ public class Patient extends User{
 
     public void setExaminations(Set<Examination> examinations) {
         this.examinations = examinations;
+    }
+
+    public Set<Pharmacy> getActionPharmacies() {
+        return actionPharmacies;
+    }
+
+    public void setActionPharmacies(Set<Pharmacy> actionPharmacies) {
+        this.actionPharmacies = actionPharmacies;
     }
 
     /*
