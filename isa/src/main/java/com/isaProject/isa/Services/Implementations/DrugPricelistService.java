@@ -28,6 +28,18 @@ public class DrugPricelistService implements IDrugPricelistService {
     @Autowired
     DrugRepository drugRepository1;
 
+    @Override
+    public DrugPricelist findByIdDrugAndIdPharmacy(Integer idDrug,Integer idPharmacy){
+        List<DrugPricelist>drugPricelists=drugRepository.findAll();
+        for(DrugPricelist d:drugPricelists){
+            if (d.getDrug().getIdDrug().equals(idDrug)&&d.getPharmacy().getIdPharm().equals(idPharmacy)){
+                return  d;
+            }
+        }
+        return null;
+    }
+
+
 
     @Override
     public List<DrugPricelist> findAll() {

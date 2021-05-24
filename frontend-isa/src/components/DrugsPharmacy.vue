@@ -85,7 +85,7 @@
          </router-link>
 
 
-<button class="btn btn-primary btn-lg" style="margin-left:60px; margin-top:42px;background:#474A8A">Delete drug</button>
+<button class="btn btn-primary btn-lg" v-on:click = "canceling(d.idDrug)" style="margin-left:60px; margin-top:42px;background:#474A8A">Delete drug</button>
 
                 </form>
       </div>
@@ -181,7 +181,7 @@ export default {
        drugName: null,
       showDrugs: true,
       showDrugsTable:false,
-
+        jel:false,
        medications:{}
 
        
@@ -218,6 +218,27 @@ export default {
                        console.log(res);
                  });
       }
+      ,
+      canceling:
+       function(date){
+       this.axios.get('/drugPricelist/delete/'+date+"/"+this.id)
+        .then(response => {
+                this.jel = response.data;
+                if(this.jel){
+                    alert("Lijek je izbrisan!") 
+
+                }else{
+                   alert("Brisanje nije moguce") 
+                }
+                
+         }).catch(res => {
+                alert("Nesto ne valja");
+                console.log(res);
+        });
+
+
+       }
+      
 
 
 
