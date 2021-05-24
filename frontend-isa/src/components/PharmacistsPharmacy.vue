@@ -60,6 +60,8 @@
     
   </tbody>
                         </table>
+                                                <button class="btn btn-primary btn-lg" v-on:click = "canceling(d.idUser)" style="margin-left:30px; margin-top:42px;background:#474A8A">Delete pharmacist</button>
+
                 </form>
       
       
@@ -95,6 +97,28 @@ export default {
     }
      ,
       methods:{
+        canceling:
+       function(date){
+       this.axios.get('/pharmacist/delete/'+date)
+        .then(response => {
+                this.jeste = response.data;
+                if(this.jeste=="Pharmacist is not  deleted"){
+                                      alert("Pharmacist is not  deleted") 
+
+                }
+                if(this.jeste=="Pharmacist is successfully deleted"){
+                                      alert("Pharmacist is successfully deleted") 
+
+                }
+                
+
+         }).catch(res => {
+                alert("Nesto ne valja");
+                console.log(res);
+        });
+
+
+       }
     
       
       }

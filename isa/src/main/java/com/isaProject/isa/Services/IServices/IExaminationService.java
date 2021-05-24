@@ -8,4 +8,5 @@ import java.util.List;
 public interface IExaminationService {
 
     List<Examination> findAll ();
+    Boolean getExaminationByIdStaff(Integer idPharmacist);
 }

@@ -20,4 +20,18 @@ public class ExaminationService implements IExaminationService {
     public List<Examination> findAll() {
         return examinationRepository.findAll();
     }
+
+    @Override
+    public Boolean getExaminationByIdStaff(Integer idPharmacist){
+
+        List<Examination> lista=examinationRepository.findAll();
+        for(Examination e:lista){
+            if (e.getStaff().getIdUser().equals(idPharmacist)){
+                return true;
+            }
+        }
+        return  false;
+
+    }
+
 }
