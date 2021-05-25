@@ -15,6 +15,6 @@ public interface IDermatologistService {
     Dermatologist save(DermatologistDTO dermatologist);
     String delete(Dermatologist dermatologist);
 
-
+     void update(Dermatologist dermatologist);
 
 }

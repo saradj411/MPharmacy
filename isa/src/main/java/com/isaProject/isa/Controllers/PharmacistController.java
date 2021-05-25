@@ -216,7 +216,13 @@ public class PharmacistController {
 
 
 
+    @PostMapping("/updatePharmacist")
+    ResponseEntity<String> update(@RequestBody Pharmacist pharmacist)
+    {
+        pharmacistService.update(pharmacist);
+        return new ResponseEntity<>("ajdeee", HttpStatus.CREATED);
 
+    }
 
 
 

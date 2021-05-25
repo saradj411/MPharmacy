@@ -7,6 +7,7 @@ import com.isaProject.isa.Model.Drugs.DrugPricelist;
 import com.isaProject.isa.Model.Examination.Examination;
 import com.isaProject.isa.Model.Users.Dermatologist;
 import com.isaProject.isa.Model.Users.Pharmacist;
+import com.isaProject.isa.Model.Users.PharmacyAdmin;
 import com.isaProject.isa.Model.Users.WorkTime;
 import com.isaProject.isa.Repositories.DermatologistRepository;
 import com.isaProject.isa.Repositories.ExaminationRepository;
@@ -42,6 +43,19 @@ public class PharmacistService implements IPharamacistService {
     public @Autowired
     ExaminationService examinationService;
 
+    @Override
+    public void update(Pharmacist pharmacist) {
+        Pharmacist pa = pharmacistRepository.getOne(pharmacist.getIdUser());
+        pa.setName(pharmacist.getName());
+        pa.setSurname(pharmacist.getSurname());
+        pa.setAddress(pharmacist.getAddress());
+        pa.setCity(pharmacist.getCity());
+        pa.setCountry(pharmacist.getCountry());
+        pa.setPhoneNumber(pharmacist.getPhoneNumber());
+        pa.setPassword(pharmacist.getPassword());
+        pa.setEmail(pharmacist.getEmail());
+        pharmacistRepository.save(pa);
+    }
 
     @Override
     public String delete(Pharmacist pharmacist) {// ne moze izbrisati farmaceute koji imaju zakazane preglede
