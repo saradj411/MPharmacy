@@ -4,6 +4,7 @@ import com.isaProject.isa.Model.DTO.*;
 import com.isaProject.isa.Model.Drugs.Drug;
 import com.isaProject.isa.Model.Pharmacy.Pharmacy;
 import com.isaProject.isa.Model.Users.Dermatologist;
+import com.isaProject.isa.Repositories.ExaminationRepository;
 import com.isaProject.isa.Services.Implementations.DermatologistService;
 import com.isaProject.isa.Services.Implementations.DrugService;
 import com.isaProject.isa.Model.Examination.Examination;
@@ -31,8 +32,6 @@ import java.util.*;
 public class DermatologistControler {
 
 
-    @Autowired
-    private DermatologistService dermatologistService;
 
     @Autowired
     private WorkTimeService workTimeService;
@@ -52,6 +51,10 @@ public class DermatologistControler {
     Set<WorkTime> tajm = new HashSet<WorkTime>();
 
     Set<Pharmacy> pharmOfDerm = new HashSet<Pharmacy>();
+    @Autowired
+    ExaminationRepository examinationRepository;
+    @Autowired
+    DermatologistService dermatologistService;
 
 
 
@@ -62,6 +65,8 @@ public class DermatologistControler {
         return new ResponseEntity<>("ajdeee", HttpStatus.CREATED);
 
     }
+
+
     @PostMapping("/searchDermatologistName/{id}")
     public ResponseEntity<List<Dermatologist>> findAllP(@PathVariable Integer id, @RequestBody SearchDermatologistDTO dto) {
         List<Dermatologist> dermatologists = dermatologistService.findAll();
@@ -105,6 +110,25 @@ public class DermatologistControler {
                 new ResponseEntity<>(HttpStatus.NOT_FOUND) :
                 ResponseEntity.ok(dermatologists);
     }
+
+    @GetMapping(value = "/findAllPatient/{id}")
+    public ResponseEntity<Set<PatientDTO>> findAllPatients(@PathVariable Integer id) {
+        /*List<Patient> patients=dermatologistService.findAllPatients(id);
+        for(Patient p:patients){
+            System.out.println("Usao u repozitorijum .Pacijent je :"+p.getName());
+        }
+        return patients == null ?
+                new ResponseEntity<>(HttpStatus.NOT_FOUND) :
+                ResponseEntity.ok(patients);
+
+         */
+        Set<PatientDTO>list=dermatologistService.findAllPatients(id);
+        return list == null ?
+                new ResponseEntity<>(HttpStatus.NOT_FOUND) :
+                ResponseEntity.ok(list);
+
+    }
+
 
     @GetMapping(value = "/findById/{id}")
     public ResponseEntity<Dermatologist> findById(@PathVariable Integer id) {

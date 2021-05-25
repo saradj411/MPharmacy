@@ -24,6 +24,7 @@ import updateMyProfile from '../components/updateMyProfile.vue'
 import updateDrug from '../components/updateDrug.vue'
 import updatePharmacistProfile from '../components/updatePharmacistProfile.vue'
 import updateDermatologistProfile from '../components/updateDermatologistProfile.vue'
+import DermatologistPatients from '../components/DermatologistPatients.vue'
 
 
 
@@ -64,6 +65,12 @@ const routes = [
       ,
       {
         path: '/ProfilePatient',
+        name: 'ProfilePatient',
+        component: ProfilePatient
+      }
+      ,
+      {
+        path: '/ProfilePatient/:id',
         name: 'ProfilePatient',
         component: ProfilePatient
       },
@@ -155,8 +162,12 @@ const routes = [
         name: 'updateDermatologistProfile',
         component: updateDermatologistProfile
       }
-      
-      
+      ,
+      {
+        path: '/DermatologistPatients/:id',
+        name: 'DermatologistPatients',
+        component: DermatologistPatients
+      }
     ]
 
 

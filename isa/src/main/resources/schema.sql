@@ -152,9 +152,7 @@ insert into examination values(501,false,'2021-07-22','11:00:00',false,880,'info
 
 insert into examination values(503,false,'2021-07-22','11:00:00',false,880,'info2','09:30:00','CREATED','PHARMACIST_EXAMINATION',508,500,502,504);
 insert into examination values(504,false,'2021-07-22','11:00:00',true,880,'info2','09:30:00','CREATED','PHARMACIST_EXAMINATION',507,504,506,502);//--------------------
-insert into examination values(505,false,'2021-07-22','11:00:00',true,1000,'info2','09:30:00','CREATED','PHARMACIST_EXAMINATION',510,500,600,502);//--------------------
-insert into examination values(506,false,'2021-07-22','11:00:00',false,1000,'info2','09:30:00','CREATED','PHARMACIST_EXAMINATION',510,501,511,501);//--------------------
-
+insert into examination values(505,false,'2021-07-22','11:00:00',true,880,'info2','09:30:00','CREATED','DERMATOLOGIST_EXAMINATION',508,501,501,null);
 
 insert into work_time values(500,'2021-07-22','11:00:00','09:30:00',500,502);
 insert into work_time values(501,'2021-07-22','11:00:00','09:30:00',504,506);//-------------------------

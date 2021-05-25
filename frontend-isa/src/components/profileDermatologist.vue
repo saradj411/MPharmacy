@@ -12,7 +12,12 @@
                   <button class = "btn btn-primary btn-xs" style="margin:auto; margin-left:38px;background:#474A8A " :href="href" @click="navigate" elevation="1">Update profile</button>
                </router-link>
             </span>
-                                  
+                     <span style="float: left; margin-top: 20px;">         
+                              
+                  <button class = "btn btn-primary btn-xs" style="margin:auto; margin-left:38px;background:#474A8A" v-on:click = "profile">Dermatologist clients </button>
+                     </span>
+        
+    
         </div>
 
         <div style=" margin: auto; width: 50%;margin-top:45px;">
@@ -108,6 +113,8 @@ export default {
   },
   
   mounted() {
+
+        
         this.axios.get('dermatologist/findById/'+501,{ 
              
          }).then(response => {
@@ -121,6 +128,9 @@ export default {
                  
 },
   methods:{
+    profile : function(){
+          window.location.href = '/DermatologistPatients/'+501;//pacijenti dermatologa sa id 501
+        }
 }
 }
 </script>
