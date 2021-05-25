@@ -120,7 +120,7 @@ public class DrugReservationController {
     ResponseEntity<String> update(@RequestBody DrugReservation dR)
     {
 
-        drugReservationService.update(dR);
+        drugReservationService.canceling(dR);
         return new ResponseEntity<>("ajdeee", HttpStatus.CREATED);
 
     }

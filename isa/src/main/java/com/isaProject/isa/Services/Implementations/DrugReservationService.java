@@ -73,7 +73,7 @@ public class DrugReservationService implements IDrugReservationService {
 
     }
     @Override
-    public void update(DrugReservation drugReservation) {
+    public void canceling(DrugReservation drugReservation) {
         DrugReservation pat = drugRepository.getOne(drugReservation.getIdReservation());
 
 

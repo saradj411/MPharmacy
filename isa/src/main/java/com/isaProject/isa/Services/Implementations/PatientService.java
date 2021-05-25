@@ -3,6 +3,7 @@ package com.isaProject.isa.Services.Implementations;
 import com.isaProject.isa.Model.DTO.ChangePasswordDTO;
 import com.isaProject.isa.Model.DTO.DrugDTO;
 import com.isaProject.isa.Model.Drugs.Drug;
+import com.isaProject.isa.Model.Drugs.ERecipe;
 import com.isaProject.isa.Model.Examination.Examination;
 import com.isaProject.isa.Model.Examination.ExaminationType;
 import com.isaProject.isa.Model.Pharmacy.Pharmacy;
@@ -14,6 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -101,6 +103,19 @@ public class PatientService implements IPatientService {
                 }
             }
         }
+        return dermExaminations;
+    }
+
+    @Override
+    public List<ERecipe> findERecipe(Integer id) {
+        Patient patient=patientRepository.findById(id).get();
+        Set<ERecipe> recepies=new HashSet<>();
+        recepies=patient.getErecipes();
+        List<ERecipe> dermExaminations=new ArrayList<>();
+        for(ERecipe er:recepies){
+            dermExaminations.add(er);
+        }
+
         return dermExaminations;
     }
 

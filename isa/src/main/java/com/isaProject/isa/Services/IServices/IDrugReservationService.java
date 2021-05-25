@@ -10,6 +10,6 @@ public interface IDrugReservationService {
     List<DrugReservation> findByIdPatient(Patient id);
     DrugReservation findById(Integer id);
     List<DrugReservation> findByIsPickedUp(Boolean isPickedUp);
-    void update(DrugReservation drugReservation);
+    void canceling(DrugReservation drugReservation);
 
 }

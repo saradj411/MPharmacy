@@ -11,6 +11,7 @@
            <button class="btn btn-danger btn-lg" style="float:left;margin-top:15px;margin-left:10px" v-on:click = "showReservation">Drug reservation</button>
             <button class="btn btn-danger btn-lg" style="float:left;margin-top:15px;margin-left:10px" v-on:click = "showConsultation">Consultation</button>
             <button class="btn btn-danger btn-lg" style="float:left;margin-top:15px;margin-left:10px" v-on:click = "showExamination">Examination</button>
+           <button class="btn btn-danger btn-lg" style="float:left;margin-top:15px;margin-left:10px" v-on:click = "showRecipe">eRecipe</button>
            
                                   
         </div>
@@ -271,6 +272,64 @@
 
 
       </div> 
+
+
+       <!--eRECEPIE!-->
+  <div v-if="showERecipe"  style="float:left;margin-left:30px;">
+     <h4 style="margin:30px">eRECEPIE:</h4>    
+ <div style="background: #a7c1c9;margin-left:30px;"  v-for="recipe in this.recepies"  v-bind:key="recipe.idRecipe">
+      
+<table  style="" id="table2" class="table" >
+ 
+    <tbody>
+        <tr>
+        <th scope="row"></th>
+         <td style="font-size:25px;font-weight:bold;">Code:</td>
+          <td style="font-size:25px;font-weight:bold;">{{recipe.code}}</td>
+      </tr>
+  
+        <tr>
+          <th></th>
+          <td>Pharmacy:</td>
+          <td>{{recipe.pharmacy.name}}</td>
+          
+
+        </tr>
+      
+        <tr>
+          <th></th>
+          <td >Issued:</td>   
+          <td>{{recipe.dateOfIssue | formatDate}}</td>
+          
+
+        </tr>
+        <tr>
+          <th></th>
+          <td >Status: </td>
+          <td>{{recipe.status}}</td>
+        <td></td>
+
+        </tr>
+        <tr>
+          <th></th>
+          <td >Drugs: </td>
+          <td></td>
+        <td></td>
+
+        </tr>
+         <tr v-for="cc in recipe.eRecipeDrug" v-bind:key="cc.id">
+          <th></th>
+          <td >{{cc.name}}-{{cc.code}}</td>
+          <td>Quantity:{{cc.quantity}}</td>
+        <td></td>
+
+        </tr>
+  </tbody>
+</table>
+           </div>
+
+
+      </div> 
 </div>
 
   
@@ -288,6 +347,7 @@ export default {
         showReserveTable:false,
         showDermExam:false,
         showPharmExam:false,
+        showERecipe:false,
 
         pharmacies : [],
         pharmacies1 : [],
@@ -295,6 +355,7 @@ export default {
         reservations:[],
         dermatologistScheduledExamination:[],
         pharmacistScheduledExamination:[],
+        recepies:[],
 
 
         pickedReservations:[],
@@ -314,6 +375,8 @@ export default {
                 alert("Nesto ne valja");
                 console.log(res);
         });
+
+
          this.axios.get('/patient/findActionPharmacy/'+this.id)
         .then(response => {
                 this.pharmacies1 = response.data;
@@ -322,6 +385,7 @@ export default {
                 alert("Nesto ne valja");
                 console.log(res);
         });
+
 
          this.axios.get('/reservation/findById/'+this.id)
         .then(response => {
@@ -364,6 +428,15 @@ export default {
                 alert("Nesto ne valja");
                 console.log(res);
         });
+
+         this.axios.get('/patient/findERecipe/'+this.id)
+        .then(response => {
+                this.recepies= response.data;
+                
+         }).catch(res => {
+                alert("Nesto ne valja");
+                console.log(res);
+        });
                
 },
 methods:{
@@ -375,6 +448,7 @@ methods:{
         this.showReserveTable=false
         this.showDermExam=false
         this.showPharmExam=false
+        this.showERecipe=false
        //this.showSearchPharmacy=true
       },
       showReservation:
@@ -383,6 +457,7 @@ methods:{
         this.showReserveTable=true
         this.showDermExam=false
         this.showPharmExam=false
+         this.showERecipe=false
       },
       showConsultation:
        function(){
@@ -390,6 +465,14 @@ methods:{
         this.showReserveTable=false
         this.showDermExam=false
         this.showPharmExam=true
+         this.showERecipe=false
+      },
+      showRecipe: function(){
+        this.showTable=false
+        this.showReserveTable=false
+       this.showDermExam=false
+       this.showPharmExam=false
+        this.showERecipe=true
       },
       showExamination:
        function(){
@@ -397,6 +480,7 @@ methods:{
         this.showReserveTable=false
        this.showDermExam=true
        this.showPharmExam=false
+        this.showERecipe=false
       },
       canceling:
        function(res,date){

@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.isaProject.isa.Model.Drugs.Drug;
 import com.isaProject.isa.Model.Drugs.DrugReservation;
+import com.isaProject.isa.Model.Drugs.ERecipe;
 import com.isaProject.isa.Model.Examination.Examination;
 import com.isaProject.isa.Model.Pharmacy.Complaint;
 import com.isaProject.isa.Model.Pharmacy.Pharmacy;
@@ -43,6 +44,10 @@ public class Patient extends User{
     @OneToMany(mappedBy = "patient", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     //@JsonBackReference
     private Set<Examination> examinations = new HashSet<Examination>();
+
+    @OneToMany(mappedBy = "patient", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    //@JsonManagedReference
+    private Set<ERecipe> erecipes = new HashSet<ERecipe>();
 
     //apoteke na koje je pretplacen
     @ManyToMany(fetch = FetchType.LAZY)
@@ -129,6 +134,14 @@ public class Patient extends User{
 
     public void setActionPharmacies(Set<Pharmacy> actionPharmacies) {
         this.actionPharmacies = actionPharmacies;
+    }
+
+    public Set<ERecipe> getErecipes() {
+        return erecipes;
+    }
+
+    public void setErecipes(Set<ERecipe> erecipes) {
+        this.erecipes = erecipes;
     }
 
     /*
