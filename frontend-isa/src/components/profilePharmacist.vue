@@ -7,8 +7,10 @@
         <div style="background: #B0B3D6; height: 80px;">
 
             <span style="float: left; margin-top: 20px;">
-                  <a class = "btn btn-primary btn-xs" style="margin:auto; background:#474A8A " href="/updateProfile">Update profile</a>
-                   
+                  <router-link :to="{ path: '/updatePharmacistProfile/'+user.idUser}" v-slot="{href, navigate}" custom>
+
+                  <button class = "btn btn-primary btn-xs" style="margin:auto; margin-left:38px;background:#474A8A " :href="href" @click="navigate" elevation="1">Update profile</button>
+               </router-link>
             </span>
                                   
         </div>
@@ -92,20 +94,25 @@ export default {
   data() {
     return {
         user: {
-                name : "",
-                surname : "",
-                email : "",
-                password : "",
-                address : "",
-                phoneNumber :"",
-                city : "",
-                country : ""
+               
     },
     pharmacy : {}
     }
   },
   
   mounted() {
+    this.axios.get('/pharmacist/findById/'+511,{ 
+             
+         }).then(response => {
+               this.user=response.data;
+
+         }).catch(res => {
+                       alert("ne valja.");
+                       console.log(res);
+        });
+
+
+
         this.axios.get('pharmacist/findById/'+506,{ 
              
          }).then(response => {

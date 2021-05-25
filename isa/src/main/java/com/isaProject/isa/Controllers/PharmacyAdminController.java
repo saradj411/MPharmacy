@@ -12,6 +12,7 @@ import com.isaProject.isa.Services.Implementations.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -302,10 +303,10 @@ public class PharmacyAdminController {
                 ResponseEntity.ok(d);
     }
 
-    @PostMapping("/updateAdmin")
+    //MediaType.APPLICATION_JSON)
+    @PostMapping(value = "/updateAdmin",consumes={"application/json"})
     ResponseEntity<String> update(@RequestBody PharmacyAdmin pharmacyAdmin)
     {
-
         pharmacyAdminService.update(pharmacyAdmin);
         return new ResponseEntity<>("ajdeee", HttpStatus.CREATED);
 

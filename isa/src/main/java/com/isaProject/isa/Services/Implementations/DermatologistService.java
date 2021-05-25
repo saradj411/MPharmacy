@@ -7,6 +7,7 @@ import com.isaProject.isa.Model.Examination.Examination;
 import com.isaProject.isa.Model.Examination.ExaminationType;
 import com.isaProject.isa.Model.Pharmacy.Pharmacy;
 import com.isaProject.isa.Model.Users.Dermatologist;
+import com.isaProject.isa.Model.Users.Pharmacist;
 import com.isaProject.isa.Model.Users.WorkTime;
 import com.isaProject.isa.Repositories.DermatologistRepository;
 import com.isaProject.isa.Repositories.ExaminationRepository;
@@ -42,6 +43,19 @@ public class DermatologistService implements IDermatologistService {
 
     Set<Pharmacy> pharmOfDerm = new HashSet<Pharmacy>();
 
+    @Override
+    public void update(Dermatologist dermatologist) {
+        Dermatologist pa = dermatologistRepository.getOne(dermatologist.getIdUser());
+        pa.setName(dermatologist.getName());
+        pa.setSurname(dermatologist.getSurname());
+        pa.setAddress(dermatologist.getAddress());
+        pa.setCity(dermatologist.getCity());
+        pa.setCountry(dermatologist.getCountry());
+        pa.setPhoneNumber(dermatologist.getPhoneNumber());
+        pa.setPassword(dermatologist.getPassword());
+        pa.setEmail(dermatologist.getEmail());
+        dermatologistRepository.save(pa);
+    }
 
     @Override
     public String delete(Dermatologist dermatologist) {

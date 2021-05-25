@@ -54,6 +54,14 @@ public class DermatologistControler {
     Set<Pharmacy> pharmOfDerm = new HashSet<Pharmacy>();
 
 
+
+    @PostMapping("/updateDermatologist")
+    ResponseEntity<String> update(@RequestBody Dermatologist dermatologist)
+    {
+        dermatologistService.update(dermatologist);
+        return new ResponseEntity<>("ajdeee", HttpStatus.CREATED);
+
+    }
     @PostMapping("/searchDermatologistName/{id}")
     public ResponseEntity<List<Dermatologist>> findAllP(@PathVariable Integer id, @RequestBody SearchDermatologistDTO dto) {
         List<Dermatologist> dermatologists = dermatologistService.findAll();

@@ -11,6 +11,7 @@ public interface IPharamacistService {
     Pharmacist findById(Integer id);
     List<Pharmacist> findAll ();
     String delete(Pharmacist pharmacist);
+     void update(Pharmacist pharmacist);
 
     Pharmacist save(PharmaceutDTO dto);
 }
