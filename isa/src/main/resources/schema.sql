@@ -151,10 +151,6 @@ insert into examination values(501,false,'2021-07-22','2021-07-22 11:00:00',fals
 insert into examination values(503,false,'2021-07-22','2021-07-22 11:00:00',false,880,'info2','2021-07-22 09:30:00','CREATED','PHARMACIST_EXAMINATION',508,500,502,504);
 insert into examination values(504,false,'2021-07-22','2021-07-22 11:00:00',true,880,'info2','2021-07-22 09:30:00','CREATED','PHARMACIST_EXAMINATION',507,504,506,502);//--------------------
 
-
-insert into work_time values(500,'2021-07-22','11:00:00','09:30:00',500,502);
-insert into work_time values(501,'2021-07-22','11:00:00','09:30:00',504,506);//-------------------------
-
 insert into action_patient_pharmacy values(507,501);
 insert into action_patient_pharmacy values(507,503);
 insert into action_patient_pharmacy values(507,504);

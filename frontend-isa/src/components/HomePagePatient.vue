@@ -9,6 +9,8 @@
             <button class="btn btn-danger btn-lg" style="float:left;margin-top:15px;margin-left:10px" v-on:click = "myProfile">Profile</button>
            
            <button class="btn btn-danger btn-lg" style="float:left;margin-top:15px;margin-left:10px" v-on:click = "showReservation">Drug reservation</button>
+            <button class="btn btn-danger btn-lg" style="float:left;margin-top:15px;margin-left:10px" v-on:click = "showReservation">Consultation</button>
+            <button class="btn btn-danger btn-lg" style="float:left;margin-top:15px;margin-left:10px" v-on:click = "showExamination">Examination</button>
            
                                   
         </div>
@@ -189,7 +191,46 @@
 
       </div> 
 
+<!--SCHEDULED EXAMINATION!-->
+  <div v-if="showDermExam"  style="float:left;margin-left:30px;">
+     <h4 style="margin:30px">SCHEDULED EXAMINATION:</h4>    
+ <div style="background: #a7c1c9;margin-left:30px;"  v-for="examination in this.dermatologistScheduledExamination"  v-bind:key="examination.idExamination">
+      
+<table  style="" id="table2" class="table" >
+ 
+    <tbody>
+        <tr>
+        <th scope="row"></th>
+      <td style="font-size:25px;font-weight:bold;">{{examination.date | formatDate}}</td>
+      <td style="font-size:25px;font-weight:bold;">{{examination.startTime}}-{{examination.endTime}}</td>
+      </tr>
+  
+        <tr>
+          <th></th>
+          <td>Pharmacy:</td>
+          <td>{{examination.pharmacy.name}}</td>
+          
 
+        </tr>
+      
+        <tr>
+          <th></th>
+          <td >Dermatologist:</td>   
+          <td>{{examination.staff.name}} {{examination.staff.surname}} </td>
+
+        </tr>
+        <tr>
+          <th></th>
+          <td style="font-size:25px;">{{examination.price}}RSD </td>
+          <td></td>
+
+        </tr>
+  </tbody>
+</table>
+           </div>
+
+
+      </div> 
 </div>
 
   
@@ -205,9 +246,14 @@ export default {
 
         showTable:true,
         showReserveTable:false,
+        showDermExam:false,
+
         pharmacies : [],
         pharmacies1 : [],
+
         reservations:[],
+        dermatologistScheduledExamination:[],
+
         pickedReservations:[],
         canceledReservations:[],
         id : this.$route.params.id,
@@ -259,6 +305,14 @@ export default {
                 alert("Nesto ne valja");
                 console.log(res);
         });
+         this.axios.get('/patient/findSheduledDermatologistExamination/'+this.id)
+        .then(response => {
+                this.dermatologistScheduledExamination = response.data;
+                
+         }).catch(res => {
+                alert("Nesto ne valja");
+                console.log(res);
+        });
                
 },
 methods:{
@@ -268,13 +322,20 @@ methods:{
        showPharmacies: function(){
         this.showTable=true
         this.showReserveTable=false
+        this.showDermExam=false
        // this.showSearchPharmacy=true
       },
       showReservation:
        function(){
         this.showTable=false
         this.showReserveTable=true
-       // this.showSearchPharmacy=true
+        this.showDermExam=false
+      },
+      showExamination:
+       function(){
+        this.showTable=false
+        this.showReserveTable=false
+       this.showDermExam=true
       },
       canceling:
        function(res,date){

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.isaProject.isa.Model.DTO.ChangePasswordDTO;
 import com.isaProject.isa.Model.DTO.DrugDTO;
 import com.isaProject.isa.Model.Drugs.Drug;
+import com.isaProject.isa.Model.Examination.Examination;
 import com.isaProject.isa.Model.Pharmacy.Pharmacy;
 import com.isaProject.isa.Model.Users.Patient;
 import com.isaProject.isa.Services.Implementations.PatientService;
@@ -67,6 +68,16 @@ public class PatientController {
         return d == null ?
                 new ResponseEntity<>(HttpStatus.NOT_FOUND) :
                 ResponseEntity.ok(pharmacies);
+    }
+
+    @GetMapping(value = "/findSheduledDermatologistExamination/{id}")
+    public ResponseEntity<Set<Examination>> findSheduledDermatologistExamination(@PathVariable Integer id) {
+
+        Set<Examination> d= patientService.findSheduledDermatologistExamination(id);
+
+        return d == null ?
+                new ResponseEntity<>(HttpStatus.NOT_FOUND) :
+                ResponseEntity.ok(d);
     }
     
 

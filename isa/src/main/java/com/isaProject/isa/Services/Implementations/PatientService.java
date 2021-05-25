@@ -3,6 +3,8 @@ package com.isaProject.isa.Services.Implementations;
 import com.isaProject.isa.Model.DTO.ChangePasswordDTO;
 import com.isaProject.isa.Model.DTO.DrugDTO;
 import com.isaProject.isa.Model.Drugs.Drug;
+import com.isaProject.isa.Model.Examination.Examination;
+import com.isaProject.isa.Model.Examination.ExaminationType;
 import com.isaProject.isa.Model.Pharmacy.Pharmacy;
 import com.isaProject.isa.Model.Users.Patient;
 import com.isaProject.isa.Repositories.DrugRepository;
@@ -12,6 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -62,6 +65,25 @@ public class PatientService implements IPatientService {
         pat.setPenalty(patient.getPenalty());
 
         patientRepository.save(pat);
+    }
+
+    @Override
+    public Set<Examination> findSheduledDermatologistExamination(Integer id) {
+       Patient patient=patientRepository.findById(id).get();
+        Set<Examination> examinations=new HashSet<>();
+        Set<Examination> dermExaminations=new HashSet<>();
+        examinations=patient.getExaminations();
+        for (Examination e:examinations){
+
+            if(e.getScheduled()){
+
+                if(e.getType().compareTo(ExaminationType.DERMATOLOGIST_EXAMINATION)==0){
+                    System.out.println("usloo");
+                    dermExaminations.add(e);
+                }
+            }
+        }
+        return dermExaminations;
     }
 
 }

@@ -53,12 +53,12 @@ public class Examination {
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     @JoinColumn(name = "patient", referencedColumnName = "idUser")
-    //@JsonManagedReference
+    //@JsonBackReference
     private Patient patient;
 
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "staffId", referencedColumnName = "idUser")
-    //@JsonManagedReference
+    //@JsonBackReference
     private Staff staff;
 
     //kod dermatologa, kod farmaceuta
@@ -80,11 +80,11 @@ public class Examination {
         return idExamination;
     }
 
-    public boolean isCanceled() {
+    public Boolean isCanceled() {
         return canceled;
     }
 
-    public void setCanceled(boolean canceled) {
+    public void setCanceled(Boolean canceled) {
         this.canceled = canceled;
     }
 
