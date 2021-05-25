@@ -85,7 +85,7 @@
          </router-link>
 
 
-<button class="btn btn-primary btn-lg" style="margin-left:60px; margin-top:42px;background:#474A8A">Delete drug</button>
+<button class="btn btn-primary btn-lg" v-on:click = "canceling(d.idDrug)" style="margin-left:60px; margin-top:42px;background:#474A8A">Delete drug</button>
 
                 </form>
       </div>
@@ -100,11 +100,11 @@
 
 
 
+
 <!-- pretraga lijeka!-->
 <div v-if="showDrugsTable"  style="margin-left:0px;">
      <h4 style="margin:30px;color:black;">Search results:</h4>    
- <div style="background: #B0B3D6; width: 700px;margin-left:380px;"  v-for="dd in this.medications"  v-bind:key="dd.idDrug">
-      
+ <div style="background: #B0B3D6; width: 700px;margin-left:380px;" v-for="d in this.medications"  v-bind:key="d.idDrug">
        <table align = "center" id="table2" class="table"  >
 
                        <tbody>
@@ -112,39 +112,39 @@
     <tr style="font-size:22px;color:#0D184F;">
       <th></th>
       <td >Name:</td>   
-       <td>{{dd.name}}</td>
+       <td>{{d.drug.name}}</td>
     
     </tr>
     <tr style="font-size:22px;color:#0D184F;">
       <th></th>
       <td >Code:</td>   
-       <td>{{dd.code}}</td>
+       <td>{{d.drug.code}}</td>
     
     </tr>   
     
     <tr style="font-size:22px;color:#0D184F;">
       <th></th>
       <td >Recipe need:</td>   
-       <td>{{dd.recipeNeed}}</td>
+       <td>{{d.drug.recipeNeed}}</td>
     
     </tr>
     <tr style="font-size:22px;color:#0D184F;">
       <th></th>
       <td >Type drug:</td>   
-       <td>{{dd.drugType}}</td>
+       <td>{{d.drug.drugType}}</td>
     
     </tr>
     
     <tr style="font-size:22px;color:#0D184F;">
       <th></th>
       <td >Fromat drug:</td>   
-       <td>{{dd.format}}</td>
+       <td>{{d.drug.format}}</td>
     
     </tr>
     <tr style="font-size:22px;color:#0D184F;">
       <th></th>
       <td >Manufacturer:</td>   
-       <td>{{dd.manufacturer}}</td>
+       <td>{{d.drug.manufacturer}}</td>
     
     </tr>
 
@@ -155,8 +155,6 @@
            </div>
 
       </div>   
-
-
 
 
 
@@ -181,8 +179,8 @@ export default {
        drugName: null,
       showDrugs: true,
       showDrugsTable:false,
-
-       medications:{}
+        jel:false,
+       medications:[]
 
        
     }
@@ -211,13 +209,34 @@ export default {
                 this.showDrugs = false;
                 this.showDrugsTable = true;
                 this.medications= response.data;
-
+                
        
           }).catch(res => {
-                       alert("Please first choose allergy!");
+                       alert("necee!");
                        console.log(res);
                  });
       }
+      ,
+      canceling:
+       function(date){
+       this.axios.get('/drugPricelist/delete/'+date+"/"+this.id)
+        .then(response => {
+                this.jel = response.data;
+                if(this.jel){
+                    alert("Lijek je izbrisan!") 
+
+                }else{
+                   alert("Brisanje nije moguce") 
+                }
+                
+         }).catch(res => {
+                alert("Nesto ne valja");
+                console.log(res);
+        });
+
+
+       }
+      
 
 
 

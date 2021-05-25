@@ -77,8 +77,9 @@ insert into user values ('PATIENT',508,'Backa','Novi Sad','Srbija','ana@gmail.co
 insert into user values ('DERMATOLOGIST',509,'Cara Milosa','Novi Sad','Srbija','urosm@gmail.com','Uros','lozinka9','066589335','Milenkovic',10.2,'Regular',0,0,null,null);
 insert into user values ('PATIENT',510,'Bulevar cara Lazara','Novi Sad','Srbija','luna@gmail.com','Luna','lozinka10','066589371','Mikic',4.8,'Gold',3,1,null,null);
 insert into user values ('PHARMACIST',511,'Bulevar kneza Milosa','Novi Sad','Srbija','maki@gmail.com','Maki','lozinka11','066589111','Djuric',4.8,'Regular',0,0,501,null);
-
-insert into user values ('PHARMACIST',600,'Bulevar kneza Milosa','Novi Sad','Srbija','sara@gmail.com','Sara','lozinka2','066589111','Djuric',4.8,'Regular',0,0,500,null);
+insert into user values ('PHARMACIST',333,'Bulevar kneza Milosa','Novi Sad','Srbija','sara@gmail.com','Sara','lozinka2','066589111','Djuric',4.8,'Regular',0,0,501,null);
+insert into user values ('PHARMACIST',559,'Bulevar kneza Milosa','Novi Sad','Srbija','veki@gmail.com','Veki','pasword','066589111','V',4.8,'Regular',0,0,501,null);
+insert into user values ('DERMATOLOGIST',533,'Cara Milosa','Novi Sad','Srbija','ivanm@gmail.com','Ivan','lozinka9','066589335','Milenkovic',10.2,'Regular',0,0,null,null);
 
 
 
@@ -87,6 +88,7 @@ insert into user values ('PHARMACIST',600,'Bulevar kneza Milosa','Novi Sad','Srb
 insert into dermatologists_in_pharmacies values(501,501);
 insert into dermatologists_in_pharmacies values(504,501);
 insert into dermatologists_in_pharmacies values(509,503);
+insert into dermatologists_in_pharmacies values(533,501);
 
 #alternative_drug
 #id drug,id alternativni drug
@@ -145,11 +147,13 @@ insert into therapy values(505,506);
 #examination
 
 #id,date,endtime,isSheduled true znaci zakazan je vec,cijena,report-info o preg,starttime,status,tip,pacijent,idpharm,idstaf,idterapi
-insert into examination values(500,false,'2021-06-20','2021-06-20 09:00:00',true,600,'info1','2021-06-20 08:00:00','CREATED','DERMATOLOGIST_EXAMINATION',510,501,501,500);
-insert into examination values(501,false,'2021-07-22','2021-07-22 11:00:00',false,880,'info2','2021-07-22 09:30:00','CREATED','DERMATOLOGIST_EXAMINATION',508,501,504,504);
+insert into examination values(500,false,'2021-06-20','09:00:00',true,600,'info1','08:00:00','CREATED','DERMATOLOGIST_EXAMINATION',510,501,501,500);
+insert into examination values(501,false,'2021-07-22','11:00:00',false,880,'info2','09:30:00','CREATED','DERMATOLOGIST_EXAMINATION',508,501,504,504);
 
-insert into examination values(503,false,'2021-07-22','2021-07-22 11:00:00',false,880,'info2','2021-07-22 09:30:00','CREATED','PHARMACIST_EXAMINATION',508,500,502,504);
-insert into examination values(504,false,'2021-07-22','2021-07-22 11:00:00',true,880,'info2','2021-07-22 09:30:00','CREATED','PHARMACIST_EXAMINATION',507,504,506,502);//--------------------
+insert into examination values(503,false,'2021-07-22','11:00:00',false,880,'info2','09:30:00','CREATED','PHARMACIST_EXAMINATION',508,500,502,504);
+insert into examination values(504,false,'2021-07-22','11:00:00',true,880,'info2','09:30:00','CREATED','PHARMACIST_EXAMINATION',507,504,506,502);//--------------------
+insert into examination values(505,false,'2021-07-22','11:00:00',true,1000,'info2','09:30:00','CREATED','PHARMACIST_EXAMINATION',510,500,600,502);//--------------------
+insert into examination values(506,false,'2021-07-22','11:00:00',false,1000,'info2','09:30:00','CREATED','PHARMACIST_EXAMINATION',510,501,511,501);//--------------------
 
 
 insert into work_time values(500,'2021-07-22','11:00:00','09:30:00',500,502);
