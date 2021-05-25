@@ -22,6 +22,10 @@ import DrugPricelist from '../components/DrugPricelist.vue'
 import DrugsPharmacy from '../components/DrugsPharmacy.vue'
 import updateMyProfile from '../components/updateMyProfile.vue'
 import updateDrug from '../components/updateDrug.vue'
+import updatePharmacistProfile from '../components/updatePharmacistProfile.vue'
+import updateDermatologistProfile from '../components/updateDermatologistProfile.vue'
+
+
 
 import moment from 'moment'
 
@@ -138,9 +142,21 @@ const routes = [
         name: 'HomePagePatient',
         component: HomePagePatient
 
+      },
+      {
+        path: '/updatePharmacistProfile/:id',
+        name: 'updatePharmacistProfile',
+        component: updatePharmacistProfile
+
+      }
+      ,
+      {
+        path: '/updateDermatologistProfile/:id',
+        name: 'updateDermatologistProfile',
+        component: updateDermatologistProfile
       }
       
-
+      
     ]
 
 

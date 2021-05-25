@@ -3,7 +3,13 @@ package com.isaProject.isa.Services.Implementations;
 
 import com.isaProject.isa.Model.DTO.DrugDTO;
 import com.isaProject.isa.Model.Drugs.Drug;
+import com.isaProject.isa.Model.Drugs.DrugPricelist;
+import com.isaProject.isa.Model.Pharmacy.Pharmacy;
+import com.isaProject.isa.Model.Users.PharmacyAdmin;
+import com.isaProject.isa.Repositories.DrugPricelistRepository;
 import com.isaProject.isa.Repositories.DrugRepository;
+import com.isaProject.isa.Repositories.PharmacyAdminRepository;
+import com.isaProject.isa.Repositories.PharmacyRepository;
 import com.isaProject.isa.Services.IServices.IDrugService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +27,17 @@ public class DrugService implements IDrugService {
 
     @Autowired
     DrugRepository drugRepository;
+    @Autowired
+    PharmacyAdminRepository pharmacyAdminRepository;
+
+    @Autowired
+    DrugPricelistRepository drugPricelistRepository;
+    @Autowired
+    DrugPricelistService drugPricelistService   ;
+
+    @Autowired
+    PharmacyRepository pharmacyRepository;
+
 
     List<Drug> d=new List<Drug>() {
         @Override
@@ -138,6 +155,28 @@ public class DrugService implements IDrugService {
             return null;
         }
     };
+    @Override
+    public Boolean remove(Drug medication, Integer idPharm) {//izbrisi lijek iz te i te apoteke ako lijek nije rezervisan
+
+
+        Pharmacy pharmacy=pharmacyRepository.findOneByIdPharm(idPharm);
+      //  System.out.println("admin jeeeeee "+pharmacyAdmin.getPharmacy().getIdPharm());//503
+      //  Pharmacy pharmacy=pharmacyAdmin.getPharmacy();//da iz apoteke iizbrisem lijek
+        System.out.println("pharmacyy jeee "+pharmacy.getIdPharm());//504
+        for (Drug drug : drugRepository.findAll()) {
+            if (drug.getIdDrug() == medication.getIdDrug()){
+                DrugPricelist drugPricelist= drugPricelistService.findByIdDrugAndIdPharmacy(medication.getIdDrug(),pharmacy.getIdPharm());
+                System.out.println("drugPricelest list id jeee "+drugPricelist.getPharmacy().getIdPharm());//501
+
+                drugPricelistRepository.delete(drugPricelist);
+                System.out.println("id prielist jeeeee"+drugPricelist.getIdPricelist());
+                return true;
+
+
+            }
+        }
+        return false;
+    }
 
     @Override
     public Drug findById(Integer id) {

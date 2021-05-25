@@ -1,8 +1,6 @@
 package com.isaProject.isa.Controllers;
 
-import com.isaProject.isa.Model.DTO.DermatologistDTO;
-import com.isaProject.isa.Model.DTO.PharmaceutDTO;
-import com.isaProject.isa.Model.DTO.WorkTimeDTO;
+import com.isaProject.isa.Model.DTO.*;
 import com.isaProject.isa.Model.Drugs.Drug;
 import com.isaProject.isa.Model.Pharmacy.Pharmacy;
 import com.isaProject.isa.Model.Users.Dermatologist;
@@ -32,6 +30,7 @@ import java.util.*;
 @Slf4j
 public class DermatologistControler {
 
+
     @Autowired
     private DermatologistService dermatologistService;
 
@@ -53,6 +52,44 @@ public class DermatologistControler {
     Set<WorkTime> tajm = new HashSet<WorkTime>();
 
     Set<Pharmacy> pharmOfDerm = new HashSet<Pharmacy>();
+
+
+
+    @PostMapping("/updateDermatologist")
+    ResponseEntity<String> update(@RequestBody Dermatologist dermatologist)
+    {
+        dermatologistService.update(dermatologist);
+        return new ResponseEntity<>("ajdeee", HttpStatus.CREATED);
+
+    }
+    @PostMapping("/searchDermatologistName/{id}")
+    public ResponseEntity<List<Dermatologist>> findAllP(@PathVariable Integer id, @RequestBody SearchDermatologistDTO dto) {
+        List<Dermatologist> dermatologists = dermatologistService.findAll();
+        System.out.println("ime sa fronta je " + dto.getName());
+        System.out.println("prezime sa fronta je " + dto.getSurame());
+
+        ArrayList<Dermatologist> newP = new ArrayList<>();
+
+        for (Dermatologist d : dermatologists) {
+            for (Pharmacy p : d.getPharmacies()) {
+                if (p.getIdPharm().equals(id)) {
+                    if (d.getSurname().toLowerCase().contains(dto.getSurame().toLowerCase()) && d.getName().toLowerCase().contains(dto.getName().toLowerCase())) {
+                        newP.add(d);
+                    }
+                  }
+
+                }
+            }
+            return newP == null ?
+                    new ResponseEntity<>(HttpStatus.NOT_FOUND) :
+                    ResponseEntity.ok(newP);
+        }
+
+
+
+
+
+
 
 
     @GetMapping(value = "/findAll")
@@ -77,6 +114,13 @@ public class DermatologistControler {
                 new ResponseEntity<>(HttpStatus.NOT_FOUND) :
                 ResponseEntity.ok(d);
     }
+    @GetMapping("/delete/{id}")
+    public ResponseEntity<String> deleteDermatologist(@PathVariable Integer id) {
+        Dermatologist dermatologist = dermatologistService.findById(id);
+        String answer = dermatologistService.delete(dermatologist);
+        return new ResponseEntity<>(answer, HttpStatus.ACCEPTED);
+    }
+
 
     @GetMapping(value = "/getDermatologists/{id}")
     public ResponseEntity<List<Dermatologist>> findAll(@PathVariable Integer id) {
@@ -159,4 +203,14 @@ public class DermatologistControler {
 
         return new ResponseEntity<>("kreirano", HttpStatus.CREATED);
     }
+
+
+
+
+
+
+
+
+
+
 }

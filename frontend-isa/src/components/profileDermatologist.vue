@@ -4,11 +4,13 @@
      background-size: 150% 111%;  height: 1100px">
                      <label style="color:#474A8A;font-size:35px;" align = "center">Dermatologist profile</label>
 
-        <div style="background: #B0B3D6; height: 80px;">
+       <div style="background: #B0B3D6; height: 80px;">
 
             <span style="float: left; margin-top: 20px;">
-                  <a class = "btn btn-primary btn-xs" style="margin:auto; background:#474A8A " href="/updateProfile">Update profile</a>
-                   
+                  <router-link :to="{ path: '/updateDermatologistProfile/'+user.idUser}" v-slot="{href, navigate}" custom>
+
+                  <button class = "btn btn-primary btn-xs" style="margin:auto; margin-left:38px;background:#474A8A " :href="href" @click="navigate" elevation="1">Update profile</button>
+               </router-link>
             </span>
                                   
         </div>

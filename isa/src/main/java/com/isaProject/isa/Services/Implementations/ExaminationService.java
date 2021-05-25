@@ -32,6 +32,7 @@ public class ExaminationService implements IExaminationService {
     }
 
     @Override
+
     public void canceling(Integer id) {
         Examination pat = examinationRepository.getOne(id);
 
@@ -41,6 +42,17 @@ public class ExaminationService implements IExaminationService {
 
 
         examinationRepository.save(pat);
+    }
+    public Boolean getExaminationByIdStaff(Integer idPharmacist){
+
+        List<Examination> lista=examinationRepository.findAll();
+        for(Examination e:lista){
+            if (e.getStaff().getIdUser().equals(idPharmacist)){
+                return true;
+            }
+        }
+        return  false;
+
     }
 
 }
