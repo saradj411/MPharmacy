@@ -9,7 +9,7 @@
             <button class="btn btn-danger btn-lg" style="float:left;margin-top:15px;margin-left:10px" v-on:click = "myProfile">Profile</button>
            
            <button class="btn btn-danger btn-lg" style="float:left;margin-top:15px;margin-left:10px" v-on:click = "showReservation">Drug reservation</button>
-            <button class="btn btn-danger btn-lg" style="float:left;margin-top:15px;margin-left:10px" v-on:click = "showReservation">Consultation</button>
+            <button class="btn btn-danger btn-lg" style="float:left;margin-top:15px;margin-left:10px" v-on:click = "showConsultation">Consultation</button>
             <button class="btn btn-danger btn-lg" style="float:left;margin-top:15px;margin-left:10px" v-on:click = "showExamination">Examination</button>
            
                                   
@@ -191,7 +191,47 @@
 
       </div> 
 
-<!--SCHEDULED EXAMINATION!-->
+<!--SCHEDULED PHARMACisct EXAMINATION!-->
+  <div v-if="showPharmExam"  style="float:left;margin-left:30px;">
+     <h4 style="margin:30px">SCHEDULED EXAMINATION:</h4>    
+ <div style="background: #a7c1c9;margin-left:30px;"  v-for="examination1 in this.pharmacistScheduledExamination"  v-bind:key="examination1.idExamination">
+      
+<table  style="" id="table2" class="table" >
+ 
+    <tbody>
+        <tr>
+        <th scope="row"></th>
+      <td style="font-size:25px;font-weight:bold;">{{examination1.date | formatDate}}</td>
+      <td style="font-size:25px;font-weight:bold;">{{examination1.startTime}}-{{examination1.endTime}}</td>
+      </tr>
+  
+        <tr>
+          <th></th>
+          <td>Pharmacy:</td>
+          <td>{{examination1.pharmacy.name}}</td>
+          
+
+        </tr>
+      
+        <tr>
+          <th></th>
+          <td >Dermatologist:</td>   
+          <td>{{examination1.staff.name}} {{examination1.staff.surname}} </td>
+
+        </tr>
+        <tr>
+          <th></th>
+          <td style="font-size:25px;">{{examination1.price}}RSD </td>
+          <td></td>
+
+        </tr>
+  </tbody>
+</table>
+           </div>
+
+
+      </div> 
+      <!--SCHEDULED DERMATOLOGIST EXAMINATION!-->
   <div v-if="showDermExam"  style="float:left;margin-left:30px;">
      <h4 style="margin:30px">SCHEDULED EXAMINATION:</h4>    
  <div style="background: #a7c1c9;margin-left:30px;"  v-for="examination in this.dermatologistScheduledExamination"  v-bind:key="examination.idExamination">
@@ -247,12 +287,15 @@ export default {
         showTable:true,
         showReserveTable:false,
         showDermExam:false,
+        showPharmExam:false,
 
         pharmacies : [],
         pharmacies1 : [],
 
         reservations:[],
         dermatologistScheduledExamination:[],
+        pharmacistScheduledExamination:[],
+
 
         pickedReservations:[],
         canceledReservations:[],
@@ -313,6 +356,14 @@ export default {
                 alert("Nesto ne valja");
                 console.log(res);
         });
+         this.axios.get('/patient/findSheduledPharmacistExamination/'+this.id)
+        .then(response => {
+                this.pharmacistScheduledExamination= response.data;
+                
+         }).catch(res => {
+                alert("Nesto ne valja");
+                console.log(res);
+        });
                
 },
 methods:{
@@ -323,19 +374,29 @@ methods:{
         this.showTable=true
         this.showReserveTable=false
         this.showDermExam=false
-       // this.showSearchPharmacy=true
+        this.showPharmExam=false
+       //this.showSearchPharmacy=true
       },
       showReservation:
        function(){
         this.showTable=false
         this.showReserveTable=true
         this.showDermExam=false
+        this.showPharmExam=false
+      },
+      showConsultation:
+       function(){
+        this.showTable=false
+        this.showReserveTable=false
+        this.showDermExam=false
+        this.showPharmExam=true
       },
       showExamination:
        function(){
         this.showTable=false
         this.showReserveTable=false
        this.showDermExam=true
+       this.showPharmExam=false
       },
       canceling:
        function(res,date){

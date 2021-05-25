@@ -13,5 +13,7 @@ public interface IPatientService {
     void saveAllergy(Integer idDrug,Integer idPatient);
     void update(Patient patient);
     Set<Examination> findSheduledDermatologistExamination(Integer id);
+    Set<Examination> findSheduledPharmacistExamination(Integer id);
+
 
 }

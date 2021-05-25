@@ -79,7 +79,15 @@ public class PatientController {
                 new ResponseEntity<>(HttpStatus.NOT_FOUND) :
                 ResponseEntity.ok(d);
     }
-    
+    @GetMapping(value = "/findSheduledPharmacistExamination/{id}")
+    public ResponseEntity<Set<Examination>> findSheduledPharmacistExamination(@PathVariable Integer id) {
+
+        Set<Examination> d= patientService.findSheduledPharmacistExamination(id);
+
+        return d == null ?
+                new ResponseEntity<>(HttpStatus.NOT_FOUND) :
+                ResponseEntity.ok(d);
+    }
 
 
 }

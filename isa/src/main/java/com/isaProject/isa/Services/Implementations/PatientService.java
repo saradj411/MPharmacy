@@ -85,6 +85,24 @@ public class PatientService implements IPatientService {
         }
         return dermExaminations;
     }
+    @Override
+    public Set<Examination> findSheduledPharmacistExamination(Integer id) {
+        Patient patient=patientRepository.findById(id).get();
+        Set<Examination> examinations=new HashSet<>();
+        Set<Examination> dermExaminations=new HashSet<>();
+        examinations=patient.getExaminations();
+        for (Examination e:examinations){
+
+            if(e.getScheduled()){
+
+                if(e.getType().compareTo(ExaminationType.PHARMACIST_EXAMINATION)==0){
+                    System.out.println("usloo ovdjee");
+                    dermExaminations.add(e);
+                }
+            }
+        }
+        return dermExaminations;
+    }
 
 }
 
