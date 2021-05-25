@@ -1,12 +1,22 @@
 package com.isaProject.isa.Services.Implementations;
 
+import com.isaProject.isa.Model.Drugs.DrugReservation;
 import com.isaProject.isa.Model.Examination.Examination;
+import com.isaProject.isa.Model.Examination.ExaminationStatus;
 import com.isaProject.isa.Repositories.ExaminationRepository;
 import com.isaProject.isa.Services.IServices.IExaminationService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -22,6 +32,17 @@ public class ExaminationService implements IExaminationService {
     }
 
     @Override
+
+    public void canceling(Integer id) {
+        Examination pat = examinationRepository.getOne(id);
+
+
+        pat.setCanceled(true);
+        pat.setStatus(ExaminationStatus.CANCELED);
+
+
+        examinationRepository.save(pat);
+    }
     public Boolean getExaminationByIdStaff(Integer idPharmacist){
 
         List<Examination> lista=examinationRepository.findAll();
