@@ -8,5 +8,9 @@ import java.util.List;
 public interface IExaminationService {
 
     List<Examination> findAll ();
+
+    void canceling(Integer id);
+
     Boolean getExaminationByIdStaff(Integer idPharmacist);
+
 }

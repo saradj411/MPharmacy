@@ -161,6 +161,37 @@ insert into work_time values(501,'2021-07-22','11:00:00','09:30:00',504,506);//-
 
 
 
+insert into examination values(505,false,'2021-07-22','11:00:00',true,1000,'info2','09:30:00','CREATED','PHARMACIST_EXAMINATION',510,500,600,502);//--------------------
+insert into examination values(506,false,'2021-07-22','11:00:00',false,1000,'info2','09:30:00','CREATED','PHARMACIST_EXAMINATION',510,501,511,501);//--------------------
+
+insert into examination values(502,false,'2021-06-20','2021-06-20 09:00:00',true,600,'info1','2021-06-20 08:00:00','SCHEDULED','DERMATOLOGIST_EXAMINATION',508,501,501,null);
+insert into examination values(505,false,'2021-07-22','2021-07-22 11:00:00',true,880,'info2','2021-07-22 09:30:00','SCHEDULED','DERMATOLOGIST_EXAMINATION',508,501,504,null);
+
+insert into examination values(506,false,'2021-07-22','2021-07-22 11:00:00',true,880,'info2','2021-07-22 09:30:00','SCHEDULED','DERMATOLOGIST_EXAMINATION',508,501,501,null);
+insert into examination values(507,false,'2021-07-23','2021-07-23 11:00:00',true,880,'info2','2021-07-23 09:30:00','SCHEDULED','DERMATOLOGIST_EXAMINATION',508,501,504,null);//--------------------
+
+insert into action_patient_pharmacy values(507,501);
+insert into action_patient_pharmacy values(507,503);
+insert into action_patient_pharmacy values(507,504);
+insert into action_patient_pharmacy values(508,501);
+insert into action_patient_pharmacy values(508,504);
+insert into action_patient_pharmacy values(510,502);
+insert into action_patient_pharmacy values(510,501);
+insert into action_patient_pharmacy values(510,500);
+
+insert into erecipe values(500,"12345",'2021-05-24','Ana',"NEW",'Mikic',508,500);//--------------------
+insert into erecipe values(501,"12346",'2021-05-22','Ana',"NEW",'Mikic',508,500);//--------------------
+
+insert into erecipe_drug values(500,"sifra 1",'probiotik',7,501);//--------------------
+insert into erecipe_drug values(501,"sifra 2",'paracetamol',8,501);//--------------------
+insert into erecipe_drug values(502,"sifra 1",'probiotik',9,501);//--------------------
+insert into erecipe_drug values(503,"sifra 2",'paracetamol',11,501);//--------------------
+
+
+insert into erecipe_e_recipe_drug values(500,501);
+insert into erecipe_e_recipe_drug values(500,500);
+insert into erecipe_e_recipe_drug values(501,502);
+insert into erecipe_e_recipe_drug values(501,503);
 
 
 
