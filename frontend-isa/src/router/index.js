@@ -6,13 +6,11 @@ import Login from '../components/Login.vue'
 import createDrugPage from '../components/createDrugPage.vue'
 import Registration from '../components/Registration.vue'
 import HomePagePatient from '../components/HomePagePatient.vue'
-
 import ProfileAdmin from '../components/ProfileAdmin.vue'
 import ProfilePatient from '../components/ProfilePatient.vue'
 import updatePharmacyProfile from '../components/updatePharmacyProfile.vue'
 import UpdatePatientProfil from '../components/UpdatePatientProfil.vue'
 import AddAllergies from '../components/AddAllergies.vue'
-
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
 import profileDermatologist from '../components/profileDermatologist.vue'
 import profilePharmacist from '../components/profilePharmacist.vue'
@@ -25,7 +23,7 @@ import updateDrug from '../components/updateDrug.vue'
 import updatePharmacistProfile from '../components/updatePharmacistProfile.vue'
 import updateDermatologistProfile from '../components/updateDermatologistProfile.vue'
 import DermatologistPatients from '../components/DermatologistPatients.vue'
-
+import RequestForVacation from '../components/RequestForVacation.vue'
 
 
 import moment from 'moment'
@@ -167,7 +165,14 @@ const routes = [
         path: '/DermatologistPatients/:id',
         name: 'DermatologistPatients',
         component: DermatologistPatients
+      },
+      {
+        path: '/RequestForVacation/:id',
+        name: 'RequestForVacation',
+        component: RequestForVacation
       }
+
+      
     ]
 
 

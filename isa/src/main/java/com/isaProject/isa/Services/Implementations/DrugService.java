@@ -33,7 +33,7 @@ public class DrugService implements IDrugService {
     @Autowired
     DrugPricelistRepository drugPricelistRepository;
     @Autowired
-    DrugPricelistService drugPricelistService   ;
+    DrugPricelistService drugPricelistService;
 
     @Autowired
     PharmacyRepository pharmacyRepository;
