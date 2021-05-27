@@ -24,6 +24,7 @@ import updatePharmacistProfile from '../components/updatePharmacistProfile.vue'
 import updateDermatologistProfile from '../components/updateDermatologistProfile.vue'
 import DermatologistPatients from '../components/DermatologistPatients.vue'
 import RequestForVacation from '../components/RequestForVacation.vue'
+import CreatePurchaseOrder from '../components/CreatePurchaseOrder.vue'
 
 
 import moment from 'moment'
@@ -171,7 +172,13 @@ const routes = [
         name: 'RequestForVacation',
         component: RequestForVacation
       }
-
+      ,
+      {
+        path: '/CreatePurchaseOrder/:id',
+        name: 'CreatePurchaseOrder',
+        component: CreatePurchaseOrder
+      }
+      
       
     ]
 

@@ -52,6 +52,9 @@ public class PharmacyAdmin extends User {
         this.drugOrder = drugOrder;
     }
 
+    public void setDrugOrder(Set<DrugOrder> drugOrder) {
+        this.drugOrder = drugOrder;
+    }
 /*
         Napomena: Jedna apoteka može da ima više administratora, a jedan
         administrator može biti administrator samo jedne apoteke.

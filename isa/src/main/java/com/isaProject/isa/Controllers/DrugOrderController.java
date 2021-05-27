@@ -1,6 +1,7 @@
 package com.isaProject.isa.Controllers;
 
 import com.isaProject.isa.Model.DTO.DrugOrderDTO;
+import com.isaProject.isa.Model.DTO.OrderItemDTO;
 import com.isaProject.isa.Model.Drugs.DrugOrder;
 import com.isaProject.isa.Services.Implementations.DrugOrderService;
 import lombok.extern.slf4j.Slf4j;
@@ -26,21 +27,21 @@ public class DrugOrderController {
     @PostMapping("/create")
     ResponseEntity<String> create(@RequestBody DrugOrderDTO drugOrderDTO)
     {
-        if(drugOrderDTO.getTimeLimit() ==null){
-            throw new IllegalArgumentException("Expiry date has to be defined.");
+        System.out.println("Datum je "+drugOrderDTO.getTimeLimit());
+        System.out.println("admin je "+drugOrderDTO.getPharmacyAdmin().getName());
+        System.out.println("id admina je "+drugOrderDTO.getPharmacyAdmin().getIdUser());
+
+        for(OrderItemDTO o:drugOrderDTO.getOrderItemDTO()){
+            System.out.println(o.getDrug().getName());
+            System.out.println(o.getQuantity());
+
         }
-     /*
-        if(!(drugOrderDTO.getTimeLimit().toString().matches("\\d{4}-\\d{2}-\\d{2}"))) {
-            throw new IllegalArgumentException("Date has to be in format YYYY-MM-DD.");
-        }
-*/
-        DrugOrder order = drugOrderService.createDrugOrder(drugOrderDTO);
+
+        DrugOrder order = drugOrderService.save(drugOrderDTO);
         if(order != null) {
             return new ResponseEntity<>("Order is successfully published!", HttpStatus.CREATED);
         }else {
             return new ResponseEntity<>("Please try later.", HttpStatus.CREATED);
         }
-
-        // return null;
     }
 }

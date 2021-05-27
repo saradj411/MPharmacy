@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.isaProject.isa.Model.Users.PharmacyAdmin;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -22,8 +23,8 @@ public class DrugOrder {
     //do kad se primaju ponude
     @Column
     @Basic
-    @Temporal(TemporalType.DATE)
-    private Date timeLimit;//********************
+    //@Temporal(TemporalType.DATE)
+    private LocalDate timeLimit;//********************
 
 
     //statusu narudžbenice (čeka ponude, obrađena)
@@ -34,7 +35,8 @@ public class DrugOrder {
     //@JsonBackReference
     private Set<OrderItem> orderItems = new HashSet<OrderItem>();//************
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    //PROMJENA MERGEEEEEE
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     @JoinColumn(name = "admin", referencedColumnName = "idUser")
     //@JsonManagedReference
     private PharmacyAdmin pharmacyAdmin;//***********
@@ -51,7 +53,7 @@ public class DrugOrder {
         return quantity;
     }
 
-    public Date getTimeLimit() {
+    public LocalDate getTimeLimit() {
         return timeLimit;
     }
 
@@ -71,15 +73,15 @@ public class DrugOrder {
         return offers;
     }
 
-    public void setIdOrder(Integer idOrder) {
+    /*public void setIdOrder(Integer idOrder) {
         this.idOrder = idOrder;
-    }
+    }*/
 
     public void setQuantity(Integer quantity) {
         this.quantity = quantity;
     }
 
-    public void setTimeLimit(Date timeLimit) {
+    public void setTimeLimit(LocalDate timeLimit) {
         this.timeLimit = timeLimit;
     }
 
@@ -99,7 +101,7 @@ public class DrugOrder {
         this.offers = offers;
     }
 
-    public DrugOrder(Integer idOrder, Integer quantity, Date timeLimit, Boolean processed, Set<OrderItem> orderItems, PharmacyAdmin pharmacyAdmin, Set<Offer> offers) {
+    public DrugOrder(Integer idOrder, Integer quantity, LocalDate timeLimit, Boolean processed, Set<OrderItem> orderItems, PharmacyAdmin pharmacyAdmin, Set<Offer> offers) {
         this.idOrder = idOrder;
         this.quantity = quantity;
         this.timeLimit = timeLimit;
@@ -108,7 +110,7 @@ public class DrugOrder {
         this.pharmacyAdmin = pharmacyAdmin;
         this.offers = offers;
     }
-    public DrugOrder(Integer idOrder,Date timeLimit, Boolean processed, Set<OrderItem> orderItems, PharmacyAdmin pharmacyAdmin, Set<Offer> offers) {
+    public DrugOrder(Integer idOrder,LocalDate timeLimit, Boolean processed, Set<OrderItem> orderItems, PharmacyAdmin pharmacyAdmin, Set<Offer> offers) {
         this.idOrder = idOrder;
         this.timeLimit = timeLimit;
         this.processed = processed;
