@@ -6,6 +6,7 @@ import com.isaProject.isa.Model.Examination.Examination;
 import com.isaProject.isa.Model.Examination.ExaminationStatus;
 import com.isaProject.isa.Model.Examination.ExaminationType;
 import com.isaProject.isa.Repositories.ExaminationRepository;
+import com.isaProject.isa.Repositories.PatientRepository;
 import com.isaProject.isa.Services.IServices.IExaminationService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,8 @@ public class ExaminationService implements IExaminationService {
 
     @Autowired
     ExaminationRepository examinationRepository;
+    @Autowired
+    PatientRepository patientRepository;
 
     @Override
     public List<Examination> findAll() {
@@ -75,5 +78,18 @@ public class ExaminationService implements IExaminationService {
         }
         return  newList;
     }
+
+    @Override
+    public void scheduledDermatologistExamination(Integer idPatient, Integer idExamination) {
+        Examination pat = examinationRepository.getOne(idExamination);
+
+
+        pat.setStatus(ExaminationStatus.SCHEDULED);
+        pat.setScheduled(true);
+        pat.setPatient(patientRepository.getOne(idPatient));
+
+        examinationRepository.save(pat);
+    }
+
 
 }

@@ -349,7 +349,7 @@
         <tr>
           <th></th>
           <td style="font-size:25px;font-weight:bold;">{{ex.startTime}}-{{ex.endTime}}</td>
-          <td></td>
+          <td><button class="btn btn-danger btn-sm" v-on:click = "schedule(ex.idExamination)">Schedule</button></td>
           
 
         </tr>
@@ -568,6 +568,21 @@ methods:{
                 }else{
                    alert("otkazivanje nije moguce") 
                 }
+                
+         }).catch(res => {
+                alert("Nesto ne valja");
+                console.log(res);
+        });
+
+      },
+
+
+      schedule:
+       function(idExamination){
+       this.axios.post('/examination/patientScheduledDermatologistExamination/'+this.id+'/'+idExamination)
+        .then(response => {
+                this.jel = response.data;
+                alert("Examination is scheduled.Check your email!")
                 
          }).catch(res => {
                 alert("Nesto ne valja");

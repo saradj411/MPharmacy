@@ -15,4 +15,6 @@ public interface IExaminationService {
     Boolean getExaminationByIdStaff(Integer idPharmacist);
     List<FrontCreatedExaminationDTO> findCreatedDermatologistExamination();
 
+    void scheduledDermatologistExamination(Integer idPatient,Integer idExamination);
+
 }

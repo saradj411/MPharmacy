@@ -38,4 +38,13 @@ public class ExaminationController {
                 new ResponseEntity<>(HttpStatus.NOT_FOUND) :
                 ResponseEntity.ok(pharm);
     }
+
+    @PostMapping("/patientScheduledDermatologistExamination/{id}/{idExamination}")
+    ResponseEntity<String> scheduledDermatologistExamination(@PathVariable Integer id,@PathVariable Integer idExamination)
+    {
+
+        examinationService.scheduledDermatologistExamination(id,idExamination);
+        return new ResponseEntity<>("ajdeee", HttpStatus.CREATED);
+
+    }
 }
