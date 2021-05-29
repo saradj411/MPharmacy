@@ -211,7 +211,7 @@
         <tr>
           <th></th>
           <td>Pharmacy:</td>
-          <td>{{examination1.pharmacy.name}}</td>
+          <td>{{examination1.namePharmacy}}</td>
           
 
         </tr>
@@ -219,7 +219,7 @@
         <tr>
           <th></th>
           <td >Dermatologist:</td>   
-          <td>{{examination1.staff.name}} {{examination1.staff.surname}} </td>
+          <td>{{examination1.nameStaff}} {{examination1.surnameStaff}} </td>
 
         </tr>
         <tr>
@@ -251,7 +251,7 @@
         <tr>
           <th></th>
           <td>Pharmacy:</td>
-          <td>{{examination.pharmacy.name}}</td>
+          <td>{{examination.namePharmacy}}</td>
           
 
         </tr>
@@ -259,7 +259,7 @@
         <tr>
           <th></th>
           <td >Dermatologist:</td>   
-          <td>{{examination.staff.name}} {{examination.staff.surname}} </td>
+          <td>{{examination.nameStaff}} {{examination.surnameStaff}} </td>
 
         </tr>
         <tr>

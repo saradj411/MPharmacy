@@ -28,6 +28,7 @@ public class FrontCreatedExaminationDTO {
     private String surnameStaff;
     private Double gradeStaff;
 
+    private String namePharmacy;
     //private Staff staff;
 
 
@@ -40,6 +41,17 @@ public class FrontCreatedExaminationDTO {
         this.nameStaff = nameStaff;
         this.surnameStaff = surnameStaff;
         this.gradeStaff = gradeStaff;
+    }
+
+    public FrontCreatedExaminationDTO(Integer idExamination, Date date, LocalTime startTime, LocalTime endTime, double price, String nameStaff, String surnameStaff, String namePharmacy) {
+        this.idExamination = idExamination;
+        this.date = date;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.price = price;
+        this.nameStaff = nameStaff;
+        this.surnameStaff = surnameStaff;
+        this.namePharmacy = namePharmacy;
     }
 
     public Integer getIdExamination() {
@@ -105,5 +117,13 @@ public class FrontCreatedExaminationDTO {
 
     public void setGradeStaff(Double gradeStaff) {
         this.gradeStaff = gradeStaff;
+    }
+
+    public String getNamePharmacy() {
+        return namePharmacy;
+    }
+
+    public void setNamePharmacy(String namePharmacy) {
+        this.namePharmacy = namePharmacy;
     }
 }
