@@ -12,5 +12,6 @@ public interface IExaminationService {
     void canceling(Integer id);
 
     Boolean getExaminationByIdStaff(Integer idPharmacist);
+    List<Examination> findCreatedDermatologistExamination();
 
 }
