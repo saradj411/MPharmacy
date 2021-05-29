@@ -1,5 +1,6 @@
 package com.isaProject.isa.Services.Implementations;
 
+import com.isaProject.isa.Model.DTO.FrontCreatedExaminationDTO;
 import com.isaProject.isa.Model.Drugs.DrugReservation;
 import com.isaProject.isa.Model.Examination.Examination;
 import com.isaProject.isa.Model.Examination.ExaminationStatus;
@@ -58,13 +59,17 @@ public class ExaminationService implements IExaminationService {
     }
 
     @Override
-    public List<Examination> findCreatedDermatologistExamination() {
+    public List<FrontCreatedExaminationDTO> findCreatedDermatologistExamination() {
         List<Examination> list=examinationRepository.findAll();
-        List<Examination> newList=new ArrayList<>();
+        List<FrontCreatedExaminationDTO> newList=new ArrayList<>();
         for(Examination e:list){
             if (e.getType().compareTo(ExaminationType.DERMATOLOGIST_EXAMINATION)==0){
                 if(e.getStatus().compareTo(ExaminationStatus.CREATED)==0) {
-                    newList.add(e);
+                    FrontCreatedExaminationDTO exDTO=new FrontCreatedExaminationDTO(e.getIdExamination(),e.getDate(),
+                            e.getStartTime(),e.getEndTime(),e.getPrice(),
+                            e.getStaff().getName(),e.getStaff().getSurname(),e.getStaff().getAvgGrade()
+                    );
+                    newList.add(exDTO);
                 }
             }
         }

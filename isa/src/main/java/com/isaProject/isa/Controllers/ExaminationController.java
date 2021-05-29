@@ -1,5 +1,6 @@
 package com.isaProject.isa.Controllers;
 
+import com.isaProject.isa.Model.DTO.FrontCreatedExaminationDTO;
 import com.isaProject.isa.Model.Drugs.Drug;
 import com.isaProject.isa.Model.Drugs.DrugReservation;
 import com.isaProject.isa.Model.Examination.Examination;
@@ -30,9 +31,9 @@ public class ExaminationController {
 
     }
     @GetMapping(value = "/findCreatedPharmacistExamination")
-    public ResponseEntity<List<Examination>> findCreatedPharmacistExamination() {
+    public ResponseEntity<List<FrontCreatedExaminationDTO>> findCreatedPharmacistExamination() {
         //log.info("dsds:"+id);
-        List<Examination> pharm=examinationService.findCreatedDermatologistExamination();
+        List<FrontCreatedExaminationDTO> pharm=examinationService.findCreatedDermatologistExamination();
         return pharm == null ?
                 new ResponseEntity<>(HttpStatus.NOT_FOUND) :
                 ResponseEntity.ok(pharm);

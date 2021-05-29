@@ -12,7 +12,9 @@
             <button class="btn btn-danger btn-lg" style="float:left;margin-top:15px;margin-left:10px" v-on:click = "showConsultation">Consultation</button>
             <button class="btn btn-danger btn-lg" style="float:left;margin-top:15px;margin-left:10px" v-on:click = "showExamination">Examination</button>
            <button class="btn btn-danger btn-lg" style="float:left;margin-top:15px;margin-left:10px" v-on:click = "showRecipe">eRecipe</button>
+           <button class="btn btn-danger btn-lg" style="float:left;margin-top:15px;margin-left:10px" v-on:click = "showCreatedDerm">Schedule Examination</button>
            
+            
                                   
         </div>
 
@@ -330,6 +332,43 @@
 
 
       </div> 
+
+       <!--CREATED DERMATOLOGIST EXAMINATION!-->
+  <div v-if="showCreatedDermExamination"  style="float:left;margin-left:30px;">
+     <h4 style="margin:30px">Examinations:</h4>
+ <div style="background: #a7c1c9;margin-left:30px;"  v-for="ex in this.dermatologistCreatedExamination"  v-bind:key="ex.idExamination">
+      
+<table  style="" id="table2" class="table" >
+ 
+    <tbody>
+        <tr>
+        <th scope="row"></th>
+         <td style="font-size:25px;font-weight:bold;">{{ex.date | formatDate}}</td>
+          <td style="font-size:25px;font-weight:bold;">{{ex.price}}RSD</td>
+      </tr>
+        <tr>
+          <th></th>
+          <td style="font-size:25px;font-weight:bold;">{{ex.startTime}}-{{ex.endTime}}</td>
+          <td></td>
+          
+
+        </tr>
+        <tr>
+          <th></th>
+          <td>Dermatologist: {{ex.nameStaff}} {{ex.surnameStaff}}</td>
+          <td>Grade dermatologist: {{ex.gradeStaff}}</td>
+          
+
+        </tr>
+      
+       
+        
+  </tbody>
+</table>
+           </div>
+
+
+      </div> 
 </div>
 
   
@@ -348,6 +387,7 @@ export default {
         showDermExam:false,
         showPharmExam:false,
         showERecipe:false,
+        showCreatedDermExamination:false,
 
         pharmacies : [],
         pharmacies1 : [],
@@ -356,6 +396,7 @@ export default {
         dermatologistScheduledExamination:[],
         pharmacistScheduledExamination:[],
         recepies:[],
+        dermatologistCreatedExamination:[],
 
 
         pickedReservations:[],
@@ -437,6 +478,15 @@ export default {
                 alert("Nesto ne valja");
                 console.log(res);
         });
+        this.axios.get('/examination/findCreatedPharmacistExamination')
+        .then(response => {
+                this.dermatologistCreatedExamination= response.data;
+                
+         }).catch(res => {
+                alert("Nesto ne valja");
+                console.log(res);
+        });
+               
                
 },
 methods:{
@@ -449,6 +499,7 @@ methods:{
         this.showDermExam=false
         this.showPharmExam=false
         this.showERecipe=false
+        this.showCreatedDermExamination=false
        //this.showSearchPharmacy=true
       },
       showReservation:
@@ -458,6 +509,7 @@ methods:{
         this.showDermExam=false
         this.showPharmExam=false
          this.showERecipe=false
+         this.showCreatedDermExamination=false
       },
       showConsultation:
        function(){
@@ -466,6 +518,7 @@ methods:{
         this.showDermExam=false
         this.showPharmExam=true
          this.showERecipe=false
+         this.showCreatedDermExamination=false
       },
       showRecipe: function(){
         this.showTable=false
@@ -473,6 +526,7 @@ methods:{
        this.showDermExam=false
        this.showPharmExam=false
         this.showERecipe=true
+        this.showCreatedDermExamination=false
       },
       showExamination:
        function(){
@@ -481,6 +535,16 @@ methods:{
        this.showDermExam=true
        this.showPharmExam=false
         this.showERecipe=false
+        this.showCreatedDermExamination=false
+      },
+      showCreatedDerm:
+       function(){
+        this.showTable=false
+        this.showReserveTable=false
+       this.showDermExam=false
+       this.showPharmExam=false
+        this.showERecipe=false
+        this.showCreatedDermExamination=true
       },
       canceling:
        function(res,date){
