@@ -2,6 +2,7 @@ package com.isaProject.isa.Model.Examination;
 
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.isaProject.isa.Model.Pharmacy.Pharmacy;
 import com.isaProject.isa.Model.Users.Patient;
@@ -55,9 +56,10 @@ public class Examination {
     @JsonBackReference
     private Patient patient;
 
+    @JsonIgnore
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "staffId", referencedColumnName = "id")
-    @JsonBackReference
+    //@JsonBackReference
     private Staff staff;
 
     //kod dermatologa, kod farmaceuta

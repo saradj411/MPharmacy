@@ -1,5 +1,6 @@
 package com.isaProject.isa.Model.Users;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.isaProject.isa.Model.Drugs.Drug;
 import com.isaProject.isa.Model.Drugs.DrugReservation;
@@ -46,6 +47,7 @@ public class Patient extends User{
     private Set<ERecipe> erecipes = new HashSet<ERecipe>();
 
     //apoteke na koje je pretplacen
+    @JsonIgnore
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "action_patient_pharmacy",
             joinColumns = @JoinColumn(name = "patientId", referencedColumnName = "id"),

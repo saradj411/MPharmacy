@@ -14,12 +14,12 @@ public class DrugPricelist implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer idPricelist;
 
-    @JsonIgnore
+    //@JsonIgnore
     @ManyToOne//(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
     @JoinColumn(name = "drugId", referencedColumnName = "idDrug", nullable = true, unique = false)
     //@JsonManagedReference
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "idDrug")
-    @JsonIdentityReference(alwaysAsId = true)
+    //@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "idDrug")
+    //@JsonIdentityReference(alwaysAsId = true)
 
     private Drug drug;
 
@@ -32,13 +32,13 @@ public class DrugPricelist implements Serializable {
     @Column
     private Date end;
 
-    @JsonIgnore
+    //@JsonIgnore
     @ManyToOne//(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
     @JoinColumn(name = "pharmacyId", referencedColumnName = "idPharm", nullable = true, unique = false)
 
     //@JsonManagedReference
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "idPharm")
-    @JsonIdentityReference(alwaysAsId = true)
+    //@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "idPharm")
+    //@JsonIdentityReference(alwaysAsId = true)
 
     private Pharmacy pharmacy;
 

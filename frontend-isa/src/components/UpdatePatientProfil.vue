@@ -129,7 +129,7 @@ export default {
           this.sifra=this.patient.password
         }
            const patientInfo = {
-                     idUser : this.patient.idUser,
+                     id : this.patient.id,
                     name: this.patient.name,
                     surname : this.patient.surname,
                     phoneNumber: this.patient.phoneNumber,
