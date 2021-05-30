@@ -2,9 +2,9 @@
   <div id="app">
     <!--<img alt="Vue logo" src="./assets/logo.png">!-->
     <content transition="slide-x-transition">
-            <router-view></router-view>
-        </content>
-   <!-- <HelloWorld msg="Welcome to Your Vue.js App"/>!-->
+      <router-view></router-view>
+    </content>
+    <!-- <HelloWorld msg="Welcome to Your Vue.js App"/>!-->
   </div>
 </template>
 <!-- 

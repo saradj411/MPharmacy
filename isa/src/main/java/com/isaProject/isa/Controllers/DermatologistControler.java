@@ -21,8 +21,9 @@ import java.util.List;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalTime;
-import java.util.*;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 
 @RestController
@@ -101,7 +102,7 @@ public class DermatologistControler {
     public ResponseEntity<List<Dermatologist>> findAll() {
         List<Dermatologist> dermatologists=dermatologistService.findAll();
         for (Dermatologist d:dermatologists){
-            System.out.println(d.getIdUser());
+            System.out.println(d.getId());
             System.out.println(d.getPharmacies());
 
 

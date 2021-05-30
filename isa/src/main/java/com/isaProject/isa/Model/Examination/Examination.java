@@ -8,7 +8,6 @@ import com.isaProject.isa.Model.Users.Patient;
 import com.isaProject.isa.Model.Users.Staff;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Date;
 
@@ -52,13 +51,13 @@ public class Examination {
     private Pharmacy pharmacy;
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
-    @JoinColumn(name = "patient", referencedColumnName = "idUser")
-    //@JsonBackReference
+    @JoinColumn(name = "patient", referencedColumnName = "id")
+    @JsonBackReference
     private Patient patient;
 
     @ManyToOne(cascade = CascadeType.MERGE)
-    @JoinColumn(name = "staffId", referencedColumnName = "idUser")
-    //@JsonBackReference
+    @JoinColumn(name = "staffId", referencedColumnName = "id")
+    @JsonBackReference
     private Staff staff;
 
     //kod dermatologa, kod farmaceuta

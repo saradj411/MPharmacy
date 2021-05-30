@@ -1,8 +1,7 @@
 package com.isaProject.isa.Model.DTO;
 
-import javax.persistence.Column;
-
 public class UserDTO {
+
 
     private String name;
 
@@ -97,4 +96,5 @@ public class UserDTO {
     public void setCountry(String country) {
         this.country = country;
     }
+
 }

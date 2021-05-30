@@ -20,6 +20,9 @@ import java.util.Set;
 public class PharmacyAdmin extends User {
 
 
+    private static final long serialVersionUID = 1L;
+
+
     @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
     @JoinColumn(name = "adminPharmacy", referencedColumnName = "idPharm", nullable = true, unique = false)
     //@JsonManagedReference

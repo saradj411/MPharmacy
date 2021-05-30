@@ -12,23 +12,23 @@ import java.util.Date;
 @Entity
 @Table
 public class DrugReservation {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer idReservation;
+ @Id
+ @GeneratedValue(strategy = GenerationType.AUTO)
+ private Integer idReservation;
 
-   //da li je preuzet lijek
-    @Column
-    private Boolean isPickedUp;
+ //da li je preuzet lijek
+ @Column
+ private Boolean isPickedUp;
 
-    //da li je otkazan
-    @Column(name = "cancelled", nullable = true)
-    private Boolean cancelled;
+ //da li je otkazan
+ @Column(name = "cancelled", nullable = true)
+ private Boolean cancelled;
 
-    @Column
-    private Integer quantity;
+ @Column
+ private Integer quantity;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "patientId", referencedColumnName = "idUser", nullable = true, unique = false)
+    @JoinColumn(name = "patientId", referencedColumnName = "id", nullable = true, unique = false)
     //@JsonManagedReference
     private Patient patient;
 

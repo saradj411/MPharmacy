@@ -3,8 +3,8 @@ module.exports = {
         port: 3000
     }
 }
-/*
-module.exports = {
+
+/*module.exports = {
     // https://cli.vuejs.org/config/#devserver-proxy
     devServer: {
         port: 3000,
