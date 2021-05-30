@@ -5,14 +5,12 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.isaProject.isa.Model.Drugs.Drug;
 import com.isaProject.isa.Model.Drugs.DrugReservation;
 import com.isaProject.isa.Model.Examination.Examination;
-import com.isaProject.isa.Model.Pharmacy.Complaint;
 
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@DiscriminatorValue("PATIENT")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 
 public class Patient extends User{
@@ -29,7 +27,7 @@ public class Patient extends User{
 
     //Lijekovi na koje je alergican
     @ManyToMany
-    @JoinTable(name = "allergies", joinColumns = @JoinColumn(name="patientId" ,  referencedColumnName  = "idUser"),
+    @JoinTable(name = "allergies", joinColumns = @JoinColumn(name="patientId" ,  referencedColumnName  = "id"),
             inverseJoinColumns = @JoinColumn(name = "drugId", referencedColumnName = "idDrug"))
     private Set<Drug> allergies = new HashSet<Drug>();
 

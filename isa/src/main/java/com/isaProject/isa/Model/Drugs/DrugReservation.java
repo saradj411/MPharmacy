@@ -10,43 +10,43 @@ import java.util.Date;
 @Entity
 @Table
 public class DrugReservation {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer idReservation;
+ @Id
+ @GeneratedValue(strategy = GenerationType.AUTO)
+ private Integer idReservation;
 
-   //da li je preuzet lijek
-    @Column
-    private Boolean isPickedUp;
+ //da li je preuzet lijek
+ @Column
+ private Boolean isPickedUp;
 
-    //da li je otkazan
-    @Column(name = "cancelled", nullable = true)
-    private Boolean cancelled;
+ //da li je otkazan
+ @Column(name = "cancelled", nullable = true)
+ private Boolean cancelled;
 
-    @Column
-    private Integer quantity;
+ @Column
+ private Integer quantity;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "patientId", referencedColumnName = "idUser", nullable = true, unique = false)
-    @JsonBackReference
-    private Patient patient;
+ @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+ @JoinColumn(name = "patientId", referencedColumnName = "id", nullable = true, unique = false)
+ @JsonBackReference
+ private Patient patient;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JsonBackReference
-    @JoinColumn(name = "drugId", referencedColumnName = "idDrug", nullable = true, unique = false)
-    private Drug drug;
+ @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+ @JsonBackReference
+ @JoinColumn(name = "drugId", referencedColumnName = "idDrug", nullable = true, unique = false)
+ private Drug drug;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "pharmacyId", referencedColumnName = "idPharm", nullable = true, unique = false)
-    @JsonBackReference
-    private Pharmacy pharmacy;
+ @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+ @JoinColumn(name = "pharmacyId", referencedColumnName = "idPharm", nullable = true, unique = false)
+ @JsonBackReference
+ private Pharmacy pharmacy;
 
 
-    @Column
-    private Date dateOfReservation;
+ @Column
+ private Date dateOfReservation;
 
-    //do kog datuma će preuzeti lek
-    @Column
-    private Date pickUpDate;
+ //do kog datuma će preuzeti lek
+ @Column
+ private Date pickUpDate;
 
     /* 3.19. Postupak rezervacije leka
 Korisnik pretragom pronalazi lek i bira iz koje apoteke rezerviše lek. Prilikom

@@ -23,7 +23,7 @@ public class Complaint {
     private ComplaintAnswer answer;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "patientId", referencedColumnName = "idUser")
+    @JoinColumn(name = "patientId", referencedColumnName = "id")
     @JsonBackReference
     private Patient patient;
 

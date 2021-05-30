@@ -20,7 +20,7 @@ public class TokenBasedAuthentication extends AbstractAuthenticationToken {
     public void setToken(String token) {
         this.token = token;
     }
-        @Override
+    @Override
     public Object getCredentials() {
         return token;
     }

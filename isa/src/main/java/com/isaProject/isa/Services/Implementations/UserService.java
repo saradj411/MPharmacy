@@ -35,7 +35,7 @@ public class UserService implements IUserService {
     @Override
     public User findById(Integer id) {
 
-        User user = userRepository.findOneByIdUser(id);
+        User user = userRepository.findOneById(id);
         return user;
     }
 

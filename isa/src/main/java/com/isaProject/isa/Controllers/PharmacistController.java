@@ -1,10 +1,5 @@
-package com.isaProject.isa.Controllers;
-
-
-import com.isaProject.isa.Model.DTO.DrugDTO;
 import com.isaProject.isa.Model.DTO.PharmaceutDTO;
 import com.isaProject.isa.Model.DTO.WorkTimeDTO;
-import com.isaProject.isa.Model.Drugs.Drug;
 import com.isaProject.isa.Model.Examination.Examination;
 import com.isaProject.isa.Model.Pharmacy.Pharmacy;
 import com.isaProject.isa.Model.Users.*;
@@ -15,7 +10,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.nio.file.FileSystemNotFoundException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -40,7 +34,7 @@ public class PharmacistController {
     @Autowired
     private PharmacyAdminService pharmacyAdminService;
     @Autowired
-    private  WorkTimeService workTimeService;
+    private WorkTimeService workTimeService;
 
     @Autowired
     private  StaffService staffService;
@@ -52,7 +46,7 @@ public class PharmacistController {
     public ResponseEntity<List<Pharmacist>> findAll() {
         List<Pharmacist> pharmacists=pharmacistService.findAll();
         for (Pharmacist d:pharmacists){
-            System.out.println(d.getIdUser());
+            System.out.println(d.getId());
             d.getPharmacy();
 
 
@@ -94,7 +88,7 @@ public class PharmacistController {
         //Pharmacy pharmacy=pharmacyService.findById(idAdmina);
         System.out.println("id adminaaaaaaaaaaaaa");
         PharmacyAdmin admin=pharmacyAdminService.findById(idAdmina);
-        System.out.println(admin.getIdUser()+"id adminaaaaaaaaaaaaa");
+        System.out.println(admin.getId()+"id adminaaaaaaaaaaaaa");
         //nece da doda id u pharmacy ps. hoceee :D
         Pharmacy pharmacy=admin.getPharmacy();
 
@@ -145,7 +139,7 @@ public class PharmacistController {
 
 
         User u=userService.findById(idAdmina);
-        Staff staff=new Staff(u.getIdUser(),u.getName(),u.getSurname(),u.getEmail(), u.getPassword(),u.getAddress(),u.getPhoneNumber(),u.getCity(),u.getCountry(),0.0,null,null,null);
+        Staff staff=new Staff(u.getId(),u.getName(),u.getSurname(),u.getEmail(), u.getPassword(),u.getAddress(),u.getPhoneNumber(),u.getCity(),u.getCountry(),0.0,null,null,null);
         //idUser, name, surname, email, password, address, phoneNumber, city, country
         WorkTimeDTO workTimeDTO=new WorkTimeDTO(jDate,startt,endd,staff,pharmacy);
         WorkTime ww=workTimeService.save(workTimeDTO);
@@ -209,7 +203,7 @@ public class PharmacistController {
 
         LocalTime startt= LocalTime.parse(start);
         LocalTime endd= LocalTime.parse(end);
-        Staff staff= staffService.findById(pharmacist.getIdUser());
+        Staff staff= staffService.findById(pharmacist.getId());
 
 
 

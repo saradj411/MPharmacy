@@ -10,12 +10,16 @@ import java.util.Date;
 import java.util.List;
 
 @Entity
-@Table
+@Table(name = "USERS")
+@Inheritance(strategy = InheritanceType.JOINED)
 public class User  implements UserDetails {
+
+    private static final long serialVersionUID = 1L;
+
     @Id
-    @Column(name = "idUser")
+    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer idUser;
+    private Integer id;
 
     @Column
     private String name;
@@ -46,7 +50,7 @@ public class User  implements UserDetails {
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name="user_authority",
-            joinColumns = @JoinColumn(name ="user_id", referencedColumnName = "idUser"),
+            joinColumns = @JoinColumn(name ="user_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name="authority_id", referencedColumnName = "id"))
     private List<Authority> authorities;
 
@@ -55,7 +59,7 @@ public class User  implements UserDetails {
     }
 
     public User(Integer idUser, String name, String surname, String email, String password, String address, String phoneNumber, String city, String country) {
-        this.idUser = idUser;
+        this.id = idUser;
         this.name = name;
         this.surname = surname;
         this.email = email;
@@ -73,12 +77,12 @@ public class User  implements UserDetails {
     }
 
 
-    public Integer getIdUser() {
-        return idUser;
+    public Integer getId() {
+        return id;
     }
 
-    public void setIdUser(Integer idUser) {
-        this.idUser = idUser;
+    public void setId(Integer idUser) {
+        this.id = idUser;
     }
 
     public String getName() {

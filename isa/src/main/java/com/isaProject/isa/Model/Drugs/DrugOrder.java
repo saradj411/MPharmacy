@@ -33,7 +33,7 @@ public class DrugOrder {
     private Set<OrderItem> orderItems = new HashSet<OrderItem>();
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "admin", referencedColumnName = "idUser")
+    @JoinColumn(name = "admin", referencedColumnName = "id")
     @JsonBackReference
     private PharmacyAdmin pharmacyAdmin;
 

@@ -64,24 +64,23 @@ insert into ingredient values(502,'sastojak 1',503);
 insert into ingredient values(503,'sastojak 1',502);
 insert into ingredient values(504,'sastojak 1',501);
 
-#user
-#id_user,address,city,country,email,name,password,phone_number,surname,avg,loyality,penali,points,id faarmacije u kojoj farmaceut radi,id apoteke za farmaceuta apoteke
-insert into user values ('DERMATOLOGIST',501,1,'Deletinara','Novi Sad','Srbija','kristinamucibabic321@gmail.com','Kristina','lozinka1','066589145','Mucibabic',5.8,'Regular',0,0,null,null);
-insert into user values ('PHARMACIST',502,1,'Bulevar kneza Milosa','Novi Sad','Srbija','sara@gmail.com','Sara','lozinka2','066589111','Djuric',4.8,'Regular',0,0,500,null);
-insert into user values ('PHARMACY_ADMIN',503,1,'Bulevar oslobodjenja','Novi Sad','Srbija','vekim@gmail.com','Verica','lozinka3','066589335','Mucibabic',5.8,'Regular',0,0,null,500);
-insert into user values ('DERMATOLOGIST',504,1,'Cara Urosa','Novi Sad','Srbija','majam@gmail.com','Maja','lozinka4','066589335','Milenkovic',10.2,'Regular',0,0,null,null);
-insert into user values ('PHARMACY_ADMIN',505,1,'Bulevar cara Lazara','Novi Sad','Srbija','marija@gmail.com','Marija','lozinka5','066589935','Maric',5.8,'Regular',0,0,null,501);
-insert into user values ('PHARMACIST',506,1,'Aleksa Santic','Novi Sad','Srbija','luka@gmail.com','Luka','lozinka6','066589011','Lukic',4.8,'Regular',0,0,504,null);
-insert into user values ('PATIENT',507,1,'Apatinska','Novi Sad','Srbija','mika@gmail.com','Mika','lozinka7','066589331','Mikic',4.8,'Regular',2,5,null,null);
-insert into user values ('PATIENT',508,1,'Backa','Novi Sad','Srbija','ana@gmail.com','Ana','lozinka8','066589371','Mikic',4.8,'Silver',3,7,null,null);
-insert into user values ('DERMATOLOGIST',509,1,'Cara Milosa','Novi Sad','Srbija','urosm@gmail.com','Uros','lozinka9','066589335','Milenkovic',10.2,'Regular',0,0,null,null);
-insert into user values ('PATIENT',510,1,'Bulevar cara Lazara','Novi Sad','Srbija','luna@gmail.com','Luna','lozinka10','066589371','Mikic',4.8,'Gold',3,1,null,null);
-insert into user values ('PHARMACIST',511,1,'Bulevar kneza Milosa','Novi Sad','Srbija','maki@gmail.com','Maki','lozinka11','066589111','Djuric',4.8,'Regular',0,0,501,null);
-insert into user values ('PHARMACIST',333,1,'Bulevar kneza Milosa','Novi Sad','Srbija','sara@gmail.com','Sara','lozinka2','066589111','Djuric',4.8,'Regular',0,0,501,null);
-insert into user values ('PHARMACIST',559,1,'Bulevar kneza Milosa','Novi Sad','Srbija','veki@gmail.com','Veki','pasword','066589111','V',4.8,'Regular',0,0,501,null);
-insert into user values ('DERMATOLOGIST',533,1,'Cara Milosa','Novi Sad','Srbija','ivanm@gmail.com','Ivan','lozinka9','066589335','Milenkovic',10.2,'Regular',0,0,null,null);
-insert into user values ('ADMIN',512,1,'Gagarinova 3','Novi Sad','Srbija','majamilenkovic98@gmail.com','Dejan','$2y$10$MEIbAfRm9f7zOzRbNykEOuVkT5MJbIGjbI7sGJYzpbcakQGH1m41W','066589371','Dekic',4.5,'Gold',0,1,null,null);
-
+--user
+--id_user,address,city,country,email,name,password,phone_number,surname,avg,loyality,penali,points,id faarmacije u kojoj farmaceut radi,id apoteke za farmaceuta apoteke
+insert into users values (501,1,'Deletinara','Novi Sad','Srbija','kristinamucibabic321@gmail.com','Kristina','lozinka1','066589145','Mucibabic');
+insert into users values (502,1,'Bulevar kneza Milosa','Novi Sad','Srbija','sara@gmail.com','Sara','lozinka2','066589111','Djuric');
+insert into users values (503,1,'Bulevar oslobodjenja','Novi Sad','Srbija','vekim@gmail.com','Verica','lozinka3','066589335','Mucibabic');
+insert into users values (504,1,'Cara Urosa','Novi Sad','Srbija','majam@gmail.com','Maja','lozinka4','066589335','Milenkovic');
+insert into users values (505,1,'Bulevar cara Lazara','Novi Sad','Srbija','marija@gmail.com','Marija','lozinka5','066589935','Maric');
+insert into users values (506,1,'Aleksa Santic','Novi Sad','Srbija','luka@gmail.com','Luka','lozinka6','066589011','Lukic');
+insert into users values (507,1,'Apatinska','Novi Sad','Srbija','mika@gmail.com','Mika','lozinka7','066589331','Mikic');
+insert into users values (508,1,'Backa','Novi Sad','Srbija','ana@gmail.com','Ana','lozinka8','066589371','Mikic');
+insert into users values (509,1,'Cara Milosa','Novi Sad','Srbija','urosm@gmail.com','Uros','lozinka9','066589335','Milenkovic');
+insert into users values (510,1,'Bulevar cara Lazara','Novi Sad','Srbija','luna@gmail.com','Luna','lozinka10','066589371','Mikic');
+insert into users values (511,1,'Bulevar kneza Milosa','Novi Sad','Srbija','maki@gmail.com','Maki','lozinka11','066589111','Djuric');
+insert into users values (333,1,'Bulevar kneza Milosa','Novi Sad','Srbija','sara@gmail.com','Sara','lozinka2','066589111','Djuric');
+insert into users values (559,1,'Bulevar kneza Milosa','Novi Sad','Srbija','veki@gmail.com','Veki','pasword','066589111','V');
+insert into users values (533,1,'Cara Milosa','Novi Sad','Srbija','ivanm@gmail.com','Ivan','lozinka9','066589335','Milenkovic');
+insert into users values (512,1,'Gagarinova 3','Novi Sad','Srbija','majamilenkovic98@gmail.com','Dejan','$2a$10$sqes3IpPL4mBgAAmimisyOWj5DlqPRndrJFNFw9zWiJjyNa5ozKS6','066589371','Dekic');
 
 
 #dermatologists_in_pharmacies

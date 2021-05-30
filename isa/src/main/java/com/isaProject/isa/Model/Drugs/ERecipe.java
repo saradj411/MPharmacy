@@ -44,7 +44,7 @@ public class ERecipe {
     private Pharmacy pharmacy;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "patientId", referencedColumnName = "idUser")
+    @JoinColumn(name = "patientId", referencedColumnName = "id")
     @JsonBackReference
     private Patient patient;
 

@@ -55,14 +55,14 @@ public class UserController {
         System.out.println(userDTO.getEmail());
         User u = userService.save(userDTO);
         return  u == null ? new ResponseEntity<>(HttpStatus.IM_USED) :
-        ResponseEntity.ok(u);
+                ResponseEntity.ok(u);
     }
 
     @PostMapping("/login")
     public ResponseEntity<UserTokenState> login(@RequestBody JwtAuthenticationRequest authRequest,
                                                 HttpServletResponse response)
     {
-
+        System.out.println("USAO");
         UserTokenState token = userService.Login(authRequest.getUsername(), authRequest.getPassword());
         return token == null ? new ResponseEntity<>(HttpStatus.NOT_FOUND) : ResponseEntity.ok(token);
     }

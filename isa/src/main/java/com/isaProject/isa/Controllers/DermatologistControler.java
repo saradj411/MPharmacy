@@ -1,9 +1,6 @@
 package com.isaProject.isa.Controllers;
 
 import com.isaProject.isa.Model.DTO.DermatologistDTO;
-import com.isaProject.isa.Model.DTO.PharmaceutDTO;
-import com.isaProject.isa.Model.DTO.WorkTimeDTO;
-import com.isaProject.isa.Model.Drugs.Drug;
 import com.isaProject.isa.Model.Examination.Examination;
 import com.isaProject.isa.Model.Pharmacy.Pharmacy;
 import com.isaProject.isa.Model.Users.*;
@@ -14,11 +11,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalTime;
-import java.util.*;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 
 @RestController
@@ -54,7 +50,7 @@ public class DermatologistControler {
     public ResponseEntity<List<Dermatologist>> findAll() {
         List<Dermatologist> dermatologists=dermatologistService.findAll();
         for (Dermatologist d:dermatologists){
-            System.out.println(d.getIdUser());
+            System.out.println(d.getId());
             System.out.println(d.getPharmacies());
 
 
