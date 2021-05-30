@@ -5,14 +5,15 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.util.Collection;
+import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table
-
-public class User implements UserDetails, Serializable {
+public class User  implements UserDetails {
     @Id
+    @Column(name = "idUser")
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer idUser;
 
@@ -40,6 +41,16 @@ public class User implements UserDetails, Serializable {
     @Column
     private String country;
 
+    @Column
+    private Boolean accountEnabled;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name="user_authority",
+            joinColumns = @JoinColumn(name ="user_id", referencedColumnName = "idUser"),
+            inverseJoinColumns = @JoinColumn(name="authority_id", referencedColumnName = "id"))
+    private List<Authority> authorities;
+
+
     public User() {
     }
 
@@ -53,7 +64,14 @@ public class User implements UserDetails, Serializable {
         this.phoneNumber = phoneNumber;
         this.city = city;
         this.country = country;
+        this.accountEnabled = true;
     }
+
+
+    public void setAuthorities(List<Authority> authorities) {
+        this.authorities = authorities;
+    }
+
 
     public Integer getIdUser() {
         return idUser;
@@ -89,36 +107,38 @@ public class User implements UserDetails, Serializable {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        return this.authorities;
     }
 
+
+    @Override
     public String getPassword() {
         return password;
     }
 
     @Override
     public String getUsername() {
-        return null;
+        return email;
     }
 
     @Override
     public boolean isAccountNonExpired() {
-        return false;
+
+        return true;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return false;
+        return true;
     }
-
     @Override
     public boolean isEnabled() {
-        return false;
+        return accountEnabled;
     }
 
     public void setPassword(String password) {
@@ -155,5 +175,24 @@ public class User implements UserDetails, Serializable {
 
     public void setCountry(String country) {
         this.country = country;
+    }
+
+    public void setAccountEnabled(Boolean accountEnabled) {
+        this.accountEnabled = accountEnabled;
+    }
+
+    public Date getLastPasswordResetDate() {
+        return  null;
+    }
+
+    public String getAuthorityRole()
+    {
+        if(authorities.isEmpty()) return null;
+        Authority authority = authorities.get(0);
+        return authority.getAuthority();
+    }
+
+    public Boolean getAccountEnabled() {
+        return accountEnabled;
     }
 }

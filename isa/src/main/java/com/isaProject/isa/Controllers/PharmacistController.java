@@ -145,7 +145,7 @@ public class PharmacistController {
 
 
         User u=userService.findById(idAdmina);
-        Staff staff=new Staff(u.getIdUser(),u.getName(),u.getSurname(),u.getEmail(),u.getPassword(),u.getAddress(),u.getPhoneNumber(),u.getCity(),u.getCountry(),0.0,null,null,null);
+        Staff staff=new Staff(u.getIdUser(),u.getName(),u.getSurname(),u.getEmail(), u.getPassword(),u.getAddress(),u.getPhoneNumber(),u.getCity(),u.getCountry(),0.0,null,null,null);
         //idUser, name, surname, email, password, address, phoneNumber, city, country
         WorkTimeDTO workTimeDTO=new WorkTimeDTO(jDate,startt,endd,staff,pharmacy);
         WorkTime ww=workTimeService.save(workTimeDTO);
