@@ -1,26 +1,21 @@
 package com.isaProject.isa.Controllers;
 
-import com.isaProject.isa.Model.DTO.*;
-import com.isaProject.isa.Model.Drugs.Drug;
-import com.isaProject.isa.Model.Pharmacy.Pharmacy;
-import com.isaProject.isa.Model.Users.Dermatologist;
-import com.isaProject.isa.Repositories.ExaminationRepository;
-import com.isaProject.isa.Services.Implementations.DermatologistService;
-import com.isaProject.isa.Services.Implementations.DrugService;
+import com.isaProject.isa.Model.DTO.DermatologistDTO;
+import com.isaProject.isa.Model.DTO.PatientDTO;
+import com.isaProject.isa.Model.DTO.SearchDermatologistDTO;
 import com.isaProject.isa.Model.Examination.Examination;
 import com.isaProject.isa.Model.Pharmacy.Pharmacy;
 import com.isaProject.isa.Model.Users.*;
+import com.isaProject.isa.Repositories.ExaminationRepository;
 import com.isaProject.isa.Services.Implementations.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.text.DateFormat;
-import java.text.ParseException;
+
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -175,7 +170,7 @@ public class DermatologistControler {
     @GetMapping(value = "/findWorkTimeByIdUser/{id}")
     public ResponseEntity<WorkTime> findWorkTimeByIdUser(@PathVariable Integer id) {
 
-        WorkTime d= workTimeService.findByIdUser(id);
+        WorkTime d= workTimeService.findByUserId(id);
         return d == null ?
                 new ResponseEntity<>(HttpStatus.NOT_FOUND) :
                 ResponseEntity.ok(d);

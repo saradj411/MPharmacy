@@ -1,7 +1,5 @@
 package com.isaProject.isa.Model.Users;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.isaProject.isa.Model.Examination.Examination;
 
 import javax.persistence.*;
@@ -12,19 +10,16 @@ import java.util.Set;
 @Table
 public class Staff extends User{
 
-
     //ocjena
     @Column
     private double avgGrade;
 
-    //radno vrijeme
+    //radno vrijemeidUser
     @OneToMany(mappedBy = "staff", fetch = FetchType.LAZY,cascade = CascadeType.ALL)
-    //@JsonBackReference
     private Set<WorkTime> workTime = new HashSet<WorkTime>();
 
     //savetovanja farmacut,pregledi dermatolog
     @OneToMany(mappedBy = "staff",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
-    //@JsonBackReference
     private Set<Examination> examinations = new HashSet<Examination>();
 
     //odmor
@@ -32,8 +27,8 @@ public class Staff extends User{
     //@JsonManagedReference
     private Set<Vacation> vacation = new HashSet<Vacation>();
 
-    public Staff(Integer idUser, String name, String surname, String email, String password, String address, String phoneNumber, String city, String country, double avgGrade, Set<WorkTime> workTime, Set<Examination> examinations, Set<Vacation> vacation) {
-        super(idUser, name, surname, email, password, address, phoneNumber, city, country);
+    public Staff(Integer id, String name, String surname, String email, String password, String address, String phoneNumber, String city, String country, double avgGrade, Set<WorkTime> workTime, Set<Examination> examinations, Set<Vacation> vacation) {
+        super(id, name, surname, email, password, address, phoneNumber, city, country);
         this.avgGrade = avgGrade;
         this.workTime = workTime;
         this.examinations = examinations;
