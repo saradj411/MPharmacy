@@ -1,22 +1,13 @@
 package com.isaProject.isa.Services.Implementations;
 
-import com.isaProject.isa.Model.Drugs.DrugReservation;
 import com.isaProject.isa.Model.Examination.Examination;
 import com.isaProject.isa.Model.Examination.ExaminationStatus;
 import com.isaProject.isa.Repositories.ExaminationRepository;
 import com.isaProject.isa.Services.IServices.IExaminationService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.util.Date;
 import java.util.List;
 
 @Service
@@ -47,7 +38,7 @@ public class ExaminationService implements IExaminationService {
 
         List<Examination> lista=examinationRepository.findAll();
         for(Examination e:lista){
-            if (e.getStaff().getIdUser().equals(idPharmacist)){
+            if (e.getStaff().getId().equals(idPharmacist)){
                 return true;
             }
         }

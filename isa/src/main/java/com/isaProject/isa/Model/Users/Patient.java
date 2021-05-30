@@ -1,12 +1,11 @@
 package com.isaProject.isa.Model.Users;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.isaProject.isa.Model.Drugs.Drug;
 import com.isaProject.isa.Model.Drugs.DrugReservation;
 import com.isaProject.isa.Model.Drugs.ERecipe;
 import com.isaProject.isa.Model.Examination.Examination;
+import com.isaProject.isa.Model.Pharmacy.Pharmacy;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -49,7 +48,7 @@ public class Patient extends User{
     //apoteke na koje je pretplacen
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "action_patient_pharmacy",
-            joinColumns = @JoinColumn(name = "patientId", referencedColumnName = "idUser"),
+            joinColumns = @JoinColumn(name = "patientId", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "pharmacyId", referencedColumnName = "idPharm"))
     private Set<Pharmacy> actionPharmacies = new HashSet<>();
 

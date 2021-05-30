@@ -1,8 +1,11 @@
 package com.isaProject.isa.Controllers;
 
 
+import com.isaProject.isa.Config.Utils.Auth.JwtAuthenticationRequest;
+import com.isaProject.isa.Model.DTO.UserDTO;
 import com.isaProject.isa.Model.Users.Patient;
 import com.isaProject.isa.Model.Users.User;
+import com.isaProject.isa.Model.Users.UserTokenState;
 import com.isaProject.isa.Services.Implementations.PatientService;
 import com.isaProject.isa.Services.Implementations.UserService;
 import lombok.extern.slf4j.Slf4j;
@@ -11,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -66,7 +70,7 @@ public class UserController {
         List<Patient> users=patientService.findAll();
 
         for(Patient u:users) {
-            System.out.println(u.getIdUser());
+            System.out.println(u.getId());
             if (day == 1) {
                 u.setPenalty(0);
                 patientService.update(u);
