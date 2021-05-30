@@ -3,6 +3,7 @@ package com.isaProject.isa.Services.Implementations;
 import com.isaProject.isa.Model.DTO.ChangePasswordDTO;
 import com.isaProject.isa.Model.DTO.DrugDTO;
 import com.isaProject.isa.Model.DTO.FrontCreatedExaminationDTO;
+
 import com.isaProject.isa.Model.Drugs.Drug;
 import com.isaProject.isa.Model.Drugs.ERecipe;
 import com.isaProject.isa.Model.Examination.Examination;
@@ -55,8 +56,8 @@ public class PatientService implements IPatientService {
 
     @Override
     public void update(Patient patient) {
-        Patient pat = patientRepository.getOne(patient.getIdUser());
-        Integer ids=pat.getIdUser();
+        Patient pat = patientRepository.getOne(patient.getId());
+        Integer ids=pat.getId();
 
         pat.setName(patient.getName());
         pat.setSurname(patient.getSurname());

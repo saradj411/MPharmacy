@@ -7,13 +7,13 @@
         <div style="background: #B0B3D6; height: 80px;">
 
             <span style="float: left; margin-top: 20px;margin-left:15px;">
-                   <router-link :to="{ path: '/UpdatePatientProfil/'+user.idUser}" v-slot="{href, navigate}" custom>
+                   <router-link :to="{ path: '/UpdatePatientProfil/'+user.id}" v-slot="{href, navigate}" custom>
                         <b-link class = "btn btn-primary btn-xs" 
                         style="margin:auto; background:#474A8A " 
                         :href="href" @click="navigate"  elevation="1"> Update profile</b-link >
                   </router-link>
 
-                  <router-link :to="{ path: '/AddAllergies/'+user.idUser}" v-slot="{href, navigate}" custom>
+                  <router-link :to="{ path: '/AddAllergies/'+user.id}" v-slot="{href, navigate}" custom>
                         <b-link class = "btn btn-primary btn-xs" 
                         style="margin:auto; background:#474A8A " 
                         :href="href" @click="navigate"  elevation="1">Allergies</b-link >

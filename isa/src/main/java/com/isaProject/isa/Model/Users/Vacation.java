@@ -22,8 +22,8 @@ public class Vacation {
     private Date end;
 
     @ManyToOne
-    @JoinColumn(name = "staffId", referencedColumnName = "idUser", nullable = false)
-    //@JsonManagedReference
+    @JoinColumn(name = "staffId", referencedColumnName = "id", nullable = false)
+    @JsonBackReference
     private Staff staff;
 
     @ManyToOne

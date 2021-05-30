@@ -15,7 +15,7 @@ import java.util.List;
 
 
 @RestController
-@CrossOrigin
+@CrossOrigin("*")
 @RequestMapping(value="/examination")
 @Slf4j
 public class ExaminationController {

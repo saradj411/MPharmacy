@@ -1,12 +1,13 @@
 package com.isaProject.isa.Model.Drugs;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
 @Table
-public class Drug {
+public class Drug implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer idDrug;
@@ -28,15 +29,17 @@ public class Drug {
     //proizvodjac
     @Column
     private String manufacturer;
-
+/*
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinTable( name = "alternativeDrug", joinColumns = @JoinColumn(name="idDrug", nullable = true,referencedColumnName="idDrug"), inverseJoinColumns = @JoinColumn(name = "idAlternativeDrug", referencedColumnName = "idDrug"))
     private Set<Drug> alternativeDrugs = new HashSet<Drug>();
-
+*/
     public Drug() {
     }
 
-    public Drug(Integer idDrug, String name, String code, boolean recipeNeed, String drugType, DrugFormat format, String manufacturer, Set<Drug> alternativeDrugs) {
+    public Drug(Integer idDrug, String name, String code, boolean recipeNeed, String drugType, DrugFormat format, String manufacturer
+            //, Set<Drug> alternativeDrugs
+    ) {
         this.idDrug = idDrug;
         this.name = name;
         this.code = code;
@@ -44,7 +47,7 @@ public class Drug {
         this.drugType = drugType;
         this.format = format;
         this.manufacturer = manufacturer;
-        this.alternativeDrugs = alternativeDrugs;
+       // this.alternativeDrugs = alternativeDrugs;
     }
 
     public Integer getIdDrug() {
@@ -103,13 +106,13 @@ public class Drug {
         this.manufacturer = manufacturer;
     }
 
-    public Set<Drug> getAlternativeDrugs() {
+   /* public Set<Drug> getAlternativeDrugs() {
         return alternativeDrugs;
     }
 
     public void setAlternativeDrugs(Set<Drug> alternativeDrugs) {
         this.alternativeDrugs = alternativeDrugs;
-    }
+    }*/
 //rezervisani lijekovi
 
 

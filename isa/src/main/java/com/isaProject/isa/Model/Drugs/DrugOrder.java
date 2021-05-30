@@ -35,9 +35,9 @@ public class DrugOrder {
     private Set<OrderItem> orderItems = new HashSet<OrderItem>();//************
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "admin", referencedColumnName = "idUser")
-    //@JsonManagedReference
-    private PharmacyAdmin pharmacyAdmin;//***********
+    @JoinColumn(name = "admin", referencedColumnName = "id")
+    @JsonBackReference
+    private PharmacyAdmin pharmacyAdmin;
 
     @OneToMany(mappedBy = "drugOrder", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     //@JsonBackReference

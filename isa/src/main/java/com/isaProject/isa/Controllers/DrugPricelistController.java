@@ -15,10 +15,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @RestController
-@CrossOrigin
+@CrossOrigin("*")
 @RequestMapping(value="/drugPricelist", produces = MediaType.APPLICATION_JSON_VALUE)
 @Slf4j
 public class DrugPricelistController {
@@ -37,6 +38,8 @@ public class DrugPricelistController {
         @GetMapping(value = "/findAll")
     public ResponseEntity<List<DrugPricelist>> findAll() {
         List<DrugPricelist> pricelists=drugService.findAll();
+
+
         return pricelists == null ?
                 new ResponseEntity<>(HttpStatus.NOT_FOUND) :
                 ResponseEntity.ok(pricelists);

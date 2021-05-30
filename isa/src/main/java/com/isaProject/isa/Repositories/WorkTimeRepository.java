@@ -7,6 +7,6 @@ import org.springframework.data.jpa.repository.Query;
 
 public interface WorkTimeRepository  extends JpaRepository<WorkTime, Integer> {
 
-    @Query("select s from WorkTime s where s.staff.idUser= ?1")
+    @Query("select s from WorkTime s where s.staff.id = ?1")
     WorkTime findWorkTimeByIdStaff(Integer id);
 }
