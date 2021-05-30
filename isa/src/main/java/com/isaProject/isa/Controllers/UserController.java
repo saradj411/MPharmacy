@@ -19,7 +19,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @RestController
-@CrossOrigin
+@CrossOrigin("*")
 @RequestMapping(value="/user")
 @Slf4j
 

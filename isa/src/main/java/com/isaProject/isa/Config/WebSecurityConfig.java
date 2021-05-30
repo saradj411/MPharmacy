@@ -87,8 +87,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll().antMatchers("/patient/updatePatient")
                 .permitAll().antMatchers("/patient/findById/{id}")
                 .permitAll().antMatchers("/patient/addAllergy/{id}/{idPatient}")
+                .permitAll().antMatchers("/user/updatePenality")
+                .permitAll().antMatchers("/examination/findCreatedPharmacistExamination")
 
-
+                .permitAll().antMatchers("/examination/patientScheduledDermatologistExamination/{id}/{idExamination}")
                 .permitAll()
 
                 // za svaki drugi zahtev korisnik mora biti autentifikovan

@@ -19,7 +19,7 @@ import java.util.Date;
 import java.util.List;
 
 @RestController
-@CrossOrigin
+@CrossOrigin("*")
 @RequestMapping(value="/drugPricelist", produces = MediaType.APPLICATION_JSON_VALUE)
 @Slf4j
 public class DrugPricelistController {
