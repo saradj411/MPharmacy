@@ -106,7 +106,7 @@ export default {
           const order = {
                     orderItemDTO: this.medicationQuantityList,
                     timeLimit: this.timeLimit,
-                    id : this.user.idUser,
+                    id : this.user.id,
                     processed : true
                 };
                 console.log(this.timeLimit);
@@ -120,8 +120,10 @@ export default {
 
                 })
                 .catch(response => {
+                    alert("neceeeee");
                     alert(response.response.data.message);
                         console.log(response);
+                        alert("neceeeee");
                  });    
       },
       dermatologistIsSelected : function(event, medicine) {

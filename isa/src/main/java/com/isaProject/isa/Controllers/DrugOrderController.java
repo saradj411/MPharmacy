@@ -31,7 +31,7 @@ public class DrugOrderController {
         System.out.println("Datum je "+drugOrderDTO.getTimeLimit());
         /*System.out.println("admin je "+drugOrderDTO.getPharmacyAdmin().getName());
         System.out.println("id admina je "+drugOrderDTO.getPharmacyAdmin().getIdUser());
-*/
+
         for(OrderItemDTO o:drugOrderDTO.getOrderItemDTO()){
             System.out.println(o.getDrug().getName());
             System.out.println(o.getQuantity());

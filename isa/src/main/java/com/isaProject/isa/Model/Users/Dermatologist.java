@@ -27,8 +27,8 @@ public class Dermatologist extends Staff {
         Jedan dermatolog može biti zaposlen u više apoteka.
     */
 
-    public Dermatologist(Integer idUser, String name, String surname, String email, String password, String address, String phoneNumber, String city, String country, double avgGrade, Set<WorkTime> workTime, Set<Examination> examinations, Set<Vacation> vacation, Set<Pharmacy> pharmacies) {
-        super(idUser, name, surname, email, password, address, phoneNumber, city, country, avgGrade, workTime, examinations, vacation);
+    public Dermatologist(Integer id, String name, String surname, String email, String password, String address, String phoneNumber, String city, String country, double avgGrade, Set<WorkTime> workTime, Set<Examination> examinations, Set<Vacation> vacation, Set<Pharmacy> pharmacies) {
+        super(id, name, surname, email, password, address, phoneNumber, city, country, avgGrade, workTime, examinations, vacation);
         this.pharmacies = pharmacies;
     }
     public Dermatologist(){

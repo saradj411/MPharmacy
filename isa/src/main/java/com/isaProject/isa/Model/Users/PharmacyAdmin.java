@@ -25,11 +25,10 @@ public class PharmacyAdmin extends User {
     //@JsonManagedReference
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "idPharm")
     @JsonIdentityReference(alwaysAsId = true)
-
     private Pharmacy pharmacy;
 
-    @JsonIgnore
 
+    @JsonIgnore
     @OneToMany(mappedBy = "pharmacyAdmin", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     //@JsonBackReference
     private Set<DrugOrder> drugOrder=new HashSet<DrugOrder>();
@@ -65,8 +64,8 @@ public class PharmacyAdmin extends User {
     */
 
 
-    public PharmacyAdmin(Integer idUser, String name, String surname, String email, String password, String address, String phoneNumber, String city, String country, Pharmacy pharmacy, Set<DrugOrder> drugOrder) {
-        super(idUser, name, surname, email, password, address, phoneNumber, city, country);
+    public PharmacyAdmin(Integer id, String name, String surname, String email, String password, String address, String phoneNumber, String city, String country, Pharmacy pharmacy, Set<DrugOrder> drugOrder) {
+        super(id, name, surname, email, password, address, phoneNumber, city, country);
         this.pharmacy = pharmacy;
         this.drugOrder = drugOrder;
     }

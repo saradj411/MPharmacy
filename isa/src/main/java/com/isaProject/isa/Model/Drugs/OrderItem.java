@@ -38,5 +38,35 @@ public class OrderItem {
 //    @JsonManagedReference
     private DrugOrder drugOrder;
 
+    public Integer getIdItem() {
+        return idItem;
+    }
 
+    public void setIdItem(Integer idItem) {
+        this.idItem = idItem;
+    }
+
+    public Integer getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
+    }
+
+    public Drug getDrug() {
+        return drug;
+    }
+
+    public void setDrug(Drug drug) {
+        this.drug = drug;
+    }
+
+    public DrugOrder getDrugOrder() {
+        return drugOrder;
+    }
+
+    public void setDrugOrder(DrugOrder drugOrder) {
+        this.drugOrder = drugOrder;
+    }
 }

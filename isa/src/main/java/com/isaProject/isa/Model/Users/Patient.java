@@ -57,8 +57,8 @@ public class Patient extends User implements Serializable {
     public Patient() {
     }
 
-    public Patient(Integer idUser, String name, String surname, String email, String password, String address, String phoneNumber, String city, String country, Integer penalty, int points, String loyaltyCategory, Set<Drug> allergies, Set<DrugReservation> drugReservation, Set<Examination> examinations) {
-        super(idUser, name, surname, email, password, address, phoneNumber, city, country);
+    public Patient(Integer id, String name, String surname, String email, String password, String address, String phoneNumber, String city, String country, Integer penalty, int points, String loyaltyCategory, Set<Drug> allergies, Set<DrugReservation> drugReservation, Set<Examination> examinations) {
+        super(id, name, surname, email, password, address, phoneNumber, city, country);
         this.penalty = penalty;
         this.points = points;
         this.loyaltyCategory = loyaltyCategory;
@@ -67,8 +67,8 @@ public class Patient extends User implements Serializable {
         this.examinations = examinations;
     }
 
-    public Patient(Integer idUser, String name, String surname, String email, String password, String address, String phoneNumber, String city, String country, Integer penalty, int points, String loyaltyCategory, Set<Drug> allergies, Set<DrugReservation> drugReservation, Set<Examination> examinations, Set<Pharmacy> actionPharmacies) {
-        super(idUser, name, surname, email, password, address, phoneNumber, city, country);
+    public Patient(Integer id, String name, String surname, String email, String password, String address, String phoneNumber, String city, String country, Integer penalty, int points, String loyaltyCategory, Set<Drug> allergies, Set<DrugReservation> drugReservation, Set<Examination> examinations, Set<Pharmacy> actionPharmacies) {
+        super(id, name, surname, email, password, address, phoneNumber, city, country);
         this.penalty = penalty;
         this.points = points;
         this.loyaltyCategory = loyaltyCategory;

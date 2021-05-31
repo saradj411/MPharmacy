@@ -46,11 +46,12 @@ const routes = [
       path: '/',
       name: 'Welcome',
       component: Welcome
-    } ,
+    },
     {
         path: '/Home/:id',
         name: 'Home',
         component: Home
+      
       },
       {
         path: '/createDrugPage/:id',
@@ -69,7 +70,7 @@ const routes = [
         component: ProfilePatient
       }
     ,
-     ,
+     
       {
         path: '/updatePharmacyProfile/:id',
         name: 'updatePharmacyProfile',
@@ -175,7 +176,8 @@ const routes = [
         name: 'CreatePurchaseOrder',
         component: CreatePurchaseOrder
       }
-      
+      ,
+      {
         path: '/SearchUser',
         name: 'SearchUser',
         component: SearchUser

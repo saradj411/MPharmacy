@@ -81,7 +81,7 @@ odkomentarisiiii
 
 
 
-        if(offer.getDrugOrder().getPharmacyAdmin().getIdUser().equals(idAdmin)) {
+        if(offer.getDrugOrder().getPharmacyAdmin().getId().equals(idAdmin)) {
             System.out.println("dobaaee");
 
 

@@ -57,8 +57,6 @@ public class DrugDTO implements Serializable {
         this.quantity = quantity;
     }
 
-    public DrugDTO() {
-    }
 
     public String getName() {
         return name;

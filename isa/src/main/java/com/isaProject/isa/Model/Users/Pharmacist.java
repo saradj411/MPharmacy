@@ -27,8 +27,8 @@ public class Pharmacist extends Staff {
         Jedan farmaceut može biti zaposlen samo u jednoj apoteci.
     */
 
-    public Pharmacist(Integer idUser, String name, String surname, String email,String password, String address, String phoneNumber, String city, String country, double avgGrade, Set<WorkTime> workTime, Set<Examination> examinations, Set<Vacation> vacation, Pharmacy pharmacy) {
-        super(idUser, name, surname, email, password, address, phoneNumber, city, country, avgGrade, workTime, examinations, vacation);
+    public Pharmacist(Integer id, String name, String surname, String email,String password, String address, String phoneNumber, String city, String country, double avgGrade, Set<WorkTime> workTime, Set<Examination> examinations, Set<Vacation> vacation, Pharmacy pharmacy) {
+        super(id, name, surname, email, password, address, phoneNumber, city, country, avgGrade, workTime, examinations, vacation);
         this.pharmacy = pharmacy;
     }
 

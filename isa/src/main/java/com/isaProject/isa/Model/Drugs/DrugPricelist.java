@@ -16,8 +16,6 @@ public class DrugPricelist implements Serializable {
     private Integer idPricelist;
 
 
-    @ManyToOne( cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "drugId", referencedColumnName = "idDrug")
     //@JsonIgnore
     @ManyToOne//(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
     @JoinColumn(name = "drugId", referencedColumnName = "idDrug", nullable = true, unique = false)

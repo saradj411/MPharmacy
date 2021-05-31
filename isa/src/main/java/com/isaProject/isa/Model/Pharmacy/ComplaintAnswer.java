@@ -5,7 +5,6 @@ import javax.persistence.*;
 @Entity
 @Table
 public class ComplaintAnswer {
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long idAnswer;

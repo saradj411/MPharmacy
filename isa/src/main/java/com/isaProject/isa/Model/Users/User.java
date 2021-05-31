@@ -60,8 +60,8 @@ public class User  implements UserDetails {
     public User() {
     }
 
-    public User(Integer idUser, String name, String surname, String email, String password, String address, String phoneNumber, String city, String country) {
-        this.id = idUser;
+    public User(Integer id, String name, String surname, String email, String password, String address, String phoneNumber, String city, String country) {
+        this.id = id;
         this.name = name;
         this.surname = surname;
         this.email = email;
