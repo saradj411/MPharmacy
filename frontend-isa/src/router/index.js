@@ -24,7 +24,7 @@ import updatePharmacistProfile from '../components/updatePharmacistProfile.vue'
 import updateDermatologistProfile from '../components/updateDermatologistProfile.vue'
 import DermatologistPatients from '../components/DermatologistPatients.vue'
 import RequestForVacation from '../components/RequestForVacation.vue'
-
+import SystemAdminProfile from '../components/SystemAdminProfile.vue'
 
 import moment from 'moment'
 
@@ -71,6 +71,11 @@ const routes = [
         path: '/ProfilePatient/:id',
         name: 'ProfilePatient',
         component: ProfilePatient
+      },
+      {
+        path: '/SystemAdminProfile',
+        name: 'SystemAdminProfile',
+        component: SystemAdminProfile
       },
       {
         path: '/updatePharmacyProfile/:id',
