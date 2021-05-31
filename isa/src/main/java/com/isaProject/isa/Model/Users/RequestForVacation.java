@@ -6,6 +6,7 @@ import com.isaProject.isa.Model.Pharmacy.Pharmacy;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Date;
 
 @Entity

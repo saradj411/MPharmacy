@@ -8,6 +8,7 @@ import com.isaProject.isa.Model.Users.Patient;
 import com.isaProject.isa.Model.Users.Staff;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Date;
@@ -20,7 +21,7 @@ public class Examination {
     private Integer idExamination;
 
     @Column
-    private Date date;
+    private LocalDate date;
 
     @Column
     private Boolean canceled;
@@ -56,7 +57,7 @@ public class Examination {
     //@JsonBackReference
     private Patient patient;
 
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.MERGE)
     @JoinColumn(name = "staffId", referencedColumnName = "idUser")
     //@JsonBackReference
     private Staff staff;
@@ -88,7 +89,7 @@ public class Examination {
         this.canceled = canceled;
     }
 
-    public Date getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
@@ -140,7 +141,7 @@ public class Examination {
         this.idExamination = idExamination;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 
@@ -188,7 +189,7 @@ public class Examination {
         this.therapy = therapy;
     }
 
-    public Examination(Integer idExamination, Date date, LocalTime startTime, LocalTime endTime, double price, String report, Boolean isScheduled, Pharmacy pharmacy, Patient patient, Staff staff, ExaminationType type, ExaminationStatus status, Therapy therapy) {
+    public Examination(Integer idExamination, LocalDate date, LocalTime startTime, LocalTime endTime, double price, String report, Boolean isScheduled, Pharmacy pharmacy, Patient patient, Staff staff, ExaminationType type, ExaminationStatus status, Therapy therapy) {
         this.idExamination = idExamination;
         this.date = date;
         this.startTime = startTime;
@@ -204,7 +205,7 @@ public class Examination {
         this.therapy = therapy;
     }
 
-    public Examination(Integer idExamination, Date date, boolean canceled, LocalTime startTime, LocalTime endTime, double price, String report, Boolean isScheduled, Pharmacy pharmacy, Patient patient, Staff staff, ExaminationType type, ExaminationStatus status, Therapy therapy) {
+    public Examination(Integer idExamination, LocalDate date, boolean canceled, LocalTime startTime, LocalTime endTime, double price, String report, Boolean isScheduled, Pharmacy pharmacy, Patient patient, Staff staff, ExaminationType type, ExaminationStatus status, Therapy therapy) {
         this.idExamination = idExamination;
         this.date = date;
         this.canceled = canceled;

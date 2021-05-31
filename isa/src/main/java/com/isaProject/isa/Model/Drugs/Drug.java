@@ -1,12 +1,13 @@
 package com.isaProject.isa.Model.Drugs;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
 @Table
-public class Drug {
+public class Drug implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer idDrug;

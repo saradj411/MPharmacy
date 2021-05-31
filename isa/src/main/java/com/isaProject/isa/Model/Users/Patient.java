@@ -11,6 +11,7 @@ import com.isaProject.isa.Model.Pharmacy.Complaint;
 import com.isaProject.isa.Model.Pharmacy.Pharmacy;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -18,10 +19,10 @@ import java.util.Set;
 @DiscriminatorValue("PATIENT")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 
-public class Patient extends User{
+public class Patient extends User implements Serializable {
 
     @Column(nullable = true)
-    private int penalty;
+    private Integer penalty;
 
     @Column(nullable = true)
     private int points;
@@ -59,7 +60,7 @@ public class Patient extends User{
     public Patient() {
     }
 
-    public Patient(Integer idUser, String name, String surname, String email, String password, String address, String phoneNumber, String city, String country, int penalty, int points, String loyaltyCategory, Set<Drug> allergies, Set<DrugReservation> drugReservation, Set<Examination> examinations) {
+    public Patient(Integer idUser, String name, String surname, String email, String password, String address, String phoneNumber, String city, String country, Integer penalty, int points, String loyaltyCategory, Set<Drug> allergies, Set<DrugReservation> drugReservation, Set<Examination> examinations) {
         super(idUser, name, surname, email, password, address, phoneNumber, city, country);
         this.penalty = penalty;
         this.points = points;
@@ -69,7 +70,7 @@ public class Patient extends User{
         this.examinations = examinations;
     }
 
-    public Patient(Integer idUser, String name, String surname, String email, String password, String address, String phoneNumber, String city, String country, int penalty, int points, String loyaltyCategory, Set<Drug> allergies, Set<DrugReservation> drugReservation, Set<Examination> examinations, Set<Pharmacy> actionPharmacies) {
+    public Patient(Integer idUser, String name, String surname, String email, String password, String address, String phoneNumber, String city, String country, Integer penalty, int points, String loyaltyCategory, Set<Drug> allergies, Set<DrugReservation> drugReservation, Set<Examination> examinations, Set<Pharmacy> actionPharmacies) {
         super(idUser, name, surname, email, password, address, phoneNumber, city, country);
         this.penalty = penalty;
         this.points = points;
@@ -80,11 +81,11 @@ public class Patient extends User{
         this.actionPharmacies = actionPharmacies;
     }
 
-    public int getPenalty() {
+    public Integer getPenalty() {
         return penalty;
     }
 
-    public void setPenalty(int penalty) {
+    public void setPenalty(Integer penalty) {
         this.penalty = penalty;
     }
 

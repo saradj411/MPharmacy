@@ -16,6 +16,7 @@ public class Offer {
     private Integer idOffer;
 
     @Column
+    @Enumerated(EnumType.STRING)
     private OfferStatus offerStatus;
 
     @Column

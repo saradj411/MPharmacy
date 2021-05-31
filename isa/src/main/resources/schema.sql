@@ -137,12 +137,12 @@ insert into drug_reservation values(509,false,'2021-04-20',false,'2021-05-24',3,
 insert into drug_reservation values(510,false,'2021-04-20',false,'2021-05-24',3,507,508,502);
 
 #therapy
-insert into therapy values(500,504);
-insert into therapy values(501,501);
-insert into therapy values(502,502);
-insert into therapy values(503,503);
-insert into therapy values(504,505);
-insert into therapy values(505,506);
+insert into therapy values(500,3,504);
+insert into therapy values(501,5,501);
+insert into therapy values(502,8,502);
+insert into therapy values(503,9,503);
+insert into therapy values(504,4,505);
+insert into therapy values(505,7,506);
 
 #examination
 

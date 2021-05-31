@@ -1,8 +1,15 @@
 package com.isaProject.isa.Services.Implementations;
 
+import com.isaProject.isa.Model.DTO.ExaminationDTO;
+import com.isaProject.isa.Model.DTO.RequestForVacationDTO;
 import com.isaProject.isa.Model.Drugs.DrugReservation;
 import com.isaProject.isa.Model.Examination.Examination;
 import com.isaProject.isa.Model.Examination.ExaminationStatus;
+import com.isaProject.isa.Model.Examination.ExaminationType;
+import com.isaProject.isa.Model.Pharmacy.Pharmacy;
+import com.isaProject.isa.Model.Users.Dermatologist;
+import com.isaProject.isa.Model.Users.RequestForVacation;
+import com.isaProject.isa.Model.Users.Staff;
 import com.isaProject.isa.Repositories.ExaminationRepository;
 import com.isaProject.isa.Services.IServices.IExaminationService;
 import lombok.extern.slf4j.Slf4j;
@@ -16,8 +23,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Stack;
 
 @Service
 @Slf4j
@@ -25,14 +34,48 @@ public class ExaminationService implements IExaminationService {
 
     @Autowired
     ExaminationRepository examinationRepository;
+    @Autowired
+    PharmacyService pharmacyService;
+    @Autowired
+    PatientService patientService;
+    @Autowired
+    StaffService staffService;
 
     @Override
     public List<Examination> findAll() {
         return examinationRepository.findAll();
     }
 
-    @Override
 
+    @Override
+    public Examination save(ExaminationDTO examinationDTO) {
+        Examination d = new Examination();
+        Staff s=new Staff();
+        d.setDate(examinationDTO.getDate());
+        d.setEndTime(examinationDTO.getEnd());
+        d.setStartTime(examinationDTO.getStart());
+        d.setStaff(staffService.findById(examinationDTO.getIdStaff()));
+        d.setPharmacy(pharmacyService.findById(examinationDTO.getIdPharm()));
+        d.setPrice(examinationDTO.getPrice());
+        d.setType(ExaminationType.DERMATOLOGIST_EXAMINATION);
+        d.setPatient(patientService.findById(examinationDTO.getIdPatient()));
+        d.setStatus(ExaminationStatus.SCHEDULED);
+        return examinationRepository.save(d);
+    }
+
+
+
+    @Override
+    public Examination findById(Integer id) {
+        //veki skontalaaa
+        Examination examination=examinationRepository.findById(id).get();
+        return examination;
+    }
+
+
+
+
+    @Override
     public void canceling(Integer id) {
         Examination pat = examinationRepository.getOne(id);
 
@@ -53,6 +96,17 @@ public class ExaminationService implements IExaminationService {
         }
         return  false;
 
+    }
+
+    public List<Examination>getExaminationsByIdStaffAndIdPharmacy(Integer idStaff){
+        List<Examination>examinations=examinationRepository.getAllExaminationsByIdStaffAndIdPharmacy(idStaff);
+        List<Examination>freeEx = new ArrayList<>();
+        for (Examination e:examinations){
+            if(e.getStatus().equals(ExaminationStatus.CREATED)){
+                freeEx.add(e);
+            }
+        }
+        return examinations;
     }
 
 }

@@ -22,6 +22,7 @@ public class DrugOrderController {
 
     @Autowired
     DrugOrderService drugOrderService;
+    /*
 
     @PostMapping("/create")
     ResponseEntity<String> create(@RequestBody DrugOrderDTO drugOrderDTO)
@@ -34,6 +35,7 @@ public class DrugOrderController {
             throw new IllegalArgumentException("Date has to be in format YYYY-MM-DD.");
         }
 */
+    /*
         DrugOrder order = drugOrderService.createDrugOrder(drugOrderDTO);
         if(order != null) {
             return new ResponseEntity<>("Order is successfully published!", HttpStatus.CREATED);
@@ -43,4 +45,6 @@ public class DrugOrderController {
 
         // return null;
     }
+
+     */
 }

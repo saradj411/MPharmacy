@@ -40,6 +40,7 @@ public class DrugOrderService implements IDrugOrderService {
 
     @Autowired
     OrderItemRepository orderItemRepository;
+    /*
 
     @Override
     public DrugOrder createDrugOrder(DrugOrderDTO drugOrder) {
@@ -74,4 +75,6 @@ public class DrugOrderService implements IDrugOrderService {
 
         return order;
     }
+
+     */
 }
