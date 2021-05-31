@@ -219,7 +219,7 @@ export default {
       ,
       canceling:
        function(date){
-       this.axios.get('/drugPricelist/delete/'+date+"/"+this.id)
+       this.axios.get('/pharmacyDrugs/delete/'+date+"/"+this.id)
         .then(response => {
                 this.jel = response.data;
                 if(this.jel){

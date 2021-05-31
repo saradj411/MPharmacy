@@ -23,12 +23,12 @@
                                             </b-dropdown-item>
                                             <b-dropdown-item>
 
-                                      <router-link :to="{ path: '/createDrugPage/'}" v-slot="{href, navigate}" custom>
-           <b-link style="font-size:15px;color:black;" :href="href" @click="navigate"  elevation="1">Add new drug
+                                      <router-link :to="{ path: '/createDrugPage/'+pharmacy.idPharm}" v-slot="{href, navigate}" custom>
+           <b-link style="font-size:15px;color:blue;" :href="href" @click="navigate"  elevation="1">Add new drug
              </b-link></router-link>
            </b-dropdown-item>
                                     </b-dropdown> 
-                                                                            <label>{{selectedMedication.name}}</label>
+                                      <label style="font-size:22px;color:#0D184F;">{{selectedMedication.name}}</label>
 
                         </div>
 
@@ -48,8 +48,11 @@
 
             <button class="btn btn-primary btn-lg" v-on:click ="addNewMedicine" style="margin-left:-950px; margin-top:20px;background:#474A8A">Order drug </button>
 
-            <div  style=" background:#B0B3D6;width:500px;margin-left:38px;margin-top:60px;" >
-                                            <table v-if="showTable" class="table">
+            <div v-if="showTable" style=" background:#B0B3D6;width:500px;height:0px;margin-left:38px;margin-top:60px;" >
+                <form >
+                    <label style="font-size:28px;color:#0D184F;margine-left:20px;">List of drugs ordered </label >
+                                            <table  class="table">
+
                                                 <thead>
                                                     <tr>
                                                 <th>Medicine name</th>
@@ -57,14 +60,18 @@
                                                 </tr>
                                                 
                                                 </thead>
+                                                <tbody>
                                                 <tr v-for="med in medicationQuantityList" :key="med.id">
                                                     <td>{{med.drug.name}}</td>
                                                     <td>{{med.quantity}}</td>
                                                 </tr>
+                                                </tbody>
                                             </table>
+                                    <button class="btn btn-primary btn-lg"  v-on:click="createDrugOrder" style="margin-left:10px; margin-top:20px;background:#474A8A">Create order</button>
+</form>
                                         </div>
+                                        
 
-              <button class="btn btn-primary btn-lg"  v-on:click="createDrugOrder" style="margin-left:-950px; margin-top:20px;background:#474A8A">Create order</button>
                                       
 
     
@@ -99,7 +106,7 @@ export default {
           const order = {
                     orderItemDTO: this.medicationQuantityList,
                     timeLimit: this.timeLimit,
-                    pharmacyAdmin : this.user,
+                    id : this.user.idUser,
                     processed : true
                 };
                 console.log(this.timeLimit);
@@ -108,9 +115,8 @@ export default {
             this.axios.post('/drugOrder/create',order,{ 
              headers: {
              }}).then(response => {
-                       alert(response.data);
-                       this.medicationQuantityList = [];
-                       this.selectedMedication = {};
+                       alert(response.data);    
+                       window.location.href = "/ProfileAdmin";
 
                 })
                 .catch(response => {

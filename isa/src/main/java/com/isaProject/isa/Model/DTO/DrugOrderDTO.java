@@ -8,7 +8,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class DrugOrderDTO {
-    private PharmacyAdmin pharmacyAdmin;//pokusati vratiti id admina
+    private Integer id;//pokusati vratiti id admina
     private LocalDate timeLimit;
     private Set<OrderItemDTO> orderItemDTO;
     private Boolean processed;
@@ -16,19 +16,19 @@ public class DrugOrderDTO {
     public DrugOrderDTO() {
     }
 
-    public DrugOrderDTO(PharmacyAdmin pharmacyAdmin, LocalDate timeLimit, Set<OrderItemDTO> orderItemDTO, Boolean processed) {
-        this.pharmacyAdmin = pharmacyAdmin;
+    public DrugOrderDTO(Integer id, LocalDate timeLimit, Set<OrderItemDTO> orderItemDTO, Boolean processed) {
+        this.id = id;
         this.timeLimit = timeLimit;
         this.orderItemDTO = orderItemDTO;
         this.processed = processed;
     }
 
-    public PharmacyAdmin getPharmacyAdmin() {
-        return pharmacyAdmin;
+    public Integer getId() {
+        return id;
     }
 
-    public void setPharmacyAdmin(PharmacyAdmin pharmacyAdmin) {
-        this.pharmacyAdmin = pharmacyAdmin;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public LocalDate getTimeLimit() {

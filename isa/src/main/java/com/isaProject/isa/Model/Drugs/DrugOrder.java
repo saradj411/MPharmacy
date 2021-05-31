@@ -26,7 +26,6 @@ public class DrugOrder {
     //@Temporal(TemporalType.DATE)
     private LocalDate timeLimit;//********************
 
-
     //statusu narudžbenice (čeka ponude, obrađena)
     @Column
     private Boolean processed;//ceka ponude=faalse//*********************
@@ -37,7 +36,7 @@ public class DrugOrder {
 
     //PROMJENA MERGEEEEEE
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
-    @JoinColumn(name = "admin", referencedColumnName = "idUser")
+    @JoinColumn(name = "admin", referencedColumnName = "idUser", nullable = true, unique = false)
     //@JsonManagedReference
     private PharmacyAdmin pharmacyAdmin;//***********
 
@@ -45,61 +44,6 @@ public class DrugOrder {
     //@JsonBackReference
     private Set<Offer> offers = new HashSet<Offer>();//*****************
 
-    public Integer getIdOrder() {
-        return idOrder;
-    }
-
-    public Integer getQuantity() {
-        return quantity;
-    }
-
-    public LocalDate getTimeLimit() {
-        return timeLimit;
-    }
-
-    public Boolean getProcessed() {
-        return processed;
-    }
-
-    public Set<OrderItem> getOrderItems() {
-        return orderItems;
-    }
-
-    public PharmacyAdmin getPharmacyAdmin() {
-        return pharmacyAdmin;
-    }
-
-    public Set<Offer> getOffers() {
-        return offers;
-    }
-
-    /*public void setIdOrder(Integer idOrder) {
-        this.idOrder = idOrder;
-    }*/
-
-    public void setQuantity(Integer quantity) {
-        this.quantity = quantity;
-    }
-
-    public void setTimeLimit(LocalDate timeLimit) {
-        this.timeLimit = timeLimit;
-    }
-
-    public void setProcessed(Boolean processed) {
-        this.processed = processed;
-    }
-
-    public void setOrderItems(Set<OrderItem> orderItems) {
-        this.orderItems = orderItems;
-    }
-
-    public void setPharmacyAdmin(PharmacyAdmin pharmacyAdmin) {
-        this.pharmacyAdmin = pharmacyAdmin;
-    }
-
-    public void setOffers(Set<Offer> offers) {
-        this.offers = offers;
-    }
 
     public DrugOrder(Integer idOrder, Integer quantity, LocalDate timeLimit, Boolean processed, Set<OrderItem> orderItems, PharmacyAdmin pharmacyAdmin, Set<Offer> offers) {
         this.idOrder = idOrder;
@@ -111,7 +55,7 @@ public class DrugOrder {
         this.offers = offers;
     }
     public DrugOrder(Integer idOrder,LocalDate timeLimit, Boolean processed, Set<OrderItem> orderItems, PharmacyAdmin pharmacyAdmin, Set<Offer> offers) {
-        this.idOrder = idOrder;
+            this.idOrder = idOrder;
         this.timeLimit = timeLimit;
         this.processed = processed;
         this.orderItems = orderItems;
@@ -121,6 +65,62 @@ public class DrugOrder {
 
     public DrugOrder(){
 
+    }
+
+    public Integer getIdOrder() {
+        return idOrder;
+    }
+
+    public void setIdOrder(Integer idOrder) {
+        this.idOrder = idOrder;
+    }
+
+    public Integer getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
+    }
+
+    public LocalDate getTimeLimit() {
+        return timeLimit;
+    }
+
+    public void setTimeLimit(LocalDate timeLimit) {
+        this.timeLimit = timeLimit;
+    }
+
+    public Boolean getProcessed() {
+        return processed;
+    }
+
+    public void setProcessed(Boolean processed) {
+        this.processed = processed;
+    }
+
+    public Set<OrderItem> getOrderItems() {
+        return orderItems;
+    }
+
+    public void setOrderItems(Set<OrderItem> orderItems) {
+        this.orderItems = orderItems;
+    }
+
+    public PharmacyAdmin getPharmacyAdmin() {
+        return pharmacyAdmin;
+    }
+
+    public void setPharmacyAdmin(PharmacyAdmin pharmacyAdmin) {
+        this.pharmacyAdmin = pharmacyAdmin;
+    }
+
+    public Set<Offer> getOffers() {
+        return offers;
+    }
+
+    public void setOffers(Set<Offer> offers) {
+        this.offers = offers;
     }
 }
 

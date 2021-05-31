@@ -52,7 +52,7 @@ const routes = [
         component: Home
       },
       {
-        path: '/createDrugPage',
+        path: '/createDrugPage/:id',
         name: 'createDrugPage',
         component: createDrugPage
       },
@@ -67,12 +67,7 @@ const routes = [
         name: 'ProfilePatient',
         component: ProfilePatient
       }
-      ,
-      {
-        path: '/ProfilePatient/:id',
-        name: 'ProfilePatient',
-        component: ProfilePatient
-      },
+    ,
       {
         path: '/updatePharmacyProfile/:id',
         name: 'updatePharmacyProfile',

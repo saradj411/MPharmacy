@@ -1,12 +1,15 @@
 package com.isaProject.isa.Model.Drugs;
 
+import org.hibernate.annotations.Cascade;
+
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
 @Table
-public class Drug {
+public class Drug implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer idDrug;
@@ -29,8 +32,11 @@ public class Drug {
     @Column
     private String manufacturer;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinTable( name = "alternativeDrug", joinColumns = @JoinColumn(name="idDrug", nullable = true,referencedColumnName="idDrug"), inverseJoinColumns = @JoinColumn(name = "idAlternativeDrug", referencedColumnName = "idDrug"))
+
+
+    @Cascade(org.hibernate.annotations.CascadeType.DELETE)
+    @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+    @JoinTable( name = "alternativeDrug", joinColumns = @JoinColumn(name="idDrug",referencedColumnName="idDrug"), inverseJoinColumns = @JoinColumn(name = "idAlternativeDrug", referencedColumnName = "idDrug"))
     private Set<Drug> alternativeDrugs = new HashSet<Drug>();
 
     public Drug() {

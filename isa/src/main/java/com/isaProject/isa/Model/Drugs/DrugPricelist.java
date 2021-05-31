@@ -3,6 +3,7 @@ package com.isaProject.isa.Model.Drugs;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.isaProject.isa.Model.Pharmacy.Pharmacy;
+import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -15,8 +16,9 @@ public class DrugPricelist {
     private Integer idPricelist;
 
 
-    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
-    @JoinColumn(name = "drugId", referencedColumnName = "idDrug", nullable = true, unique = false)
+
+    @ManyToOne( cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "drugId", referencedColumnName = "idDrug")
 
     //@JsonManagedReference
     private Drug drug;

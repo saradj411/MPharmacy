@@ -19,12 +19,16 @@
                         <input type="text" class="form-control" v-model = "code" placeholder="Enter code">
                         </div>
                     </div>
-                    <div >
-                        <div>
-                            <label style="font-size:22px;color:#0D184F;">Recipe need:</label>
-                            <input type="text" class="form-control"  v-model="recipeNeed" placeholder="Enter recipe need">
+                    
+
+<div >
+                        <div >
+                            <label style="font-size:22px;color:#0D184F;">Quantity:</label>
+                            <input type="number" class="form-control" v-model="quantity" placeholder="Enter quantity">
                         </div>
                     </div>
+
+
                     <div >
                         <div >
                             <label style="font-size:22px;color:#0D184F;">Manufacturer:</label>
@@ -95,7 +99,11 @@ export default {
       manufacturer :"",
       nesto:"",
       choosenType : ""  ,
-      choosenFormat : ""  
+      choosenFormat : ""  ,
+      quantity:"",
+      id : this.$route.params.id,
+      pharmacy:{}
+
     }
   },
 
@@ -105,16 +113,20 @@ export default {
           const medicationInfo = {
                name : this.name,
                code : this.code,
-               recipeNeed : this.recipeNeed,
+               recipeNeed : this.true,
                drugType : this.choosenType,
                format : this.choosenFormat,  
-               manufacturer : this.manufacturer
+               manufacturer : this.manufacturer,
+               quantity : this.quantity,
+               pharmacy:this.pharmacy
+
           }
           this.axios.post('/drug/create',medicationInfo,{ 
              headers: {
              }}).then(response => {
                        alert("Lijek je dodat!");
                         this.nesto=response.data;
+          window.location.href = "/ProfileAdmin";
 
                         console.log(response.data);
                 })
@@ -130,6 +142,15 @@ export default {
       }
 },
  mounted() {
+     this.axios.get('/pharmacy/findById/'+this.id)
+        .then(response => {
+                this.pharmacy = response.data;
+                 
+       
+         }).catch(res => {
+                alert("Ne valja");
+                console.log(res);
+        });
     }
 }
 </script>  

@@ -46,7 +46,7 @@ public class DrugOrderService implements IDrugOrderService {
     public DrugOrder save(DrugOrderDTO drugOrderDTO) {
         DrugOrder d = new DrugOrder();
         d.setTimeLimit(drugOrderDTO.getTimeLimit());
-        d.setPharmacyAdmin(drugOrderDTO.getPharmacyAdmin());
+        d.setPharmacyAdmin(pharmacyAdminService.findById(drugOrderDTO.getId()));
         //d.setProcessed(false);
         //d.setOffers(null);
 
@@ -54,7 +54,7 @@ public class DrugOrderService implements IDrugOrderService {
         DrugOrder drugOrder = drugOrderRepository.save(d);
         for(OrderItemDTO medDto : drugOrderDTO.getOrderItemDTO()){//vrati mi listu llijekova sa kolicinom
             OrderItem orderItem1 = new OrderItem(medDto.getQuantity(),medDto.getDrug());//
-            orderItem1.setDrugOrder(drugOrder);
+            orderItem1.setDrugOrder(d);
             orderItemRepository.save(orderItem1);
         }
         return drugOrder;
