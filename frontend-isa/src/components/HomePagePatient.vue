@@ -296,7 +296,7 @@
         <tr>
           <th></th>
           <td>Pharmacy:</td>
-          <!--<td>{{recipe.pharmacy.name}}</td>!-->
+          <td>{{recipe.pharmacyName}}</td>
           
  
         </tr>
@@ -473,7 +473,7 @@ export default {
                 console.log(res);
         });
 
-         this.axios.get('/patient/findERecipe/'+this.id)
+         this.axios.get('/erecipe/findByIdPatient/'+this.id)
         .then(response => {
                 this.recepies= response.data;
                 

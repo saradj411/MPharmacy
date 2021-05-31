@@ -112,7 +112,7 @@ public class PatientService implements IPatientService {
         return dermExaminations;
     }
 
-    @Override
+    /*@Override
     public List<ERecipe> findERecipe(Integer id) {
         Patient patient=patientRepository.findById(id).get();
         Set<ERecipe> recepies=new HashSet<>();
@@ -123,7 +123,7 @@ public class PatientService implements IPatientService {
         }
 
         return dermExaminations;
-    }
+    }*/
 
 }
 

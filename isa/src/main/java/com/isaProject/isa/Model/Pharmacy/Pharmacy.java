@@ -15,6 +15,8 @@ import java.util.Set;
 
 @Entity
 @Table
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+
 public class  Pharmacy implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -29,16 +31,6 @@ public class  Pharmacy implements Serializable {
     //prosečnu ocenu apoteke,
     @Column
     private double avgGrade;
-
-
-//proba za grane eeeee
-
-
-///
-///fsds
-
-//proba za grane
-
 
 
     @OneToMany(mappedBy = "pharmacy", fetch = FetchType.LAZY, cascade = CascadeType.ALL)

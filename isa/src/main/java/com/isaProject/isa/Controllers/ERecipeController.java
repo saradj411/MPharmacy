@@ -1,5 +1,6 @@
 package com.isaProject.isa.Controllers;
 
+import com.isaProject.isa.Model.DTO.FrontERecipeDTO;
 import com.isaProject.isa.Model.Drugs.ERecipe;
 import com.isaProject.isa.Model.Examination.Examination;
 import com.isaProject.isa.Services.Implementations.ERecipeService;
@@ -22,9 +23,9 @@ public class ERecipeController {
     ERecipeService eRecipeService;
 
     @GetMapping(value = "/findByIdPatient/{id}")
-    public ResponseEntity<List<ERecipe>> findSheduledPharmacistExamination(@PathVariable Integer id) {
+    public ResponseEntity<List<FrontERecipeDTO>> findSheduledPharmacistExamination(@PathVariable Integer id) {
 
-        List<ERecipe> d= eRecipeService.findByPatient(id);
+        List<FrontERecipeDTO> d= eRecipeService.findByPatient(id);
 
         return d == null ?
                 new ResponseEntity<>(HttpStatus.NOT_FOUND) :

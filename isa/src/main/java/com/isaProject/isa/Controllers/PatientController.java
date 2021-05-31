@@ -90,7 +90,7 @@ public class PatientController {
                 new ResponseEntity<>(HttpStatus.NOT_FOUND) :
                 ResponseEntity.ok(d);
     }
-    @GetMapping(value = "/findERecipe/{id}")
+    /*@GetMapping(value = "/findERecipe/{id}")
     public ResponseEntity<List<ERecipe>> findERecipe(@PathVariable Integer id) {
 
         List<ERecipe> d= patientService.findERecipe(id);
@@ -98,6 +98,6 @@ public class PatientController {
         return d == null ?
                 new ResponseEntity<>(HttpStatus.NOT_FOUND) :
                 ResponseEntity.ok(d);
-    }
+    }*/
 
 }

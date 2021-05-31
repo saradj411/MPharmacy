@@ -41,11 +41,11 @@ public class Patient extends User{
     @OneToMany(mappedBy = "patient", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     //@JsonBackReference
     private Set<Examination> examinations = new HashSet<Examination>();
-
+/*
     @OneToMany(mappedBy = "patient", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     //@JsonManagedReference
     private Set<ERecipe> erecipes = new HashSet<ERecipe>();
-
+*/
     //apoteke na koje je pretplacen
     @JsonIgnore
     @ManyToMany(fetch = FetchType.LAZY)
@@ -133,7 +133,7 @@ public class Patient extends User{
     public void setActionPharmacies(Set<Pharmacy> actionPharmacies) {
         this.actionPharmacies = actionPharmacies;
     }
-
+/*
     public Set<ERecipe> getErecipes() {
         return erecipes;
     }
@@ -141,7 +141,7 @@ public class Patient extends User{
     public void setErecipes(Set<ERecipe> erecipes) {
         this.erecipes = erecipes;
     }
-
+*/
     /*
     //zalbe
     @OneToMany(mappedBy = "patient", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
