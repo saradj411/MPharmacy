@@ -49,7 +49,7 @@
 
            <b-dropdown-item>
 
-                                      <router-link :to="{ path: '/createDrugPage/'}" v-slot="{href, navigate}" custom>
+                                      <router-link :to="{ path: '/createDrugPage/'+pharmacy.idPharm}" v-slot="{href, navigate}" custom>
            <b-link style="font-size:20px;color:black;" :href="href" @click="navigate"  elevation="1">Add drug
              </b-link></router-link>
            </b-dropdown-item>

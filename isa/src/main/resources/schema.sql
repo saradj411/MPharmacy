@@ -225,7 +225,6 @@ insert into examination values(507,false,'2021-07-23','2021-07-23 11:00:00',true
 insert into examination values(509,false,'2021-08-27','12:00:00',false,1050,'info2','10:30:00','CREATED','PHARMACIST_EXAMINATION',null,501,511,null);
 
 
-
 insert into examination values(510,false,'2021-08-29','11:00:00',false,1030,'info2','09:30:00','CREATED','DERMATOLOGIST_EXAMINATION',null,500,501,null);
 insert into examination values(511,false,'2021-08-27','12:00:00',false,1050,'info2','10:30:00','CREATED','DERMATOLOGIST_EXAMINATION',null,501,504,null);
 

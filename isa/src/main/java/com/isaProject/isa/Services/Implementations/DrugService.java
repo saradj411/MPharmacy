@@ -4,12 +4,10 @@ package com.isaProject.isa.Services.Implementations;
 import com.isaProject.isa.Model.DTO.DrugDTO;
 import com.isaProject.isa.Model.Drugs.Drug;
 import com.isaProject.isa.Model.Drugs.DrugPricelist;
+import com.isaProject.isa.Model.Drugs.PharmacyDrugs;
 import com.isaProject.isa.Model.Pharmacy.Pharmacy;
 import com.isaProject.isa.Model.Users.PharmacyAdmin;
-import com.isaProject.isa.Repositories.DrugPricelistRepository;
-import com.isaProject.isa.Repositories.DrugRepository;
-import com.isaProject.isa.Repositories.PharmacyAdminRepository;
-import com.isaProject.isa.Repositories.PharmacyRepository;
+import com.isaProject.isa.Repositories.*;
 import com.isaProject.isa.Services.IServices.IDrugService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,12 +29,15 @@ public class DrugService implements IDrugService {
     PharmacyAdminRepository pharmacyAdminRepository;
 
     @Autowired
+    PharmacyRepository pharmacyRepository;
+
+    @Autowired
     DrugPricelistRepository drugPricelistRepository;
     @Autowired
     DrugPricelistService drugPricelistService;
 
     @Autowired
-    PharmacyRepository pharmacyRepository;
+    PharmacyDrugsRepository pharmacyDrugsRepository;
 
 
     List<Drug> d=new List<Drug>() {
@@ -188,8 +189,8 @@ public class DrugService implements IDrugService {
         //veki skontalaaa
         d=drugRepository.findOneByName(name);
         return d;
-
     }
+
 
     @Override
     public List<Drug> findAll() {
@@ -200,13 +201,19 @@ public class DrugService implements IDrugService {
     @Override
     public Drug save(DrugDTO drug) {
         Drug d = new Drug();
+        PharmacyDrugs pd=new PharmacyDrugs();
         d.setName(drug.getName());
         d.setCode(drug.getCode());
         d.setDrugType(drug.getDrugType());
         d.setFormat(drug.getFormat());
         d.setManufacturer(drug.getManufacturer());
-        d.setRecipeNeed(drug.isRecipeNeed());
-        return drugRepository.save(d);
+//        d.setRecipeNeed(true);
+        pd.setQuantity(drug.getQuantity());
+        pd.setPharmacy(drug.getPharmacy());
+        Drug novi=drugRepository.save(d);
+        pd.setDrug(novi);
+        pharmacyDrugsRepository.save(pd);
+        return novi;
     }
     @Override
     public void update(Drug drug) {

@@ -3,10 +3,12 @@ package com.isaProject.isa.Controllers;
 import com.isaProject.isa.Model.DTO.PharmacyDTO;
 import com.isaProject.isa.Model.Drugs.Drug;
 import com.isaProject.isa.Model.Drugs.DrugPricelist;
+import com.isaProject.isa.Model.Drugs.PharmacyDrugs;
 import com.isaProject.isa.Model.Pharmacy.Pharmacy;
 import com.isaProject.isa.Services.IServices.IPharmacyService;
 import com.isaProject.isa.Services.Implementations.DrugPricelistService;
 import com.isaProject.isa.Services.Implementations.DrugService;
+import com.isaProject.isa.Services.Implementations.PharmacyDrugsService;
 import com.isaProject.isa.Services.Implementations.PharmacyService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +32,10 @@ public class PharmacyController {
 
     @Autowired
     private DrugPricelistService drugPricelistService;
+
+    @Autowired
+    private PharmacyDrugsService pharmacyDrugsService;
+
 
     @GetMapping(value = "/findAll")
     public ResponseEntity<List<Pharmacy>> findAll() {
@@ -57,11 +63,11 @@ public class PharmacyController {
     @GetMapping(value = "/getDrugsPharmacy/{id}")
     public ResponseEntity<List<Drug>> findDrugs(@PathVariable Integer id) {
         List<Drug> drugs=drugService.findAll();
-        List<DrugPricelist> drugPricelists=drugPricelistService.findAll();
+        List<PharmacyDrugs> pharmacyDrugs=pharmacyDrugsService.findAll();
 
         ArrayList<Drug> listDrugs = new ArrayList<>();
 
-        for (DrugPricelist dp:drugPricelists){
+        for (PharmacyDrugs dp:pharmacyDrugs){
             for (Drug dd:drugs){
                 if(dp.getPharmacy().getIdPharm().equals(id)){
                     System.out.println("eee"+dp.getPharmacy().getIdPharm());

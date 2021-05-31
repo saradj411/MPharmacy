@@ -1,82 +1,57 @@
 package com.isaProject.isa.Model.DTO;
 
+import com.isaProject.isa.Model.Users.PharmacyAdmin;
+
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
 public class DrugOrderDTO {
-    private Integer pharmacyAdminEmail;
-    private Integer idAdmin;//*********************
-    private Date timeLimit;//*******************
-    private Set<DrugItemDTO> drugOrderItems = new HashSet<>();//************************
-    String idAdminn;
-    String timeLimitt;
+    private Integer id;//pokusati vratiti id admina
+    private LocalDate timeLimit;
+    private Set<OrderItemDTO> orderItemDTO;
+    private Boolean processed;
 
-    public Integer getPharmacyAdminEmail() {
-        return pharmacyAdminEmail;
+    public DrugOrderDTO() {
     }
 
-    public Date getTimeLimit() {
+    public DrugOrderDTO(Integer id, LocalDate timeLimit, Set<OrderItemDTO> orderItemDTO, Boolean processed) {
+        this.id = id;
+        this.timeLimit = timeLimit;
+        this.orderItemDTO = orderItemDTO;
+        this.processed = processed;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public LocalDate getTimeLimit() {
         return timeLimit;
     }
 
-    public Set<DrugItemDTO> getDrugOrderItems() {
-        return drugOrderItems;
-    }
-
-    public void setPharmacyAdminEmail(Integer pharmacyAdminEmail) {
-        this.pharmacyAdminEmail = pharmacyAdminEmail;
-    }
-
-    public void setTimeLimit(Date timeLimit) {
+    public void setTimeLimit(LocalDate timeLimit) {
         this.timeLimit = timeLimit;
     }
 
-    public void setDrugOrderItems(Set<DrugItemDTO> drugOrderItems) {
-        this.drugOrderItems = drugOrderItems;
+    public Set<OrderItemDTO> getOrderItemDTO() {
+        return orderItemDTO;
     }
 
-    public DrugOrderDTO(Integer idAdmin, Date timeLimit, Set<DrugItemDTO> drugOrderItems) {//***********************
-        this.idAdmin = idAdmin;
-        this.timeLimit = timeLimit;
-        this.drugOrderItems = drugOrderItems;
+    public void setOrderItemDTO(Set<OrderItemDTO> orderItemDTO) {
+        this.orderItemDTO = orderItemDTO;
     }
 
-
-    public DrugOrderDTO(Integer idAdmin, Date timeLimit) {
-        this.idAdmin = idAdmin;
-        this.timeLimit = timeLimit;
-        //this.drugOrderItems = drugOrderItems;
-    }
-    public DrugOrderDTO(String idAdmin, String timeLimit) {
-        this.idAdminn = idAdmin;
-        this.timeLimitt = timeLimit;
-        //this.drugOrderItems = drugOrderItems;
+    public Boolean getProcessed() {
+        return processed;
     }
 
-
-
-    public DrugOrderDTO(Date timeLimit, Set<DrugItemDTO> drugOrderItems) {
-        this.timeLimit = timeLimit;
-        this.drugOrderItems = drugOrderItems;
-    }
-
-    public Integer getIdAdmin() {
-        return idAdmin;
-    }
-
-    public void setIdAdmin(Integer idAdmin) {
-        this.idAdmin = idAdmin;
-    }
-
-    public DrugOrderDTO(Integer pharmacyAdminEmail, Integer idAdmin, Date timeLimit, Set<DrugItemDTO> drugOrderItems) {
-        this.pharmacyAdminEmail = pharmacyAdminEmail;
-        this.idAdmin = idAdmin;
-        this.timeLimit = timeLimit;
-        this.drugOrderItems = drugOrderItems;
-    }
-
-    public DrugOrderDTO(){
-
+    public void setProcessed(Boolean processed) {
+        this.processed = processed;
     }
 }

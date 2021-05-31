@@ -1,5 +1,7 @@
 package com.isaProject.isa.Model.Drugs;
 
+import org.hibernate.annotations.Cascade;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;
@@ -29,6 +31,10 @@ public class Drug implements Serializable {
     //proizvodjac
     @Column
     private String manufacturer;
+
+    @Cascade(org.hibernate.annotations.CascadeType.DELETE)
+    @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+    @JoinTable( name = "alternativeDrug", joinColumns = @JoinColumn(name="idDrug",referencedColumnName="idDrug"), inverseJoinColumns = @JoinColumn(name = "idAlternativeDrug", referencedColumnName = "idDrug"))
 /*
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinTable( name = "alternativeDrug", joinColumns = @JoinColumn(name="idDrug", nullable = true,referencedColumnName="idDrug"), inverseJoinColumns = @JoinColumn(name = "idAlternativeDrug", referencedColumnName = "idDrug"))

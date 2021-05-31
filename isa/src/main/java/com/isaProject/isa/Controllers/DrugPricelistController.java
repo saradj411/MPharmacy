@@ -29,14 +29,16 @@ public class DrugPricelistController {
     @Autowired
     private DrugService drugService1;
 
+
     @GetMapping("/delete/{idDrug}/{idPharm}")
     public ResponseEntity<Boolean> deleteDermatologist(@PathVariable Integer idDrug,@PathVariable Integer idPharm ) {
         Drug drug = drugService1.findById(idDrug);
         Boolean answer = drugService1.remove(drug, idPharm);
         return new ResponseEntity<>(answer, HttpStatus.ACCEPTED);
     }
-        @GetMapping(value = "/findAll")
-    public ResponseEntity<List<DrugPricelist>> findAll() {
+
+    @GetMapping(value = "/findAll")
+        public ResponseEntity<List<DrugPricelist>> findAll() {
         List<DrugPricelist> pricelists=drugService.findAll();
 
 

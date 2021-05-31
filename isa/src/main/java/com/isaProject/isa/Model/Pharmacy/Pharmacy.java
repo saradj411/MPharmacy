@@ -41,7 +41,7 @@ public class  Pharmacy implements Serializable {
 //proba za grane
 
 
-
+//@OneToMany(cascade = CascadeType.REMOVE, orphanRemoval = true)
     @OneToMany(mappedBy = "pharmacy", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     //@JsonBackReference
     private Set<PharmacyAdmin> pharmacyAdmins = new HashSet<PharmacyAdmin>();

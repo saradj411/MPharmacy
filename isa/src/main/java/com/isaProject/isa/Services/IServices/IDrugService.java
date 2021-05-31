@@ -16,4 +16,4 @@ public interface IDrugService {
     //dodati za rezervaciju kad Sara uradi
     Boolean remove(Drug medication, Integer idAdmin);
 
-}
+    }

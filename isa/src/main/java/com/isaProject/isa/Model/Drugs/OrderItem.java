@@ -18,14 +18,23 @@ public class OrderItem {
     @Column
     private Integer quantity;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "drugId", referencedColumnName = "idDrug")
-  //  @JsonManagedReference
 
+
+    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+    @JoinColumn(name = "drugId", referencedColumnName = "idDrug", nullable = true, unique = false)
+  //  @JsonManagedReference
     private Drug drug;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "orderId", referencedColumnName = "idOrder")
+    public OrderItem(Integer quantity, Drug drug) {
+        this.quantity = quantity;
+        this.drug = drug;
+    }
+
+    public OrderItem() {
+    }
+
+    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+    @JoinColumn(name = "orderId", referencedColumnName = "idOrder", nullable = true, unique = false)
 //    @JsonManagedReference
     private DrugOrder drugOrder;
 

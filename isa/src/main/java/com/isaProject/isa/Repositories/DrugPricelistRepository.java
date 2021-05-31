@@ -13,4 +13,9 @@ public interface DrugPricelistRepository extends JpaRepository<DrugPricelist, In
 
     @Query("select ex from DrugPricelist  ex where ex.pharmacy.idPharm = ?1 and ex.drug.name = ?2")
     List<DrugPricelist> findAllDrugsByNameAndIdPharmacy(Integer idPharmacy,String name);
+
+    //findAllDrugsByIdDrugAndIdPharmacy
+
+    @Query("select ex from DrugPricelist  ex where ex.pharmacy.idPharm = ?1 and ex.drug.idDrug = ?2")
+    DrugPricelist findAllDrugsByIdDrugAndIdPharmacy(Integer idPharm,Integer idDrug);
 }
