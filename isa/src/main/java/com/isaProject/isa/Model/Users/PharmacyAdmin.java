@@ -13,14 +13,14 @@ import java.util.Set;
 
 @Entity
 //@DiscriminatorValue("PHARMACY_ADMIN")
-//@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class PharmacyAdmin extends User {
 
 
     private static final long serialVersionUID = 1L;
 
-    @JsonIgnore
-    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+    //@JsonIgnore
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "adminPharmacy", referencedColumnName = "idPharm", nullable = true, unique = false)
     //@JsonManagedReference
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "idPharm")
@@ -28,6 +28,7 @@ public class PharmacyAdmin extends User {
 
     private Pharmacy pharmacy;
 
+    @JsonIgnore
 
     @OneToMany(mappedBy = "pharmacyAdmin", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     //@JsonBackReference

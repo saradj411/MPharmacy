@@ -5,13 +5,14 @@ import com.isaProject.isa.Model.Examination.Examination;
 import com.isaProject.isa.Model.Pharmacy.Pharmacy;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 
-public class Dermatologist extends Staff{
+public class Dermatologist extends Staff {
 
     //apoteke u kojima je zaposlen
     @ManyToMany(fetch = FetchType.LAZY)

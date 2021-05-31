@@ -286,13 +286,11 @@ public class PharmacyAdminController {
     public ResponseEntity<Pharmacy> getPharm(@PathVariable Integer id) {
 
         PharmacyAdmin pharmacyAdmin = pharmacyAdminService.findById(id);
+        System.out.println("ajde "+pharmacyAdmin.getPharmacy().getName());
         return pharmacyAdmin.getPharmacy() == null ?
                 new ResponseEntity<>(HttpStatus.NOT_FOUND) :
                 ResponseEntity.ok(pharmacyAdmin.getPharmacy());
-
     }
-
-
 
     @GetMapping(value = "/findById/{id}")
     public ResponseEntity<PharmacyAdmin> findById(@PathVariable Integer id) {

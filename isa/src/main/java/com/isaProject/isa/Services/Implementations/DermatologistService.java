@@ -115,6 +115,7 @@ public class DermatologistService implements IDermatologistService {
         return dermatologistRepository.findAll();
     }
 
+
     @Override
     public Set<PatientDTO> findAllPatients(Integer id) {
         /*//proslijedim id dermatologa
@@ -128,10 +129,13 @@ public class DermatologistService implements IDermatologistService {
             }
         }
         return patients;*/
-        HashSet<PatientDTO> patients=new HashSet<>();
+        Set<PatientDTO> patients=new HashSet<>();
 
         List<Examination>list=examinationRepository.find(id);
+
+        System.out.println("Stampa id "+id);
         for(Examination l:list){
+            System.out.println("Pacijent je "+ l.getPatient().getName());
             PatientDTO p=new PatientDTO(l.getPatient().getId(),l.getPatient().getEmail(),l.getPatient().getName(),l.getPatient().getSurname(),
                    l.getPatient().getPhoneNumber() );
             patients.add(p);

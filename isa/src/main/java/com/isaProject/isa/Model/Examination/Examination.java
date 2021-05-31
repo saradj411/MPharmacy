@@ -3,6 +3,7 @@ package com.isaProject.isa.Model.Examination;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.isaProject.isa.Model.Pharmacy.Pharmacy;
 import com.isaProject.isa.Model.Users.Patient;
@@ -14,6 +15,8 @@ import java.util.Date;
 
 @Entity
 @Table
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+
 public class Examination {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -43,9 +46,6 @@ public class Examination {
     @Column
     private Boolean isScheduled;
 
-
-
-
     @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.MERGE)
     @JoinColumn(name = "pharmacyId", referencedColumnName = "idPharm")
     //@JsonManagedReference
@@ -56,10 +56,10 @@ public class Examination {
     @JsonBackReference
     private Patient patient;
 
-    @JsonIgnore
+    //@JsonIgnore
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "staffId", referencedColumnName = "id")
-    //@JsonBackReference
+    @JsonBackReference
     private Staff staff;
 
     //kod dermatologa, kod farmaceuta
