@@ -79,10 +79,11 @@ public class ExaminationController {
     @PostMapping("/create")
     public ResponseEntity<String> addDrug(@RequestBody ExaminationDTO examinationDTO) {
         System.out.println("Usao u pregleddd");
-        System.out.println("examination  "+examinationDTO.getStart());
-        System.out.println("end "+examinationDTO.getEnd());
+        System.out.println("examination  " + examinationDTO.getStart());
+        System.out.println("end " + examinationDTO.getEnd());
         Examination examination = examinationService.save(examinationDTO);
         return new ResponseEntity<>("kreirano", HttpStatus.CREATED);
+    }
     @GetMapping(value = "/findCreatedPharmacistExamination")
     public ResponseEntity<List<FrontCreatedExaminationDTO>> findCreatedPharmacistExamination() {
         //log.info("dsds:"+id);

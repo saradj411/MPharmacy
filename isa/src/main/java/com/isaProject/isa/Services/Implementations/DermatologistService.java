@@ -15,10 +15,7 @@ import com.isaProject.isa.Model.Users.Dermatologist;
 import com.isaProject.isa.Model.Users.Patient;
 import com.isaProject.isa.Model.Users.Staff;
 import com.isaProject.isa.Model.Users.WorkTime;
-import com.isaProject.isa.Repositories.DermatologistRepository;
-import com.isaProject.isa.Repositories.ExaminationRepository;
-import com.isaProject.isa.Repositories.PatientRepository;
-import com.isaProject.isa.Repositories.WorkTimeRepository;
+import com.isaProject.isa.Repositories.*;
 import com.isaProject.isa.Services.IServices.IDermatologistService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -289,7 +286,7 @@ budućih pregleda kojoj korisnik pristupa sa svog profila. Pregled se dodaje i u
             List<WorkTime>finaList=new ArrayList<WorkTime>();
 
             for (WorkTime w:workTimes1){
-                if(w.getStaff().getIdUser().equals(idDerm)){
+                if(w.getStaff().getId().equals(idDerm)){
                     finaList.add(w);
                 }
             }

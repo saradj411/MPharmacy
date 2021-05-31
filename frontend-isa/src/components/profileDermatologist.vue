@@ -28,7 +28,7 @@
              </b-link></router-link>
            </b-dropdown-item>
                                      <b-dropdown-item>
-                                      <router-link :to="{ path: '/WorkCalendar/'+user.idUser}" v-slot="{href, navigate}" custom>
+                                      <router-link :to="{ path: '/WorkCalendar/'+user.id}" v-slot="{href, navigate}" custom>
            <b-link style="font-size:20px;color:black;" :href="href" @click="navigate"  elevation="1">Work calendar
              </b-link></router-link>
            </b-dropdown-item>

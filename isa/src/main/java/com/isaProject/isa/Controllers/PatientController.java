@@ -108,7 +108,7 @@ public class PatientController {
         ArrayList<PatientDTO> lista=new ArrayList<>();
         List<Patient> d= patientService.findAll();
         for (Patient p:d){
-            PatientDTO pDTO=new PatientDTO(p.getIdUser(),p.getEmail(),p.getName(),p.getSurname(),p.getPhoneNumber());
+            PatientDTO pDTO=new PatientDTO(p.getId(),p.getEmail(),p.getName(),p.getSurname(),p.getPhoneNumber());
 
             lista.add(pDTO);
 

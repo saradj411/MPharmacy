@@ -1,8 +1,6 @@
 package com.isaProject.isa.Controllers;
 
-import com.isaProject.isa.Model.DTO.DermatologistDTO;
-import com.isaProject.isa.Model.DTO.PatientDTO;
-import com.isaProject.isa.Model.DTO.SearchDermatologistDTO;
+import com.isaProject.isa.Model.DTO.*;
 import com.isaProject.isa.Model.Examination.Examination;
 import com.isaProject.isa.Model.Pharmacy.Pharmacy;
 import com.isaProject.isa.Model.Users.*;

@@ -18,7 +18,6 @@ import java.util.Date;
 @Entity
 @Table
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-
 public class Examination {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -47,24 +46,25 @@ public class Examination {
     // a false samo je kreiran od strane admina i pacijent ga moze zakazati
     @Column
     private Boolean isScheduled;
-
+//eager
     @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.MERGE)
     @JoinColumn(name = "pharmacyId", referencedColumnName = "idPharm")
     //@JsonManagedReference
     private Pharmacy pharmacy;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
+    //@JsonIgnore
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "patient", referencedColumnName = "id")
     @JsonBackReference
     private Patient patient;
 
-    @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.MERGE)
-    @JoinColumn(name = "staffId", referencedColumnName = "idUser")
-    //@JsonBackReference
-    //@JsonIgnore
+//    @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.MERGE)
+//    @JoinColumn(name = "staffId", referencedColumnName = "idUser")
+//    //@JsonBackReference
+    @JsonIgnore
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "staffId", referencedColumnName = "id")
-    @JsonBackReference
+    //@JsonBackReference
     private Staff staff;
 
     //kod dermatologa, kod farmaceuta

@@ -101,11 +101,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 
                 .permitAll().antMatchers("/requestVacation/create")
-
-
                 .permitAll().antMatchers("/pharmacist/getPharmacist/{id}")
                 .permitAll().antMatchers("/pharmacy/findById/{id}")
                 .permitAll().antMatchers("/pharmacy/getDrugsPharmacy/{id}")
+                .permitAll().antMatchers("/patient/findAll/")
+                .permitAll().antMatchers("/dermatologist/getFreeEx/{id}")
+                .permitAll().antMatchers("/patient/searchUser/")
+                .permitAll().antMatchers("/pharmacist/searchPharmacistName/{id}")
+                .permitAll().antMatchers("/dermatologist/searchDermatologistName/{id}")
+                .permitAll().antMatchers("/pharmacist/delete/{id}")
 
 
 
@@ -122,6 +126,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll().antMatchers("/examination/patientScheduledDermatologistExamination/{id}/{idExamination}")
                 .permitAll().antMatchers("/reservation/getBool/{id}")
                 .permitAll().antMatchers("/reservation/canceling")
+                .permitAll().antMatchers("/drugPricelist/searchDrugName/{id}")
 
 
                 .permitAll()

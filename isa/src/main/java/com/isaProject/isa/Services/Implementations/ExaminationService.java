@@ -109,6 +109,8 @@ public class ExaminationService implements IExaminationService {
         }
         return examinations;
     }
+
+
     @Override
     public List<FrontCreatedExaminationDTO> findCreatedDermatologistExamination() {
         List<Examination> list=examinationRepository.findAll();
@@ -126,7 +128,6 @@ public class ExaminationService implements IExaminationService {
         }
         return  newList;
     }
-
     @Override
     public void scheduledDermatologistExamination(Integer idPatient, Integer idExamination) {
         Examination pat = examinationRepository.getOne(idExamination);

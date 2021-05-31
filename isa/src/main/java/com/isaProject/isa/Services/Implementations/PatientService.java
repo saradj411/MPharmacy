@@ -82,7 +82,8 @@ public class PatientService implements IPatientService {
             if(e.getScheduled()){
 
                 if(e.getType().compareTo(ExaminationType.DERMATOLOGIST_EXAMINATION)==0){
-                    FrontCreatedExaminationDTO exDTO=new FrontCreatedExaminationDTO(e.getIdExamination(),e.getDate(),
+                    FrontCreatedExaminationDTO exDTO=new FrontCreatedExaminationDTO(
+                            e.getIdExamination(),e.getDate(),
                             e.getStartTime(),e.getEndTime(),e.getPrice(),
                             e.getStaff().getName(),e.getStaff().getSurname(),e.getPharmacy().getName());
                    dermExaminations.add(exDTO);

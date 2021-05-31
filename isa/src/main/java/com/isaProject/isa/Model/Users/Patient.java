@@ -41,13 +41,11 @@ public class Patient extends User implements Serializable {
     private Set<DrugReservation> drugReservation=new HashSet<DrugReservation>();
 
     @OneToMany(mappedBy = "patient", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    //@JsonBackReference
+    @JsonBackReference
     private Set<Examination> examinations = new HashSet<Examination>();
-
     @OneToMany(mappedBy = "patient", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     //@JsonManagedReference
     private Set<ERecipe> erecipes = new HashSet<ERecipe>();
-
     //apoteke na koje je pretplacen
     @JsonIgnore
     @ManyToMany(fetch = FetchType.LAZY)
