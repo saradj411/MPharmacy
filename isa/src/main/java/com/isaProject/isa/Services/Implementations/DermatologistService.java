@@ -4,6 +4,8 @@ import com.isaProject.isa.Model.DTO.*;
 import com.isaProject.isa.Model.Drugs.Drug;
 import com.isaProject.isa.Model.Drugs.Ingredient;
 import com.isaProject.isa.Model.Drugs.Specification;
+import com.isaProject.isa.Model.DTO.DermatologistDTO;
+import com.isaProject.isa.Model.DTO.PatientDTO;
 import com.isaProject.isa.Model.Examination.Examination;
 import com.isaProject.isa.Model.Examination.ExaminationStatus;
 import com.isaProject.isa.Model.Examination.ExaminationType;
@@ -13,7 +15,10 @@ import com.isaProject.isa.Model.Users.Dermatologist;
 import com.isaProject.isa.Model.Users.Patient;
 import com.isaProject.isa.Model.Users.Staff;
 import com.isaProject.isa.Model.Users.WorkTime;
-import com.isaProject.isa.Repositories.*;
+import com.isaProject.isa.Repositories.DermatologistRepository;
+import com.isaProject.isa.Repositories.ExaminationRepository;
+import com.isaProject.isa.Repositories.PatientRepository;
+import com.isaProject.isa.Repositories.WorkTimeRepository;
 import com.isaProject.isa.Services.IServices.IDermatologistService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,6 +27,9 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.*;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Service
 public class DermatologistService implements IDermatologistService, Serializable {
@@ -64,7 +72,7 @@ public class DermatologistService implements IDermatologistService, Serializable
 
     @Override
     public void update(Dermatologist dermatologist) {
-        Dermatologist pa = dermatologistRepository.getOne(dermatologist.getIdUser());
+        Dermatologist pa = dermatologistRepository.getOne(dermatologist.getId());
         pa.setName(dermatologist.getName());
         pa.setSurname(dermatologist.getSurname());
         pa.setAddress(dermatologist.getAddress());
@@ -83,7 +91,7 @@ public class DermatologistService implements IDermatologistService, Serializable
         String message = "Dermatoloist is not deleted!";
 
 
-        if(examinationService.getExaminationByIdStaff(dermatologist.getIdUser()).equals(false)){
+        if(examinationService.getExaminationByIdStaff(dermatologist.getId()).equals(false)){
             dermatologistRepository.delete(dermatologist);
             return  "Dermatoloist is  deleted!";
 
@@ -92,12 +100,12 @@ public class DermatologistService implements IDermatologistService, Serializable
             if (examination.getScheduled()){
 
             }else {
-                if(examination.getStaff().getIdUser()==dermatologist.getIdUser()){
+                if(examination.getStaff().getId()==dermatologist.getId()){
                     if(examination.getType().equals(ExaminationType.DERMATOLOGIST_EXAMINATION)){
                         dermatologistRepository.delete(dermatologist);
 
                         for (WorkTime workTimeDermatologist : workTimeRepository.findAll()) {
-                            if (workTimeDermatologist.getStaff().getIdUser() == dermatologist.getIdUser()) {
+                            if (workTimeDermatologist.getStaff().getId() == dermatologist.getId()) {
                                 workTimeRepository.delete(workTimeDermatologist);
 
                             }
@@ -134,6 +142,7 @@ public class DermatologistService implements IDermatologistService, Serializable
         return dermatologistRepository.findAll();
     }
 
+
     @Override
     public Set<PatientDTO> findAllPatients(Integer id) {
         /*//proslijedim id dermatologa
@@ -147,11 +156,14 @@ public class DermatologistService implements IDermatologistService, Serializable
             }
         }
         return patients;*/
-        HashSet<PatientDTO> patients=new HashSet<>();
+        Set<PatientDTO> patients=new HashSet<>();
 
         List<Examination>list=examinationRepository.find(id);
+
+        System.out.println("Stampa id "+id);
         for(Examination l:list){
-            PatientDTO p=new PatientDTO(l.getPatient().getIdUser(),l.getPatient().getEmail(),l.getPatient().getName(),l.getPatient().getSurname(),
+            System.out.println("Pacijent je "+ l.getPatient().getName());
+            PatientDTO p=new PatientDTO(l.getPatient().getId(),l.getPatient().getEmail(),l.getPatient().getName(),l.getPatient().getSurname(),
                    l.getPatient().getPhoneNumber() );
             patients.add(p);
         }

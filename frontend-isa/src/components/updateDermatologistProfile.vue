@@ -135,7 +135,7 @@ export default {
         
         
           const pharmacistInfo = {
-                    idUser : this.dermatolog.idUser,
+                    id : this.dermatolog.id,
                     name: this.dermatolog.name,
                     surname : this.dermatolog.surname,
                     phoneNumber: this.dermatolog.phoneNumber,

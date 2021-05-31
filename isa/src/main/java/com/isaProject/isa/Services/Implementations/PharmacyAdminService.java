@@ -23,7 +23,7 @@ public class PharmacyAdminService implements IPharmacyAdminService {
 
     @Override
     public PharmacyAdmin findById(Integer id) {
-        PharmacyAdmin pa = pharmacyAdminRepository.findOneByIdUser(id);
+        PharmacyAdmin pa = pharmacyAdminRepository.findOneById(id);
         return pa;
     }
 
@@ -55,7 +55,7 @@ public class PharmacyAdminService implements IPharmacyAdminService {
 
     @Override
     public void update(PharmacyAdmin pharmacyAdmin) {
-        PharmacyAdmin pa = pharmacyAdminRepository.getOne(pharmacyAdmin.getIdUser());
+        PharmacyAdmin pa = pharmacyAdminRepository.getOne(pharmacyAdmin.getId());
         pa.setName(pharmacyAdmin.getName());
         pa.setSurname(pharmacyAdmin.getSurname());
         pa.setAddress(pharmacyAdmin.getAddress());

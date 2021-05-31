@@ -13,6 +13,7 @@ import java.util.List;
 public interface WorkTimeRepository  extends JpaRepository<WorkTime, Integer> {
 
     @Query("select s from WorkTime s where s.staff.idUser= ?1") //za pharm
+    @Query("select s from WorkTime s where s.staff.id = ?1")
     WorkTime findWorkTimeByIdStaff(Integer id);
 
 

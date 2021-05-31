@@ -12,7 +12,9 @@
             <button class="btn btn-danger btn-lg" style="float:left;margin-top:15px;margin-left:10px" v-on:click = "showConsultation">Consultation</button>
             <button class="btn btn-danger btn-lg" style="float:left;margin-top:15px;margin-left:10px" v-on:click = "showExamination">Examination</button>
            <button class="btn btn-danger btn-lg" style="float:left;margin-top:15px;margin-left:10px" v-on:click = "showRecipe">eRecipe</button>
+           <button class="btn btn-danger btn-lg" style="float:left;margin-top:15px;margin-left:10px" v-on:click = "showCreatedDerm">Schedule Examination</button>
            
+            
                                   
         </div>
 
@@ -89,7 +91,7 @@
       </tr>
       <tr>
         <th scope="row"></th>
-        <td style="font-size:25px">{{reservation.drug.name}}</td>
+        <!--<td style="font-size:25px">{{reservation.drug.name}}</td>!-->
       <td style="font-size:25px;">Quantity:{{reservation.quantity}} </td>
       </tr>
     <tr>
@@ -102,7 +104,7 @@
     <tr>
       <th></th>
       <td >Pharmacy</td>   
-    <td>{{reservation.pharmacy.name}}</td>
+    <!--<td>{{reservation.pharmacy.name}}</td>!-->
 
     </tr>
      <tr>
@@ -127,7 +129,7 @@
     <tbody>
       <tr>
         <th scope="row"></th>
-        <td style="font-size:25px;font-weight:bold;">{{reservation.drug.name}}</td>
+       <!-- <td style="font-size:25px;font-weight:bold;">{{reservation.drug.name}}</td>!-->
       <td style="font-size:25px;">Quantity:{{reservation.quantity}} </td>
       </tr>
     <tr>
@@ -145,7 +147,7 @@
     <tr>
       <th></th>
       <td >Pharmacy</td>   
-    <td>{{reservation.pharmacy.name}}</td>
+    <!--<td>{{reservation.pharmacy.name}}</td>!-->
 
     </tr>
      
@@ -165,7 +167,7 @@
     <tbody>
       <tr>
         <th scope="row"></th>
-        <td style="font-size:25px;font-weight:bold;">{{reservation.drug.name}}</td>
+        <!--<td style="font-size:25px;font-weight:bold;">{{reservation.drug.name}}</td>!-->
       <td style="font-size:25px;">Quantity:{{reservation.quantity}} </td>
       </tr>
     <tr>
@@ -183,7 +185,7 @@
     <tr>
       <th></th>
       <td >Pharmacy</td>   
-    <td>{{reservation.pharmacy.name}}</td>
+   <!-- <td>{{reservation.pharmacy.name}}</td>!-->
     </tr>
   </tbody>
 </table>
@@ -209,7 +211,7 @@
         <tr>
           <th></th>
           <td>Pharmacy:</td>
-          <td>{{examination1.pharmacy.name}}</td>
+          <td>{{examination1.namePharmacy}}</td>
           
 
         </tr>
@@ -217,7 +219,8 @@
         <tr>
           <th></th>
           <td >Dermatologist:</td>   
-          <td>{{examination1.staff.name}} {{examination1.staff.surname}} </td>
+
+          <!--<td>{{examination1.staff.name}} {{examination1.staff.surname}} </td>!-->
 
         </tr>
         <tr>
@@ -249,7 +252,7 @@
         <tr>
           <th></th>
           <td>Pharmacy:</td>
-          <td>{{examination.pharmacy.name}}</td>
+          <td>{{examination.namePharmacy}}</td>
           
 
         </tr>
@@ -257,7 +260,9 @@
         <tr>
           <th></th>
           <td >Dermatologist:</td>   
-          <td>{{examination.staff.name}} {{examination.staff.surname}} </td>
+
+         <!--<td>{{examination.staff.name}} {{examination.staff.surname}} </td>!-->
+
 
         </tr>
         <tr>
@@ -291,9 +296,9 @@
         <tr>
           <th></th>
           <td>Pharmacy:</td>
-          <td>{{recipe.pharmacy.name}}</td>
+          <!--<td>{{recipe.pharmacy.name}}</td>!-->
           
-
+ 
         </tr>
       
         <tr>
@@ -330,6 +335,43 @@
 
 
       </div> 
+
+       <!--CREATED DERMATOLOGIST EXAMINATION!-->
+  <div v-if="showCreatedDermExamination"  style="float:left;margin-left:30px;">
+     <h4 style="margin:30px">Examinations:</h4>
+ <div style="background: #a7c1c9;margin-left:30px;"  v-for="ex in this.dermatologistCreatedExamination"  v-bind:key="ex.idExamination">
+      
+<table  style="" id="table2" class="table" >
+ 
+    <tbody>
+        <tr>
+        <th scope="row"></th>
+         <td style="font-size:25px;font-weight:bold;">{{ex.date | formatDate}}</td>
+          <td style="font-size:25px;font-weight:bold;">{{ex.price}}RSD</td>
+      </tr>
+        <tr>
+          <th></th>
+          <td style="font-size:25px;font-weight:bold;">{{ex.startTime}}-{{ex.endTime}}</td>
+          <td><button class="btn btn-danger btn-sm" v-on:click = "schedule(ex.idExamination)">Schedule</button></td>
+          
+
+        </tr>
+        <tr>
+          <th></th>
+          <td>Dermatologist: {{ex.nameStaff}} {{ex.surnameStaff}}</td>
+          <td>Grade dermatologist: {{ex.gradeStaff}}</td>
+          
+
+        </tr>
+      
+       
+        
+  </tbody>
+</table>
+           </div>
+
+
+      </div> 
 </div>
 
   
@@ -348,6 +390,7 @@ export default {
         showDermExam:false,
         showPharmExam:false,
         showERecipe:false,
+        showCreatedDermExamination:false,
 
         pharmacies : [],
         pharmacies1 : [],
@@ -356,6 +399,7 @@ export default {
         dermatologistScheduledExamination:[],
         pharmacistScheduledExamination:[],
         recepies:[],
+        dermatologistCreatedExamination:[],
 
 
         pickedReservations:[],
@@ -437,6 +481,15 @@ export default {
                 alert("Nesto ne valja");
                 console.log(res);
         });
+        this.axios.get('/examination/findCreatedPharmacistExamination')
+        .then(response => {
+                this.dermatologistCreatedExamination= response.data;
+                
+         }).catch(res => {
+                alert("Nesto ne valja");
+                console.log(res);
+        });
+               
                
 },
 methods:{
@@ -449,6 +502,7 @@ methods:{
         this.showDermExam=false
         this.showPharmExam=false
         this.showERecipe=false
+        this.showCreatedDermExamination=false
        //this.showSearchPharmacy=true
       },
       showReservation:
@@ -458,6 +512,7 @@ methods:{
         this.showDermExam=false
         this.showPharmExam=false
          this.showERecipe=false
+         this.showCreatedDermExamination=false
       },
       showConsultation:
        function(){
@@ -466,6 +521,7 @@ methods:{
         this.showDermExam=false
         this.showPharmExam=true
          this.showERecipe=false
+         this.showCreatedDermExamination=false
       },
       showRecipe: function(){
         this.showTable=false
@@ -473,6 +529,7 @@ methods:{
        this.showDermExam=false
        this.showPharmExam=false
         this.showERecipe=true
+        this.showCreatedDermExamination=false
       },
       showExamination:
        function(){
@@ -481,6 +538,16 @@ methods:{
        this.showDermExam=true
        this.showPharmExam=false
         this.showERecipe=false
+        this.showCreatedDermExamination=false
+      },
+      showCreatedDerm:
+       function(){
+        this.showTable=false
+        this.showReserveTable=false
+       this.showDermExam=false
+       this.showPharmExam=false
+        this.showERecipe=false
+        this.showCreatedDermExamination=true
       },
       canceling:
        function(res,date){
@@ -504,6 +571,21 @@ methods:{
                 }else{
                    alert("otkazivanje nije moguce") 
                 }
+                
+         }).catch(res => {
+                alert("Nesto ne valja");
+                console.log(res);
+        });
+
+      },
+
+
+      schedule:
+       function(idExamination){
+       this.axios.post('/examination/patientScheduledDermatologistExamination/'+this.id+'/'+idExamination)
+        .then(response => {
+                this.jel = response.data;
+                alert("Examination is scheduled.Check your email!")
                 
          }).catch(res => {
                 alert("Nesto ne valja");

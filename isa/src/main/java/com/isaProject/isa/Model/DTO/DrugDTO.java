@@ -2,8 +2,12 @@ package com.isaProject.isa.Model.DTO;
 
 import com.isaProject.isa.Model.Drugs.DrugFormat;
 
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import java.io.Serializable;
 
-public class DrugDTO {
+
+public class DrugDTO implements Serializable {
     private String name;
 
     private String code;
@@ -12,6 +16,7 @@ public class DrugDTO {
 
     private String drugType;
 
+    @Enumerated(EnumType.STRING)
     private DrugFormat format;
 
     private String manufacturer;
@@ -24,6 +29,9 @@ public class DrugDTO {
         this.drugType = drugType;
         this.format = format;
         this.manufacturer = manufacturer;
+    }
+
+    public DrugDTO() {
     }
 
     public String getName() {

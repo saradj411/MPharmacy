@@ -1,13 +1,12 @@
 package com.isaProject.isa.Model.Users;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.isaProject.isa.Model.Drugs.Drug;
 import com.isaProject.isa.Model.Drugs.DrugReservation;
 import com.isaProject.isa.Model.Drugs.ERecipe;
 import com.isaProject.isa.Model.Examination.Examination;
-import com.isaProject.isa.Model.Pharmacy.Complaint;
 import com.isaProject.isa.Model.Pharmacy.Pharmacy;
 
 import javax.persistence.*;
@@ -16,7 +15,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@DiscriminatorValue("PATIENT")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 
 public class Patient extends User implements Serializable {
@@ -33,7 +31,7 @@ public class Patient extends User implements Serializable {
 
     //Lijekovi na koje je alergican
     @ManyToMany
-    @JoinTable(name = "allergies", joinColumns = @JoinColumn(name="patientId" ,  referencedColumnName  = "idUser"),
+    @JoinTable(name = "allergies", joinColumns = @JoinColumn(name="patientId" ,  referencedColumnName  = "id"),
             inverseJoinColumns = @JoinColumn(name = "drugId", referencedColumnName = "idDrug"))
     private Set<Drug> allergies = new HashSet<Drug>();
 
@@ -51,9 +49,10 @@ public class Patient extends User implements Serializable {
     private Set<ERecipe> erecipes = new HashSet<ERecipe>();
 
     //apoteke na koje je pretplacen
+    @JsonIgnore
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "action_patient_pharmacy",
-            joinColumns = @JoinColumn(name = "patientId", referencedColumnName = "idUser"),
+            joinColumns = @JoinColumn(name = "patientId", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "pharmacyId", referencedColumnName = "idPharm"))
     private Set<Pharmacy> actionPharmacies = new HashSet<>();
 

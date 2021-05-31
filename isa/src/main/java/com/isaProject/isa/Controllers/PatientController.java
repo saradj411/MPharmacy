@@ -2,6 +2,9 @@ package com.isaProject.isa.Controllers;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.isaProject.isa.Model.DTO.*;
+import com.isaProject.isa.Model.DTO.ChangePasswordDTO;
+import com.isaProject.isa.Model.DTO.DrugDTO;
+import com.isaProject.isa.Model.DTO.FrontCreatedExaminationDTO;
 import com.isaProject.isa.Model.Drugs.Drug;
 import com.isaProject.isa.Model.Drugs.ERecipe;
 import com.isaProject.isa.Model.Examination.Examination;
@@ -72,18 +75,18 @@ public class PatientController {
     }
 
     @GetMapping(value = "/findSheduledDermatologistExamination/{id}")
-    public ResponseEntity<Set<Examination>> findSheduledDermatologistExamination(@PathVariable Integer id) {
+    public ResponseEntity<Set<FrontCreatedExaminationDTO>> findSheduledDermatologistExamination(@PathVariable Integer id) {
 
-        Set<Examination> d= patientService.findSheduledDermatologistExamination(id);
+        Set<FrontCreatedExaminationDTO> d= patientService.findSheduledDermatologistExamination(id);
 
         return d == null ?
                 new ResponseEntity<>(HttpStatus.NOT_FOUND) :
                 ResponseEntity.ok(d);
     }
     @GetMapping(value = "/findSheduledPharmacistExamination/{id}")
-    public ResponseEntity<Set<Examination>> findSheduledPharmacistExamination(@PathVariable Integer id) {
+    public ResponseEntity<Set<FrontCreatedExaminationDTO>> findSheduledPharmacistExamination(@PathVariable Integer id) {
 
-        Set<Examination> d= patientService.findSheduledPharmacistExamination(id);
+        Set<FrontCreatedExaminationDTO> d= patientService.findSheduledPharmacistExamination(id);
 
         return d == null ?
                 new ResponseEntity<>(HttpStatus.NOT_FOUND) :
