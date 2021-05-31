@@ -52,6 +52,9 @@ public class DermatologistControler {
     @Autowired
     DermatologistService dermatologistService;
 
+    @Autowired
+    ExaminationService examinationService;
+
 
 
     @PostMapping("/updateDermatologist")
@@ -223,6 +226,70 @@ public class DermatologistControler {
 
         return new ResponseEntity<>("kreirano", HttpStatus.CREATED);
     }
+
+
+
+
+    //uzmi unaprije zakazane preglede
+    @GetMapping("/getFreeEx/{idStaff}")
+    public  ResponseEntity<List<FreeExaminationsForRepresentationDTO>> getAllFreeExaminations(@PathVariable Integer idStaff) {
+
+        List<Examination>examinations=examinationService.getExaminationsByIdStaffAndIdPharmacy(idStaff);
+        List<FreeExaminationsForRepresentationDTO>freeEx=new ArrayList<>();
+        for (Examination ex:examinations){
+            System.out.println("imeee pacijenta "+ ex.getPatient().getName());
+
+            System.out.println("imeee "+ ex.getPharmacy().getName());
+            FreeExaminationsForRepresentationDTO freeE=new FreeExaminationsForRepresentationDTO(ex.getDate(),ex.getStartTime(),ex.getEndTime(),ex.getPrice(),ex.getPharmacy().getName(),ex.getPatient().getName(),ex.getPatient().getSurname(),ex.getIdExamination());
+            freeEx.add(freeE);
+        }
+        return new ResponseEntity<>(freeEx, HttpStatus.ACCEPTED);
+    }
+
+    /*
+    Dermatolog za korisnika za kojeg trenutno izvršava pregled bira jedan od
+    unapred definisanih pregleda idPacijenta,i taj pregled nekako //dto sa id Pacijenta
+     */
+
+
+    @PostMapping("/updateFreeExx")
+    ResponseEntity<String> updateFreeEx(@RequestBody ScheduleAnExaminationDTO scheduleAnExaminationDTO)
+    {
+        dermatologistService.updateFreeEx(scheduleAnExaminationDTO);
+        return new ResponseEntity<>("ajdeee", HttpStatus.CREATED);
+
+    }
+
+    /*
+    opcija da označi da se korisnik nije pojavio na zakazanom pregledu.
+Ukoliko se korisnik ne pojavi na pregledu, dobija 1 penal.
+
+     */
+
+    @PostMapping("/updateFreeEx/{idPatient}")
+    ResponseEntity<String> patientNotAppearr(@PathVariable Integer idPatient)
+    {
+        dermatologistService.patientNotAppear(idPatient);
+        return new ResponseEntity<>("ajdeee", HttpStatus.CREATED);
+
+    }
+
+    // opcija da započne pregled
+    //Dok pregled traje, dermatolog u slobodnoj formi unosi informacije o
+    //pregledu.
+
+    @PostMapping("/startExamination/{idPatient}/{report}")
+    ResponseEntity<String> startExamination(@RequestBody Integer idPatient,@RequestBody String report)
+    {
+
+        return new ResponseEntity<>("ajdeee", HttpStatus.CREATED);
+
+    }
+
+
+
+
+
 
 
 

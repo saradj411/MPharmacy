@@ -19,6 +19,36 @@ public class Ingredient {
     //@JsonManagedReference
     private Specification specification;
 
+    public String getName() {
+        return name;
+    }
 
+    public void setName(String name) {
+        this.name = name;
+    }
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Specification getSpecification() {
+        return specification;
+    }
+
+    public void setSpecification(Specification specification) {
+        this.specification = specification;
+    }
+
+    public Ingredient(Long id, String name, Specification specification) {
+        this.id = id;
+        this.name = name;
+        this.specification = specification;
+    }
+
+    public Ingredient() {
+    }
 }

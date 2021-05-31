@@ -24,7 +24,9 @@ import updatePharmacistProfile from '../components/updatePharmacistProfile.vue'
 import updateDermatologistProfile from '../components/updateDermatologistProfile.vue'
 import DermatologistPatients from '../components/DermatologistPatients.vue'
 import RequestForVacation from '../components/RequestForVacation.vue'
-
+import SearchUser from '../components/SearchUser.vue'
+import WorkCalendar from '../components/WorkCalendar.vue'
+import StartExamination from '../components/StartExamination.vue'
 
 import moment from 'moment'
 
@@ -66,12 +68,7 @@ const routes = [
         name: 'ProfilePatient',
         component: ProfilePatient
       }
-      ,
-      {
-        path: '/ProfilePatient/:id',
-        name: 'ProfilePatient',
-        component: ProfilePatient
-      },
+     ,
       {
         path: '/updatePharmacyProfile/:id',
         name: 'updatePharmacyProfile',
@@ -171,7 +168,27 @@ const routes = [
         name: 'RequestForVacation',
         component: RequestForVacation
       }
+      ,
+      {
+        path: '/SearchUser',
+        name: 'SearchUser',
+        component: SearchUser
+      }
+      ,
+      {
+        path: '/WorkCalendar/:id',
+        name: 'WorkCalendar',
+        component: WorkCalendar
+      }
+      
+      ,
+      {
+        path: '/StartExamination/:id',
+        name: 'StartExamination',
+        component: StartExamination
+      }
 
+     
       
     ]
 

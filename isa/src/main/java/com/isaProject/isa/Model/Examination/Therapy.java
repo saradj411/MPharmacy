@@ -19,4 +19,7 @@ public class Therapy {
     //@JsonManagedReference
     private Drug drug;
 
+    @Column
+    private Integer numberOfDay;
+
 }

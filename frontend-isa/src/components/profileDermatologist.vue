@@ -19,6 +19,21 @@
                               
                   <button class = "btn btn-primary btn-xs" style="margin:auto; margin-left:38px;background:#474A8A" v-on:click = "requestForvacation">Request for vacation</button>
                      </span>
+                     <span style="float: left; margin-top: 20px;">
+                      <b-dropdown id="ddCommodity" name="ddCommodity" text="Choose user" style="margin-left:33px; color:white;"  >
+                                    
+                                    <b-dropdown-item>
+                                      <router-link :to="{ path: '/SearchUser/'}" v-slot="{href, navigate}" custom>
+           <b-link style="font-size:20px;color:black;" :href="href" @click="navigate"  elevation="1">Search user
+             </b-link></router-link>
+           </b-dropdown-item>
+                                     <b-dropdown-item>
+                                      <router-link :to="{ path: '/WorkCalendar/'+user.idUser}" v-slot="{href, navigate}" custom>
+           <b-link style="font-size:20px;color:black;" :href="href" @click="navigate"  elevation="1">Work calendar
+             </b-link></router-link>
+           </b-dropdown-item>
+                                </b-dropdown> 
+</span>
         
     
         </div>
