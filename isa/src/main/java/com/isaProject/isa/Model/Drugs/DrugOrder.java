@@ -39,6 +39,10 @@ public class DrugOrder {
     @JoinColumn(name = "admin", referencedColumnName = "idUser", nullable = true, unique = false)
     //@JsonManagedReference
     private PharmacyAdmin pharmacyAdmin;//***********
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "admin", referencedColumnName = "id")
+    @JsonBackReference
+    private PharmacyAdmin pharmacyAdmin;
 
     @OneToMany(mappedBy = "drugOrder", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     //@JsonBackReference
@@ -122,6 +126,7 @@ public class DrugOrder {
     public void setOffers(Set<Offer> offers) {
         this.offers = offers;
     }
+
 }
 
 

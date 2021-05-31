@@ -11,7 +11,7 @@
 
                   <button class = "btn btn-primary btn-xs" style="margin:auto; margin-left:38px;background:#474A8A " :href="href" @click="navigate" elevation="1">Update pharmacy</button>
                </router-link>
-               <router-link :to="{ path: '/updateMyProfile/'+user.idUser}" v-slot="{href, navigate}" custom>
+               <router-link :to="{ path: '/updateMyProfile/'+user.id}" v-slot="{href, navigate}" custom>
 
                   <button class = "btn btn-primary btn-xs" style="margin:auto; margin-left:38px;background:#474A8A " :href="href" @click="navigate" elevation="1">Update profile</button>
                </router-link>
@@ -126,7 +126,7 @@ export default {
   },
   
   mounted() {
-        this.axios.get('/adminstrator/findById/'+505,{ 
+        this.axios.get('/adminstrator/findById/'+503,{ 
              
          }).then(response => {
                this.user=response.data;
@@ -135,7 +135,7 @@ export default {
                        alert("ne valja.");
                        console.log(res);
         });
-        this.axios.get('/adminstrator/findPharm/'+505,{ 
+        this.axios.get('/adminstrator/findPharm/'+503,{ 
              
          }).then(response => {
                this.pharmacy=response.data;

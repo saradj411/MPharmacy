@@ -1,26 +1,30 @@
 package com.isaProject.isa.Model.Drugs;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.*;
 import com.isaProject.isa.Model.Pharmacy.Pharmacy;
 import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 
 @Entity
 @Table
-public class DrugPricelist {
+public class DrugPricelist implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer idPricelist;
 
 
-
     @ManyToOne( cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "drugId", referencedColumnName = "idDrug")
-
+    //@JsonIgnore
+    @ManyToOne//(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+    @JoinColumn(name = "drugId", referencedColumnName = "idDrug", nullable = true, unique = false)
     //@JsonManagedReference
+    //@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "idDrug")
+    //@JsonIdentityReference(alwaysAsId = true)
+
     private Drug drug;
 
     @Column
@@ -32,10 +36,14 @@ public class DrugPricelist {
     @Column
     private Date end;
 
-    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+    //@JsonIgnore
+    @ManyToOne//(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
     @JoinColumn(name = "pharmacyId", referencedColumnName = "idPharm", nullable = true, unique = false)
 
     //@JsonManagedReference
+    //@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "idPharm")
+    //@JsonIdentityReference(alwaysAsId = true)
+
     private Pharmacy pharmacy;
 
     public DrugPricelist(Integer idPricelist, Drug drug, double price, Date start, Date end, Pharmacy pharmacy) {

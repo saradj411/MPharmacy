@@ -6,6 +6,7 @@ import com.isaProject.isa.Model.Pharmacy.Pharmacy;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Date;
 
 @Entity
@@ -31,8 +32,8 @@ public class RequestForVacation {
     private String description;
 
     @ManyToOne
-    @JoinColumn(name = "staffId", referencedColumnName = "idUser", nullable = false)
-    //@JsonManagedReference
+    @JoinColumn(name = "staffId", referencedColumnName = "id", nullable = false)
+    @JsonBackReference
     private Staff staff;
 
     @ManyToOne

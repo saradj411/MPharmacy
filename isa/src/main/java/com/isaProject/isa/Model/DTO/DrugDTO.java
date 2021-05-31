@@ -3,8 +3,12 @@ package com.isaProject.isa.Model.DTO;
 import com.isaProject.isa.Model.Drugs.DrugFormat;
 import com.isaProject.isa.Model.Pharmacy.Pharmacy;
 
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import java.io.Serializable;
 
-public class DrugDTO {
+
+public class DrugDTO implements Serializable {
     private String name;
 
     private String code;
@@ -13,6 +17,7 @@ public class DrugDTO {
 
     private String drugType;
 
+    @Enumerated(EnumType.STRING)
     private DrugFormat format;
 
     private String manufacturer;
@@ -50,6 +55,9 @@ public class DrugDTO {
 
     public void setQuantity(Integer quantity) {
         this.quantity = quantity;
+    }
+
+    public DrugDTO() {
     }
 
     public String getName() {

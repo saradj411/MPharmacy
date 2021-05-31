@@ -5,19 +5,19 @@ import com.isaProject.isa.Model.Examination.Examination;
 import com.isaProject.isa.Model.Pharmacy.Pharmacy;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@DiscriminatorValue("DERMATOLOGIST")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 
-public class Dermatologist extends Staff{
+public class Dermatologist extends Staff {
 
     //apoteke u kojima je zaposlen
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "dermatologists_in_pharmacies",
-            joinColumns = @JoinColumn(name = "dermatologistId", referencedColumnName = "idUser"),
+            joinColumns = @JoinColumn(name = "dermatologistId", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "pharmacyId", referencedColumnName = "idPharm"))
     private Set<Pharmacy> pharmacies = new HashSet<>();
 

@@ -1,28 +1,22 @@
 package com.isaProject.isa.Controllers;
 
 import com.isaProject.isa.Model.DTO.*;
-import com.isaProject.isa.Model.Drugs.Drug;
-import com.isaProject.isa.Model.Pharmacy.Pharmacy;
-import com.isaProject.isa.Model.Users.Dermatologist;
-import com.isaProject.isa.Repositories.ExaminationRepository;
-import com.isaProject.isa.Services.Implementations.DermatologistService;
-import com.isaProject.isa.Services.Implementations.DrugService;
 import com.isaProject.isa.Model.Examination.Examination;
 import com.isaProject.isa.Model.Pharmacy.Pharmacy;
 import com.isaProject.isa.Model.Users.*;
+import com.isaProject.isa.Repositories.ExaminationRepository;
 import com.isaProject.isa.Services.Implementations.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.text.DateFormat;
-import java.text.ParseException;
+
 import java.text.SimpleDateFormat;
-import java.time.LocalTime;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 
 @RestController
@@ -55,6 +49,9 @@ public class DermatologistControler {
     ExaminationRepository examinationRepository;
     @Autowired
     DermatologistService dermatologistService;
+
+    @Autowired
+    ExaminationService examinationService;
 
 
 
@@ -101,7 +98,7 @@ public class DermatologistControler {
     public ResponseEntity<List<Dermatologist>> findAll() {
         List<Dermatologist> dermatologists=dermatologistService.findAll();
         for (Dermatologist d:dermatologists){
-            System.out.println(d.getIdUser());
+            System.out.println(d.getId());
             System.out.println(d.getPharmacies());
 
 
@@ -174,7 +171,7 @@ public class DermatologistControler {
     @GetMapping(value = "/findWorkTimeByIdUser/{id}")
     public ResponseEntity<WorkTime> findWorkTimeByIdUser(@PathVariable Integer id) {
 
-        WorkTime d= workTimeService.findByIdUser(id);
+        WorkTime d= workTimeService.findByUserId(id);
         return d == null ?
                 new ResponseEntity<>(HttpStatus.NOT_FOUND) :
                 ResponseEntity.ok(d);
@@ -227,6 +224,70 @@ public class DermatologistControler {
 
         return new ResponseEntity<>("kreirano", HttpStatus.CREATED);
     }
+
+
+
+
+    //uzmi unaprije zakazane preglede
+    @GetMapping("/getFreeEx/{idStaff}")
+    public  ResponseEntity<List<FreeExaminationsForRepresentationDTO>> getAllFreeExaminations(@PathVariable Integer idStaff) {
+
+        List<Examination>examinations=examinationService.getExaminationsByIdStaffAndIdPharmacy(idStaff);
+        List<FreeExaminationsForRepresentationDTO>freeEx=new ArrayList<>();
+        for (Examination ex:examinations){
+            System.out.println("imeee pacijenta "+ ex.getPatient().getName());
+
+            System.out.println("imeee "+ ex.getPharmacy().getName());
+            FreeExaminationsForRepresentationDTO freeE=new FreeExaminationsForRepresentationDTO(ex.getDate(),ex.getStartTime(),ex.getEndTime(),ex.getPrice(),ex.getPharmacy().getName(),ex.getPatient().getName(),ex.getPatient().getSurname(),ex.getIdExamination());
+            freeEx.add(freeE);
+        }
+        return new ResponseEntity<>(freeEx, HttpStatus.ACCEPTED);
+    }
+
+    /*
+    Dermatolog za korisnika za kojeg trenutno izvršava pregled bira jedan od
+    unapred definisanih pregleda idPacijenta,i taj pregled nekako //dto sa id Pacijenta
+     */
+
+
+    @PostMapping("/updateFreeExx")
+    ResponseEntity<String> updateFreeEx(@RequestBody ScheduleAnExaminationDTO scheduleAnExaminationDTO)
+    {
+        dermatologistService.updateFreeEx(scheduleAnExaminationDTO);
+        return new ResponseEntity<>("ajdeee", HttpStatus.CREATED);
+
+    }
+
+    /*
+    opcija da označi da se korisnik nije pojavio na zakazanom pregledu.
+Ukoliko se korisnik ne pojavi na pregledu, dobija 1 penal.
+
+     */
+
+    @PostMapping("/updateFreeEx/{idPatient}")
+    ResponseEntity<String> patientNotAppearr(@PathVariable Integer idPatient)
+    {
+        dermatologistService.patientNotAppear(idPatient);
+        return new ResponseEntity<>("ajdeee", HttpStatus.CREATED);
+
+    }
+
+    // opcija da započne pregled
+    //Dok pregled traje, dermatolog u slobodnoj formi unosi informacije o
+    //pregledu.
+
+    @PostMapping("/startExamination/{idPatient}/{report}")
+    ResponseEntity<String> startExamination(@RequestBody Integer idPatient,@RequestBody String report)
+    {
+
+        return new ResponseEntity<>("ajdeee", HttpStatus.CREATED);
+
+    }
+
+
+
+
+
 
 
 

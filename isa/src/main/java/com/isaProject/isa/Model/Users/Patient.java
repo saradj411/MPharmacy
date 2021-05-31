@@ -1,27 +1,26 @@
 package com.isaProject.isa.Model.Users;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.isaProject.isa.Model.Drugs.Drug;
 import com.isaProject.isa.Model.Drugs.DrugReservation;
 import com.isaProject.isa.Model.Drugs.ERecipe;
 import com.isaProject.isa.Model.Examination.Examination;
-import com.isaProject.isa.Model.Pharmacy.Complaint;
 import com.isaProject.isa.Model.Pharmacy.Pharmacy;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@DiscriminatorValue("PATIENT")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 
-public class Patient extends User{
+public class Patient extends User implements Serializable {
 
     @Column(nullable = true)
-    private int penalty;
+    private Integer penalty;
 
     @Column(nullable = true)
     private int points;
@@ -32,7 +31,7 @@ public class Patient extends User{
 
     //Lijekovi na koje je alergican
     @ManyToMany
-    @JoinTable(name = "allergies", joinColumns = @JoinColumn(name="patientId" ,  referencedColumnName  = "idUser"),
+    @JoinTable(name = "allergies", joinColumns = @JoinColumn(name="patientId" ,  referencedColumnName  = "id"),
             inverseJoinColumns = @JoinColumn(name = "drugId", referencedColumnName = "idDrug"))
     private Set<Drug> allergies = new HashSet<Drug>();
 
@@ -42,24 +41,23 @@ public class Patient extends User{
     private Set<DrugReservation> drugReservation=new HashSet<DrugReservation>();
 
     @OneToMany(mappedBy = "patient", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    //@JsonBackReference
+    @JsonBackReference
     private Set<Examination> examinations = new HashSet<Examination>();
-
     @OneToMany(mappedBy = "patient", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     //@JsonManagedReference
     private Set<ERecipe> erecipes = new HashSet<ERecipe>();
-
     //apoteke na koje je pretplacen
+    @JsonIgnore
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "action_patient_pharmacy",
-            joinColumns = @JoinColumn(name = "patientId", referencedColumnName = "idUser"),
+            joinColumns = @JoinColumn(name = "patientId", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "pharmacyId", referencedColumnName = "idPharm"))
     private Set<Pharmacy> actionPharmacies = new HashSet<>();
 
     public Patient() {
     }
 
-    public Patient(Integer idUser, String name, String surname, String email, String password, String address, String phoneNumber, String city, String country, int penalty, int points, String loyaltyCategory, Set<Drug> allergies, Set<DrugReservation> drugReservation, Set<Examination> examinations) {
+    public Patient(Integer idUser, String name, String surname, String email, String password, String address, String phoneNumber, String city, String country, Integer penalty, int points, String loyaltyCategory, Set<Drug> allergies, Set<DrugReservation> drugReservation, Set<Examination> examinations) {
         super(idUser, name, surname, email, password, address, phoneNumber, city, country);
         this.penalty = penalty;
         this.points = points;
@@ -69,7 +67,7 @@ public class Patient extends User{
         this.examinations = examinations;
     }
 
-    public Patient(Integer idUser, String name, String surname, String email, String password, String address, String phoneNumber, String city, String country, int penalty, int points, String loyaltyCategory, Set<Drug> allergies, Set<DrugReservation> drugReservation, Set<Examination> examinations, Set<Pharmacy> actionPharmacies) {
+    public Patient(Integer idUser, String name, String surname, String email, String password, String address, String phoneNumber, String city, String country, Integer penalty, int points, String loyaltyCategory, Set<Drug> allergies, Set<DrugReservation> drugReservation, Set<Examination> examinations, Set<Pharmacy> actionPharmacies) {
         super(idUser, name, surname, email, password, address, phoneNumber, city, country);
         this.penalty = penalty;
         this.points = points;
@@ -80,11 +78,11 @@ public class Patient extends User{
         this.actionPharmacies = actionPharmacies;
     }
 
-    public int getPenalty() {
+    public Integer getPenalty() {
         return penalty;
     }
 
-    public void setPenalty(int penalty) {
+    public void setPenalty(Integer penalty) {
         this.penalty = penalty;
     }
 

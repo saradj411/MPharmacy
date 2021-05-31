@@ -1,9 +1,6 @@
 package com.isaProject.isa.Model.Users;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.*;
 import com.isaProject.isa.Model.Drugs.DrugOrder;
 import com.isaProject.isa.Model.Pharmacy.Pharmacy;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -15,16 +12,23 @@ import java.util.Set;
 
 
 @Entity
-@DiscriminatorValue("PHARMACY_ADMIN")
-//@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+//@DiscriminatorValue("PHARMACY_ADMIN")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class PharmacyAdmin extends User {
 
 
-    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+    private static final long serialVersionUID = 1L;
+
+    //@JsonIgnore
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "adminPharmacy", referencedColumnName = "idPharm", nullable = true, unique = false)
     //@JsonManagedReference
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "idPharm")
+    @JsonIdentityReference(alwaysAsId = true)
+
     private Pharmacy pharmacy;
 
+    @JsonIgnore
 
     @OneToMany(mappedBy = "pharmacyAdmin", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     //@JsonBackReference

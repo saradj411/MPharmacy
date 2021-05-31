@@ -32,17 +32,20 @@ public class Drug implements Serializable {
     @Column
     private String manufacturer;
 
-
-
     @Cascade(org.hibernate.annotations.CascadeType.DELETE)
     @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
     @JoinTable( name = "alternativeDrug", joinColumns = @JoinColumn(name="idDrug",referencedColumnName="idDrug"), inverseJoinColumns = @JoinColumn(name = "idAlternativeDrug", referencedColumnName = "idDrug"))
+/*
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinTable( name = "alternativeDrug", joinColumns = @JoinColumn(name="idDrug", nullable = true,referencedColumnName="idDrug"), inverseJoinColumns = @JoinColumn(name = "idAlternativeDrug", referencedColumnName = "idDrug"))
     private Set<Drug> alternativeDrugs = new HashSet<Drug>();
-
+*/
     public Drug() {
     }
 
-    public Drug(Integer idDrug, String name, String code, boolean recipeNeed, String drugType, DrugFormat format, String manufacturer, Set<Drug> alternativeDrugs) {
+    public Drug(Integer idDrug, String name, String code, boolean recipeNeed, String drugType, DrugFormat format, String manufacturer
+            //, Set<Drug> alternativeDrugs
+    ) {
         this.idDrug = idDrug;
         this.name = name;
         this.code = code;
@@ -50,7 +53,7 @@ public class Drug implements Serializable {
         this.drugType = drugType;
         this.format = format;
         this.manufacturer = manufacturer;
-        this.alternativeDrugs = alternativeDrugs;
+       // this.alternativeDrugs = alternativeDrugs;
     }
 
     public Integer getIdDrug() {
@@ -109,13 +112,13 @@ public class Drug implements Serializable {
         this.manufacturer = manufacturer;
     }
 
-    public Set<Drug> getAlternativeDrugs() {
+   /* public Set<Drug> getAlternativeDrugs() {
         return alternativeDrugs;
     }
 
     public void setAlternativeDrugs(Set<Drug> alternativeDrugs) {
         this.alternativeDrugs = alternativeDrugs;
-    }
+    }*/
 //rezervisani lijekovi
 
 

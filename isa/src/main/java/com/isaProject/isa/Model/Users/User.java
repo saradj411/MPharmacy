@@ -7,16 +7,21 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.util.Collection;
+import java.util.Date;
+import java.util.List;
 
 @Entity
-@Table
-@JsonIdentityInfo(generator= ObjectIdGenerators.PropertyGenerator.class, property="idUser")
-public class User implements UserDetails, Serializable {
+@Table(name = "USERS")
+@Inheritance(strategy = InheritanceType.JOINED)
+public class User  implements UserDetails {
+
+    private static final long serialVersionUID = 1L;
+
     @Id
+    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer idUser;
+    private Integer id;
 
     @Column
     private String name;
@@ -42,11 +47,21 @@ public class User implements UserDetails, Serializable {
     @Column
     private String country;
 
+    @Column
+    private Boolean accountEnabled;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name="user_authority",
+            joinColumns = @JoinColumn(name ="user_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name="authority_id", referencedColumnName = "id"))
+    private List<Authority> authorities;
+
+
     public User() {
     }
 
     public User(Integer idUser, String name, String surname, String email, String password, String address, String phoneNumber, String city, String country) {
-        this.idUser = idUser;
+        this.id = idUser;
         this.name = name;
         this.surname = surname;
         this.email = email;
@@ -55,14 +70,21 @@ public class User implements UserDetails, Serializable {
         this.phoneNumber = phoneNumber;
         this.city = city;
         this.country = country;
+        this.accountEnabled = true;
     }
 
-    public Integer getIdUser() {
-        return idUser;
+
+    public void setAuthorities(List<Authority> authorities) {
+        this.authorities = authorities;
     }
 
-    public void setIdUser(Integer idUser) {
-        this.idUser = idUser;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer idUser) {
+        this.id = idUser;
     }
 
     public String getName() {
@@ -91,36 +113,38 @@ public class User implements UserDetails, Serializable {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        return this.authorities;
     }
 
+
+    @Override
     public String getPassword() {
         return password;
     }
 
     @Override
     public String getUsername() {
-        return null;
+        return email;
     }
 
     @Override
     public boolean isAccountNonExpired() {
-        return false;
+
+        return true;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return false;
+        return true;
     }
-
     @Override
     public boolean isEnabled() {
-        return false;
+        return accountEnabled;
     }
 
     public void setPassword(String password) {
@@ -157,5 +181,24 @@ public class User implements UserDetails, Serializable {
 
     public void setCountry(String country) {
         this.country = country;
+    }
+
+    public void setAccountEnabled(Boolean accountEnabled) {
+        this.accountEnabled = accountEnabled;
+    }
+
+    public Date getLastPasswordResetDate() {
+        return  null;
+    }
+
+    public String getAuthorityRole()
+    {
+        if(authorities.isEmpty()) return null;
+        Authority authority = authorities.get(0);
+        return authority.getAuthority();
+    }
+
+    public Boolean getAccountEnabled() {
+        return accountEnabled;
     }
 }

@@ -1,30 +1,18 @@
 package com.isaProject.isa.Services.Implementations;
 
-import com.isaProject.isa.Model.DTO.DrugDTO;
 import com.isaProject.isa.Model.DTO.PharmaceutDTO;
-import com.isaProject.isa.Model.Drugs.Drug;
-import com.isaProject.isa.Model.Drugs.DrugPricelist;
 import com.isaProject.isa.Model.Examination.Examination;
-import com.isaProject.isa.Model.Users.Dermatologist;
 import com.isaProject.isa.Model.Users.Pharmacist;
-import com.isaProject.isa.Model.Users.PharmacyAdmin;
 import com.isaProject.isa.Model.Users.WorkTime;
-import com.isaProject.isa.Repositories.DermatologistRepository;
 import com.isaProject.isa.Repositories.ExaminationRepository;
 import com.isaProject.isa.Repositories.PharmacistRepository;
 import com.isaProject.isa.Repositories.WorkTimeRepository;
-import com.isaProject.isa.Services.IServices.IDermatologistService;
 import com.isaProject.isa.Services.IServices.IPharamacistService;
-import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.Instant;
-import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 
 @Service
@@ -34,7 +22,6 @@ public class PharmacistService implements IPharamacistService {
 
     public @Autowired
     PharmacistRepository pharmacistRepository;
-
     public @Autowired
     ExaminationRepository examinationRepository;
 
@@ -45,7 +32,7 @@ public class PharmacistService implements IPharamacistService {
 
     @Override
     public void update(Pharmacist pharmacist) {
-        Pharmacist pa = pharmacistRepository.getOne(pharmacist.getIdUser());
+        Pharmacist pa = pharmacistRepository.getOne(pharmacist.getId());
         pa.setName(pharmacist.getName());
         pa.setSurname(pharmacist.getSurname());
         pa.setAddress(pharmacist.getAddress());
@@ -62,18 +49,18 @@ public class PharmacistService implements IPharamacistService {
 
 
         String message = "Pharmacist is not  deleted";
-        if(examinationService.getExaminationByIdStaff(pharmacist.getIdUser()).equals(false)){
+        if(examinationService.getExaminationByIdStaff(pharmacist.getId()).equals(false)){
             pharmacistRepository.delete(pharmacist);
             return  "Pharmacist is not  deleted";
 
         }
 
         for (Examination examination : examinationRepository.findAll()) {
-            if (examination.getType().toString().equals("PHARMACIST_EXAMINATION") && examination.getStaff().getIdUser().equals(pharmacist.getIdUser()) && !examination.getScheduled()) {
+            if (examination.getType().toString().equals("PHARMACIST_EXAMINATION") && examination.getStaff().getId().equals(pharmacist.getId()) && !examination.getScheduled()) {
                 pharmacistRepository.delete(pharmacist);
 
                 for (WorkTime workTimePharmacist : workTimeRepository.findAll()) {
-                    if (workTimePharmacist.getStaff().getIdUser().equals(pharmacist.getIdUser())) {
+                    if (workTimePharmacist.getStaff().getId().equals(pharmacist.getId())) {
                         workTimeRepository.delete(workTimePharmacist);
 
                     }
@@ -132,13 +119,13 @@ public class PharmacistService implements IPharamacistService {
 
         for(Examination examination : examinationRepository.findAll()){
 
-            if(examination.getType().equals("PHARMACIST_EXAMINATION") && examination.getStaff().getIdUser() == pharmacist.getIdUser() && !examination.getScheduled()){
+            if(examination.getType().equals("PHARMACIST_EXAMINATION") && examination.getStaff().getId() == pharmacist.getId() && !examination.getScheduled()){
                 throw  new IllegalStateException("Pharmacist  has scheduled examination.");
             }
         }
 
         for(WorkTime workTimePharmacist : workTimeRepository.findAll()){
-            if(workTimePharmacist.getStaff().getIdUser()== pharmacist.getIdUser()){
+            if(workTimePharmacist.getStaff().getId()== pharmacist.getId()){
                 workTimeRepository.delete(workTimePharmacist);
             }
         }
@@ -146,4 +133,6 @@ public class PharmacistService implements IPharamacistService {
         return  "Pharmacist is successfully deleted";
     }
 */
-    }
+    
+
+}

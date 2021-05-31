@@ -23,6 +23,7 @@ public class DrugOrderController {
 
     @Autowired
     DrugOrderService drugOrderService;
+    /*
 
     @PostMapping("/create")
     ResponseEntity<String> create(@RequestBody DrugOrderDTO drugOrderDTO)
@@ -38,10 +39,14 @@ public class DrugOrderController {
         }
 
         DrugOrder order = drugOrderService.save(drugOrderDTO);
+    /*
+        DrugOrder order = drugOrderService.createDrugOrder(drugOrderDTO);
         if(order != null) {
             return new ResponseEntity<>("Order is successfully published!", HttpStatus.CREATED);
         }else {
             return new ResponseEntity<>("Please try later.", HttpStatus.CREATED);
         }
     }
+
+     */
 }

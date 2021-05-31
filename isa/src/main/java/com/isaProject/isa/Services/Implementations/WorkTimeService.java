@@ -1,7 +1,6 @@
 package com.isaProject.isa.Services.Implementations;
 
 import com.isaProject.isa.Model.DTO.WorkTimeDTO;
-import com.isaProject.isa.Model.Users.Pharmacist;
 import com.isaProject.isa.Model.Users.WorkTime;
 import com.isaProject.isa.Repositories.WorkTimeRepository;
 import com.isaProject.isa.Services.IServices.IWorkTimeService;
@@ -25,8 +24,8 @@ public class WorkTimeService implements IWorkTimeService {
     }
 
     @Override
-    public WorkTime findByIdUser(Integer id) {
-        WorkTime workTime=workTimeRepository.findWorkTimeByIdStaff(id);
+    public WorkTime findByUserId(Integer id) {
+        WorkTime workTime = workTimeRepository.findWorkTimeByIdStaff(id);
         return workTime;
     }
 

@@ -137,10 +137,11 @@
     <tr>
       <th></th>
       <td >Price duration:</td>   
-       <td>{{drug.start | formatDate}}-{{drug.end| formatDate}}</td>
+       <td>{{drug.start}}-{{drug.end| formatDate}}</td>
 
     </tr>
  
+
   </tbody>
 </table>
            </div>
