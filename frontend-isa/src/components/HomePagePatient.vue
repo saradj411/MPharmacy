@@ -91,7 +91,7 @@
       </tr>
       <tr>
         <th scope="row"></th>
-        <!--<td style="font-size:25px">{{reservation.drug.name}}</td>!-->
+        <td style="font-size:25px">{{reservation.drugName}}</td>
       <td style="font-size:25px;">Quantity:{{reservation.quantity}} </td>
       </tr>
     <tr>
@@ -104,7 +104,7 @@
     <tr>
       <th></th>
       <td >Pharmacy</td>   
-    <!--<td>{{reservation.pharmacy.name}}</td>!-->
+      <td>{{reservation.pharmacyName}}</td>
 
     </tr>
      <tr>
@@ -129,7 +129,7 @@
     <tbody>
       <tr>
         <th scope="row"></th>
-       <!-- <td style="font-size:25px;font-weight:bold;">{{reservation.drug.name}}</td>!-->
+       <td style="font-size:25px;font-weight:bold;">{{reservation.drugName}}</td>
       <td style="font-size:25px;">Quantity:{{reservation.quantity}} </td>
       </tr>
     <tr>
@@ -147,7 +147,7 @@
     <tr>
       <th></th>
       <td >Pharmacy</td>   
-    <!--<td>{{reservation.pharmacy.name}}</td>!-->
+    <td>{{reservation.pharmacyName}}</td>
 
     </tr>
      
@@ -167,7 +167,7 @@
     <tbody>
       <tr>
         <th scope="row"></th>
-        <!--<td style="font-size:25px;font-weight:bold;">{{reservation.drug.name}}</td>!-->
+        <td style="font-size:25px;font-weight:bold;">{{reservation.drugName}}</td>
       <td style="font-size:25px;">Quantity:{{reservation.quantity}} </td>
       </tr>
     <tr>
@@ -185,7 +185,7 @@
     <tr>
       <th></th>
       <td >Pharmacy</td>   
-   <!-- <td>{{reservation.pharmacy.name}}</td>!-->
+     <td>{{reservation.pharmacyName}}</td>
     </tr>
   </tbody>
 </table>
@@ -220,7 +220,7 @@
           <th></th>
           <td >Dermatologist:</td>   
 
-          <!--<td>{{examination1.staff.name}} {{examination1.staff.surname}} </td>!-->
+          <td>{{examination1.nameStaff}} {{examination1.surnameStaff}} </td>
 
         </tr>
         <tr>
@@ -261,7 +261,7 @@
           <th></th>
           <td >Dermatologist:</td>   
 
-         <!--<td>{{examination.staff.name}} {{examination.staff.surname}} </td>!-->
+         <td>{{examination.nameStaff}} {{examination.surnameStaff}} </td>
 
 
         </tr>

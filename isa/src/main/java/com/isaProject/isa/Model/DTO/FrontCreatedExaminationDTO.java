@@ -8,6 +8,7 @@ import com.isaProject.isa.Model.Users.Patient;
 import com.isaProject.isa.Model.Users.Staff;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Date;
 
@@ -15,7 +16,7 @@ public class FrontCreatedExaminationDTO {
 
     private Integer idExamination;
 
-    private Date date;
+    private LocalDate date;
 
 
     private LocalTime startTime;
@@ -32,7 +33,7 @@ public class FrontCreatedExaminationDTO {
     //private Staff staff;
 
 
-    public FrontCreatedExaminationDTO(Integer idExamination, Date date, LocalTime startTime, LocalTime endTime, double price, String nameStaff, String surnameStaff, Double gradeStaff) {
+    public FrontCreatedExaminationDTO(Integer idExamination, LocalDate date, LocalTime startTime, LocalTime endTime, double price, String nameStaff, String surnameStaff, Double gradeStaff) {
         this.idExamination = idExamination;
         this.date = date;
         this.startTime = startTime;
@@ -43,7 +44,7 @@ public class FrontCreatedExaminationDTO {
         this.gradeStaff = gradeStaff;
     }
 
-    public FrontCreatedExaminationDTO(Integer idExamination, Date date, LocalTime startTime, LocalTime endTime, double price, String nameStaff, String surnameStaff, String namePharmacy) {
+    public FrontCreatedExaminationDTO(Integer idExamination, LocalDate date, LocalTime startTime, LocalTime endTime, double price, String nameStaff, String surnameStaff, String namePharmacy) {
         this.idExamination = idExamination;
         this.date = date;
         this.startTime = startTime;
@@ -62,11 +63,11 @@ public class FrontCreatedExaminationDTO {
         this.idExamination = idExamination;
     }
 
-    public Date getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 
