@@ -14,7 +14,6 @@ import java.util.Set;
 
 @Entity
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-
 public class Patient extends User{
 
     @Column(nullable = true)

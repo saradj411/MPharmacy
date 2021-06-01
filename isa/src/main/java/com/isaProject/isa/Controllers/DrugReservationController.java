@@ -84,7 +84,7 @@ public class DrugReservationController {
     @GetMapping(value = "/findAllPicked")
     public ResponseEntity<List<DrugReservation>> findAllPicked() {
         List<DrugReservation> reservations=this.drugReservationService.findByIsPickedUp(true);
-        
+
         return reservations == null ?
                 new ResponseEntity<>(HttpStatus.NOT_FOUND) :
                 ResponseEntity.ok(reservations);

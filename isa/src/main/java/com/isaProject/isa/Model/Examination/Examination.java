@@ -44,9 +44,6 @@ public class Examination {
     @Column
     private Boolean isScheduled;
 
-
-
-
     @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.MERGE)
     @JoinColumn(name = "pharmacyId", referencedColumnName = "idPharm")
     //@JsonManagedReference
