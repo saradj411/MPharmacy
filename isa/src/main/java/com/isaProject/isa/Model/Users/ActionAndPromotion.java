@@ -29,4 +29,54 @@ public class ActionAndPromotion {
     @JsonBackReference
     private Pharmacy pharmacy;
 
+    public Integer getIdAction() {
+        return idAction;
+    }
+
+    public void setIdAction(Integer idAction) {
+        this.idAction = idAction;
+    }
+
+    public Date getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
+    }
+
+    public Date getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
+    }
+
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+    }
+
+    public Pharmacy getPharmacy() {
+        return pharmacy;
+    }
+
+    public void setPharmacy(Pharmacy pharmacy) {
+        this.pharmacy = pharmacy;
+    }
+
+    public ActionAndPromotion(Integer idAction, Date startDate, Date endDate, String text, Pharmacy pharmacy) {
+        this.idAction = idAction;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.text = text;
+        this.pharmacy = pharmacy;
+    }
+
+    public ActionAndPromotion() {
+    }
 }

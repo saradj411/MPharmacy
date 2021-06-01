@@ -1,6 +1,7 @@
 package com.isaProject.isa.Services.Implementations;
 import com.isaProject.isa.Model.Drugs.DrugOrder;
 import com.isaProject.isa.Model.Drugs.Offer;
+import com.isaProject.isa.Model.Users.Patient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -64,6 +65,24 @@ public class ServiceForEmail{
         helper.setText(htmlMsg, true);
         helper.setTo(offer.getSupplier().getEmail());
         helper.setSubject("Rejected absence");
+        helper.setFrom(environment.getProperty("spring.mail.username"));
+        javaMailSender.send(mimeMessage);
+        System.out.println("kraj funkc!");
+    }
+
+
+    public void sendingEmailsForActionAndPromotions (Patient patient,String pharmacyName,String text) throws MessagingException {
+        // TODO Auto-generated method stub
+
+
+        MimeMessage mimeMessage = javaMailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, "utf-8");
+        String htmlMsg =
+                "<p>Hello,pharmacy "+pharmacyName+"has new action:"+text+"</p>";
+
+        helper.setText(htmlMsg, true);
+        helper.setTo(patient.getEmail());
+        helper.setSubject("Rejected absence");///////////////////////ovo promijeni
         helper.setFrom(environment.getProperty("spring.mail.username"));
         javaMailSender.send(mimeMessage);
         System.out.println("kraj funkc!");
