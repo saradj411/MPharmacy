@@ -57,25 +57,19 @@ public class DrugReservationService implements IDrugReservationService {
         Boolean rez=false;
         //trenutno vrijeme
         LocalDate now=LocalDate.now();
-        //jedan dan manje nego danas
-        LocalDate day=now.minusDays(1);
-          int dan= dateRes.getDayOfMonth();
-        //poredim dan manje sa danom kad se mora pokupiti rez
-        int res=dateRes.compareTo(day);
+        LocalDate minusDan=dateRes.minusDays(1);
+
+        int res=minusDan.compareTo(now);
         if(res==0){
             //poklapaju se, ne moze otkazati
             rez=false;
-
         }else if (res>0){
             //moguce
             rez=true;
         }else{
             rez=false;
         }
-        //System.out.println(wd);
-        //System.out.println(dsd);
-        System.out.println("res:"+res);
-        System.out.println("dan:"+dan);
+        //System.out.println("dan:"+dan);
         return rez;
 
     }

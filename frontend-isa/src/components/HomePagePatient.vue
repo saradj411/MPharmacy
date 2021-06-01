@@ -701,8 +701,8 @@ methods:{
         this.showFinishedPharm=false
       },
       canceling:
-       function(res,date){
-       this.axios.get('/reservation/getBool/'+date)
+       function(res,idRes){
+       this.axios.get('/reservation/getBool/'+idRes)
         .then(response => {
                 this.jel = response.data;
                 if(this.jel){
@@ -712,15 +712,15 @@ methods:{
                             }).then(response => {
                             this.jel = response.data;
             
-                              alert("otkazanoo") 
-                
+                              alert("Reservation canceled!") 
+                                 window.location.href = "/HomePagePatient/"+this.id;
                 
                             }).catch(res => {
                                     alert("Nesto ne valja");
                                     console.log(res);
                             });
                 }else{
-                   alert("otkazivanje nije moguce") 
+                   alert("Cancellation is not possible!") 
                 }
                 
          }).catch(res => {
