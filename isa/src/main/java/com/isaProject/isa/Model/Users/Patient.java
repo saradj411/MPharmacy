@@ -46,7 +46,7 @@ public class Patient extends User{
     private Set<ERecipe> erecipes = new HashSet<ERecipe>();
 */
     //apoteke na koje je pretplacen
-    @JsonIgnore
+    //@JsonIgnore
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "action_patient_pharmacy",
             joinColumns = @JoinColumn(name = "patientId", referencedColumnName = "id"),

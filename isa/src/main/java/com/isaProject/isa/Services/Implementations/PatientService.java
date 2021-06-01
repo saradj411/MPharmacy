@@ -7,6 +7,7 @@ import com.isaProject.isa.Model.DTO.FrontCreatedExaminationDTO;
 import com.isaProject.isa.Model.Drugs.Drug;
 import com.isaProject.isa.Model.Drugs.ERecipe;
 import com.isaProject.isa.Model.Examination.Examination;
+import com.isaProject.isa.Model.Examination.ExaminationStatus;
 import com.isaProject.isa.Model.Examination.ExaminationType;
 import com.isaProject.isa.Model.Pharmacy.Pharmacy;
 import com.isaProject.isa.Model.Users.Patient;
@@ -79,7 +80,7 @@ public class PatientService implements IPatientService {
         examinations=patient.getExaminations();
         for (Examination e:examinations){
 
-            if(e.getScheduled()){
+            if(e.getStatus().compareTo(ExaminationStatus.SCHEDULED)==0){
 
                 if(e.getType().compareTo(ExaminationType.DERMATOLOGIST_EXAMINATION)==0){
                     FrontCreatedExaminationDTO exDTO=new FrontCreatedExaminationDTO(e.getIdExamination(),e.getDate(),
@@ -99,12 +100,57 @@ public class PatientService implements IPatientService {
         examinations=patient.getExaminations();
         for (Examination e:examinations){
 
-            if(e.getScheduled()){
+            if(e.getStatus().compareTo(ExaminationStatus.SCHEDULED)==0){
 
                 if(e.getType().compareTo(ExaminationType.PHARMACIST_EXAMINATION)==0){
                     FrontCreatedExaminationDTO exDTO=new FrontCreatedExaminationDTO(e.getIdExamination(),e.getDate(),
                             e.getStartTime(),e.getEndTime(),e.getPrice(),
                             e.getStaff().getName(),e.getStaff().getSurname(),e.getPharmacy().getName());
+                    dermExaminations.add(exDTO);
+                }
+            }
+        }
+        return dermExaminations;
+    }
+
+    @Override
+    public Set<FrontCreatedExaminationDTO> findFinishedDermatologistExamination(Integer id) {
+        Patient patient=patientRepository.findById(id).get();
+        Set<Examination> examinations=new HashSet<>();
+        Set<FrontCreatedExaminationDTO> dermExaminations=new HashSet<>();
+        examinations=patient.getExaminations();
+        for (Examination e:examinations){
+
+            if(e.getStatus().compareTo(ExaminationStatus.FINISHED)==0){
+
+                if(e.getType().compareTo(ExaminationType.DERMATOLOGIST_EXAMINATION)==0){
+                    FrontCreatedExaminationDTO exDTO=new FrontCreatedExaminationDTO(e.getIdExamination(),e.getDate(),
+                            e.getStartTime(),e.getEndTime(),e.getPrice(),
+                            e.getStaff().getName(),e.getStaff().getSurname(),e.getPharmacy().getName(),
+                    e.getReport(),e.getTherapy());
+
+                    dermExaminations.add(exDTO);
+                }
+            }
+        }
+        return dermExaminations;
+    }
+
+    @Override
+    public Set<FrontCreatedExaminationDTO> findFinishedPharmacistExamination(Integer id) {
+        Patient patient=patientRepository.findById(id).get();
+        Set<Examination> examinations=new HashSet<>();
+        Set<FrontCreatedExaminationDTO> dermExaminations=new HashSet<>();
+        examinations=patient.getExaminations();
+        for (Examination e:examinations){
+
+            if(e.getStatus().compareTo(ExaminationStatus.FINISHED)==0){
+
+                if(e.getType().compareTo(ExaminationType.PHARMACIST_EXAMINATION)==0){
+                    FrontCreatedExaminationDTO exDTO=new FrontCreatedExaminationDTO(e.getIdExamination(),e.getDate(),
+                            e.getStartTime(),e.getEndTime(),e.getPrice(),
+                            e.getStaff().getName(),e.getStaff().getSurname(),e.getPharmacy().getName(),
+                            e.getReport(),e.getTherapy());
                     dermExaminations.add(exDTO);
                 }
             }

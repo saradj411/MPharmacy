@@ -90,6 +90,24 @@ public class PatientController {
                 new ResponseEntity<>(HttpStatus.NOT_FOUND) :
                 ResponseEntity.ok(d);
     }
+    @GetMapping(value = "/findFinishedDermatologistExamination/{id}")
+    public ResponseEntity<Set<FrontCreatedExaminationDTO>> findFinishedDermatologistExamination(@PathVariable Integer id) {
+
+        Set<FrontCreatedExaminationDTO> d= patientService.findFinishedDermatologistExamination(id);
+
+        return d == null ?
+                new ResponseEntity<>(HttpStatus.NOT_FOUND) :
+                ResponseEntity.ok(d);
+    }
+    @GetMapping(value = "/findFinishedPharmacistExamination/{id}")
+    public ResponseEntity<Set<FrontCreatedExaminationDTO>> findFinishedPharmacistExamination(@PathVariable Integer id) {
+
+        Set<FrontCreatedExaminationDTO> d= patientService.findFinishedPharmacistExamination(id);
+
+        return d == null ?
+                new ResponseEntity<>(HttpStatus.NOT_FOUND) :
+                ResponseEntity.ok(d);
+    }
     /*@GetMapping(value = "/findERecipe/{id}")
     public ResponseEntity<List<ERecipe>> findERecipe(@PathVariable Integer id) {
 

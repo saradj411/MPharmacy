@@ -196,7 +196,7 @@
 
 <!--SCHEDULED PHARMACisct EXAMINATION!-->
   <div v-if="showPharmExam"  style="float:left;margin-left:30px;">
-     <h4 style="margin:30px">SCHEDULED EXAMINATION:</h4>    
+     <h4 style="margin:30px">Scheduled examinations:</h4>    
  <div style="background: #a7c1c9;margin-left:30px;"  v-for="examination1 in this.pharmacistScheduledExamination"  v-bind:key="examination1.idExamination">
       
 <table  style="" id="table2" class="table" >
@@ -218,7 +218,7 @@
       
         <tr>
           <th></th>
-          <td >Dermatologist:</td>   
+          <td >Pharmacist:</td>   
 
           <td>{{examination1.nameStaff}} {{examination1.surnameStaff}} </td>
 
@@ -227,6 +227,63 @@
           <th></th>
           <td style="font-size:25px;">{{examination1.price}}RSD </td>
           <td></td>
+
+        </tr>
+  </tbody>
+</table>
+           </div>
+
+
+      </div> 
+      <!--FINISHD PHARMACisct EXAMINATION!-->
+  <div v-if="showFinishedPharm"  style="float:left;margin-left:30px;">
+     <h4 style="margin:30px">Finished examinations:</h4>    
+ <div style="background: #a7c1c9;margin-left:30px;"  v-for="examination2 in this.pharmacistFinishedExamination"  v-bind:key="examination2.idExamination">
+      
+<table  style="" id="table2" class="table" >
+ 
+    <tbody>
+        <tr>
+        <th scope="row"></th>
+      <td style="font-size:25px;font-weight:bold;">{{examination2.date | formatDate}}</td>
+      <td style="font-size:25px;font-weight:bold;">{{examination2.startTime}}-{{examination2.endTime}}</td>
+      </tr>
+  <tr>
+          <th></th>
+          <td>Report:</td>
+          <td>{{examination2.report}}</td>
+        </tr>
+        <tr>
+          <th></th>
+          <td>Pharmacy:</td>
+          <td>{{examination2.namePharmacy}}</td>
+        </tr>
+      
+        <tr>
+          <th></th>
+          <td >Pharmacist:</td>   
+          <td>{{examination2.nameStaff}} {{examination2.surnameStaff}} </td>
+
+        </tr>
+        <tr>
+          <th></th>
+          <td style="font-size:25px;">{{examination2.price}}RSD </td>
+          <td></td>
+
+        </tr>
+         <tr>
+          <th></th>
+          <td >Therapy: </td>
+          <td></td>
+        
+
+        </tr>
+         <tr>
+          <th></th>
+          <td >{{examination2.therapy.drug.name}}</td>
+          <td >Daily dose:</td>
+          
+        
 
         </tr>
   </tbody>
@@ -278,6 +335,67 @@
 
       </div> 
 
+<!--finished DERMATOLOGIST EXAMINATION!-->
+  <div v-if="showFinishedDerm"  style="float:left;margin-left:30px;">
+     <h4 style="margin:30px">Finished examinations:</h4>    
+ <div style="background: #a7c1c9;margin-left:30px;"  v-for="examination3 in this.dermatologistFinishedExamination"  v-bind:key="examination3.idExamination">
+      
+<table  style="" id="table2" class="table" >
+ 
+    <tbody>
+        <tr>
+        <th scope="row"></th>
+      <td style="font-size:25px;font-weight:bold;">{{examination3.date | formatDate}}</td>
+      <td style="font-size:25px;font-weight:bold;">{{examination3.startTime}}-{{examination3.endTime}}</td>
+      </tr>
+  <tr>
+          <th></th>
+          <td>Report:</td>
+          <td>{{examination3.report}}</td>
+        </tr>
+        <tr>
+          <th></th>
+          <td>Pharmacy:</td>
+          <td>{{examination3.namePharmacy}}</td>
+          
+
+        </tr>
+      
+        <tr>
+          <th></th>
+          <td >Dermatologist:</td>   
+
+         <td>{{examination3.nameStaff}} {{examination3.surnameStaff}} </td>
+
+
+        </tr>
+        <tr>
+          <th></th>
+          <td style="font-size:25px;">{{examination3.price}}RSD </td>
+          <td></td>
+
+        </tr>
+        <tr>
+          <th></th>
+          <td >Therapy: </td>
+          <td></td>
+        
+
+        </tr>
+         <tr>
+          <th></th>
+          <td >{{examination3.therapy.drug.name}}</td>
+          <td >Daily dose:</td>
+          
+        
+
+        </tr>
+  </tbody>
+</table>
+           </div>
+
+
+      </div> 
 
        <!--eRECEPIE!-->
   <div v-if="showERecipe"  style="float:left;margin-left:30px;">
@@ -391,6 +509,8 @@ export default {
         showPharmExam:false,
         showERecipe:false,
         showCreatedDermExamination:false,
+        showFinishedDerm:false,
+        showFinishedPharm:false,
 
         pharmacies : [],
         pharmacies1 : [],
@@ -401,6 +521,8 @@ export default {
         recepies:[],
         dermatologistCreatedExamination:[],
 
+        dermatologistFinishedExamination:[],
+        pharmacistFinishedExamination:[],
 
         pickedReservations:[],
         canceledReservations:[],
@@ -473,6 +595,23 @@ export default {
                 console.log(res);
         });
 
+         this.axios.get('/patient/findFinishedDermatologistExamination/'+this.id)
+        .then(response => {
+                this.dermatologistFinishedExamination = response.data;
+                
+         }).catch(res => {
+                alert("Nesto ne valja");
+                console.log(res);
+        });
+         this.axios.get('/patient/findFinishedPharmacistExamination/'+this.id)
+        .then(response => {
+                this.pharmacistFinishedExamination= response.data;
+                
+         }).catch(res => {
+                alert("Nesto ne valja");
+                console.log(res);
+        });
+
          this.axios.get('/erecipe/findByIdPatient/'+this.id)
         .then(response => {
                 this.recepies= response.data;
@@ -503,6 +642,8 @@ methods:{
         this.showPharmExam=false
         this.showERecipe=false
         this.showCreatedDermExamination=false
+        this.showFinishedDerm=false
+        this.showFinishedPharm=false
        //this.showSearchPharmacy=true
       },
       showReservation:
@@ -513,6 +654,8 @@ methods:{
         this.showPharmExam=false
          this.showERecipe=false
          this.showCreatedDermExamination=false
+         this.showFinishedDerm=false
+        this.showFinishedPharm=false
       },
       showConsultation:
        function(){
@@ -522,6 +665,8 @@ methods:{
         this.showPharmExam=true
          this.showERecipe=false
          this.showCreatedDermExamination=false
+         this.showFinishedDerm=false
+        this.showFinishedPharm=true
       },
       showRecipe: function(){
         this.showTable=false
@@ -530,6 +675,8 @@ methods:{
        this.showPharmExam=false
         this.showERecipe=true
         this.showCreatedDermExamination=false
+        this.showFinishedDerm=false
+        this.showFinishedPharm=false
       },
       showExamination:
        function(){
@@ -539,6 +686,8 @@ methods:{
        this.showPharmExam=false
         this.showERecipe=false
         this.showCreatedDermExamination=false
+        this.showFinishedDerm=true
+        this.showFinishedPharm=false
       },
       showCreatedDerm:
        function(){
@@ -548,6 +697,8 @@ methods:{
        this.showPharmExam=false
         this.showERecipe=false
         this.showCreatedDermExamination=true
+        this.showFinishedDerm=false
+        this.showFinishedPharm=false
       },
       canceling:
        function(res,date){
