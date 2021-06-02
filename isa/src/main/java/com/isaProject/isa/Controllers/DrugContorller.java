@@ -3,7 +3,6 @@ package com.isaProject.isa.Controllers;
 
 import com.isaProject.isa.Model.DTO.DrugDTO;
 import com.isaProject.isa.Model.Drugs.Drug;
-import com.isaProject.isa.Model.Users.PharmacyAdmin;
 import com.isaProject.isa.Services.Implementations.DrugService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

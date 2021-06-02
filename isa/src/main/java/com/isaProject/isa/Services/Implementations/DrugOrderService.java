@@ -2,6 +2,7 @@ package com.isaProject.isa.Services.Implementations;
 
 import com.isaProject.isa.Model.DTO.DrugItemDTO;
 import com.isaProject.isa.Model.DTO.DrugOrderDTO;
+import com.isaProject.isa.Model.DTO.OrderItemDTO;
 import com.isaProject.isa.Model.Drugs.Drug;
 import com.isaProject.isa.Model.Drugs.DrugOrder;
 import com.isaProject.isa.Model.Drugs.DrugPricelist;
@@ -41,10 +42,30 @@ public class DrugOrderService implements IDrugOrderService {
     @Autowired
     OrderItemRepository orderItemRepository;
 
+
     @Override
+    public DrugOrder save(DrugOrderDTO drugOrderDTO) {
+        DrugOrder d = new DrugOrder();
+        d.setTimeLimit(drugOrderDTO.getTimeLimit());
+        d.setPharmacyAdmin(pharmacyAdminService.findById(drugOrderDTO.getId()));
+        //d.setProcessed(false);
+        //d.setOffers(null);
+
+
+        DrugOrder drugOrder = drugOrderRepository.save(d);
+        for(OrderItemDTO medDto : drugOrderDTO.getOrderItemDTO()){//vrati mi listu llijekova sa kolicinom
+            OrderItem orderItem1 = new OrderItem(medDto.getQuantity(),medDto.getDrug());//
+            orderItem1.setDrugOrder(d);
+            orderItemRepository.save(orderItem1);
+        }
+        return drugOrder;
+
+    }
+
+/*    @Override
     public DrugOrder createDrugOrder(DrugOrderDTO drugOrder) {
 
-        if(drugOrder.getTimeLimit().before(new Date())){
+        if(drugOrder.getTimeLimit().be(new Date())){
             throw new IllegalArgumentException("Error.Input date again");
         }
         DrugOrder order = new DrugOrder();
@@ -73,5 +94,8 @@ public class DrugOrderService implements IDrugOrderService {
         }
 
         return order;
-    }
+    }*/
+
+
+
 }

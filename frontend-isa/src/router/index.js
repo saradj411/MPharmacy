@@ -24,8 +24,10 @@ import updatePharmacistProfile from '../components/updatePharmacistProfile.vue'
 import updateDermatologistProfile from '../components/updateDermatologistProfile.vue'
 import DermatologistPatients from '../components/DermatologistPatients.vue'
 import RequestForVacation from '../components/RequestForVacation.vue'
-
-
+import CreatePurchaseOrder from '../components/CreatePurchaseOrder.vue'
+import SearchUser from '../components/SearchUser.vue'
+import WorkCalendar from '../components/WorkCalendar.vue'
+import StartExamination from '../components/StartExamination.vue'
 import moment from 'moment'
 
 Vue.use(VueRouter)
@@ -44,14 +46,15 @@ const routes = [
       path: '/',
       name: 'Welcome',
       component: Welcome
-    } ,
+    },
     {
         path: '/Home/:id',
         name: 'Home',
         component: Home
+      
       },
       {
-        path: '/createDrugPage',
+        path: '/createDrugPage/:id',
         name: 'createDrugPage',
         component: createDrugPage
       },
@@ -66,12 +69,8 @@ const routes = [
         name: 'ProfilePatient',
         component: ProfilePatient
       }
-      ,
-      {
-        path: '/ProfilePatient/:id',
-        name: 'ProfilePatient',
-        component: ProfilePatient
-      },
+    ,
+     
       {
         path: '/updatePharmacyProfile/:id',
         name: 'updatePharmacyProfile',
@@ -171,7 +170,33 @@ const routes = [
         name: 'RequestForVacation',
         component: RequestForVacation
       }
+      ,
+      {
+        path: '/CreatePurchaseOrder/:id',
+        name: 'CreatePurchaseOrder',
+        component: CreatePurchaseOrder
+      }
+      ,
+      {
+        path: '/SearchUser',
+        name: 'SearchUser',
+        component: SearchUser
+      }
+      ,
+      {
+        path: '/WorkCalendar/:id',
+        name: 'WorkCalendar',
+        component: WorkCalendar
+      }
+      
+      ,
+      {
+        path: '/StartExamination/:id',
+        name: 'StartExamination',
+        component: StartExamination
+      }
 
+     
       
     ]
 

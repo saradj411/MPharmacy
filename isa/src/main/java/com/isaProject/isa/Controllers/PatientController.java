@@ -1,12 +1,8 @@
 package com.isaProject.isa.Controllers;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.isaProject.isa.Model.DTO.ChangePasswordDTO;
-import com.isaProject.isa.Model.DTO.DrugDTO;
+import com.isaProject.isa.Model.DTO.*;
 import com.isaProject.isa.Model.DTO.FrontCreatedExaminationDTO;
-import com.isaProject.isa.Model.Drugs.Drug;
-import com.isaProject.isa.Model.Drugs.ERecipe;
-import com.isaProject.isa.Model.Examination.Examination;
 import com.isaProject.isa.Model.Pharmacy.Pharmacy;
 import com.isaProject.isa.Model.Users.Patient;
 import com.isaProject.isa.Services.Implementations.PatientService;
@@ -14,7 +10,6 @@ import com.isaProject.isa.Services.Implementations.PharmacyService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -118,4 +113,35 @@ public class PatientController {
                 ResponseEntity.ok(d);
     }*/
 
+
+    @GetMapping(value = "/findAll")
+    public ResponseEntity<List<PatientDTO>> findAll() {
+        ArrayList<PatientDTO> lista=new ArrayList<>();
+        List<Patient> d= patientService.findAll();
+        for (Patient p:d){
+            PatientDTO pDTO=new PatientDTO(p.getId(),p.getEmail(),p.getName(),p.getSurname(),p.getPhoneNumber());
+
+            lista.add(pDTO);
+
+        }
+
+        return lista == null ?
+                new ResponseEntity<>(HttpStatus.NOT_FOUND) :
+                ResponseEntity.ok(lista);
+    }
+    @PostMapping("/searchUser")
+    public ResponseEntity<List<Patient>> findAllP(@RequestBody SearchUserDTO dto) {
+        List<Patient> lista=patientService.findAll();
+        System.out.println("ime sa fronta je "+dto.getName());
+        System.out.println("prezime sa fronta je "+dto.getSurame());
+        ArrayList<Patient> newP = new ArrayList<>();
+        for (Patient d:lista){
+                if(d.getSurname().toLowerCase().contains(dto.getSurame().toLowerCase()) && d.getName().toLowerCase().contains(dto.getName().toLowerCase())){
+                    newP.add(d);
+                }
+        }
+        return newP == null ?
+                new ResponseEntity<>(HttpStatus.NOT_FOUND) :
+                ResponseEntity.ok(newP);
+    }
 }

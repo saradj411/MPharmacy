@@ -1,10 +1,15 @@
 package com.isaProject.isa.Controllers;
 
+import com.isaProject.isa.Model.DTO.ExaminationDTO;
 import com.isaProject.isa.Model.DTO.FrontCreatedExaminationDTO;
-import com.isaProject.isa.Model.Drugs.Drug;
-import com.isaProject.isa.Model.Drugs.DrugReservation;
 import com.isaProject.isa.Model.Examination.Examination;
+
 import com.isaProject.isa.Services.Implementations.DrugReservationService;
+
+import com.isaProject.isa.Model.Pharmacy.Pharmacy;
+import com.isaProject.isa.Model.Users.Patient;
+import com.isaProject.isa.Model.Users.Staff;
+
 import com.isaProject.isa.Services.Implementations.ExaminationService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +38,53 @@ public class ExaminationController {
         examinationService.canceling(id);
         return new ResponseEntity<>("ajdeee", HttpStatus.CREATED);
 
+    }
+    @GetMapping(value = "/findPatientById/{id}")
+    public ResponseEntity<Patient> findById(@PathVariable Integer id) {
+
+        Examination examination= examinationService.findById(id);
+        Patient patient=examination.getPatient();
+        return patient == null ?
+                new ResponseEntity<>(HttpStatus.NOT_FOUND) :
+                ResponseEntity.ok(patient);
+    }
+
+    @GetMapping(value = "/findExamination/{id}")
+    public ResponseEntity<Examination> findByIdEx(@PathVariable Integer id) {
+
+        Examination examination= examinationService.findById(id);
+        return examination == null ?
+                new ResponseEntity<>(HttpStatus.NOT_FOUND) :
+                ResponseEntity.ok(examination);
+    }
+    @GetMapping(value = "/findStaff/{id}")
+    public ResponseEntity<Staff> findStaff(@PathVariable Integer id) {
+
+        Examination examination= examinationService.findById(id);
+        Staff staff=examination.getStaff();
+        return staff == null ?
+                new ResponseEntity<>(HttpStatus.NOT_FOUND) :
+                ResponseEntity.ok(staff);
+    }
+
+    @GetMapping(value = "/findPharmacy/{id}")
+    public ResponseEntity<Pharmacy> findPharmacy(@PathVariable Integer id) {
+
+        Examination examination= examinationService.findById(id);
+        Pharmacy pharmacy=examination.getPharmacy();
+        return pharmacy == null ?
+                new ResponseEntity<>(HttpStatus.NOT_FOUND) :
+                ResponseEntity.ok(pharmacy);
+    }
+
+
+    @PostMapping("/create")
+    public ResponseEntity<String> addDrug(@RequestBody ExaminationDTO examinationDTO) {
+        System.out.println("Usao u pregleddd");
+        System.out.println("examination  " + examinationDTO.getStart());
+        System.out.println("end " + examinationDTO.getEnd());
+        Examination examination = examinationService.save(examinationDTO);
+        return new ResponseEntity<>("kreirano", HttpStatus.CREATED);
     }
     @GetMapping(value = "/findCreatedPharmacistExamination")
     public ResponseEntity<List<FrontCreatedExaminationDTO>> findCreatedPharmacistExamination() {

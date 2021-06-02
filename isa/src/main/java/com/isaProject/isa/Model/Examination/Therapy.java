@@ -18,6 +18,8 @@ public class Therapy {
     @JoinColumn(name = "drugId", referencedColumnName = "idDrug")
     //@JsonManagedReference
     private Drug drug;
+    @Column
+    private Integer numberOfDay;
 
     public Therapy(Integer idTherapy, Drug drug) {
         this.idTherapy = idTherapy;
@@ -41,5 +43,13 @@ public class Therapy {
 
     public void setDrug(Drug drug) {
         this.drug = drug;
+    }
+
+    public Integer getNumberOfDay() {
+        return numberOfDay;
+    }
+
+    public void setNumberOfDay(Integer numberOfDay) {
+        this.numberOfDay = numberOfDay;
     }
 }

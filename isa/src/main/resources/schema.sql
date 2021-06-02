@@ -154,12 +154,12 @@ insert into pharmacy_admin values(503,501);
 #alternative_drug
 #id drug,id alternativni drug
 
-insert into alternative_drug values(501,507);
-insert into alternative_drug values(502,507);
-insert into alternative_drug values(503,506);
-insert into alternative_drug values(504,506);
-insert into alternative_drug values(505,506);
-insert into alternative_drug values(506,502);
+#insert into alternative_drug values(501,507);
+#insert into alternative_drug values(502,507);
+#insert into alternative_drug values(503,506);
+#insert into alternative_drug values(504,506);
+#insert into alternative_drug values(505,506);
+#insert into alternative_drug values(506,502);
 
 
 #allergies
@@ -197,12 +197,12 @@ insert into drug_reservation values(509,false,'2021-04-20',false,false,'2021-06-
 insert into drug_reservation values(510,false,'2021-04-20',false,false,'2021-06-02',3,507,508,502);
 
 #therapy
-insert into therapy values(500,504);
-insert into therapy values(501,501);
-insert into therapy values(502,502);
-insert into therapy values(503,503);
-insert into therapy values(504,505);
-insert into therapy values(505,506);
+insert into therapy values(500,3,504);
+insert into therapy values(501,5,501);
+insert into therapy values(502,8,502);
+insert into therapy values(503,9,503);
+insert into therapy values(504,4,505);
+insert into therapy values(505,7,506);
 
 #work_timelimit
 insert into work_time values(500,'2021-07-22','11:00:00','09:30:00',500,502);
@@ -223,6 +223,7 @@ insert into examination values(502,false,'2021-06-20','08:30:00',true,600,'info1
 insert into examination values(507,false,'2021-07-23','2021-07-23 11:00:00',true,880,'info2','2021-07-23 09:30:00','SCHEDULED','DERMATOLOGIST_EXAMINATION',508,501,504,null);//--------------------
 
 insert into examination values(508,false,'2021-08-29','11:00:00',false,1030,'info2','09:30:00','CREATED','PHARMACIST_EXAMINATION',null,500,559,null);
+
 insert into examination values(509,false,'2021-08-27','12:00:00',false,1050,'info2','10:30:00','CREATED','PHARMACIST_EXAMINATION',null,501,511,null);
 
 insert into examination values(510,false,'2021-08-21','11:00:00',false,1030,'info2','09:30:00','CREATED','DERMATOLOGIST_EXAMINATION',null,500,501,null);

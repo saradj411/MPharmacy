@@ -36,8 +36,8 @@ public class FrontCreatedExaminationDTO {
     private Therapy therapy;
     //private Staff staff;
 
-
     public FrontCreatedExaminationDTO(Integer idExamination, LocalDate date, LocalTime startTime, LocalTime endTime, double price, String nameStaff, String surnameStaff, Double gradeStaff) {
+
         this.idExamination = idExamination;
         this.date = date;
         this.startTime = startTime;
@@ -60,6 +60,7 @@ public class FrontCreatedExaminationDTO {
     }
 
     public FrontCreatedExaminationDTO(Integer idExamination, LocalDate date, LocalTime startTime, LocalTime endTime, double price, String nameStaff, String surnameStaff, String namePharmacy, String report, Therapy therapy) {
+
         this.idExamination = idExamination;
         this.date = date;
         this.startTime = startTime;

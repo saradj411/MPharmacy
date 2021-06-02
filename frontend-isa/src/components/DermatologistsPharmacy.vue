@@ -34,10 +34,11 @@
 <!-- pretraga dermtologa!-->
 <div v-if="showDermatologistsTable"  style="margin-left:0px;">
      <h4 style="margin:30px;color:black;">Search results:</h4>    
+     <div style="background: #B0B3D6; width: 700px;margin-left:380px;" v-for="d in this.f=dermatologists"  v-bind:key="d.id">
+
        <table align = "center" id="table2" class="table"  >
 
                        <tbody>
-     <div style="background: #B0B3D6; width: 700px;margin-left:380px;" v-for="d in this.f=dermatologists"  v-bind:key="d.idUser">
       
     <tr style="font-size:22px;color:#0D184F;">
       <th></th>
@@ -54,14 +55,13 @@
       <th></th>
       <td >Average grade:</td>   
        <td>{{d.avgGrade}}</td>
-    </tr>>
+    </tr>
 
-         </div>
 
    </tbody>
 
                         </table>
-
+</div>
      
       </div>   
 
@@ -74,7 +74,7 @@
 <!--prikaz dermatologa-->
 <div v-if="showDermatologists">
 
-    <div style="background:#B0B3D6; width:650px;margin-left:38px;margin-top:60px;"  v-for="d in this.dermatolog"  v-bind:key="d.idUser">
+    <div style="background:#B0B3D6; width:650px;margin-left:38px;margin-top:60px;"  v-for="d in this.dermatolog"  v-bind:key="d.id">
          <form>
            <table style="" id="table2" class="table" >
 
@@ -128,7 +128,7 @@
   </tbody>
                         </table>
 
-                        <button class="btn btn-primary btn-lg" v-on:click = "canceling(d.idUser)" style="margin-left:30px; margin-top:42px;background:#474A8A">Delete dermatolog</button>
+                        <button class="btn btn-primary btn-lg" v-on:click = "canceling(d.id)" style="margin-left:30px; margin-top:42px;background:#474A8A">Delete dermatolog</button>
 
                 </form>
       

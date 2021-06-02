@@ -3,6 +3,7 @@ package com.isaProject.isa.Model.Examination;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.isaProject.isa.Model.Pharmacy.Pharmacy;
 import com.isaProject.isa.Model.Users.Patient;
@@ -11,10 +12,10 @@ import com.isaProject.isa.Model.Users.Staff;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.Date;
 
 @Entity
 @Table
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Examination {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -44,16 +45,21 @@ public class Examination {
     @Column
     private Boolean isScheduled;
 
+//eager
     @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.MERGE)
     @JoinColumn(name = "pharmacyId", referencedColumnName = "idPharm")
     //@JsonManagedReference
     private Pharmacy pharmacy;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
+    //@JsonIgnore
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "patient", referencedColumnName = "id")
     @JsonBackReference
     private Patient patient;
 
+//    @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.MERGE)
+//    @JoinColumn(name = "staffId", referencedColumnName = "idUser")
+//    //@JsonBackReference
     @JsonIgnore
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "staffId", referencedColumnName = "id")

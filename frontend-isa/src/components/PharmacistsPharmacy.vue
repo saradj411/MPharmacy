@@ -30,7 +30,7 @@
 <!-- pretraga farmaceuta!-->
 <div v-if="showPharmacistsTable"  style="margin-left:0px;">
      <h4 style="margin:30px;color:black;">Search results:</h4>    
- <div style="background: #B0B3D6; width: 700px;margin-left:380px;" v-for="d in this.pharmacists"  v-bind:key="d.idUser">
+ <div style="background: #B0B3D6; width: 700px;margin-left:380px;" v-for="d in this.pharmacists"  v-bind:key="d.id">
        <table align = "center" id="table2" class="table"  >
 
                        <tbody>
@@ -75,7 +75,7 @@
 <!--Lista farmamceuta-->
 <div v-if="showPharmacists">
 
-        <div  style="background:#B0B3D6; width:650px;margin-left:38px;margin-top:60px;"  v-for="d in this.farmaceut"  v-bind:key="d.idUser">
+        <div  style="background:#B0B3D6; width:650px;margin-left:38px;margin-top:60px;"  v-for="d in this.farmaceut"  v-bind:key="d.id">
                    <form>
                       <table style="" id="table2" class="table" > 
 
@@ -137,7 +137,7 @@
     </tr>
   </tbody>
                         </table>
-                                                <button class="btn btn-primary btn-lg" v-on:click = "canceling(d.idUser)" style="margin-left:30px; margin-top:42px;background:#474A8A">Delete pharmacist</button>
+                                                <button class="btn btn-primary btn-lg" v-on:click = "canceling(d.id)" style="margin-left:30px; margin-top:42px;background:#474A8A">Delete pharmacist</button>
 
                 </form>
       

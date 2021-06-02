@@ -18,14 +18,23 @@ public class OrderItem {
     @Column
     private Integer quantity;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "drugId", referencedColumnName = "idDrug")
-  //  @JsonManagedReference
 
+
+    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+    @JoinColumn(name = "drugId", referencedColumnName = "idDrug", nullable = true, unique = false)
+  //  @JsonManagedReference
     private Drug drug;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "orderId", referencedColumnName = "idOrder")
+    public OrderItem(Integer quantity, Drug drug) {
+        this.quantity = quantity;
+        this.drug = drug;
+    }
+
+    public OrderItem() {
+    }
+
+    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+    @JoinColumn(name = "orderId", referencedColumnName = "idOrder", nullable = true, unique = false)
 //    @JsonManagedReference
     private DrugOrder drugOrder;
 
@@ -33,44 +42,31 @@ public class OrderItem {
         return idItem;
     }
 
-    public Integer getQuantity() {
-        return quantity;
-    }
-
-    public Drug getDrug() {
-        return drug;
-    }
-
-    public DrugOrder getDrugOrder() {
-        return drugOrder;
-    }
-
     public void setIdItem(Integer idItem) {
         this.idItem = idItem;
+    }
+
+    public Integer getQuantity() {
+        return quantity;
     }
 
     public void setQuantity(Integer quantity) {
         this.quantity = quantity;
     }
 
+    public Drug getDrug() {
+        return drug;
+    }
+
     public void setDrug(Drug drug) {
         this.drug = drug;
     }
 
+    public DrugOrder getDrugOrder() {
+        return drugOrder;
+    }
+
     public void setDrugOrder(DrugOrder drugOrder) {
-        this.drugOrder = drugOrder;
-    }
-
-    public OrderItem(Integer idItem, Integer quantity, Drug drug, DrugOrder drugOrder) {
-        this.idItem = idItem;
-        this.quantity = quantity;
-        this.drug = drug;
-        this.drugOrder = drugOrder;
-    }
-
-    public OrderItem(Integer quantity, Drug drug, DrugOrder drugOrder) {
-        this.quantity = quantity;
-        this.drug = drug;
         this.drugOrder = drugOrder;
     }
 }

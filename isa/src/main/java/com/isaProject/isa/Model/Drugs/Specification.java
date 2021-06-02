@@ -35,6 +35,63 @@ public class Specification {
     //@JsonBackReference
     private Set<Ingredient> ingredients=new HashSet<Ingredient>();
 
+    public Integer getIdSpec() {
+        return idSpec;
+    }
 
+    public String getContraindications() {
+        return contraindications;
+    }
 
+    public String getStructure() {
+        return structure;
+    }
+
+    public Integer getRecommendedDose() {
+        return recommendedDose;
+    }
+
+    public Drug getDrug() {
+        return drug;
+    }
+
+    public Set<Ingredient> getIngredients() {
+        return ingredients;
+    }
+
+    public void setIdSpec(Integer idSpec) {
+        this.idSpec = idSpec;
+    }
+
+    public void setContraindications(String contraindications) {
+        this.contraindications = contraindications;
+    }
+
+    public void setStructure(String structure) {
+        this.structure = structure;
+    }
+
+    public void setRecommendedDose(Integer recommendedDose) {
+        this.recommendedDose = recommendedDose;
+    }
+
+    public void setDrug(Drug drug) {
+        this.drug = drug;
+    }
+
+    public void setIngredients(Set<Ingredient> ingredients) {
+        this.ingredients = ingredients;
+    }
+
+    public Specification(Integer idSpec, String contraindications, String structure, Integer recommendedDose, Drug drug, Set<Ingredient> ingredients) {
+        this.idSpec = idSpec;
+        this.contraindications = contraindications;
+        this.structure = structure;
+        this.recommendedDose = recommendedDose;
+        this.drug = drug;
+        this.ingredients = ingredients;
+    }
+
+    public Specification() {
+    }
 }

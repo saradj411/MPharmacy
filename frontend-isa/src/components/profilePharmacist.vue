@@ -7,7 +7,7 @@
         <div style="background: #B0B3D6; height: 80px;">
 
             <span style="float: left; margin-top: 20px;">
-                  <router-link :to="{ path: '/updatePharmacistProfile/'+user.idUser}" v-slot="{href, navigate}" custom>
+                  <router-link :to="{ path: '/updatePharmacistProfile/'+user.id}" v-slot="{href, navigate}" custom>
 
                   <button class = "btn btn-primary btn-xs" style="margin:auto; margin-left:38px;background:#474A8A " :href="href" @click="navigate" elevation="1">Update profile</button>
                </router-link>

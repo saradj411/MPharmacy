@@ -103,7 +103,7 @@ export default {
 
   
   mounted() {
-        this.axios.get('adminstrator/findById/'+505,{ 
+        this.axios.get('adminstrator/findById/'+503,{ 
              
          }).then(response => {
                this.admin=response.data;
@@ -135,7 +135,7 @@ export default {
         
         
           const adminInfo = {
-                    idUser : this.admin.idUser,
+                    id : this.admin.id,
                     name: this.admin.name,
                     surname : this.admin.surname,
                     phoneNumber: this.admin.phoneNumber,

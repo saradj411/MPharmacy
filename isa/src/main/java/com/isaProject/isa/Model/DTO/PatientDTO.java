@@ -1,6 +1,10 @@
 package com.isaProject.isa.Model.DTO;
 
-public class PatientDTO {
+import org.springframework.stereotype.Component;
+
+import java.io.Serializable;
+
+public class PatientDTO  {
     private  Integer id;
 
     private String email;

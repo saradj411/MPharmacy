@@ -22,7 +22,7 @@
 
 <!--Lista pacijanata-->
 
-        <div  style="background:#B0B3D6; width:650px;margin-left:38px;margin-top:60px;"  v-for="d in this.patients"  v-bind:key="d.idUser">
+        <div  style="background:#B0B3D6; width:650px;margin-left:38px;margin-top:60px;"  v-for="d in this.patients"  v-bind:key="d.id">
                    <form>
                       <table style="" id="table2" class="table" > 
 
