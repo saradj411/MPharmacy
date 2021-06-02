@@ -108,6 +108,23 @@ public class DrugPricelistController {
                 ResponseEntity.ok(drugs);
     }
 
+    @PostMapping("/create/{idPharmacy}")
+    public ResponseEntity<String> createDrugPricelist(@RequestBody DrugPricelistDTO drugPricelistDTO,@PathVariable Integer idPharmacy){
+
+        DrugPricelist drug = drugService.save(drugPricelistDTO,idPharmacy);
+        return new ResponseEntity<>("kreirano", HttpStatus.CREATED);
+    }
+
+    @PostMapping("/updatePatient/{idPharmacy}")
+    ResponseEntity<String> update(@RequestBody DrugPricelist drugPricelist,@PathVariable Integer idPharmacy)
+    {
+
+        drugService.update(drugPricelist);
+        return new ResponseEntity<>("ajdeee", HttpStatus.CREATED);
+
+    }
+
+
 
 
 }

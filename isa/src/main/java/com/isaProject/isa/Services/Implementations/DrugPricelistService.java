@@ -1,7 +1,10 @@
 package com.isaProject.isa.Services.Implementations;
 
+import com.isaProject.isa.Model.DTO.DrugPricelistDTO;
+import com.isaProject.isa.Model.DTO.DrugPricelistUpdateDTO;
 import com.isaProject.isa.Model.Drugs.Drug;
 import com.isaProject.isa.Model.Drugs.DrugPricelist;
+import com.isaProject.isa.Model.Pharmacy.Pharmacy;
 import com.isaProject.isa.Repositories.DrugPricelistRepository;
 import com.isaProject.isa.Repositories.DrugRepository;
 import com.isaProject.isa.Services.IServices.IDrugPricelistService;
@@ -27,6 +30,17 @@ public class DrugPricelistService implements IDrugPricelistService {
 
     @Autowired
     DrugRepository drugRepository1;
+
+    @Autowired
+    PharmacyService pharmacyService;
+
+
+
+
+
+    @Autowired
+    DrugService drugService2;
+
 
     @Override
     public DrugPricelist findByIdDrugAndIdPharmacy(Integer idDrug,Integer idPharmacy){
@@ -83,13 +97,52 @@ public class DrugPricelistService implements IDrugPricelistService {
 
     }
 
+    @Override
+    public DrugPricelist save(DrugPricelistDTO drugPricelistDTO, Integer idPharmacy) {
+        DrugPricelist d = new DrugPricelist();
+
+        //PharmacyAdmin pharmacyAdmin=pharmacyAdminService.findById(idAdmina);
+        Pharmacy pharmacy=pharmacyService.findById(idPharmacy);
+        Drug drug=drugRepository1.findOneByNameDrug(drugPricelistDTO.getName());
+        d.setDrug(drug);
+        d.setPharmacy(pharmacy);
+        d.setPrice(drugPricelistDTO.getPrice());
+        d.setStart(drugPricelistDTO.getStart());
+        d.setEnd(drugPricelistDTO.getEnd());
 
 
+        return drugRepository.save(d);
+    }
+
+    @Override
+    public void update(DrugPricelistUpdateDTO drugPricelistUpdateDTOs) {
+
+    }
 
 
+    @Override
+    public void update(DrugPricelist drugPricelist) {
+        DrugPricelist pat =findById(drugPricelist.getIdPricelist());
 
+        pat.setEnd(drugPricelist.getEnd());
+        pat.setStart(drugPricelist.getStart());
+        pat.setPrice(drugPricelist.getPrice());
+        pat.setDrug(drugPricelist.getDrug());
 
-
-
+        pat.setPharmacy(drugPricelist.getPharmacy());
+        drugRepository.save(pat);
+    }
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
