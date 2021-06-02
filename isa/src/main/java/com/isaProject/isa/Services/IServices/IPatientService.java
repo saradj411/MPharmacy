@@ -16,7 +16,9 @@ public interface IPatientService {
     void update(Patient patient);
     Set<FrontCreatedExaminationDTO> findSheduledDermatologistExamination(Integer id);
     Set<FrontCreatedExaminationDTO> findSheduledPharmacistExamination(Integer id);
-    List<ERecipe> findERecipe(Integer id);
+    Set<FrontCreatedExaminationDTO> findFinishedDermatologistExamination(Integer id);
+    Set<FrontCreatedExaminationDTO> findFinishedPharmacistExamination(Integer id);
+    //List<ERecipe> findERecipe(Integer id);
 
 
 }

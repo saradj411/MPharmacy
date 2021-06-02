@@ -16,8 +16,8 @@ import java.util.Set;
 
 @Entity
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-
 public class Patient extends User implements Serializable {
+
 
     @Column(nullable = true)
     private Integer penalty;
@@ -40,15 +40,17 @@ public class Patient extends User implements Serializable {
     //@JsonBackReference
     private Set<DrugReservation> drugReservation=new HashSet<DrugReservation>();
 
-    @OneToMany(mappedBy = "patient", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JsonBackReference
+    @OneToMany(mappedBy = "patient", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    //@JsonBackReference
     private Set<Examination> examinations = new HashSet<Examination>();
+/*
     @OneToMany(mappedBy = "patient", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     //@JsonManagedReference
     private Set<ERecipe> erecipes = new HashSet<ERecipe>();
+*/
     //apoteke na koje je pretplacen
-    @JsonIgnore
-    @ManyToMany(fetch = FetchType.LAZY)
+    //@JsonIgnore
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "action_patient_pharmacy",
             joinColumns = @JoinColumn(name = "patientId", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "pharmacyId", referencedColumnName = "idPharm"))
@@ -133,7 +135,7 @@ public class Patient extends User implements Serializable {
     public void setActionPharmacies(Set<Pharmacy> actionPharmacies) {
         this.actionPharmacies = actionPharmacies;
     }
-
+/*
     public Set<ERecipe> getErecipes() {
         return erecipes;
     }
@@ -141,7 +143,7 @@ public class Patient extends User implements Serializable {
     public void setErecipes(Set<ERecipe> erecipes) {
         this.erecipes = erecipes;
     }
-
+*/
     /*
     //zalbe
     @OneToMany(mappedBy = "patient", fetch = FetchType.LAZY, cascade = CascadeType.ALL)

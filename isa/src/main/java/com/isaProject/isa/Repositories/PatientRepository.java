@@ -11,4 +11,6 @@ import java.util.List;
 public interface PatientRepository  extends JpaRepository<Patient, Integer> {
     @Query("select s from Patient s where s.id= ?1")
     Patient find(Integer id);
+
+    Patient findOneById(Integer idPatient);
 }

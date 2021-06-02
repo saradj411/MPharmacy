@@ -264,6 +264,11 @@ mounted() {
                 alert("Nesto ne valja");
                 console.log(res);
         });
+        this.axios.post('/reservation/checkReservations')
+        .catch(res => {
+                alert("Nesto ne valja");
+                console.log(res);
+        });
         
     }
      

@@ -1,10 +1,9 @@
-package com.isaProject.isa.Model.Drugs;
-
+package com.isaProject.isa.Model.DTO;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.isaProject.isa.Model.Drugs.ERecipeDrug;
+import com.isaProject.isa.Model.Drugs.ERecipeStatus;
 import com.isaProject.isa.Model.Pharmacy.Pharmacy;
 import com.isaProject.isa.Model.Users.Patient;
 
@@ -14,63 +13,36 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-@Entity
-@Table
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+public class FrontERecipeDTO {
 
-public class ERecipe {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer idRecipe;
 
-    //● Šifru
-    @Column
     private String code;
 
-    //● Ime i prezime korisnika za kojeg se izdaje recept
-    @Column
     private String name;
 
-    @Column
     private String surname;
 
-    //● Datum izdavanja
-    @Column
     private LocalDate dateOfIssue;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    //@JsonBackReference
     private Set<ERecipeDrug> eRecipeDrug = new HashSet<ERecipeDrug>();
 
-    //@JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "pharmacyId", referencedColumnName = "idPharm")
-    //@JsonManagedReference
-    private Pharmacy pharmacy;
+    private String pharmacyName;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "patientId", referencedColumnName = "id")
-    //@JsonBackReference
-    private Patient patient;
-
-    @Column
-    @Enumerated(EnumType.STRING)
     private ERecipeStatus status;
 
-    public ERecipe(Integer idRecipe, String code, String name, String surname, LocalDate dateOfIssue, Set<ERecipeDrug> eRecipeDrug, Pharmacy pharmacy, Patient patient, ERecipeStatus status) {
+    public FrontERecipeDTO(Integer idRecipe, String code, String name, String surname, LocalDate dateOfIssue, Set<ERecipeDrug> eRecipeDrug, String pharmacyName, ERecipeStatus status) {
         this.idRecipe = idRecipe;
         this.code = code;
         this.name = name;
         this.surname = surname;
         this.dateOfIssue = dateOfIssue;
         this.eRecipeDrug = eRecipeDrug;
-        this.pharmacy = pharmacy;
-        this.patient = patient;
+        this.pharmacyName = pharmacyName;
         this.status = status;
     }
 
-    public ERecipe() {
+    public FrontERecipeDTO() {
     }
 
     public Integer getIdRecipe() {
@@ -121,20 +93,12 @@ public class ERecipe {
         this.eRecipeDrug = eRecipeDrug;
     }
 
-    public Pharmacy getPharmacy() {
-        return pharmacy;
+    public String getPharmacyName() {
+        return pharmacyName;
     }
 
-    public void setPharmacy(Pharmacy pharmacy) {
-        this.pharmacy = pharmacy;
-    }
-
-    public Patient getPatient() {
-        return patient;
-    }
-
-    public void setPatient(Patient patient) {
-        this.patient = patient;
+    public void setPharmacyName(String pharmacyName) {
+        this.pharmacyName = pharmacyName;
     }
 
     public ERecipeStatus getStatus() {
@@ -145,7 +109,3 @@ public class ERecipe {
         this.status = status;
     }
 }
-/*
--eRecept (nov, obrađen, odbijen)
-
- */
