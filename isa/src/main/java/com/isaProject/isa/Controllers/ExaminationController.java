@@ -4,6 +4,7 @@ import com.isaProject.isa.Model.DTO.FrontCreatedExaminationDTO;
 import com.isaProject.isa.Model.Drugs.Drug;
 import com.isaProject.isa.Model.Drugs.DrugReservation;
 import com.isaProject.isa.Model.Examination.Examination;
+import com.isaProject.isa.Services.Implementations.DrugReservationService;
 import com.isaProject.isa.Services.Implementations.ExaminationService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 
@@ -21,6 +23,8 @@ import java.util.List;
 public class ExaminationController {
     @Autowired
     ExaminationService examinationService;
+    @Autowired
+    DrugReservationService drugReservationService;
 
     @PostMapping("/canceling/{id}")
     ResponseEntity<String> update(@PathVariable Integer id)
@@ -44,6 +48,26 @@ public class ExaminationController {
     {
 
         examinationService.scheduledDermatologistExamination(id,idExamination);
+        return new ResponseEntity<>("ajdeee", HttpStatus.CREATED);
+
+    }
+    @GetMapping(value = "/getBool/{id}")
+    public ResponseEntity<Boolean> getBool(@PathVariable Integer id) {
+        Examination ex=examinationService.findById(id);
+        LocalDate date=ex.getDate();
+        //log.info("dsds:"+id);
+        Boolean res=drugReservationService.possibleCancel(date);
+
+        return res == null ?
+                new ResponseEntity<>(HttpStatus.NOT_FOUND) :
+                ResponseEntity.ok(res);
+    }
+    @CrossOrigin
+    @PostMapping("/patientCanceling")
+    ResponseEntity<String> update(@RequestBody Examination examination)
+    {
+
+        examinationService.patientCanceling(examination);
         return new ResponseEntity<>("ajdeee", HttpStatus.CREATED);
 
     }

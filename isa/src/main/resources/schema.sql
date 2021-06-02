@@ -214,19 +214,19 @@ insert into work_time values(501,'2021-07-22','11:00:00','09:30:00',504,506);
 
 insert into examination values(500,false,'2021-06-20','09:00:00',true,600,'info1','08:00:00','CREATED','DERMATOLOGIST_EXAMINATION',null,501,501,500);
 insert into examination values(501,false,'2021-07-22','11:00:00',false,880,'info2','09:30:00','CREATED','DERMATOLOGIST_EXAMINATION',null,501,504,504);
-insert into examination values(503,false,'2021-07-22','11:00:00',false,880,'info2','09:30:00','CREATED','PHARMACIST_EXAMINATION',null,500,502,504);
-insert into examination values(504,false,'2021-07-22','11:00:00',true,880,'info2','09:30:00','CREATED','PHARMACIST_EXAMINATION',null,504,506,502);//--------------------
-insert into examination values(505,false,'2021-07-22','11:00:00',true,880,'info2','09:30:00','CREATED','DERMATOLOGIST_EXAMINATION',null,501,501,null);
-insert into examination values(506,false,'2021-07-22','11:00:00',false,1000,'info2','09:30:00','CREATED','PHARMACIST_EXAMINATION',null,501,511,501);//--------------------
+insert into examination values(503,false,'2021-07-27','11:00:00',false,880,'info2','09:30:00','CREATED','PHARMACIST_EXAMINATION',null,500,502,504);
+insert into examination values(504,false,'2021-07-29','11:00:00',true,880,'info2','09:30:00','CREATED','PHARMACIST_EXAMINATION',null,504,506,502);//--------------------
+insert into examination values(505,false,'2021-07-24','11:00:00',true,880,'info2','09:30:00','CREATED','DERMATOLOGIST_EXAMINATION',null,501,501,null);
+insert into examination values(506,false,'2021-07-25','11:00:00',false,1000,'info2','09:30:00','CREATED','PHARMACIST_EXAMINATION',null,501,511,501);//--------------------
 
-insert into examination values(502,false,'2021-06-20','2021-06-20 09:00:00',true,600,'info1','2021-06-20 08:00:00','SCHEDULED','DERMATOLOGIST_EXAMINATION',508,501,501,null);
+insert into examination values(502,false,'2021-06-20','08:30:00',true,600,'info1','07:00:00','SCHEDULED','DERMATOLOGIST_EXAMINATION',508,501,501,null);
 insert into examination values(507,false,'2021-07-23','2021-07-23 11:00:00',true,880,'info2','2021-07-23 09:30:00','SCHEDULED','DERMATOLOGIST_EXAMINATION',508,501,504,null);//--------------------
 
 insert into examination values(508,false,'2021-08-29','11:00:00',false,1030,'info2','09:30:00','CREATED','PHARMACIST_EXAMINATION',null,500,559,null);
 insert into examination values(509,false,'2021-08-27','12:00:00',false,1050,'info2','10:30:00','CREATED','PHARMACIST_EXAMINATION',null,501,511,null);
 
-insert into examination values(510,false,'2021-08-29','11:00:00',false,1030,'info2','09:30:00','CREATED','DERMATOLOGIST_EXAMINATION',null,500,501,null);
-insert into examination values(511,false,'2021-08-27','12:00:00',false,1050,'info2','10:30:00','CREATED','DERMATOLOGIST_EXAMINATION',null,501,504,null);
+insert into examination values(510,false,'2021-08-21','11:00:00',false,1030,'info2','09:30:00','CREATED','DERMATOLOGIST_EXAMINATION',null,500,501,null);
+insert into examination values(511,false,'2021-08-26','12:00:00',false,1050,'info2','10:30:00','CREATED','DERMATOLOGIST_EXAMINATION',null,501,504,null);
 
 insert into examination values(533,false,'2021-04-20','09:00:00',true,6432,'info1','08:00:00','FINISHED','DERMATOLOGIST_EXAMINATION',510,501,501,500);
 insert into examination values(534,false,'2021-04-22','11:00:00',true,20943,'info2','09:30:00','FINISHED','DERMATOLOGIST_EXAMINATION',508,501,504,504);

@@ -38,7 +38,11 @@ public class ExaminationService implements IExaminationService {
     }
 
     @Override
+    public Examination findById(Integer id) {
+        return examinationRepository.findOneByIdExamination(id);
+    }
 
+    @Override
     public void canceling(Integer id) {
         Examination pat = examinationRepository.getOne(id);
 
@@ -49,6 +53,19 @@ public class ExaminationService implements IExaminationService {
 
         examinationRepository.save(pat);
     }
+
+    @Override
+    public void patientCanceling(Examination examination) {
+        Examination pat = examinationRepository.getOne(examination.getIdExamination());
+
+        pat.setCanceled(true);
+        pat.setStatus(ExaminationStatus.CREATED);
+        pat.setScheduled(false);
+        pat.setPatient(null);
+
+        examinationRepository.save(pat);
+    }
+
     public Boolean getExaminationByIdStaff(Integer idPharmacist){
 
         List<Examination> lista=examinationRepository.findAll();

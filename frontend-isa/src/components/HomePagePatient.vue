@@ -226,7 +226,7 @@
         <tr>
           <th></th>
           <td style="font-size:25px;">{{examination1.price}}RSD </td>
-          <td></td>
+          
 
         </tr>
   </tbody>
@@ -325,7 +325,8 @@
         <tr>
           <th></th>
           <td style="font-size:25px;">{{examination.price}}RSD </td>
-          <td></td>
+          <td><button class="btn btn-danger btn-sm" v-on:click = "cancelExamination(examination,examination.idExamination)">Cancel</button></td>
+
 
         </tr>
   </tbody>
@@ -527,7 +528,8 @@ export default {
         pickedReservations:[],
         canceledReservations:[],
         id : this.$route.params.id,
-        jel:false
+        jel:false,
+        jel1:false
 
     }
   },
@@ -730,7 +732,35 @@ methods:{
 
       },
 
+      cancelExamination:
+       function(examination,idEx){
+       this.axios.get('/examination/getBool/'+idEx)
+        .then(response => {
+                this.jel1 = response.data;
+               if(this.jel1){
+                   //alert("tru je")
+                    //nek otkaze ili sta vec, odvede na neku stranicu...
+                      this.axios.post('/examination/patientCanceling',examination,{
+                            }).then(response => {
+                            this.jel1 = response.data;
+            
+                              alert("Examination canceled!") 
+                                 window.location.href = "/HomePagePatient/"+this.id;
+                
+                            }).catch(res => {
+                                    alert("Nesto ne valja");
+                                    console.log(res);
+                            });
+                }else{
+                   alert("Cancellation is not possible!") 
+                }
+                
+         }).catch(res => {
+                alert("Nesto ne valja");
+                console.log(res);
+        });
 
+      },
       schedule:
        function(idExamination){
        this.axios.post('/examination/patientScheduledDermatologistExamination/'+this.id+'/'+idExamination)
