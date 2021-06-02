@@ -97,12 +97,13 @@ export default {
         currentPassword : "",
         newPassword : "",
         newPasswordRepeat : "",
-        sifra:""
+        sifra:"",
+         idU : this.$route.params.id,
     }
   },
   
   mounted() {
-        this.axios.get('patient/findOneById/'+507,{ 
+        this.axios.get('patient/findOneById/'+this.idU,{ 
              
          }).then(response => {
                this.patient=response.data;
