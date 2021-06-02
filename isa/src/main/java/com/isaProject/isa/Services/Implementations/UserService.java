@@ -52,7 +52,8 @@ public class UserService implements IUserService {
 
     @Override
     public User save(UserDTO user) {
-        List<Authority> auth = authService.findByname("PATIENT");
+        List<Authority> auth = authService.findByname("ROLE_PATIENT");
+
         for(User u : userRepository.findAll())
         {
             if(u.getEmail().equals(user.getEmail()))
@@ -70,6 +71,7 @@ public class UserService implements IUserService {
         u.setCountry(user.getCountry());
         u.setAccountEnabled(false);
         u.setAuthorities(auth);
+
         //dodati na mejl
         return userRepository.save(u);
     }
@@ -92,11 +94,19 @@ public class UserService implements IUserService {
 
         // Create a token for that user
         User user = (User) authentication.getPrincipal();
-        String jwt = tokenUtils.generateToken(user);
+        String jwt = tokenUtils.generateToken(user.getEmail());
         int expiresIn = tokenUtils.getExpiredIn();
 
         return new UserTokenState(jwt, expiresIn);
         }
+
+    @Override
+    public User getLoggedUser() {
+        Authentication loggedUser = SecurityContextHolder.getContext().getAuthentication();
+        String email = loggedUser.getName();
+        User u = userRepository.findByEmail(email);
+        return  u;
+    }
 
 
 }

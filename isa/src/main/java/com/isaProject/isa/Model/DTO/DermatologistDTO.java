@@ -164,6 +164,26 @@ public class DermatologistDTO {
         return pharmacy;
     }
 
+    @Override
+    public String toString() {
+        return "DermatologistDTO{" +
+                "name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", address='" + address + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", city='" + city + '\'' +
+                ", country='" + country + '\'' +
+                ", avgGrade=" + avgGrade +
+                ", workTime=" + workTime +
+                ", examinations=" + examinations +
+                ", vacation=" + vacation +
+                ", pharmacies=" + pharmacies +
+                ", pharmacy=" + pharmacy +
+                '}';
+    }
+
     public void setPharmacy(Pharmacy pharmacy) {
         this.pharmacy = pharmacy;
     }

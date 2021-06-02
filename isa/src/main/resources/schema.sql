@@ -45,13 +45,13 @@ insert into drug_pricelist values (508,'2021-11-01',286,'2020-07-07',508,501);
 insert into drug_pricelist values (509,'2021-11-01',300,'2020-07-07',507,501);
 
 #specification
-#id,contraindikacija,doza,struktura,code
+#id,contraindikacija,ingridiens, doza,struktura,code(idleka)
 
-insert into specification values (500,'iritacija sinusa',4,'sastav 1','sifra 1');
-insert into specification values (501,'iritacija oka',6,'sastav 2','sifra 2');
-insert into specification values (502,'nema',7,'sastav 3','sifra 3');
-insert into specification values (503,'iritacija sinusa',2,'sastav 4','sifra 4');
-insert into specification values (504,'nema',9,'sastav 5','sifra 5');
+insert into specification values (500,'iritacija sinusa','sastojak 1, sastojak 2',4,'sastav 1','sifra 1');
+insert into specification values (501,'iritacija oka','sastojak 1',6,'sastav 2','sifra 2');
+insert into specification values (502,'nema','sastojak 3, sastojak 2',7,'sastav 3','sifra 3');
+insert into specification values (503,'iritacija sinusa','sastojak 13',2,'sastav 4','sifra 4');
+insert into specification values (504,'nema','sastojak 4',9,'sastav 5','sifra 5');
 
 #ingredient
 
@@ -81,12 +81,12 @@ insert into users values (512,1,'Gagarinova 3','Novi Sad','Srbija','majamilenkov
 
 
 #Authority_table
-INSERT INTO authority values (1, 'ADMIN');
-INSERT INTO authority values (2, 'PHARMACY_ADMIN');
-INSERT INTO authority values (3, 'PHARMACIST');
-INSERT INTO authority values (4, 'DERMATOLOGIST');
-INSERT INTO authority values (5, 'PATIENT');
-INSERT INTO authority values (6, 'SUPPLIER');
+INSERT INTO authority values (1, 'ROLE_ADMIN');
+INSERT INTO authority values (2, 'ROLE_PHARMACY_ADMIN');
+INSERT INTO authority values (3, 'ROLE_PHARMACIST');
+INSERT INTO authority values (4, 'ROLE_DERMATOLOGIST');
+INSERT INTO authority values (5, 'ROLE_PATIENT');
+INSERT INTO authority values (6, 'ROLE_SUPPLIER');
 
 #user_authority
 insert into user_authority values(501, 4);

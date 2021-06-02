@@ -16,7 +16,6 @@ public class Supplier extends  User{
 
     //ponuda za narudzbu
 
-
     @OneToMany(mappedBy = "supplier", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     //@JsonBackReference
     private Set<Offer> offers=new HashSet<Offer>();

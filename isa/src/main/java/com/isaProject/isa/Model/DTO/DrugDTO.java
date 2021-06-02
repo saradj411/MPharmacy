@@ -26,6 +26,19 @@ public class DrugDTO implements Serializable {
 
     private Pharmacy pharmacy;
 
+    public DrugDTO(String name, String code, boolean recipeNeed, String drugType, DrugFormat format, String manufacturer) {
+        this.name = name;
+        this.code = code;
+        this.recipeNeed = recipeNeed;
+        this.drugType = drugType;
+        this.format = format;
+        this.manufacturer = manufacturer;
+    }
+
+    public DrugDTO(){}
+
+
+
 
     public DrugDTO(String name, String code, boolean recipeNeed, String drugType, DrugFormat format, String manufacturer, Integer quantity, Pharmacy pharmacy) {
         this.name = name;
@@ -46,8 +59,6 @@ public class DrugDTO implements Serializable {
         this.pharmacy = pharmacy;
     }
 
-    public DrugDTO() {
-    }
 
     public Integer getQuantity() {
         return quantity;

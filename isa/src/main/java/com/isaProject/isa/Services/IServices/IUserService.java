@@ -14,4 +14,5 @@ public interface IUserService {
     User findByEmail(String email);
 
     UserTokenState Login(String email, String password);
+    User getLoggedUser();
 }

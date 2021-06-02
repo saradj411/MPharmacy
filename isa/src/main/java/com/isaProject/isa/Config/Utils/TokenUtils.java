@@ -14,30 +14,36 @@ import java.util.Date;
 @Component
 public class TokenUtils {
 
-    @Value("MPharmay")
+    // Izdavac tokena
+    @Value("spring-security-example")
     private String APP_NAME;
+
+    // Tajna koju samo backend aplikacija treba da zna kako bi mogla da generise i proveri JWT https://jwt.io/
     @Value("somesecret")
     public String SECRET;
 
-
-    @Value("300000")
+    // Period vazenja
+    @Value("3600000")
     private int EXPIRES_IN;
 
+    // Naziv headera kroz koji ce se prosledjivati JWT u komunikaciji server-klijent
     @Value("Authorization")
     private String AUTH_HEADER;
 
+    // Moguce je generisati JWT za razlicite klijente (npr. web i mobilni klijenti nece imati isto trajanje JWT, JWT za mobilne klijente ce trajati duze jer se mozda aplikacija redje koristi na taj nacin)
     private static final String AUDIENCE_UNKNOWN = "unknown";
     private static final String AUDIENCE_WEB = "web";
     private static final String AUDIENCE_MOBILE = "mobile";
     private static final String AUDIENCE_TABLET = "tablet";
 
+    // Algoritam za potpisivanje JWT
     private SignatureAlgorithm SIGNATURE_ALGORITHM = SignatureAlgorithm.HS512;
 
     // Funkcija za generisanje JWT token
-    public String generateToken(User user) {
+    public String generateToken(String username) {
         return Jwts.builder()
                 .setIssuer(APP_NAME)
-                .setSubject(user.getUsername())
+                .setSubject(username)
                 .setAudience(generateAudience())
                 .setIssuedAt(new Date())
                 .setExpiration(generateExpirationDate())
@@ -46,6 +52,16 @@ public class TokenUtils {
     }
 
     private String generateAudience() {
+//		Moze se iskoristiti org.springframework.mobile.device.Device objekat za odredjivanje tipa uredjaja sa kojeg je zahtev stigao.
+
+//		String audience = AUDIENCE_UNKNOWN;
+//		if (device.isNormal()) {
+//			audience = AUDIENCE_WEB;
+//		} else if (device.isTablet()) {
+//			audience = AUDIENCE_TABLET;
+//		} else if (device.isMobile()) {
+//			audience = AUDIENCE_MOBILE;
+//		}
         return AUDIENCE_WEB;
     }
 
@@ -77,12 +93,8 @@ public class TokenUtils {
 
     // Funkcija za validaciju JWT tokena
     public Boolean validateToken(String token, UserDetails userDetails) {
-        User user = (User) userDetails;
         final String username = getUsernameFromToken(token);
-        final Date created = getIssuedAtDateFromToken(token);
-
-        return (username != null && username.equals(userDetails.getUsername())
-                && !isCreatedBeforeLastPasswordReset(created, user.getLastPasswordResetDate()));
+        return (username != null && username.equals(userDetails.getUsername()));
     }
 
     public String getUsernameFromToken(String token) {

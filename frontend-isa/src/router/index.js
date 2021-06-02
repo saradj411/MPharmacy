@@ -28,6 +28,9 @@ import CreatePurchaseOrder from '../components/CreatePurchaseOrder.vue'
 import SearchUser from '../components/SearchUser.vue'
 import WorkCalendar from '../components/WorkCalendar.vue'
 import StartExamination from '../components/StartExamination.vue'
+import SystemAdminProfile from '../components/SystemAdminProfile.vue'
+import AddShifarnikPage from '../components/AddShifarnikPage'
+import RegisterNewSystemAdmin from '../components/RegisterNewSystemAdmin'
 import moment from 'moment'
 
 Vue.use(VueRouter)
@@ -72,6 +75,11 @@ const routes = [
     ,
      
       {
+        path: '/SystemAdminProfile',
+        name: 'SystemAdminProfile',
+        component: SystemAdminProfile
+      },
+      {
         path: '/updatePharmacyProfile/:id',
         name: 'updatePharmacyProfile',
         component: updatePharmacyProfile
@@ -110,6 +118,11 @@ const routes = [
         component: DermatologistsPharmacy
       }
       ,
+      {
+        path: '/AddShifarnikPage',
+        name: 'AddShifarnikPage',
+        component: AddShifarnikPage
+      },
       {
         path: '/PharmacistsPharmacy/:id',
         name: 'PharmacistsPharmacy',
@@ -194,6 +207,11 @@ const routes = [
         path: '/StartExamination/:id',
         name: 'StartExamination',
         component: StartExamination
+      },
+      {
+        path:'/RegisterNewSystemAdmin',
+        name: 'RegisterNewSystemAdmin',
+        component: RegisterNewSystemAdmin
       }
 
      
@@ -206,7 +224,8 @@ const routes = [
 const router = new VueRouter({
     mode: 'history',
     base: process.env.BASE_URL,
-    routes
+    routes,
+    
   })
   
   export default router

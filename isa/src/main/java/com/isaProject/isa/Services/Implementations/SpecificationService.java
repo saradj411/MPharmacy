@@ -1,6 +1,7 @@
 package com.isaProject.isa.Services.Implementations;
 
 import com.isaProject.isa.Model.DTO.IngredientDTO;
+import com.isaProject.isa.Model.DTO.SpecificaitonDTO;
 import com.isaProject.isa.Model.DTO.SpecificationDTO;
 import com.isaProject.isa.Model.Drugs.Ingredient;
 import com.isaProject.isa.Model.Drugs.Specification;
@@ -10,14 +11,15 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 
 @Service
 @Slf4j
-
 public class SpecificationService implements ISpecificationService {
 
   public @Autowired
@@ -40,16 +42,38 @@ public class SpecificationService implements ISpecificationService {
       }
     }
   */
-    Set<IngredientDTO> ingredients=new HashSet<IngredientDTO>();
+    /*Set<IngredientDTO> ingredients=new HashSet<IngredientDTO>();
 
-    for (Ingredient in:needSpecification.getIngredients()){
+    for (Ingredient in : needSpecification.getIngredients()){
       IngredientDTO i=new IngredientDTO(in.getName());
       ingredients.add(i);
+      }*/
+
+
+    //SpecificationDTO dto=new SpecificationDTO(needSpecification.getContraindications(),needSpecification.getStructure(),needSpecification.getRecommendedDose(),ingredients);
+
+    //return dto;
+         return null;
     }
 
-    SpecificationDTO dto=new SpecificationDTO(needSpecification.getContraindications(),needSpecification.getStructure(),needSpecification.getRecommendedDose(),ingredients);
 
-    return dto;
-  }
+    @Override
+    public Optional<Specification> findById(Integer idSpec) {
+        return specificationRepository.findById(idSpec);
+    }
 
+    @Override
+    public Specification save(SpecificaitonDTO specDTO) {
+
+        Specification s = new Specification();
+        s.setContraindications(specDTO.getContraindications());
+        s.setStructure(specDTO.getStructure());
+        s.setRecommendedDose(specDTO.getRecommendedDose());
+        s.setDrug(specDTO.getDrug());
+        s.setIngredients(specDTO.getIngredients());
+
+        specificationRepository.save(s);
+        return s;
+
+    }
 }

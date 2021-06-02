@@ -1,7 +1,7 @@
 <template>
    <div >
     <div class="loginHolder">
-    <h1 >Register patient: </h1>
+    <h1 >Add new admin of the system: </h1>
     <br>
         <div class="loginDiv">
             <table id="loginTable">
@@ -55,19 +55,7 @@
                     <td>
                     <input type="text" v-model="country" :class="{'input--error':!country}"  class="form-control" placeholder="Enter country"  aria-label="Enter phone nubmer" aria-describedby="addon-wrapping">
                     </td>   
-                </tr>
-                 <tr>
-                    <td> <h4> Password: </h4> </td>
-                    <td>
-                    <input type="password" id="password" v-model="password" :class="{'input--error':!password}" class="form-control" placeholder="Enter password"  aria-label="Enter password" aria-describedby="addon-wrapping">
-                    </td>   
-                </tr>
-                 <tr>
-                    <td> <h4> Repeat password: </h4> </td>
-                    <td>
-                    <input type="Password" v-model="rePassword" :class="{'input--error':!rePassword}" class="form-control" placeholder="Enter password"  aria-label="Enter password" aria-describedby="addon-wrapping">
-                    </td>   
-                </tr>
+                </tr>                 
                 <tr>
                     <td colspan="2">
                         <div id="errorMessage" > 
@@ -76,10 +64,11 @@
                         
                     </td>
                 </tr>
+                <br>
                 <tr>        
                     <td colspan="2">
-                        <button class = "btn btn-primary btn-xs"  :disabled="!name || !surname || !email || !address || !phoneNumber           || !city
-                        || !country || !password || (!rePassword)"  style="margin:auto; margin-left:38px;background: #000;margin-top: 10px; width: 200px;" v-on:click="registerPatient">Confirm</button>
+                        <button class = "btn btn-primary btn-xs"  :disabled="!name || !surname || !email || !address || !phoneNumber || !city
+                        || !country"  style="margin:auto; margin-left:38px;background: #000;margin-top: 10px; width: 200px;" v-on:click="registerAdmin">Confirm</button>
                     
                     </td>
                 
@@ -90,7 +79,7 @@
 </div>
 </template>
 <script> 
-import { required, sameAs } from 'vuelidate/lib/validators'
+import { required } from 'vuelidate/lib/validators'
 
 export default{
     data()
@@ -99,12 +88,10 @@ export default{
             name : "",
             surname : "",
             email : "",
-            password : "",
             address : "",
             phoneNumber : "",
             city : "",
-            country : "",
-            rePassword : "",
+            country : "",          
             errorMessage : ""
 
         }
@@ -131,13 +118,6 @@ export default{
         },
         country : {
             required            
-        },
-        password : {
-            required            
-        },
-        rePassword:
-        {
-            sameAsPassword: sameAs('password')
         }
 
 
@@ -145,21 +125,13 @@ export default{
 
     methods:
     {
-        registerPatient : function()
+        registerAdmin : function()
         {
             console.log(this.name);
-            if(this.password != this.rePassword)
-            {
-                console.log("DAL RADI");
-                document.getElementById("errorMessage").innerHTML  = 'Password are not maching!';
-                document.getElementById("errorMessage").style = "font-size:20px; color: red;";
-                this.password = "";
-                this.rePassword = "";
-            }
-            else
-            { 
+                         
                 console.log("Prosao");
                 document.getElementById("errorMessage").innerHTML  = 'Succeseffully!';
+                
                 const patientInfo = 
             {
                 name : this.name,
