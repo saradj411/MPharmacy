@@ -16,6 +16,8 @@ public class DrugDTO {
 
     private String manufacturer;
 
+    public DrugDTO(){}
+
 
     public DrugDTO(String name, String code, boolean recipeNeed, String drugType, DrugFormat format, String manufacturer) {
         this.name = name;
