@@ -2,6 +2,7 @@ package com.isaProject.isa.Controllers;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.isaProject.isa.Model.DTO.DefiningFreeTermsWithDermatologist;
 import com.isaProject.isa.Model.Drugs.Ingredient;
 import com.isaProject.isa.Model.Pharmacy.Pharmacy;
 import com.isaProject.isa.Model.Users.PharmacyAdmin;
@@ -309,6 +310,25 @@ public class PharmacyAdminController {
         return new ResponseEntity<>("ajdeee", HttpStatus.CREATED);
 
     }
+
+    @PostMapping(value = "/definingFreeTermsWithDermatologist",consumes={"application/json"})
+    ResponseEntity<String> definingFreeTermsWithDermatologist(@RequestBody DefiningFreeTermsWithDermatologist definingFreeTermsWithDermatologist)
+    {
+        pharmacyAdminService.definingFreeTermsWithDermatologist(definingFreeTermsWithDermatologist);
+        return new ResponseEntity<>("ajdeee", HttpStatus.CREATED);
+
+    }
+
+        /*
+
+    Svaki dermatolog ima radno vreme za svaku apoteku posebno. Administrator
+apoteke definiše preglede kod dermatologa u terminu kada je dermatolog u
+apoteci. Za svaki pregled potrebno je definisati datum i vreme početka pregleda,
+trajanje pregleda i cenu. U radnom kalendaru dermatologa nalaze se pregledi
+koji su unapred definisani.
+
+
+     */
 
 
 

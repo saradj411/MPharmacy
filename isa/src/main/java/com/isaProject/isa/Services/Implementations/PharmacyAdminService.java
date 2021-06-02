@@ -1,9 +1,17 @@
 package com.isaProject.isa.Services.Implementations;
 
+import com.isaProject.isa.Model.DTO.DefiningFreeTermsWithDermatologist;
 import com.isaProject.isa.Model.DTO.PharmacyAdminDTO;
+import com.isaProject.isa.Model.Examination.Examination;
+import com.isaProject.isa.Model.Examination.ExaminationStatus;
+import com.isaProject.isa.Model.Examination.ExaminationType;
 import com.isaProject.isa.Model.Pharmacy.Pharmacy;
+import com.isaProject.isa.Model.Users.Dermatologist;
 import com.isaProject.isa.Model.Users.PharmacyAdmin;
+import com.isaProject.isa.Model.Users.WorkTime;
+import com.isaProject.isa.Repositories.ExaminationRepository;
 import com.isaProject.isa.Repositories.PharmacyAdminRepository;
+import com.isaProject.isa.Repositories.WorkTimeRepository;
 import com.isaProject.isa.Services.IServices.IPharmacyAdminService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +28,18 @@ public class PharmacyAdminService implements IPharmacyAdminService {
 
     @Autowired
     private PharmacyService pharmacyService;
+
+    @Autowired
+    private DermatologistService dermatologistService;
+
+    @Autowired
+    private WorkTimeService workTimeService;
+
+    @Autowired
+    private WorkTimeRepository workTimeRepository;
+
+    @Autowired
+    ExaminationRepository examinationRepository;
 
     @Override
     public PharmacyAdmin findById(Integer id) {
@@ -66,4 +86,46 @@ public class PharmacyAdminService implements IPharmacyAdminService {
         pa.setEmail(pharmacyAdmin.getEmail());
         pharmacyAdminRepository.save(pa);
     }
+
+    /*
+
+    Svaki dermatolog ima radno vreme za svaku apoteku posebno. Administrator
+apoteke definiše preglede kod dermatologa u terminu kada je dermatolog u
+apoteci. Za svaki pregled potrebno je definisati datum i vreme početka pregleda,
+trajanje pregleda i cenu. U radnom kalendaru dermatologa nalaze se pregledi
+koji su unapred definisani.
+
+
+     */
+   public Examination definingFreeTermsWithDermatologist(DefiningFreeTermsWithDermatologist definingFreeTermsWithDermatologist){
+
+    Dermatologist dermatologist=dermatologistService.findById(definingFreeTermsWithDermatologist.getIdDerm());
+    Pharmacy pharmacy=pharmacyService.findByNamee(definingFreeTermsWithDermatologist.getPharmName());
+    WorkTime workTime=workTimeService.findByUserId(dermatologist.getId());
+    //mozda ispisati na frontu kada je njegovo radno vrijeme u toj apoteci nmp
+       List<WorkTime> workTimes=workTimeRepository.findWorkTimeByIdDermAndIdPharm(definingFreeTermsWithDermatologist.getIdDerm(),pharmacy.getIdPharm());
+
+       if(dermatologistService.checkingThatTheScheduleMatches(workTimes,definingFreeTermsWithDermatologist.getDate(), definingFreeTermsWithDermatologist.getStartTime(),definingFreeTermsWithDermatologist.getEndTime())){
+           throw new IllegalArgumentException("TheScheduleNotMatches");
+       }
+
+       //provjera da li se poklapa sa radnim vremenom
+
+       Examination examination=new Examination();
+       examination.setStatus(ExaminationStatus.CREATED);
+       examination.setDate(definingFreeTermsWithDermatologist.getDate());
+       examination.setStartTime(definingFreeTermsWithDermatologist.getStartTime());
+       examination.setEndTime(definingFreeTermsWithDermatologist.getEndTime());
+       examination.setPharmacy(pharmacy);
+       examination.setPrice(definingFreeTermsWithDermatologist.getPrice());
+       examination.setType(ExaminationType.DERMATOLOGIST_EXAMINATION);
+       examination.setStaff(dermatologist);
+       return examinationRepository.save(examination);
+
+       //da li se treba ovo ostalo na null stavljati ???
+
+
+
+
+   }
 }
