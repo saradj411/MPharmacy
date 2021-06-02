@@ -22,7 +22,7 @@ import java.util.Set;
 @CrossOrigin("*")
 @RequestMapping(value="/patient")
 @Slf4j
-@JsonIgnoreProperties(ignoreUnknown = true)
+//@JsonIgnoreProperties(ignoreUnknown = true)
 public class PatientController {
 
     @Autowired
@@ -31,9 +31,9 @@ public class PatientController {
     @Autowired
     private PharmacyService pharmacyService;
 
-    @GetMapping(value = "/findById/{id}")
-    public ResponseEntity<Patient> findById(@PathVariable Integer id) {
 
+    @GetMapping(value = "/findOneById/{id}")
+    public ResponseEntity<Patient> findById(@PathVariable Integer id) {
         Patient d= patientService.findById(id);
         return d == null ?
                 new ResponseEntity<>(HttpStatus.NOT_FOUND) :

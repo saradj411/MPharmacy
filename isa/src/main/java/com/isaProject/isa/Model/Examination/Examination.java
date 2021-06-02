@@ -54,13 +54,13 @@ public class Examination {
     //@JsonIgnore
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "patient", referencedColumnName = "id")
-    @JsonBackReference
+    //@JsonBackReference
     private Patient patient;
 
 //    @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.MERGE)
 //    @JoinColumn(name = "staffId", referencedColumnName = "idUser")
 //    //@JsonBackReference
-    @JsonIgnore
+   // @JsonIgnore
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "staffId", referencedColumnName = "id")
     //@JsonBackReference
@@ -229,6 +229,9 @@ public class Examination {
 
     }
 
+    public Boolean getCanceled() {
+        return canceled;
+    }
 }
   /*
 ---stranicu za započinjanje pregleda i unos informacija o pregledu gde može

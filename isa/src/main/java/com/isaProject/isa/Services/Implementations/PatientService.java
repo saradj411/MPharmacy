@@ -11,8 +11,10 @@ import com.isaProject.isa.Model.Examination.ExaminationStatus;
 import com.isaProject.isa.Model.Examination.ExaminationType;
 import com.isaProject.isa.Model.Pharmacy.Pharmacy;
 import com.isaProject.isa.Model.Users.Patient;
+import com.isaProject.isa.Model.Users.User;
 import com.isaProject.isa.Repositories.DrugRepository;
 import com.isaProject.isa.Repositories.PatientRepository;
+import com.isaProject.isa.Repositories.UserRepository;
 import com.isaProject.isa.Services.IServices.IPatientService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,11 +32,15 @@ public class PatientService implements IPatientService {
     @Autowired
     PatientRepository patientRepository;
     @Autowired
+    UserRepository userRepository;
+    @Autowired
     DrugRepository drugRepository;
 
     @Override
     public Patient findById(Integer id) {
-
+        System.out.println("ovdje uslo sada aaaaa:"+id);
+        User user=userRepository.getOne(id);
+        System.out.println("ovdje uslo sada aaaaa:"+user.getName());
         return patientRepository.findById(id).get();
 
     }

@@ -1,16 +1,12 @@
 package com.isaProject.isa.Services.Implementations;
 
 import com.isaProject.isa.Model.DTO.ExaminationDTO;
-import com.isaProject.isa.Model.DTO.RequestForVacationDTO;
 import com.isaProject.isa.Model.DTO.FrontCreatedExaminationDTO;
-import com.isaProject.isa.Model.Drugs.DrugReservation;
 
 import com.isaProject.isa.Model.Examination.Examination;
 import com.isaProject.isa.Model.Examination.ExaminationStatus;
 import com.isaProject.isa.Model.Examination.ExaminationType;
-import com.isaProject.isa.Model.Pharmacy.Pharmacy;
-import com.isaProject.isa.Model.Users.Dermatologist;
-import com.isaProject.isa.Model.Users.RequestForVacation;
+import com.isaProject.isa.Model.Users.Patient;
 import com.isaProject.isa.Model.Users.Staff;
 import com.isaProject.isa.Repositories.ExaminationRepository;
 import com.isaProject.isa.Repositories.PatientRepository;
@@ -20,14 +16,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Date;
 
 import java.util.List;
-import java.util.Stack;
 
 @Service
 @Slf4j
@@ -41,6 +33,7 @@ public class ExaminationService implements IExaminationService {
     PatientService patientService;
     @Autowired
     StaffService staffService;
+    @Autowired
     PatientRepository patientRepository;
     @Override
     public List<Examination> findAll() {
@@ -149,7 +142,9 @@ public class ExaminationService implements IExaminationService {
 
         pat.setStatus(ExaminationStatus.SCHEDULED);
         pat.setScheduled(true);
-        pat.setPatient(patientRepository.getOne(idPatient));
+
+        Patient patient=patientRepository.getOne(idPatient);
+        pat.setPatient(patient);
 
         examinationRepository.save(pat);
     }
