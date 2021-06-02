@@ -1,17 +1,20 @@
 package com.isaProject.isa.Model.Users;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.isaProject.isa.Model.Pharmacy.Pharmacy;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Date;
 
 @Entity
 @Table
-public class RequestForVacation {
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+public class RequestForVacation implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -30,6 +33,11 @@ public class RequestForVacation {
     //razlog za odbijanje
     @Column
     private String description;
+
+    //da li je administartor obradio zahtjev
+
+    @Column
+    private boolean requestProcessed;
 
     @ManyToOne
     @JoinColumn(name = "staffId", referencedColumnName = "id", nullable = false)
@@ -108,6 +116,25 @@ public class RequestForVacation {
     }
 
     public void setPharmacy(Pharmacy pharmacy) {
+        this.pharmacy = pharmacy;
+    }
+
+    public boolean isRequestProcessed() {
+        return requestProcessed;
+    }
+
+    public void setRequestProcessed(boolean requestProcessed) {
+        this.requestProcessed = requestProcessed;
+    }
+
+    public RequestForVacation(Integer id, LocalDate start, LocalDate end, Boolean accepted, String description, boolean requestProcessed, Staff staff, Pharmacy pharmacy) {
+        this.id = id;
+        this.start = start;
+        this.end = end;
+        this.accepted = accepted;
+        this.description = description;
+        this.requestProcessed = requestProcessed;
+        this.staff = staff;
         this.pharmacy = pharmacy;
     }
 }

@@ -2,6 +2,7 @@ package com.isaProject.isa.Services.Implementations;
 import com.isaProject.isa.Model.Drugs.DrugOrder;
 import com.isaProject.isa.Model.Drugs.Offer;
 import com.isaProject.isa.Model.Users.Patient;
+import com.isaProject.isa.Model.Users.RequestForVacation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -89,16 +90,45 @@ public class ServiceForEmail{
     }
 
 
+    public void sendingEmailToAcceptRequestForVacation (RequestForVacation requestForVacation) throws MessagingException {
+        // TODO Auto-generated method stub
+
+
+        MimeMessage mimeMessage = javaMailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, "utf-8");
+        String htmlMsg =
+                "<p>Hello "+requestForVacation.getStaff().getName() +", Your request for vacation is accept.</p>";
+
+        helper.setText(htmlMsg, true);
+        helper.setTo(requestForVacation.getStaff().getEmail());
+        helper.setSubject("Rejected absence");///////////////////////ovo promijeni
+        helper.setFrom(environment.getProperty("spring.mail.username"));
+        javaMailSender.send(mimeMessage);
+        System.out.println("kraj funkc!");
+    }
+
+    public void sendingEmailToRejectRequestForVacation (RequestForVacation requestForVacation,String text) throws MessagingException {
+        // TODO Auto-generated method stub
+
+
+        MimeMessage mimeMessage = javaMailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, "utf-8");
+        String htmlMsg =
+                "<p>Hello "+requestForVacation.getStaff().getName() +", Your request for vacation is reject because "+text+" .</p>";
+
+        helper.setText(htmlMsg, true);
+        helper.setTo(requestForVacation.getStaff().getEmail());
+        helper.setSubject("Rejected absence");///////////////////////ovo promijeni
+        helper.setFrom(environment.getProperty("spring.mail.username"));
+        javaMailSender.send(mimeMessage);
+        System.out.println("kraj funkc!");
+    }
+
+
+
+
+
     /*
-
-
-
-
-
-
-
-
-
 
 
 
@@ -111,7 +141,7 @@ public class ServiceForEmail{
 
 		spring.mail.host = smtp.gmail.com
 spring.mail.username = kristinamucibabic321@gmail.com
-spring.mail.password = ljeskovdub
+spring.mail.password =
 spring.mail.port=587
 spring.mail.properties.mail.smtp.starttls.enable = true
 spring.mail.properties.mail.smtp.starttls.required=true
