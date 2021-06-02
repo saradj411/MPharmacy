@@ -1,19 +1,24 @@
 package com.isaProject.isa.Services.Implementations;
 
 import com.isaProject.isa.Model.DTO.ExaminationDTO;
+import com.isaProject.isa.Model.DTO.ExaminationFrontDTO;
 import com.isaProject.isa.Model.DTO.RequestForVacationDTO;
 import com.isaProject.isa.Model.DTO.FrontCreatedExaminationDTO;
+import com.isaProject.isa.Model.Drugs.Drug;
 import com.isaProject.isa.Model.Drugs.DrugReservation;
 
 import com.isaProject.isa.Model.Examination.Examination;
 import com.isaProject.isa.Model.Examination.ExaminationStatus;
 import com.isaProject.isa.Model.Examination.ExaminationType;
+import com.isaProject.isa.Model.Examination.Therapy;
 import com.isaProject.isa.Model.Pharmacy.Pharmacy;
 import com.isaProject.isa.Model.Users.Dermatologist;
 import com.isaProject.isa.Model.Users.RequestForVacation;
 import com.isaProject.isa.Model.Users.Staff;
+import com.isaProject.isa.Repositories.DrugRepository;
 import com.isaProject.isa.Repositories.ExaminationRepository;
 import com.isaProject.isa.Repositories.PatientRepository;
+import com.isaProject.isa.Repositories.TherapyRepository;
 import com.isaProject.isa.Services.IServices.IExaminationService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,13 +46,43 @@ public class ExaminationService implements IExaminationService {
     PatientService patientService;
     @Autowired
     StaffService staffService;
+    @Autowired
     PatientRepository patientRepository;
+
+    @Autowired
+    DrugRepository drugRepository;
+
+
+    @Autowired
+    TherapyRepository therapyRepository;
     @Override
     public List<Examination> findAll() {
         return examinationRepository.findAll();
     }
 
 
+
+
+    @Override
+    public Examination save1(ExaminationFrontDTO examinationDTO) {
+        Examination d = new Examination();
+        Drug drug=drugRepository.findOneByNameDrug(examinationDTO.getName());
+        System.out.println(drug.getName());
+        d.setDate(examinationDTO.getDate());
+        d.setEndTime(examinationDTO.getEnd());
+        d.setStartTime(examinationDTO.getStart());
+        d.setStaff(staffService.findById(examinationDTO.getIdStaff()));
+        d.setPharmacy(pharmacyService.findById(examinationDTO.getIdPharm()));
+        d.setPatient(patientService.findById(examinationDTO.getIdPatient()));
+        d.setStatus(ExaminationStatus.FINISHED);
+        d.setPrice(examinationDTO.getPrice());
+        d.setType(ExaminationType.DERMATOLOGIST_EXAMINATION);
+        d.setReport(examinationDTO.getReport());
+        Therapy t=new Therapy(drug,examinationDTO.getNumberOfDay());
+        d.setTherapy(t);
+        therapyRepository.save(t);
+        return examinationRepository.save(d);
+    }
     @Override
     public Examination save(ExaminationDTO examinationDTO) {
         Examination d = new Examination();
@@ -103,11 +138,12 @@ public class ExaminationService implements IExaminationService {
         List<Examination>examinations=examinationRepository.getAllExaminationsByIdStaffAndIdPharmacy(idStaff);
         List<Examination>freeEx = new ArrayList<>();
         for (Examination e:examinations){
-            if(e.getStatus().equals(ExaminationStatus.CREATED)){
+            if(e.getStatus().compareTo(ExaminationStatus.SCHEDULED)==0){
                 freeEx.add(e);
             }
         }
-        return examinations;
+        //examinations
+        return freeEx;
     }
 
 
