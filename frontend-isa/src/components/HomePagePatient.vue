@@ -635,7 +635,7 @@ export default {
 },
 methods:{
      myProfile : function(){
-          window.location.href = "/ProfilePatient";
+          window.location.href = "/ProfilePatient/"+this.id;
       },
        showPharmacies: function(){
         this.showTable=true

@@ -68,7 +68,7 @@ const routes = [
       }
       ,
       {
-        path: '/ProfilePatient',
+        path: '/ProfilePatient/:id',
         name: 'ProfilePatient',
         component: ProfilePatient
       }

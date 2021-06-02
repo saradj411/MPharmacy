@@ -15,7 +15,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+//@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Patient extends User implements Serializable {
 
 
@@ -30,16 +30,18 @@ public class Patient extends User implements Serializable {
     private String loyaltyCategory;
 
     //Lijekovi na koje je alergican
-    @ManyToMany
+    //@JsonIgnore
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "allergies", joinColumns = @JoinColumn(name="patientId" ,  referencedColumnName  = "id"),
             inverseJoinColumns = @JoinColumn(name = "drugId", referencedColumnName = "idDrug"))
     private Set<Drug> allergies = new HashSet<Drug>();
 
-
-    @OneToMany(mappedBy = "patient")
+    @JsonIgnore
+    @OneToMany(mappedBy = "patient", fetch = FetchType.EAGER)
     //@JsonBackReference
     private Set<DrugReservation> drugReservation=new HashSet<DrugReservation>();
 
+    @JsonIgnore
     @OneToMany(mappedBy = "patient", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     //@JsonBackReference
     private Set<Examination> examinations = new HashSet<Examination>();
@@ -49,7 +51,7 @@ public class Patient extends User implements Serializable {
     private Set<ERecipe> erecipes = new HashSet<ERecipe>();
 */
     //apoteke na koje je pretplacen
-    //@JsonIgnore
+    @JsonIgnore
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "action_patient_pharmacy",
             joinColumns = @JoinColumn(name = "patientId", referencedColumnName = "id"),

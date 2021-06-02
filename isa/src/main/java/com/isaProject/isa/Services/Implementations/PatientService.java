@@ -41,7 +41,8 @@ public class PatientService implements IPatientService {
         System.out.println("ovdje uslo sada aaaaa:"+id);
         User user=userRepository.getOne(id);
         System.out.println("ovdje uslo sada aaaaa:"+user.getName());
-        return patientRepository.findById(id).get();
+        Patient patient=patientRepository.getOne(id);
+        return patient;
 
     }
 
@@ -86,9 +87,9 @@ public class PatientService implements IPatientService {
         examinations=patient.getExaminations();
         for (Examination e:examinations){
 
-            if(e.getStatus().compareTo(ExaminationStatus.SCHEDULED)==0){
+            if((e.getStatus().compareTo(ExaminationStatus.SCHEDULED))==0){
 
-                if(e.getType().compareTo(ExaminationType.DERMATOLOGIST_EXAMINATION)==0){
+                if((e.getType().compareTo(ExaminationType.DERMATOLOGIST_EXAMINATION))==0){
                     FrontCreatedExaminationDTO exDTO=new FrontCreatedExaminationDTO(
                             e.getIdExamination(),e.getDate(),
                             e.getStartTime(),e.getEndTime(),e.getPrice(),
@@ -107,9 +108,9 @@ public class PatientService implements IPatientService {
         examinations=patient.getExaminations();
         for (Examination e:examinations){
 
-            if(e.getStatus().compareTo(ExaminationStatus.SCHEDULED)==0){
+            if((e.getStatus().compareTo(ExaminationStatus.SCHEDULED))==0){
 
-                if(e.getType().compareTo(ExaminationType.PHARMACIST_EXAMINATION)==0){
+                if((e.getType().compareTo(ExaminationType.PHARMACIST_EXAMINATION))==0){
                     FrontCreatedExaminationDTO exDTO=new FrontCreatedExaminationDTO(e.getIdExamination(),e.getDate(),
                             e.getStartTime(),e.getEndTime(),e.getPrice(),
                             e.getStaff().getName(),e.getStaff().getSurname(),e.getPharmacy().getName());
@@ -128,9 +129,9 @@ public class PatientService implements IPatientService {
         examinations=patient.getExaminations();
         for (Examination e:examinations){
 
-            if(e.getStatus().compareTo(ExaminationStatus.FINISHED)==0){
+            if((e.getStatus().compareTo(ExaminationStatus.FINISHED))==0){
 
-                if(e.getType().compareTo(ExaminationType.DERMATOLOGIST_EXAMINATION)==0){
+                if((e.getType().compareTo(ExaminationType.DERMATOLOGIST_EXAMINATION))==0){
                     FrontCreatedExaminationDTO exDTO=new FrontCreatedExaminationDTO(e.getIdExamination(),e.getDate(),
                             e.getStartTime(),e.getEndTime(),e.getPrice(),
                             e.getStaff().getName(),e.getStaff().getSurname(),e.getPharmacy().getName(),
@@ -151,9 +152,9 @@ public class PatientService implements IPatientService {
         examinations=patient.getExaminations();
         for (Examination e:examinations){
 
-            if(e.getStatus().compareTo(ExaminationStatus.FINISHED)==0){
+            if((e.getStatus().compareTo(ExaminationStatus.FINISHED))==0){
 
-                if(e.getType().compareTo(ExaminationType.PHARMACIST_EXAMINATION)==0){
+                if((e.getType().compareTo(ExaminationType.PHARMACIST_EXAMINATION))==0){
                     FrontCreatedExaminationDTO exDTO=new FrontCreatedExaminationDTO(e.getIdExamination(),e.getDate(),
                             e.getStartTime(),e.getEndTime(),e.getPrice(),
                             e.getStaff().getName(),e.getStaff().getSurname(),e.getPharmacy().getName(),
