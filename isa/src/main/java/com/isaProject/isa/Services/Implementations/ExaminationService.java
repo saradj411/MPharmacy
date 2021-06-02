@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
+import javax.mail.MessagingException;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -35,6 +36,10 @@ public class ExaminationService implements IExaminationService {
     StaffService staffService;
     @Autowired
     PatientRepository patientRepository;
+
+    @Autowired
+    ServiceForEmail serviceForEmail;
+
     @Override
     public List<Examination> findAll() {
         return examinationRepository.findAll();
@@ -136,7 +141,7 @@ public class ExaminationService implements IExaminationService {
         return  newList;
     }
     @Override
-    public void scheduledDermatologistExamination(Integer idPatient, Integer idExamination) {
+    public void scheduledDermatologistExamination(Integer idPatient, Integer idExamination) throws MessagingException {
         Examination pat = examinationRepository.getOne(idExamination);
 
 
@@ -147,6 +152,7 @@ public class ExaminationService implements IExaminationService {
         pat.setPatient(patient);
 
         examinationRepository.save(pat);
+        serviceForEmail.sendingMailToPatientForExamination(pat,patient);
     }
 
 

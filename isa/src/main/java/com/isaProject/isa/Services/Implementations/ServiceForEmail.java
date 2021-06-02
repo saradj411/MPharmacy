@@ -1,6 +1,8 @@
 package com.isaProject.isa.Services.Implementations;
 import com.isaProject.isa.Model.Drugs.DrugOrder;
 import com.isaProject.isa.Model.Drugs.Offer;
+import com.isaProject.isa.Model.Examination.Examination;
+import com.isaProject.isa.Model.Users.Patient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -69,7 +71,23 @@ public class ServiceForEmail{
         System.out.println("kraj funkc!");
     }
 
+    public void sendingMailToPatientForExamination(Examination ex,Patient patient) throws MessagingException {
+        // TODO Auto-generated method stub
+        System.out.println("usao u funkc za slanje mejla "+patient.getEmail());
 
+        MimeMessage mimeMessage = javaMailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, "utf-8");
+        String htmlMsg =
+                "<p>You have successfully scheduled an examination!" +
+                        ex.getDate()+" "+ex.getStartTime()+"-"+ex.getEndTime()+"</p>";
+
+        helper.setText(htmlMsg, true);
+        helper.setTo(patient.getEmail());
+        helper.setSubject("Schedule examination");
+        helper.setFrom(environment.getProperty("spring.mail.username"));
+        javaMailSender.send(mimeMessage);
+        System.out.println("kraj funkc!");
+    }
     /*
 
 

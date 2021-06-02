@@ -5,6 +5,7 @@ import com.isaProject.isa.Model.DTO.FrontCreatedExaminationDTO;
 import com.isaProject.isa.Model.Drugs.DrugReservation;
 import com.isaProject.isa.Model.Examination.Examination;
 
+import javax.mail.MessagingException;
 import java.util.List;
 
 public interface IExaminationService {
@@ -19,7 +20,7 @@ public interface IExaminationService {
     Examination save(ExaminationDTO examinationDTO);
     List<FrontCreatedExaminationDTO> findCreatedDermatologistExamination();
 
-    void scheduledDermatologistExamination(Integer idPatient,Integer idExamination);
+    void scheduledDermatologistExamination(Integer idPatient,Integer idExamination) throws MessagingException;
 
 
     }

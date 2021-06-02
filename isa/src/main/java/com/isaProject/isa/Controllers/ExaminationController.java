@@ -17,6 +17,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.mail.MessagingException;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -96,8 +97,7 @@ public class ExaminationController {
     }
 
     @PostMapping("/patientScheduledDermatologistExamination/{id}/{idExamination}")
-    ResponseEntity<String> scheduledDermatologistExamination(@PathVariable Integer id,@PathVariable Integer idExamination)
-    {
+    ResponseEntity<String> scheduledDermatologistExamination(@PathVariable Integer id,@PathVariable Integer idExamination) throws MessagingException {
 
         examinationService.scheduledDermatologistExamination(id,idExamination);
         return new ResponseEntity<>("ajdeee", HttpStatus.CREATED);

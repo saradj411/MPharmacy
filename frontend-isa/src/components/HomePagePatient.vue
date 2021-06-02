@@ -767,7 +767,7 @@ methods:{
         .then(response => {
                 this.jel = response.data;
                 alert("Examination is scheduled.Check your email!")
-                
+                window.location.href = "/HomePagePatient/"+this.id;
          }).catch(res => {
                 alert("Nesto ne valja");
                 console.log(res);
