@@ -11,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -33,7 +34,9 @@ public class PatientController {
 
 
     @GetMapping(value = "/findOneById/{id}")
+    @Async
     public ResponseEntity<Patient> findById(@PathVariable Integer id) {
+        System.out.println("PatientController"+id);
         Patient d= patientService.findById(id);
         return d == null ?
                 new ResponseEntity<>(HttpStatus.NOT_FOUND) :
