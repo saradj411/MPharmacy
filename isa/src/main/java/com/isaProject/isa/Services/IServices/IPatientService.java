@@ -1,6 +1,7 @@
 package com.isaProject.isa.Services.IServices;
 
 import com.isaProject.isa.Model.DTO.FrontCreatedExaminationDTO;
+import com.isaProject.isa.Model.Drugs.Drug;
 import com.isaProject.isa.Model.Drugs.ERecipe;
 import com.isaProject.isa.Model.Examination.Examination;
 import com.isaProject.isa.Model.Users.Patient;
@@ -17,6 +18,8 @@ public interface IPatientService {
     Set<FrontCreatedExaminationDTO> findSheduledDermatologistExamination(Integer id);
     Set<FrontCreatedExaminationDTO> findSheduledPharmacistExamination(Integer id);
     List<ERecipe> findERecipe(Integer id);
+     Set<Drug> getAllergy(Integer idPatient, String name) ;
 
+        String findAllergy(Integer idPatient,String name);
 
 }

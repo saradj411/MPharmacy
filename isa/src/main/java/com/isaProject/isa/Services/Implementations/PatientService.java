@@ -51,8 +51,30 @@ public class PatientService implements IPatientService {
         allergies.add(dr);
         patient.setAllergies(allergies);
         patientRepository.save(patient);
-
     }
+    @Override
+    public String findAllergy(Integer idPatient,String name) {
+        String answer="The patient isn't allergic to the drug";
+        Patient patient = patientRepository.findById(idPatient).get();
+        Set<Drug> allergies=patient.getAllergies();
+        for (Drug d:allergies){
+            if(d.getName().equals(name)){
+                answer="The patient is allergic to the drug";
+
+            }
+        }
+        return answer;
+    }
+
+    @Override
+    public Set<Drug> getAllergy(Integer idPatient, String name) {
+        Patient patient = patientRepository.findById(idPatient).get();
+        Set<Drug> allergies=patient.getAllergies();
+
+        return allergies;
+    }
+
+
 
     @Override
     public void update(Patient patient) {

@@ -11,6 +11,7 @@ import com.isaProject.isa.Model.Examination.Examination;
 import com.isaProject.isa.Model.Pharmacy.Pharmacy;
 import com.isaProject.isa.Model.Users.Patient;
 import com.isaProject.isa.Model.Users.Pharmacist;
+import com.isaProject.isa.Services.Implementations.DrugService;
 import com.isaProject.isa.Services.Implementations.PatientService;
 import com.isaProject.isa.Services.Implementations.PharmacyService;
 import lombok.extern.slf4j.Slf4j;
@@ -36,7 +37,38 @@ public class PatientController {
     private PatientService patientService;
 
     @Autowired
+    private DrugService drugService;
+
+    @Autowired
     private PharmacyService pharmacyService;
+
+    /*@GetMapping(value = "/findAllergyById/{id}")
+    public ResponseEntity<Set<Drug>> findAllergyById(@PathVariable Integer id) {
+
+        Set<Drug> d= patientService.findAllergy(id);
+        return d == null ?
+                new ResponseEntity<>(HttpStatus.NOT_FOUND) :
+                ResponseEntity.ok(d);
+    }*/
+    @GetMapping(value = "/findAllergyById/{id}/{name}")
+    public ResponseEntity<String> findAllergy(@PathVariable (value = "id") Integer id,@PathVariable (value = "name") String name) {
+        String answer=patientService.findAllergy(id,name);
+        return new ResponseEntity<>(answer, HttpStatus.ACCEPTED);
+
+    }
+
+
+    @GetMapping(value = "/checkAllergy/{id}/{name}")
+    public ResponseEntity<Boolean> checkAllergy(@PathVariable (value = "id") Integer id,@PathVariable (value = "name") String name) {
+        String answer=patientService.findAllergy(id,name);
+        Boolean check=false;
+        if(answer.equals("The patient isn't allergic to the drug")){
+            check=false;
+        }else {
+            check = true;//pacijent je alergican
+        }
+        return new ResponseEntity<>(check, HttpStatus.ACCEPTED);
+    }
 
     @GetMapping(value = "/findById/{id}")
     public ResponseEntity<Patient> findById(@PathVariable Integer id) {
