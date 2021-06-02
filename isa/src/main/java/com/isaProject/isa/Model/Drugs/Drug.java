@@ -1,5 +1,6 @@
 package com.isaProject.isa.Model.Drugs;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
@@ -9,6 +10,7 @@ import java.util.Set;
 
 @Entity
 @Table
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Drug implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -114,13 +116,13 @@ public class Drug implements Serializable {
         this.manufacturer = manufacturer;
     }
 
-   /* public Set<Drug> getAlternativeDrugs() {
+    public Set<Drug> getAlternativeDrugs() {
         return alternativeDrugs;
     }
 
     public void setAlternativeDrugs(Set<Drug> alternativeDrugs) {
         this.alternativeDrugs = alternativeDrugs;
-    }*/
+    }
 //rezervisani lijekovi
 
 

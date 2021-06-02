@@ -58,7 +58,7 @@
 
                          <div class="form-group col-md-6">
                         <label style="color: #0D184F">Old drug format : {{drug.format}}</label>
- <div >
+                        <div >
 
                         <div style="color:#0D184F;">
                        
@@ -159,7 +159,7 @@ export default {
 
         } 
         this.axios.post('/drug/updateDrug',adminInfo,{
-      }).then(response => {
+      }).then(response => { 
                this.nesto=response.data;
                 alert("Changes have been saved!");
                 window.location.href = "/updateDrug/"+this.id;

@@ -99,6 +99,34 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
                 .permitAll().antMatchers("/dermatologist/findAllPatient/{id}")
 
+                .permitAll().antMatchers("/examination/findPatientById/{id}")
+
+                .permitAll().antMatchers("/examination/findPharmacy/{id}")
+                .permitAll().antMatchers("/specification/getIngredients/{name}")
+                .permitAll().antMatchers("/specification/getSpec/{name}")
+
+                .permitAll().antMatchers("/examination/create")
+                .permitAll().antMatchers("/pharmacyDrugs/findDrugsByIdPharm/{id}/{name}")
+                .permitAll().antMatchers("/pharmacyDrugs/findAlternative/{idPharm}/{id}/{name}")
+                .permitAll().antMatchers("/patient/checkAllergy/{id}/{name}")
+                .permitAll().antMatchers("/pharmacyDrugs/checkAvalibility/{id}/{name}")
+
+                .permitAll().antMatchers("/dermatologist/updateFreeEx/{idPatient}/{idEx}")
+
+
+
+
+                .permitAll().antMatchers("/examination/findExamination/{id}")
+                .permitAll().antMatchers("/examination/finished")
+
+
+                .permitAll().antMatchers("/examination/findStaff/{id}")
+                .permitAll().antMatchers("/patient/findAllergyById/{id}")
+                .permitAll().antMatchers("/patient/findAllergyById/{id}/{name}")
+
+                .permitAll().antMatchers("/pharmacyDrugs/findDrugsByIdPharm/{id}/{name}")
+
+
 
                 .permitAll().antMatchers("/requestVacation/create")
                 .permitAll().antMatchers("/pharmacist/getPharmacist/{id}")
