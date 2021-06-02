@@ -25,6 +25,7 @@ import updateDermatologistProfile from '../components/updateDermatologistProfile
 import DermatologistPatients from '../components/DermatologistPatients.vue'
 import RequestForVacation from '../components/RequestForVacation.vue'
 import SystemAdminProfile from '../components/SystemAdminProfile.vue'
+import AddShifarnikPage from '../components/AddShifarnikPage'
 
 import moment from 'moment'
 
@@ -117,6 +118,11 @@ const routes = [
       }
       ,
       {
+        path: '/AddShifarnikPage',
+        name: 'AddShifarnikPage',
+        component: AddShifarnikPage
+      },
+      {
         path: '/PharmacistsPharmacy/:id',
         name: 'PharmacistsPharmacy',
         component: PharmacistsPharmacy
@@ -186,7 +192,8 @@ const routes = [
 const router = new VueRouter({
     mode: 'history',
     base: process.env.BASE_URL,
-    routes
+    routes,
+    
   })
   
   export default router

@@ -5,7 +5,9 @@ import com.isaProject.isa.Model.DTO.PatientDTO;
 import com.isaProject.isa.Model.Examination.Examination;
 import com.isaProject.isa.Model.Examination.ExaminationType;
 import com.isaProject.isa.Model.Pharmacy.Pharmacy;
+import com.isaProject.isa.Model.Users.Authority;
 import com.isaProject.isa.Model.Users.Dermatologist;
+import com.isaProject.isa.Model.Users.User;
 import com.isaProject.isa.Model.Users.WorkTime;
 import com.isaProject.isa.Repositories.DermatologistRepository;
 import com.isaProject.isa.Repositories.ExaminationRepository;
@@ -14,6 +16,7 @@ import com.isaProject.isa.Repositories.WorkTimeRepository;
 import com.isaProject.isa.Services.IServices.IDermatologistService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
@@ -27,7 +30,11 @@ public class DermatologistService implements IDermatologistService {
 
     public @Autowired
     DermatologistRepository dermatologistRepository;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
+    @Autowired
+    private AuthorityService authService;
     public @Autowired
     WorkTimeRepository workTimeRepository;
     public @Autowired
@@ -143,12 +150,23 @@ public class DermatologistService implements IDermatologistService {
 
     @Override
     public Dermatologist save(DermatologistDTO dermatologist) {
+        System.out.println(dermatologist.toString());
+
+        List<Authority> auth = authService.findByname("DERMATOLOGIST");
+        for(Dermatologist d : dermatologistRepository.findAll())
+        {
+            if(d.getEmail().equals(dermatologist.getEmail()))
+                return null;
+        }
+
         Dermatologist d = new Dermatologist();
+        //dodati na mejl
+
         d.setName(dermatologist.getName());
         d.setSurname(dermatologist.getSurname());
-        d.setEmail(dermatologist.getSurname());
-        d.setPassword(dermatologist.getPassword());
-        d.setAddress(dermatologist.getPhoneNumber());
+        d.setEmail(dermatologist.getEmail());
+        d.setPassword(passwordEncoder.encode(dermatologist.getPassword()));
+        d.setAddress(dermatologist.getAddress());
         d.setPhoneNumber(dermatologist.getPhoneNumber());
         d.setCity(dermatologist.getCity());
         d.setCountry(dermatologist.getCountry());
@@ -158,6 +176,9 @@ public class DermatologistService implements IDermatologistService {
         d.setVacation(null);
         pharmOfDerm.add(dermatologist.getPharmacy());
         d.setPharmacies(pharmOfDerm);
+        d.setAccountEnabled(false);
+        d.setAuthorities(auth);
         return dermatologistRepository.save(d);
+
     }
 }

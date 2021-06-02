@@ -10,7 +10,10 @@
                 <tr>
                     <td><h4 > Email: </h4> </td>
                     <td>
-                        <input type="text" v-model="email" :class="{'input--error':!email}" class="form-control" placeholder="Enter email" aria-label="Enter name" aria-describedby="addon-wrapping">
+                        <input type="text" v-model="username" 
+                        class="form-control" :class="{'input--error':!username}" 
+                        placeholder="Enter email" aria-label="Enter name" 
+                        aria-describedby="addon-wrapping">
                         
                     </td> 
                         
@@ -18,7 +21,10 @@
                 <tr>
                     <td> <h4> Password: </h4> </td>
                     <td>
-                    <input type="password" v-model="password" :class="{'input--error':!password}" class="form-control" placeholder="Enter name"  aria-label="Enter name" aria-describedby="addon-wrapping">
+                    <input type="password" v-model="password" 
+                    :class="{'input--error':!password}" 
+                    class="form-control" placeholder="Enter name"  
+                    aria-label="Enter name" aria-describedby="addon-wrapping">
                     </td>   
                 </tr>
                 <tr>
@@ -27,7 +33,8 @@
                 <tr>        
                     <td colspan="2">
                         <button class = "btn btn-primary btn-xs"
-                        :disabled="!email || !password"
+                        :disabled="!username || !password"
+                        v-on:click="userForLogin"
                         style="margin:auto; margin-left:38px;background: #000;margin-top: 10px; width: 200px;" >Submit</button>
                     </td>
                 
@@ -63,40 +70,89 @@
         padding: 50px;
     }
 
-    .input--error{
+    .input--error
+    {
     border-color:red;
     }
     
 </style>
 
 <script>
+import { required } from 'vuelidate/lib/validators'
+
 export default
 {
     data()
     {
         return{
-            email: "",
+            username: "",
             password: ""
+        }
+    },
+    validations:
+    {
+        username:
+        {
+            required
+        },
+        password:
+        {
+            required
         }
     },
     methods:
     {
         userForLogin: function()
         {
-            if(this.email == '' || this.password == '')
+            if(this.username == '' || this.password == '')
             {
-
+                console.log("PRAZNA POLJA");
             }
             else
             {
+                console.log("UDJE?");
                 const loginInfo = 
                 {
-                    email: this.email,
+                    username: this.username,
                     password: this.password
                 }
-            }
+
+               this.axios.post('/user/login', loginInfo, {
+                    headers: 
+                    {          
+                         
+                        
+                    }}).then(response => 
+                    {                        
+                        
+                        console.log(response.data);
+                        this.axios.defaults.headers.common['Authorization'] = 'Bearer ' + response.data.accessToken;
+                        localStorage.setItem( 'accessToken', response.data.accessToken);
+                        localStorage.setItem('expiresIn', new Date(new Date().getTime() + response.data.expiresIn).getTime());
+                        
+                       this.$router.push('SystemAdminProfile');
+                        
+                        
+                        //Odkomentarisati ovo kad se obavi verifikacija mejla
+                    }).catch(res => {                   
+                       
+                        if(res.response.status === 401)
+                            alert("Wrong password or email.");
+                        
+                        console.log(res.response);
+                        this.errorMessage = res.response.data.message;
+                    });    
+                /*this.$store.dispatch('login', loginInfo)
+                    .then(() => this.$router.push('SystemAdminProfile'))
+                    .catch(err => console.log(err))*/
+                }
         }
+    },
+    mounted()
+    {
+
     }
+    
 }
 
 </script>
