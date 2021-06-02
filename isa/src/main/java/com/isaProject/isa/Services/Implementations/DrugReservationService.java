@@ -85,6 +85,28 @@ public class DrugReservationService implements IDrugReservationService {
     }
 
     @Override
+    public void checkReservations() {
+        List<DrugReservation> list=drugRepository.findAll();
+        LocalDate now=LocalDate.now();
+        for(DrugReservation dR:list){
+            if(dR.getPickUpDate().compareTo(now)==0){
+                if(!dR.getCancelled()){
+                    if(!dR.getPickedUp()){
+                        if(!dR.getExpired()) {
+                            Patient pat = dR.getPatient();
+                            pat.setPenalty(pat.getPenalty() + 1);
+                            patientRepository.save(pat);
+
+                            dR.setExpired(true);
+                            drugRepository.save(dR);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    @Override
     public List<FrontDrugReservationDTO> findActualByIdPatient(Patient id) {
         List<DrugReservation> reserv = drugRepository.findAllByPatient(id);
         List<FrontDrugReservationDTO> reserv1 = new ArrayList<>();

@@ -14,6 +14,7 @@ public interface IDrugReservationService {
     DrugReservation findById(Integer id);
     List<DrugReservation> findByIsPickedUp(Boolean isPickedUp);
     void canceling(DrugReservation drugReservation);
+    void checkReservations();
     List<FrontDrugReservationDTO> findActualByIdPatient(Patient id);
     List<FrontDrugReservationDTO> findPickedById(Patient id);
     List<FrontDrugReservationDTO> findCanceledById(Patient id);

@@ -98,4 +98,14 @@ public class DrugReservationController {
         return new ResponseEntity<>("ajdeee", HttpStatus.CREATED);
 
     }
+    @PostMapping("/checkReservations")
+    ResponseEntity<String> checkReservations()
+    {
+
+        drugReservationService.checkReservations();
+        return new ResponseEntity<>("ajdeee", HttpStatus.CREATED);
+
+    }
+
+
 }

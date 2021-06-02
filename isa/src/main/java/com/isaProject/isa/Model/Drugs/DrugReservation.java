@@ -29,6 +29,9 @@ public class DrugReservation implements Serializable {
        private Boolean cancelled;
 
        @Column
+       private Boolean expired;
+
+       @Column
        private Integer quantity;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
@@ -134,6 +137,22 @@ public class DrugReservation implements Serializable {
 
  public void setPickUpDate(LocalDate pickUpDate) {
   this.pickUpDate = pickUpDate;
+ }
+
+ public Patient getPatient() {
+  return patient;
+ }
+
+ public void setPatient(Patient patient) {
+  this.patient = patient;
+ }
+
+ public Boolean getExpired() {
+  return expired;
+ }
+
+ public void setExpired(Boolean expired) {
+  this.expired = expired;
  }
 
     /* 3.19. Postupak rezervacije leka

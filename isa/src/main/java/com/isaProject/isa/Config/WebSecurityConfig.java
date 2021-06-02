@@ -81,6 +81,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll().antMatchers("/reservation/findById/{id}")
                 .permitAll().antMatchers("/patient/findSheduledPharmacistExamination/{id}")
                 .permitAll().antMatchers("/patient/findFinishedPharmacistExamination/{id}")
+                .permitAll().antMatchers("/reservation/checkReservations")
 
                 .permitAll().antMatchers("/patient/findActionPharmacy/{id}")
                 .permitAll().antMatchers("/patient/findERecipe/{id}")
