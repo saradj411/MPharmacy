@@ -115,16 +115,6 @@ public class UserController {
         return token == null ? new ResponseEntity<>(HttpStatus.NOT_FOUND) : ResponseEntity.ok(token);
     }
 
-    @PostMapping(value = "/saveDermatologist", consumes = MediaType.APPLICATION_JSON_VALUE)
-    @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<User> saveDermatologist(@RequestBody DermatologistDTO dermDTO)
-    {
-        System.out.println("USAO U SAVE DERMATOLOGA SA ADMIN ROLE");
-        System.out.println(dermDTO.getEmail());
-        User u = dermatologistService.save(dermDTO);
-        return  u == null ? new ResponseEntity<>(HttpStatus.IM_USED) :
-               new ResponseEntity<>(u, HttpStatus.CREATED);
-    }
 
     /*@PostMapping(value = "/saveSupplier", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<User> saveDermatologist(@RequestBody SupplierDTO dermDTO)
