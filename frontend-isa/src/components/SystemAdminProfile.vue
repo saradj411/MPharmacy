@@ -1,14 +1,15 @@
 <template>
     <div>
-        <h1> Welcome {{ loggedAdmin.name }} {{ surname }} </h1>
+        <h1> Welcome {{ loggedAdmin.name }} {{ loggedAdmin.surname }} ! </h1>
+        <br>
 <div class="button_holder">
     <button class = "btn btn-primary btn-xs" v-on:click = "AddShifarnikPage" style="margin:auto; margin-left:38px;background: #000;margin-top: 10px; width: 200px;" > Add Sifarnik </button>
-    <button class = "btn btn-primary btn-xs" v-on:click = "AddSystemAdminPage" style="margin:auto; margin-left:38px;background: #000;margin-top: 10px; width: 200px;" > Register pharmacy & pharmacy admins </button>
+    <button class = "btn btn-primary btn-xs" v-on:click = "AddNewPharmacyAndTheirAdmin" style="margin:auto; margin-left:38px;background: #000;margin-top: 10px; width: 200px;" > Register pharmacy & pharmacy admins </button>
     <button class = "btn btn-primary btn-xs" v-on:click = "AddDermatologistPage" style="margin:auto; margin-left:38px;background: #000;margin-top: 10px; width: 200px;" > Register dermatologist </button>          
-    <button class = "btn btn-primary btn-xs" v-on:clicl = "a" style="margin:auto; margin-left:38px;background: #000;margin-top: 10px; width: 200px;" > Register supplier </button>
-    <button class = "btn btn-primary btn-xs" v-on:clicl = "a" style="margin:auto; margin-left:38px;background: #000;margin-top: 10px; width: 200px;" > Loyality program </button>
-    <button class = "btn btn-primary btn-xs" v-on:clicl = "a" style="margin:auto; margin-left:38px;background: #000;margin-top: 10px; width: 200px;" > Add new system administrator </button>
-    <button class = "btn btn-primary btn-xs" v-on:clicl = "a" style="margin:auto; margin-left:38px;background: #000;margin-top: 10px; width: 200px;" > Complains </button>
+    <button class = "btn btn-primary btn-xs" v-on:click = "AddSupplierPage" style="margin:auto; margin-left:38px;background: #000;margin-top: 10px; width: 200px;" > Register supplier </button>
+    <button class = "btn btn-primary btn-xs" v-on:click = "AddLoyalityProgram" style="margin:auto; margin-left:38px;background: #000;margin-top: 10px; width: 200px;" > Loyality program </button>
+    <button class = "btn btn-primary btn-xs" v-on:click = "AddSystemAdminPage" style="margin:auto; margin-left:38px;background: #000;margin-top: 10px; width: 200px;" > Add new system administrator </button>
+    <button class = "btn btn-primary btn-xs" v-on:click = "ComplainsPage" style="margin:auto; margin-left:38px;background: #000;margin-top: 10px; width: 200px;" > Complains </button>
 
 
 </div>
@@ -50,7 +51,24 @@
         AddDermatologistPage: function()
         {
             window.location.href = '/RegisterDermatologist/' + this.id;
+        },
+        AddSupplierPage: function()
+        {
+
+        },
+        AddLoyalityProgram: function()
+        {
+
+        },
+        AddNewPharmacyAndTheirAdmin: function()
+        {
+
+        },
+        ComplainsPage: function()
+        {
+
         }
+
         
     },
     mounted() {
