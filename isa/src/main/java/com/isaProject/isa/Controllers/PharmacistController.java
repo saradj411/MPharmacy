@@ -113,7 +113,13 @@ public class PharmacistController {
         return new ResponseEntity<>(answer, HttpStatus.CREATED);
 
     }
-
+    @GetMapping(value = "/findClientsPharmacist/{id}")
+    public ResponseEntity<List<ReviewedClientsDTO>> findClientsD(@PathVariable Integer id) {
+        List<ReviewedClientsDTO> reviewedClientsDTOS=pharmacistService.reviewedClientsDermatologist(id);
+        return reviewedClientsDTOS == null ?
+                new ResponseEntity<>(HttpStatus.NOT_FOUND) :
+                ResponseEntity.ok(reviewedClientsDTOS);
+    }
 
     @GetMapping("/getFreeEx/{idStaff}")
     public  ResponseEntity<List<FreeExaminationsForRepresentationDTO>> getAllFreeExaminations(@PathVariable Integer idStaff) {

@@ -12,6 +12,9 @@
                   <button class = "btn btn-primary btn-xs" style="margin:auto; margin-left:38px;background:#474A8A " :href="href" @click="navigate" elevation="1">Update profile</button>
                </router-link>
             </span>
+             <span style="float: left; margin-top: 20px;">
+                  <button class = "btn btn-primary btn-xs" style="margin:auto; margin-left:38px;background:#474A8A" v-on:click = "clients">Reviewed clients </button>
+                     </span>
 
 <span style="float: left; margin-top: 20px;">
                   <button class = "btn btn-primary btn-xs" style="margin:auto; margin-left:38px;background:#474A8A" v-on:click = "profile">Clients </button>
@@ -136,7 +139,10 @@ export default {
   methods:{
      profile : function(){
           window.location.href = '/Clients';
-        }
+        },
+        clients : function(){
+          window.location.href = '/ReviewedClientsPharmacist/'+333;
+        },
 }
 }
 </script>

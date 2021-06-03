@@ -1,6 +1,7 @@
 package com.isaProject.isa.Services.Implementations;
 
 import com.isaProject.isa.Model.DTO.PharmaceutDTO;
+import com.isaProject.isa.Model.DTO.ReviewedClientsDTO;
 import com.isaProject.isa.Model.DTO.ScheduleAnExaminationDTO;
 import com.isaProject.isa.Model.Examination.Examination;
 import com.isaProject.isa.Model.Examination.ExaminationStatus;
@@ -16,6 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -36,6 +38,26 @@ public class PharmacistService implements IPharamacistService {
     public @Autowired
     PatientRepository patientRepository;
 
+
+
+
+    @Override
+    public List<ReviewedClientsDTO> reviewedClientsDermatologist(Integer id){
+        List<Examination> examinations=examinationRepository.findAll();
+        List <ReviewedClientsDTO> reviewedClientsDTOS=new ArrayList<>();
+
+        for (Examination e:examinations){
+            if(e.getStaff().getId().equals(id)){
+                if(e.getStatus().compareTo(ExaminationStatus.FINISHED)==0){
+                    ReviewedClientsDTO reviewedClientsDTO=new ReviewedClientsDTO(e.getDate(),e.getPatient().getName(),e.getPatient().getSurname(),e.getStartTime(),e.getEndTime());
+                    reviewedClientsDTOS.add(reviewedClientsDTO);
+                }
+
+            }
+        }
+        return  reviewedClientsDTOS;
+
+    }
     @Override
     public void update(Pharmacist pharmacist) {
         Pharmacist pa = pharmacistRepository.getOne(pharmacist.getId());
