@@ -28,7 +28,10 @@ import CreatePurchaseOrder from '../components/CreatePurchaseOrder.vue'
 import SearchUser from '../components/SearchUser.vue'
 import WorkCalendar from '../components/WorkCalendar.vue'
 import StartExamination from '../components/StartExamination.vue'
+import SheduleExamination from '../components/SheduleExamination.vue'
 import moment from 'moment'
+
+
 
 Vue.use(VueRouter)
 Vue.use(BootstrapVue)
@@ -59,7 +62,7 @@ const routes = [
         component: createDrugPage
       },
       {
-        path: '/ProfileAdmin',
+        path: '/ProfileAdmin/:id',
         name: 'ProfileAdmin',
         component: ProfileAdmin
       }
@@ -85,7 +88,7 @@ const routes = [
       
       {
 
-        path: '/profileDermatologist',
+        path: '/profileDermatologist/:id',
         name: 'profileDermatologist',
         component: profileDermatologist
       },
@@ -178,7 +181,7 @@ const routes = [
       }
       ,
       {
-        path: '/SearchUser',
+        path: '/SearchUser/:id',
         name: 'SearchUser',
         component: SearchUser
       }
@@ -195,8 +198,13 @@ const routes = [
         name: 'StartExamination',
         component: StartExamination
       }
-
-     
+      ,
+      {
+        path: '/SheduleExamination/:id',
+        name: 'SheduleExamination',
+        component: SheduleExamination
+      }
+      
       
     ]
 

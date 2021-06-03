@@ -31,9 +31,22 @@ public class PharmacyService implements IPharmacyService {
 
     }
 
+
     @Override
     public Pharmacy findByNamee(String name) {
             return pharmacyRepository.findOneByNamee(name);
+    }
+
+    @Override
+    public Pharmacy pronadjiPoImenu(String name){
+        List<Pharmacy>listOfPharm=pharmacyRepository.findAll();
+        Pharmacy pharmacy=new Pharmacy();
+        for (Pharmacy p:listOfPharm){
+            if(p.getName().equals(name)){
+                pharmacy=p;
+            }
+        }
+        return pharmacy;
     }
 
 

@@ -14,12 +14,10 @@ insert into drug values (504,'sifra 4','kapsula','CAPSULE','proizvodjac 4','ampr
 insert into drug values (505,'sifra 5','prasak','INJECTION','proizvodjac 5','aspirin',false);
 insert into drug values (506,'sifra 6','tableta','TABLET','proizvodjac 6','brufen',false);
 insert into drug values (507,'sifra 7','sprej','GEL','proizvodjac 7','mometazonfuorat',true);
-insert into drug values (508,'sifra 8','sprej','GEL','proizvodjac 8','andol',true);
 
 
 #pharmacy_drugs
 #id,kolicina,drug_id,pharmacy_id
-insert into pharmacy_drugs values (509,5,508,501);
 insert into pharmacy_drugs values (501,5,503,503);
 insert into pharmacy_drugs values (502,8,504,501);
 insert into pharmacy_drugs values (503,6,505,503);
@@ -29,6 +27,12 @@ insert into pharmacy_drugs values (506,5,503,500);
 insert into pharmacy_drugs values (507,8,504,502);
 insert into pharmacy_drugs values (508,8,507,501);
 
+#altervnative_drugs
+insert into alternative_drug values (505,501);
+
+insert into alternative_drug values (503,501);
+insert into alternative_drug values (503,502);
+insert into alternative_drug values (503,507);
 
 
 #drug_pricelist
@@ -41,8 +45,8 @@ insert into drug_pricelist values (504,'2021-07-12',180,'2020-02-02',506,504);
 insert into drug_pricelist values (505,'2021-12-01',300,'2020-04-07',507,502);
 insert into drug_pricelist values (506,'2021-09-09',280,'2020-04-01',503,500);
 insert into drug_pricelist values (507,'2021-11-01',300,'2020-07-07',504,502);
-insert into drug_pricelist values (508,'2021-11-01',286,'2020-07-07',508,501);
-insert into drug_pricelist values (509,'2021-11-01',300,'2020-07-07',507,501);
+
+
 
 #specification
 #id,contraindikacija,doza,struktura,code
@@ -212,22 +216,14 @@ insert into work_time values(501,'2021-07-22','11:00:00','09:30:00',504,506);
 
 #id,date,endtime,isSheduled true znaci zakazan je vec,cijena,report-info o preg,starttime,status,tip,pacijent,idpharm,idstaf,idterapi
 
-insert into examination values(500,false,'2021-06-20','09:00:00',true,600,'info1','08:00:00','CREATED','DERMATOLOGIST_EXAMINATION',510,501,501,500);
+insert into examination values(500,false,'2021-06-20','09:00:00',true,600,null,'08:00:00','SCHEDULED','DERMATOLOGIST_EXAMINATION',510,501,501,null);
 insert into examination values(501,false,'2021-07-22','11:00:00',false,880,'info2','09:30:00','CREATED','DERMATOLOGIST_EXAMINATION',508,501,504,504);
 insert into examination values(503,false,'2021-07-22','11:00:00',false,880,'info2','09:30:00','CREATED','PHARMACIST_EXAMINATION',508,500,502,504);
 insert into examination values(504,false,'2021-07-22','11:00:00',true,880,'info2','09:30:00','CREATED','PHARMACIST_EXAMINATION',507,504,506,502);//--------------------
-insert into examination values(505,false,'2021-07-22','11:00:00',true,880,'info2','09:30:00','CREATED','DERMATOLOGIST_EXAMINATION',508,501,501,null);
+insert into examination values(505,false,'2021-07-22','11:00:00',true,880,null,'09:30:00','SCHEDULED','DERMATOLOGIST_EXAMINATION',508,501,501,null);
 insert into examination values(506,false,'2021-07-22','11:00:00',false,1000,'info2','09:30:00','CREATED','PHARMACIST_EXAMINATION',510,501,511,501);//--------------------
+insert into examination values(502,false,'2021-06-20','2021-06-20 09:00:00',true,600,null,'2021-06-20 08:00:00','SCHEDULED','DERMATOLOGIST_EXAMINATION',508,501,501,null);
 
-insert into examination values(502,false,'2021-06-20','2021-06-20 09:00:00',true,600,'info1','2021-06-20 08:00:00','SCHEDULED','DERMATOLOGIST_EXAMINATION',508,501,501,null);
-insert into examination values(507,false,'2021-07-23','2021-07-23 11:00:00',true,880,'info2','2021-07-23 09:30:00','SCHEDULED','DERMATOLOGIST_EXAMINATION',508,501,504,null);//--------------------
-
-insert into examination values(509,false,'2021-08-27','12:00:00',false,1050,'info2','10:30:00','CREATED','PHARMACIST_EXAMINATION',null,501,511,null);
-
-
-
-insert into examination values(510,false,'2021-08-29','11:00:00',false,1030,'info2','09:30:00','CREATED','DERMATOLOGIST_EXAMINATION',null,500,501,null);
-insert into examination values(511,false,'2021-08-27','12:00:00',false,1050,'info2','10:30:00','CREATED','DERMATOLOGIST_EXAMINATION',null,501,504,null);
 
 
 insert into action_patient_pharmacy values(507,501);
@@ -252,17 +248,6 @@ insert into erecipe_e_recipe_drug values(500,501);
 insert into erecipe_e_recipe_drug values(500,500);
 insert into erecipe_e_recipe_drug values(501,502);
 insert into erecipe_e_recipe_drug values(501,503);
-
-
-
-
-
-
-
-
-
-
-
 
 
 

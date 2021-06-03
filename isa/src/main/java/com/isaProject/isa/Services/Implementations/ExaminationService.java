@@ -12,19 +12,15 @@ import com.isaProject.isa.Model.Examination.ExaminationStatus;
 import com.isaProject.isa.Model.Examination.ExaminationType;
 import com.isaProject.isa.Model.Examination.Therapy;
 import com.isaProject.isa.Model.Pharmacy.Pharmacy;
-import com.isaProject.isa.Model.Users.Dermatologist;
-import com.isaProject.isa.Model.Users.RequestForVacation;
-import com.isaProject.isa.Model.Users.Staff;
-import com.isaProject.isa.Repositories.DrugRepository;
-import com.isaProject.isa.Repositories.ExaminationRepository;
-import com.isaProject.isa.Repositories.PatientRepository;
-import com.isaProject.isa.Repositories.TherapyRepository;
+import com.isaProject.isa.Model.Users.*;
+import com.isaProject.isa.Repositories.*;
 import com.isaProject.isa.Services.IServices.IExaminationService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
+import javax.mail.MessagingException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -48,10 +44,19 @@ public class ExaminationService implements IExaminationService {
     StaffService staffService;
     @Autowired
     PatientRepository patientRepository;
-
+    @Autowired
+    DermatologistService dermatologistService;
     @Autowired
     DrugRepository drugRepository;
+    @Autowired
+    WorkTimeRepository workTimeRepository;
+    @Autowired
+    ExaminationService examinationService;
+    @Autowired
+    StaffRepository staffRepository;
 
+    @Autowired
+    ServiceForEmail serviceForEmail;
 
     @Autowired
     TherapyRepository therapyRepository;
@@ -62,7 +67,127 @@ public class ExaminationService implements IExaminationService {
 
 
 
+    @Override
+    public Examination save2(ExaminationDTO examinationDTO) throws MessagingException {
+        Examination d = new Examination();
 
+
+
+
+
+        List<WorkTime> workTimes = workTimeRepository.findWorkTimeByIdDermAndIdPharm(examinationDTO.getIdStaff(), examinationDTO.getIdPharm());
+        if (!dermatologistService.checkingThatTheScheduleMatches(workTimes, examinationDTO.getDate(), examinationDTO.getStart(), examinationDTO.getEnd())) {
+            throw new IllegalArgumentException("TheScheduleNotMatches");
+        }
+
+
+        List<Examination> listOfEx = examinationRepository.find(examinationDTO.getIdStaff());
+
+        // WorkTime workTimes1 = workTimeRepository.listaWorkTime(examinationDTO.getDate(), examinationDTO.getStart(), examinationDTO.getEnd());
+        // System.out.println("EEEEEEEEEEEEEEE" + workTimes1.getStartTime());
+
+
+        boolean check = true;
+        List<Examination> finaList = new ArrayList<Examination>();
+
+        List<Examination> finaList2 = new ArrayList<Examination>();
+        List<Examination> exx = examinationRepository.getExaminationsByTime(examinationDTO.getDate(), examinationDTO.getStart(), examinationDTO.getEnd());
+
+        for (Examination e:exx){
+            if (e.getStaff().getId().equals(examinationDTO.getIdStaff())){
+                finaList.add(e);
+            }
+        }
+
+
+
+
+
+            /*
+            kao ni sa
+drugim pregledom koji dermatolog ima zakazan.
+
+             */
+
+        if (finaList.size()==0) {
+
+        } else {
+            throw new IllegalArgumentException("Doctor have an appointment scheduled at that time ");
+
+        }
+
+
+        //******************************************
+
+
+
+
+
+           /*
+
+
+            Termin pregleda ne sme da se preklapa sa drugim pregledom
+ili savetovanjem koje pacijent ima zakazano (u bilo kojoj apoteci),
+
+             */
+
+        /*List<Examination>listExaminationOfAllPatient=examinationService.findAll();
+        Patient patient=patientRepository.getOne(examinationDTO.getIdPatient());
+        List<Examination>listExaminationOfMyPatient=new ArrayList<>();
+        Staff staff=staffRepository.getOne(examinationDTO.getIdStaff());
+
+        for (Examination e:listExaminationOfAllPatient){
+            if(e.getPatient().equals(patient)){
+                listExaminationOfMyPatient.add(e);
+            }
+        }
+
+        if(listExaminationOfMyPatient.size()!=0){
+            throw new IllegalArgumentException("Patient have an appointment scheduled at that time ");
+        }*/
+
+        for (Examination e:exx){
+            if (e.getPatient().getId().equals(examinationDTO.getIdPatient())){
+                finaList2.add(e);
+            }
+        }
+
+        if (finaList2.size()==0){
+
+        }else{
+            throw new IllegalArgumentException("Patient have an appointment scheduled at that time ");
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        d.setDate(examinationDTO.getDate());
+        d.setEndTime(examinationDTO.getEnd());
+        d.setStartTime(examinationDTO.getStart());
+        d.setStaff(staffService.findById(examinationDTO.getIdStaff()));
+        System.out.println("APOTEKAAA "+examinationDTO.getName());
+        d.setPharmacy(pharmacyService.pronadjiPoImenu(examinationDTO.getName()));
+
+        d.setPatient(patientService.findById(examinationDTO.getIdPatient()));
+        d.setStatus(ExaminationStatus.CREATED);
+        d.setType(ExaminationType.DERMATOLOGIST_EXAMINATION);
+        serviceForEmail.sendingAnEmailToInformPatientAboutExamination(examinationDTO);
+        return examinationRepository.save(d);
+    }
     @Override
     public Examination save1(ExaminationFrontDTO examinationDTO) {
         Examination d = new Examination();
@@ -84,9 +209,95 @@ public class ExaminationService implements IExaminationService {
         return examinationRepository.save(d);
     }
     @Override
-    public Examination save(ExaminationDTO examinationDTO) {
+    public Examination save(ExaminationDTO examinationDTO) throws MessagingException {
+
+        List<WorkTime> workTimes = workTimeRepository.findWorkTimeByIdDermAndIdPharm(examinationDTO.getIdStaff(), examinationDTO.getIdPharm());
+        if (!dermatologistService.checkingThatTheScheduleMatches(workTimes, examinationDTO.getDate(), examinationDTO.getStart(), examinationDTO.getEnd())) {
+            throw new IllegalArgumentException("TheScheduleNotMatches");
+        }
+
+
+        List<Examination> listOfEx = examinationRepository.find(examinationDTO.getIdStaff());
+
+       // WorkTime workTimes1 = workTimeRepository.listaWorkTime(examinationDTO.getDate(), examinationDTO.getStart(), examinationDTO.getEnd());
+       // System.out.println("EEEEEEEEEEEEEEE" + workTimes1.getStartTime());
+
+
+        boolean check = true;
+      List<Examination> finaList = new ArrayList<Examination>();
+
+        List<Examination> finaList2 = new ArrayList<Examination>();
+        List<Examination> exx = examinationRepository.getExaminationsByTime(examinationDTO.getDate(), examinationDTO.getStart(), examinationDTO.getEnd());
+
+        for (Examination e:exx){
+            if (e.getStaff().getId().equals(examinationDTO.getIdStaff())){
+                finaList.add(e);
+            }
+        }
+
+
+
+
+
+            /*
+            kao ni sa
+drugim pregledom koji dermatolog ima zakazan.
+
+             */
+
+            if (finaList.size()==0) {
+
+            } else {
+                throw new IllegalArgumentException("Doctor have an appointment scheduled at that time ");
+
+            }
+
+
+            //******************************************
+
+
+
+
+
+           /*
+
+
+            Termin pregleda ne sme da se preklapa sa drugim pregledom
+ili savetovanjem koje pacijent ima zakazano (u bilo kojoj apoteci),
+
+             */
+
+        /*List<Examination>listExaminationOfAllPatient=examinationService.findAll();
+        Patient patient=patientRepository.getOne(examinationDTO.getIdPatient());
+        List<Examination>listExaminationOfMyPatient=new ArrayList<>();
+        Staff staff=staffRepository.getOne(examinationDTO.getIdStaff());
+
+        for (Examination e:listExaminationOfAllPatient){
+            if(e.getPatient().equals(patient)){
+                listExaminationOfMyPatient.add(e);
+            }
+        }
+
+        if(listExaminationOfMyPatient.size()!=0){
+            throw new IllegalArgumentException("Patient have an appointment scheduled at that time ");
+        }*/
+
+        for (Examination e:exx){
+            if (e.getPatient().getId().equals(examinationDTO.getIdPatient())){
+                finaList2.add(e);
+            }
+        }
+
+        if (finaList2.size()==0){
+
+        }else{
+            throw new IllegalArgumentException("Patient have an appointment scheduled at that time ");
+        }
+
+
+
         Examination d = new Examination();
-        Staff s=new Staff();
+        Staff s = new Staff();
         d.setDate(examinationDTO.getDate());
         d.setEndTime(examinationDTO.getEnd());
         d.setStartTime(examinationDTO.getStart());
@@ -96,7 +307,12 @@ public class ExaminationService implements IExaminationService {
         d.setType(ExaminationType.DERMATOLOGIST_EXAMINATION);
         d.setPatient(patientService.findById(examinationDTO.getIdPatient()));
         d.setStatus(ExaminationStatus.SCHEDULED);
+
+        //posalji mejl
+        serviceForEmail.sendingAnEmailToInformPatientAboutExamination(examinationDTO);
+
         return examinationRepository.save(d);
+
     }
 
 

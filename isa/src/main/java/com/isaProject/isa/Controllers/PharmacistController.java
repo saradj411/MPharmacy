@@ -128,6 +128,7 @@ public class PharmacistController {
 
 
  */
+/*
 
     @GetMapping(value ="create/{name}/{surname}/{email}/{address}/{phoneNumber}/{city}/{country}/{idAdmina}/{date}/{start}/{end}")
     public ResponseEntity<String> addDrug(@PathVariable(value="name") String name,@PathVariable(value="surname") String surname,@PathVariable(value="email") String email,@PathVariable(value="address") String address,@PathVariable(value="phoneNumber") String phoneNumber,@PathVariable(value="city") String city,@PathVariable(value="country") String country,@PathVariable(value="idAdmina") Integer idAdmina,@PathVariable(value="start") String start,@PathVariable(value="end") String end) {
@@ -156,9 +157,11 @@ public class PharmacistController {
         String proba="2011/11/11";
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 
-        /*
+        */
+/*
         localhost:8083/dermatologist/create/dsdfdd/sdsadd/asdsdd/aSDdd/ASDFdd/ASDddd/asdefrdddd/503/2017-11-11/11:15:45/12:15:45
-         */
+         *//*
+
 
 
         Date apptDay = null;
@@ -209,6 +212,7 @@ public class PharmacistController {
 
         return new ResponseEntity<>("kreirano", HttpStatus.CREATED);
     }
+*/
 
 
 
@@ -226,7 +230,7 @@ public class PharmacistController {
 
 
 
-    @GetMapping(value ="createWorkTime/{idPharmaceut}/{date}/{start}/{end}")//mora se id proslijediti nekako ili mozda email
+   /* @GetMapping(value ="createWorkTime/{idPharmaceut}/{date}/{start}/{end}")//mora se id proslijediti nekako ili mozda email
     public ResponseEntity<String> addWorkTime(@PathVariable(value="idPharmaceut") Integer idPharmaceut,@PathVariable(value="start") String start,@PathVariable(value="end") String end) {
 
         Pharmacist pharmacist=pharmacistService.findById(idPharmaceut);//moze i findbyemail
@@ -282,7 +286,7 @@ public class PharmacistController {
 
         return new ResponseEntity<>("kreirano", HttpStatus.CREATED);
     }
-
+*/
 
     @GetMapping("/delete/{id}")
     public ResponseEntity<String> deletePharmacist(@PathVariable Integer id) {

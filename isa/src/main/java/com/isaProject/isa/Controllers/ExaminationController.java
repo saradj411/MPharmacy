@@ -21,6 +21,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.mail.MessagingException;
 import java.util.List;
 
 
@@ -99,10 +100,12 @@ public class ExaminationController {
 
 
     @PostMapping("/create")
-    public ResponseEntity<String> addDrug(@RequestBody ExaminationDTO examinationDTO) {
-        System.out.println("Usao u pregleddd");
-        System.out.println("examination  " + examinationDTO.getStart());
-        System.out.println("end " + examinationDTO.getEnd());
+    public ResponseEntity<String> addDrug(@RequestBody ExaminationDTO examinationDTO) throws MessagingException {
+        Examination examination = examinationService.save(examinationDTO);//////////ne znam dal je ovdje bilo samo save
+        return new ResponseEntity<>("kreirano", HttpStatus.CREATED);
+    }
+    @PostMapping("/createOne")
+    public ResponseEntity<String> create(@RequestBody ExaminationDTO examinationDTO) throws MessagingException {
         Examination examination = examinationService.save(examinationDTO);
         return new ResponseEntity<>("kreirano", HttpStatus.CREATED);
     }

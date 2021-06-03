@@ -127,6 +127,15 @@ public class PharmacyController {
                 new ResponseEntity<>(HttpStatus.NOT_FOUND) :
                 ResponseEntity.ok(pharm);
     }
+
+    @GetMapping(value = "/findOneByName/{name}")
+    public ResponseEntity<Pharmacy> findByName(@PathVariable String name) {
+        //log.info("dsds:"+id);
+        Pharmacy pharm=pharmacyService.pronadjiPoImenu(name);
+        return pharm == null ?
+                new ResponseEntity<>(HttpStatus.NOT_FOUND) :
+                ResponseEntity.ok(pharm);
+    }
     @PostMapping("/register")
     public ResponseEntity<String> addPharmacy(@RequestBody PharmacyDTO pharmacyDTO) {
 

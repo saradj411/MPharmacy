@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.isaProject.isa.Model.Pharmacy.Pharmacy;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Date;
 
@@ -17,7 +18,7 @@ public class WorkTime {
     private Integer id;
 
     @Column
-    private Date date;
+    private LocalDate date;
 
     @Column
     private LocalTime startTime;
@@ -39,7 +40,7 @@ public class WorkTime {
         return id;
     }
 
-    public Date getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
@@ -63,7 +64,7 @@ public class WorkTime {
         this.id = id;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 
@@ -83,7 +84,7 @@ public class WorkTime {
         this.pharmacy = pharmacy;
     }
 
-    public WorkTime(Integer id, Date date, LocalTime startTime, LocalTime endTime, Staff staff, Pharmacy pharmacy) {
+    public WorkTime(Integer id, LocalDate date, LocalTime startTime, LocalTime endTime, Staff staff, Pharmacy pharmacy) {
         this.id = id;
         this.date = date;
         this.startTime = startTime;

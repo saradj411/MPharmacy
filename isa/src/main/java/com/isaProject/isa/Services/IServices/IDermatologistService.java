@@ -36,7 +36,7 @@ public interface IDermatologistService {
 */
     void  scheduleEx(LocalDate date, LocalTime start, LocalTime end, String name, Integer idDerm, Integer idPharm, Integer idPatient, double price);
 
-    void patientNotAppear(Integer id);
+    void patientNotAppear(Integer idEx);
 
     void startExamination(CreateExaminationDTO createExaminationDTO);
 

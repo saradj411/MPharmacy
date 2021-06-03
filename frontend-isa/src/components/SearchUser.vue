@@ -77,9 +77,9 @@
 <!--Lista -->
 <div v-if="showUsers">
 
-        <div  style="background:#B0B3D6; width:650px;margin-left:38px;margin-top:60px;"  v-for="d in this.pacijent"  v-bind:key="d.idUser">
+        <div  style="width:650px;margin-left:38px;margin-top:60px;"  v-for="d in this.pacijent"  v-bind:key="d.idUser">
                    <form>
-                      <table style="" id="table2" class="table" > 
+                      <table style="background:#B0B3D6; " id="table2" class="table" > 
 
                        <tbody>
       
@@ -109,12 +109,53 @@
  
   </tbody>
                         </table>
+<button class="btn btn-primary btn-lg"  style="margin-left:-30px; margin-top:50px;background:#474A8A" v-on:click ="startEx(d.id)">Start examination</button>
 
                 </form>
       
       
         </div>
         </div>
+
+
+<!--PREGLED-->
+
+ <div v-if="showNew" style="background:#B0B3D6; width:650px;margin-left:38px;margin-top:60px;">
+                                      <label style="font-size:30px;color:#0D184F;margine-left:20px;">Schedule new examination</label >
+
+                    <div >
+                        <div>
+                        <label style="font-size:22px;color:#0D184F;">Date:</label>
+                        <input type="date" class="form-control" v-model="date" placeholder="Enter description">
+                        </div>
+                    </div>
+                    <div >
+                        <div >
+                        <label style="font-size:22px;color:#0D184F;">Start time:</label>
+                        <input type="time" class="form-control" v-model = "start" placeholder="Enter start date">
+                        </div>
+                    </div>
+                    <div >
+                        <div>
+                            <label style="font-size:22px;color:#0D184F;">End time:</label>
+                            <input type="time" class="form-control"  v-model="end" placeholder="Enter end date">
+                        </div>
+                    </div>
+                    <div >
+                        <div>
+                            <label style="font-size:22px;color:#0D184F;">Pharmacy:</label>
+                            <input type="text" class="form-control"  v-model="pharmacy" placeholder="Enter pharmacy">
+                        </div>
+                    </div>
+                     <button class="btn btn-primary btn-lg" v-on:click ="shedule" style="margin-left:10px; margin-top:50px;background:#474A8A">Shedule</button>
+
+            </div>
+
+
+
+
+
+
 </div>
 
 </template>
@@ -123,32 +164,79 @@
 export default {
   data() {
     return {
-      
-       pacijent : {},
-       showUsers: true,
-       showUsersTable:false,
-       jel:false,
-       name : "",
-       userName:"",
-       userSurname:"",
-       user:[]
+      id : this.$route.params.id,
+      pacijent : {},
+      showNew: false,
+      showUsers: true,
+      showUsersTable:false,
+      jel:false,
+      name : "",
+      userName:"",
+      userSurname:"",
+      user:[],
+      idPatient:"",
+      jedanPacijent:{},
+      pharmacy:"",
+      apoteka:{}
        
     }
   },
   mounted() {
         this.axios.get('/patient/findAll/')
         .then(response => {
-                this.pacijent = response.data;
+                this.pacijent = response.data;  
                  
        
          }).catch(res => {
-                alert("Ne valja");
                 console.log(res);
-        });
-    }
-     ,
+        });   
+    },
       methods:{
+            startEx : function(data){
+               console.log(data);
+                     this.showNew = true;
+                     this.showUsers = false;
+                     this.axios.get('/patient/findById/'+data)
+                           .then(response => {
+                              this.jedanPacijent = response.data;
+                                    
+                                    
+                              }).catch(res => {
+                                    console.log(res);
+                           });
+            },
 
+
+            shedule : function(){
+                    console.log("ime je "+this.pharmacy)
+                     this.axios.get('/pharmacy/findOneByName/'+this.pharmacy)
+                           .then(response => {
+
+                                    this.apoteka = response.data;
+                                                            
+                              }).catch(res => {
+                                    console.log(res);
+                           });
+                     const infoExamination = {
+                              idPatient: this.jedanPacijent.id,
+                              idStaff: this.id,
+                              name : this.pharmacy,
+                              date : this.date,
+                              start : this.start,
+                              end : this.end,
+                           }
+                        this.axios.post('/examination/createOne',infoExamination,{ 
+                        headers: {
+                        }}).then(response => {
+                                 alert("Examination is successfully created!");
+                                    console.log(response.data);
+                        
+                           })
+                           .catch(response => {
+                              alert(response.response.data.message);
+                                    console.log(response);
+                           });    
+                  },
 
       searchByName: function(){
         

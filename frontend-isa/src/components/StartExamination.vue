@@ -261,10 +261,10 @@ export default {
                                                 idPatient: this.pacijent.id,
                                                 idStaff: this.staff.id,
                                                 idPharm : this.pharmacy.idPharm,
-                                                date : this.date,
-                                                start : this.start,
-                                                end : this.end,
-                                                price:this.price,
+                                                date : this.pregled.date,
+                                                start : this.pregled.start,
+                                                end : this.pregled.end,
+                                                price:this.pregled.price,
                                                 report:this.report,
                                                 name:this.choosenDrug,
                                                 numberOfDay:this.numberOfDay
@@ -273,7 +273,7 @@ export default {
                                             this.axios.post('/examination/finished',info,{ 
                                         headers: {
                                         }}).then(response => {
-                                                  alert("Examination is successfully created!Alternative drug");
+                                                  alert("Examination is successfully created!");
                                                     console.log(response.data);
                                         
                                             })

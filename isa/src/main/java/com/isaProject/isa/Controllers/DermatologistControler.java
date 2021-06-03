@@ -264,11 +264,12 @@ Ukoliko se korisnik ne pojavi na pregledu, dobija 1 penal.
 
      */
 
-    @PostMapping("/updateFreeEx/{idPatient}")
-    ResponseEntity<String> patientNotAppearr(@PathVariable Integer idPatient)
+    @GetMapping("/updateFreeEx/{idEx}")
+    ResponseEntity<String> patientNotAppearr(@PathVariable Integer idEx)
     {
-        dermatologistService.patientNotAppear(idPatient);
-        return new ResponseEntity<>("ajdeee", HttpStatus.CREATED);
+        String answer="The patient received 1 penalty!";
+        dermatologistService.patientNotAppear(idEx);
+        return new ResponseEntity<>(answer, HttpStatus.CREATED);
 
     }
 
