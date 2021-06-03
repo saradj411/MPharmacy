@@ -32,6 +32,7 @@ import WorkCalendarPharmacist from '../components/WorkCalendarPharmacist.vue'
 import StartCounseling from '../components/StartCounseling.vue'
 import SearchUserPharmacist from '../components/SearchUserPharmacist.vue'
 import Clients from '../components/Clients.vue'
+import ReviewedClientsDermatologist from '../components/ReviewedClientsDermatologist.vue'
 
 
 import moment from 'moment'
@@ -225,6 +226,12 @@ const routes = [
         path: '/Clients',
         name: 'Clients',
         component: Clients
+      }
+      ,
+      {
+        path: '/ReviewedClientsDermatologist/:id',
+        name: 'ReviewedClientsDermatologist',
+        component: ReviewedClientsDermatologist
       }
       
       

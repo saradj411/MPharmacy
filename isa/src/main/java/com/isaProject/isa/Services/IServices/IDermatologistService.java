@@ -40,4 +40,7 @@ public interface IDermatologistService {
 
     void startExamination(CreateExaminationDTO createExaminationDTO);
 
-}
+    List<ReviewedClientsDTO> reviewedClientsDermatologist(Integer id);
+
+
+    }

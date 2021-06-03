@@ -337,6 +337,27 @@ ili savetovanjem koje pacijent ima zakazano (u bilo kojoj apoteci),
 
     }
 
+
+    @Override
+    public List<ReviewedClientsDTO> reviewedClientsDermatologist(Integer id){
+        List<Examination> examinations=examinationRepository.findAll();
+        List <ReviewedClientsDTO> reviewedClientsDTOS=new ArrayList<>();
+
+        for (Examination e:examinations){
+            if(e.getStaff().getId().equals(id)){
+                if(e.getStatus().compareTo(ExaminationStatus.FINISHED)==0){
+                    ReviewedClientsDTO reviewedClientsDTO=new ReviewedClientsDTO(e.getDate(),e.getPatient().getName(),e.getPatient().getSurname(),e.getStartTime(),e.getEndTime());
+                    reviewedClientsDTOS.add(reviewedClientsDTO);
+                }
+
+            }
+        }
+        return  reviewedClientsDTOS;
+
+    }
+
+
+
     @Override
     public void patientNotAppear(Integer idEx){
 

@@ -88,7 +88,13 @@ public class DermatologistControler {
         }
 
 
-
+            @GetMapping(value = "/findClientsDermatologist/{id}")
+            public ResponseEntity<List<ReviewedClientsDTO>> findClientsD(@PathVariable Integer id) {
+                List<ReviewedClientsDTO> reviewedClientsDTOS=dermatologistService.reviewedClientsDermatologist(id);
+                return reviewedClientsDTOS == null ?
+                        new ResponseEntity<>(HttpStatus.NOT_FOUND) :
+                        ResponseEntity.ok(reviewedClientsDTOS);
+            }
 
 
 

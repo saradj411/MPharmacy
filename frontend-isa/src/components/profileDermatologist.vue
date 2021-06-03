@@ -15,6 +15,12 @@
                      <span style="float: left; margin-top: 20px;">
                   <button class = "btn btn-primary btn-xs" style="margin:auto; margin-left:38px;background:#474A8A" v-on:click = "profile">Clients </button>
                      </span>
+                     <span style="float: left; margin-top: 20px;">
+                  <button class = "btn btn-primary btn-xs" style="margin:auto; margin-left:38px;background:#474A8A" v-on:click = "clients">Reviewed clients </button>
+                     </span>
+
+                      
+
                      <span style="float: left; margin-top: 20px;">         
                               
                   <button class = "btn btn-primary btn-xs" style="margin:auto; margin-left:38px;background:#474A8A" v-on:click = "requestForvacation">Request for vacation</button>
@@ -136,6 +142,11 @@ export default {
         requestForvacation : function(){
           window.location.href = '/RequestForVacation/'+501;
         },
+        clients : function(){
+          window.location.href = '/ReviewedClientsDermatologist/'+501;
+        },
+
+        
 
         
 
