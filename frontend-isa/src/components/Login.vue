@@ -124,17 +124,75 @@ export default
                         
                     }}).then(response => 
                     {                        
-                        
-                        console.log(response.data);
-                        this.axios.defaults.headers.common['Authorization'] = 'Bearer ' + response.data.accessToken;
                         localStorage.setItem( 'accessToken', response.data.accessToken);
                         localStorage.setItem('expiresIn', new Date(new Date().getTime() + response.data.expiresIn).getTime());
+                        this.axios.defaults.headers.common['Authorization'] = 'Bearer ' + response.data.accessToken;
+                        //console.log(response.data);
+                                
+                                this.axios.get('/user/loggedUser', {
+                                headers: 
+                                {          
+                                    //'Authorization': `Bearer ` + localStorage.getItem('accessToken')
+                                    
+                                }}).then(response => 
+                                {                        
+                                    if(response.data.authorityRole === "ROLE_ADMIN")
+                                    {
+                                        console.log("USAO ADMIN");
+                                        console.log(response.data);
+                                        this.$router.push('SystemAdminProfile/' + response.data.id);
+                                        //DODATI ZA ID ADMINA
+                                    }
+                                    else if(response.data.authorityRole === "ROLE_PATIENT")
+                                    {
+                                            this.$router.push('HomePagePatient/'+ response.data.id);
+                                    }
+                                    else if(response.data.authorityRole === "ROLE_PHARMACY_ADMIN")
+                                    {
+                                        
+                                            this.$router.push('ProfileAdmin' /*+ response.data.id*/);
+                                    }
+                                    else if(response.data.authorityRole === "ROLE_PHARMACIST")
+                                    {
+                                        console.log("USAO U ROLE_PHARMACIST");
+                                            //this.$router.push('HomePagePatient/'+ response.data.id);
+                                            this.$router.push('profilePharmacist' /*+ response.data.id*/);
+                                    }
+                                    else if(response.data.authorityRole === "ROLE_DERMATOLOGIST")
+                                    {
+                                        console.log("USAO U DERMATOLOGA")
+                                            //this.$router.push('HomePagePatient/'+ response.data.id);
+                                            this.$router.push('profileDermatologist' /*+ response.data.id*/);
+                                    }
+                                    else if(response.data.authorityRole === "ROLE_SUPPLIER")
+                                    {
+                                        console.log('Supplier');
+                                            //this.$router.push('HomePagePatient/'+ response.data.id);
+                                    }
+                                    else
+                                    {
+                                        console.log(response.data);
+                                        alert("User has no account!");
+                                    }
+                                   
+                                    
+                                    
+                                    //Odkomentarisati ovo kad se obavi verifikacija mejla
+                                }).catch(res => {                 
+                                
+                                    console.log("GRESKA");
+                                    console.log(res.response);
+                                    this.errorMessage = res.response.data.message;
+                                });                        
                         
-                       this.$router.push('SystemAdminProfile');
+                        
+                        
+
+                       //this.$router.push('SystemAdminProfile');
                         
                         
                         //Odkomentarisati ovo kad se obavi verifikacija mejla
-                    }).catch(res => {                   
+                    }).catch(res => {      
                        
                         if(res.response.status === 401)
                             alert("Wrong password or email.");
@@ -150,7 +208,7 @@ export default
     },
     mounted()
     {
-
+        
     }
     
 }
