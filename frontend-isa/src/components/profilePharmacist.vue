@@ -18,7 +18,7 @@
                           <b-dropdown id="ddCommodity" name="ddCommodity" text="Counseling" style="margin-left:33px; color:white;"  >
                                         
                                         <b-dropdown-item>
-                                          <router-link :to="{ path: '/SearchUser/'+user.id}" v-slot="{href, navigate}" custom>
+                                          <router-link :to="{ path: '/SearchUserPharmacist/'+user.id}" v-slot="{href, navigate}" custom>
               <b-link style="font-size:20px;color:black;" :href="href" @click="navigate"  elevation="1">Search user
                 </b-link></router-link>
               </b-dropdown-item>

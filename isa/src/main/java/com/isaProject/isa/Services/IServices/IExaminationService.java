@@ -18,7 +18,9 @@ public interface IExaminationService {
     Examination createExD(ExaminationDTO examinationDTO) throws MessagingException;
     Boolean getExaminationByIdStaff(Integer idPharmacist);
     Examination findById(Integer id);
-    Examination save(ExaminationDTO examinationDTO) throws MessagingException;
+    Examination saveP(ExaminationDTO examinationDTO) throws MessagingException;
+
+        Examination save(ExaminationDTO examinationDTO) throws MessagingException;
     List<FrontCreatedExaminationDTO> findCreatedDermatologistExamination();
     void canceling(Integer id);
 

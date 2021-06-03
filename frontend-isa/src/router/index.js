@@ -31,7 +31,7 @@ import StartExamination from '../components/StartExamination.vue'
 import SheduleExamination from '../components/SheduleExamination.vue'
 import WorkCalendarPharmacist from '../components/WorkCalendarPharmacist.vue'
 import StartCounseling from '../components/StartCounseling.vue'
-
+import SearchUserPharmacist from '../components/SearchUserPharmacist.vue'
 
 
 import moment from 'moment'
@@ -101,6 +101,12 @@ const routes = [
         path: '/profileDermatologist/:id',
         name: 'profileDermatologist',
         component: profileDermatologist
+      },
+      {
+
+        path: '/SearchUserPharmacist/:id',
+        name: 'SearchUserPharmacist',
+        component: SearchUserPharmacist
       },
       {
         path: '/profilePharmacist',

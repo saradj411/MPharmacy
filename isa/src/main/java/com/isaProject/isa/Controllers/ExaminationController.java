@@ -110,11 +110,18 @@ public class ExaminationController {
         return new ResponseEntity<>("kreirano", HttpStatus.CREATED);
     }
 
-    @PostMapping("/createPharmacists")
+    @PostMapping("/createDermatologist")
     public ResponseEntity<String> create(@RequestBody ExaminationDTO examinationDTO) throws MessagingException {
         Examination examination = examinationService.save(examinationDTO);
         return new ResponseEntity<>("kreirano", HttpStatus.CREATED);
     }
+
+    @PostMapping("/createPharmacists")
+    public ResponseEntity<String> createP(@RequestBody ExaminationDTO examinationDTO) throws MessagingException {
+        Examination examination = examinationService.saveP(examinationDTO);
+        return new ResponseEntity<>("kreirano", HttpStatus.CREATED);
+    }
+
 
     @PostMapping("/finished/{id}")
     public ResponseEntity<String> finished(@RequestBody ExaminationFrontDTO examinationFrontDTO,@PathVariable Integer id) {

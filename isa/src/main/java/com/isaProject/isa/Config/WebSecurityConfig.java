@@ -114,6 +114,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll().antMatchers("/examination/createPharmacistEx")
 
                 .permitAll().antMatchers("/examination/createPharmacists")
+                .permitAll().antMatchers("/examination/createDermatologist")
 
                 .permitAll().antMatchers("/pharmacyDrugs/findDrugsByIdPharm/{id}/{name}")
 

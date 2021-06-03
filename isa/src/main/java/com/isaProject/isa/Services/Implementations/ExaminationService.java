@@ -58,6 +58,8 @@ public class ExaminationService implements IExaminationService {
 
     @Autowired
     ServiceForEmail serviceForEmail;
+    @Autowired
+    PharmacistRepository pharmacistRepository;
 
     @Autowired
     TherapyRepository therapyRepository;
@@ -300,6 +302,57 @@ ili savetovanjem koje pacijent ima zakazano (u bilo kojoj apoteci),
         d.setStartTime(examinationDTO.getStart());
         d.setStaff(staffService.findById(examinationDTO.getIdStaff()));
         d.setType(ExaminationType.DERMATOLOGIST_EXAMINATION);
+        d.setPatient(patientService.findById(examinationDTO.getIdPatient()));
+        d.setStatus(ExaminationStatus.CREATED);
+        serviceForEmail.sendingAnEmailToInformPatientAboutExamination(examinationDTO);
+
+        return examinationRepository.save(d);
+
+    }
+    @Override
+    public Examination saveP(ExaminationDTO examinationDTO) throws MessagingException {
+        Pharmacist s=pharmacistRepository.getOne(examinationDTO.getIdStaff());
+        System.out.println("aaaa"+s.getPharmacy().getIdPharm());
+        List<WorkTime> workTimes = workTimeRepository.findWorkTimeByIdDermAndIdPharm(examinationDTO.getIdStaff(),s.getPharmacy().getIdPharm());
+        if (!dermatologistService.checkingThatTheScheduleMatches(workTimes, examinationDTO.getDate(), examinationDTO.getStart(), examinationDTO.getEnd())) {
+            throw new IllegalArgumentException("TheScheduleNotMatches");
+        }
+        boolean check = true;
+        List<Examination> finaList = new ArrayList<Examination>();
+        List<Examination> finaList2 = new ArrayList<Examination>();
+        List<Examination> exx = examinationRepository.getExaminationsByTime(examinationDTO.getDate(), examinationDTO.getStart(), examinationDTO.getEnd());
+        for (Examination e:exx){
+            if (e.getStaff().getId().equals(examinationDTO.getIdStaff())){
+                finaList.add(e);
+            }
+        }
+
+        if (finaList.size()==0) {
+
+        } else {
+            throw new IllegalArgumentException("Doctor have an appointment scheduled at that time ");
+
+        }
+
+        for (Examination e:exx){
+            if (e.getPatient().getId().equals(examinationDTO.getIdPatient())){
+                finaList2.add(e);
+            }
+        }
+
+        if (finaList2.size()==0){
+
+        }else{
+            throw new IllegalArgumentException("Patient have an appointment scheduled at that time ");
+        }        Examination d = new Examination();
+        System.out.println(pharmacyService.pronadjiPoImenu(examinationDTO.getName()));
+        d.setPharmacy(s.getPharmacy());
+
+        d.setDate(examinationDTO.getDate());
+        d.setEndTime(examinationDTO.getEnd());
+        d.setStartTime(examinationDTO.getStart());
+        d.setStaff(staffService.findById(examinationDTO.getIdStaff()));
+        d.setType(ExaminationType.PHARMACIST_EXAMINATION);
         d.setPatient(patientService.findById(examinationDTO.getIdPatient()));
         d.setStatus(ExaminationStatus.CREATED);
         serviceForEmail.sendingAnEmailToInformPatientAboutExamination(examinationDTO);
