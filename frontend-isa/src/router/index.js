@@ -31,6 +31,7 @@ import StartExamination from '../components/StartExamination.vue'
 import SystemAdminProfile from '../components/SystemAdminProfile.vue'
 import AddShifarnikPage from '../components/AddShifarnikPage'
 import RegisterNewSystemAdmin from '../components/RegisterNewSystemAdmin'
+import ReserveDrug from '../components/ReserveDrug'
 import moment from 'moment'
 
 Vue.use(VueRouter)
@@ -212,6 +213,11 @@ const routes = [
         path:'/RegisterNewSystemAdmin',
         name: 'RegisterNewSystemAdmin',
         component: RegisterNewSystemAdmin
+      },
+      {
+        path:'/ReserveDrug/:id/:idPatient',
+        name: 'ReserveDrug',
+        component: ReserveDrug
       }
 
      

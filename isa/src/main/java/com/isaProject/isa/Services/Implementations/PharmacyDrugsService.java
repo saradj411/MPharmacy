@@ -79,4 +79,14 @@ public class PharmacyDrugsService implements IPharmacyDrugsService {
        // return false;
     }
 
+    @Override
+    public List<PharmacyDrugs> findByName(String name) {
+        return pharmacyDrugsRepository.findByName(name);
+    }
+
+    @Override
+    public PharmacyDrugs findById(Integer id) {
+        return pharmacyDrugsRepository.findOneById(id);
+    }
+
 }

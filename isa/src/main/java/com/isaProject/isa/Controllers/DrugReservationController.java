@@ -1,5 +1,7 @@
 package com.isaProject.isa.Controllers;
 
+import com.isaProject.isa.Model.DTO.DrugDTO;
+import com.isaProject.isa.Model.DTO.DrugReservationDTO;
 import com.isaProject.isa.Model.DTO.FrontDrugReservationDTO;
 import com.isaProject.isa.Model.Drugs.Drug;
 import com.isaProject.isa.Model.Drugs.DrugPricelist;
@@ -107,5 +109,10 @@ public class DrugReservationController {
 
     }
 
+    @PostMapping("/create")
+    public ResponseEntity<DrugReservation> createReservation(@RequestBody DrugReservationDTO drugDTO) {
 
+        DrugReservation drug = drugReservationService.save(drugDTO);
+        return new ResponseEntity<>(drug, HttpStatus.CREATED);
+    }
 }

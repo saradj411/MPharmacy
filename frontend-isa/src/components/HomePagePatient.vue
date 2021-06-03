@@ -13,10 +13,26 @@
             <button class="btn btn-danger btn-lg" style="float:left;margin-top:15px;margin-left:10px" v-on:click = "showExamination">Examination</button>
            <button class="btn btn-danger btn-lg" style="float:left;margin-top:15px;margin-left:10px" v-on:click = "showRecipe">eRecipe</button>
            <button class="btn btn-danger btn-lg" style="float:left;margin-top:15px;margin-left:10px" v-on:click = "showCreatedDerm">Schedule Examination</button>
+           <button class="btn btn-danger btn-lg" style="float:left;margin-top:15px;margin-left:10px" v-on:click = "showAllDrugs">Reserve drug</button>
            
             
                                   
         </div>
+
+        <div v-if="showSearchDrug"  style="background:#B0B3D6; height: 70px; margin-top: 10px">
+            
+      <span  style="float:right;margin:15px">
+                    
+          <div class="input-group mb-3">
+              <input type="text" v-model="drugName" class="form-control" placeholder="Enter drug name" aria-label="Enter name" aria-describedby="addon-wrapping">
+              <div class="input-group-append">
+                  <button class="btn btn-info" type="button"  v-on:click = "searchName(drugName)" >Search</button>
+                </div>
+           </div>
+      </span>
+             
+            
+  </div>
 
 <!-- all PHARMACIES!-->
   <div v-if="showTable"  style="float:left;margin-left:30px;">
@@ -491,6 +507,71 @@
 
 
       </div> 
+
+      
+       <!--ALL DRUG IN PHARMACIES !-->
+  <div v-if="showDrugsInPharmacies"  style="float:left;margin-left:30px;">
+     <h4 style="margin:30px">DRUGS IN PHARMACIES:</h4>
+ <div style="background: #a7c1c9;margin-left:30px;"  v-for="dr in this.drugInPharmacies"  v-bind:key="dr.id">
+      
+<table  style="" id="table2" class="table" >
+ 
+    <tbody>
+      <tr>
+        <th scope="row"></th>
+        <td>Drug:</td>
+         <td>{{dr.drug.name}}</td>
+      </tr>
+        <tr>
+        <th scope="row"></th>
+        
+         <td>Pharmacy:</td>
+          <td>{{dr.pharmacy.name}}</td>
+      </tr>
+        <tr>
+          <th></th>
+          <td><button class="btn btn-danger btn-sm" v-on:click = "reserve(dr.id)">Reserve</button></td>
+          
+
+
+        </tr>
+  </tbody>
+</table>
+           </div>
+
+
+      </div> 
+      <!--SEARCH DRUG!-->
+  <div v-if="showSearchDrugs"  style="float:left;margin-left:30px;">
+     <h4 style="margin:30px">DRUGS IN PHARMACIES:</h4>
+ <div style="background: #a7c1c9;margin-left:30px;"  v-for="dr in this.searchDrugs"  v-bind:key="dr.id">
+      
+<table  style="" id="table2" class="table" >
+ 
+    <tbody>
+      <tr>
+        <th scope="row"></th>
+        <td>Drug:</td>
+         <td>{{dr.drug.name}}</td>
+      </tr>
+        <tr>
+        <th scope="row"></th>
+        
+         <td>Pharmacy:</td>
+          <td>{{dr.pharmacy.name}}</td>
+      </tr>
+        <tr>
+          <th></th>
+          <td><button class="btn btn-danger btn-sm" v-on:click = "reserve(dr.id)">Reserve</button></td>
+          
+
+        </tr>
+  </tbody>
+</table>
+           </div>
+
+
+      </div> 
 </div>
 
   
@@ -512,9 +593,13 @@ export default {
         showCreatedDermExamination:false,
         showFinishedDerm:false,
         showFinishedPharm:false,
+        showDrugsInPharmacies:false,
+        showSearchDrugs:false,
+        showSearchDrug:false,
 
         pharmacies : [],
         pharmacies1 : [],
+        drugName:null,
 
         reservations:[],
         dermatologistScheduledExamination:[],
@@ -524,6 +609,9 @@ export default {
 
         dermatologistFinishedExamination:[],
         pharmacistFinishedExamination:[],
+        drugInPharmacies:[],
+        searchDrugs:[],
+    
 
         pickedReservations:[],
         canceledReservations:[],
@@ -630,6 +718,14 @@ export default {
                 alert("Nesto ne valja");
                 console.log(res);
         });
+        this.axios.get('/pharmacyDrugs/getAll')
+        .then(response => {
+                this.drugInPharmacies= response.data;
+                
+         }).catch(res => {
+                alert("Nesto ne valja");
+                console.log(res);
+        });
                
                
 },
@@ -646,6 +742,9 @@ methods:{
         this.showCreatedDermExamination=false
         this.showFinishedDerm=false
         this.showFinishedPharm=false
+        this.showDrugsInPharmacies=false
+        this.showSearchDrug=false
+        this.showSearchDrugs=false
        //this.showSearchPharmacy=true
       },
       showReservation:
@@ -658,6 +757,9 @@ methods:{
          this.showCreatedDermExamination=false
          this.showFinishedDerm=false
         this.showFinishedPharm=false
+        this.showDrugsInPharmacies=false
+        this.showSearchDrug=false
+        this.showSearchDrugs=false
       },
       showConsultation:
        function(){
@@ -669,6 +771,9 @@ methods:{
          this.showCreatedDermExamination=false
          this.showFinishedDerm=false
         this.showFinishedPharm=true
+        this.showDrugsInPharmacies=false
+        this.showSearchDrug=false
+        this.showSearchDrugs=false
       },
       showRecipe: function(){
         this.showTable=false
@@ -679,6 +784,9 @@ methods:{
         this.showCreatedDermExamination=false
         this.showFinishedDerm=false
         this.showFinishedPharm=false
+        this.showDrugsInPharmacies=false
+        this.showSearchDrug=false
+        this.showSearchDrugs=false
       },
       showExamination:
        function(){
@@ -690,6 +798,9 @@ methods:{
         this.showCreatedDermExamination=false
         this.showFinishedDerm=true
         this.showFinishedPharm=false
+        this.showDrugsInPharmacies=false
+        this.showSearchDrug=false
+        this.showSearchDrugs=false
       },
       showCreatedDerm:
        function(){
@@ -701,6 +812,22 @@ methods:{
         this.showCreatedDermExamination=true
         this.showFinishedDerm=false
         this.showFinishedPharm=false
+        this.showDrugsInPharmacies=false
+        this.showSearchDrug=false
+        this.showSearchDrugs=false
+      },
+      showAllDrugs: function(){
+        this.showTable=false
+        this.showReserveTable=false
+       this.showDermExam=false
+       this.showPharmExam=false
+        this.showERecipe=false
+        this.showCreatedDermExamination=false
+        this.showFinishedDerm=false
+        this.showFinishedPharm=false
+        this.showDrugsInPharmacies=true
+        this.showSearchDrug=true
+        this.showSearchDrugs=false
       },
       canceling:
        function(res,idRes){
@@ -773,6 +900,25 @@ methods:{
                 console.log(res);
         });
 
+      },
+      reserve:
+       function(idTab){
+       
+         window.location.href = "/ReserveDrug/"+idTab+"/"+this.id;
+        
+
+      },
+       searchName: function(drugName){
+           
+             this.drugName = drugName
+        this.axios.get('/pharmacyDrugs/getAllByName/'+ this.drugName)
+          .then(response => {
+              this.showDrugsInPharmacies = false;
+              this.showSearchDrugs = true;
+                this.searchDrugs= response.data;
+                
+              
+          })
       },
 
 }
