@@ -29,6 +29,11 @@ import SearchUser from '../components/SearchUser.vue'
 import WorkCalendar from '../components/WorkCalendar.vue'
 import StartExamination from '../components/StartExamination.vue'
 import SheduleExamination from '../components/SheduleExamination.vue'
+import WorkCalendarPharmacist from '../components/WorkCalendarPharmacist.vue'
+import StartCounseling from '../components/StartCounseling.vue'
+
+
+
 import moment from 'moment'
 
 
@@ -83,6 +88,11 @@ const routes = [
         path: '/UpdatePatientProfil/:id',
         name: 'UpdatePatientProfil',
         component: UpdatePatientProfil
+      },
+      {
+        path: '/StartCounseling/:id',
+        name: 'StartCounseling',
+        component: StartCounseling
       },
      
       
@@ -190,6 +200,12 @@ const routes = [
         path: '/WorkCalendar/:id',
         name: 'WorkCalendar',
         component: WorkCalendar
+      }
+      ,
+      {
+        path: '/WorkCalendarPharmacist/:id',
+        name: 'WorkCalendarPharmacist',
+        component: WorkCalendarPharmacist
       }
       
       ,

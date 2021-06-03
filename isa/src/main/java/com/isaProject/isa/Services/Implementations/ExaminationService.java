@@ -1,5 +1,6 @@
 package com.isaProject.isa.Services.Implementations;
 
+import ch.qos.logback.core.net.SyslogOutputStream;
 import com.isaProject.isa.Model.DTO.ExaminationDTO;
 import com.isaProject.isa.Model.DTO.ExaminationFrontDTO;
 import com.isaProject.isa.Model.DTO.RequestForVacationDTO;
@@ -68,19 +69,12 @@ public class ExaminationService implements IExaminationService {
 
 
     @Override
-    public Examination save2(ExaminationDTO examinationDTO) throws MessagingException {
+    public Examination createExD(ExaminationDTO examinationDTO) throws MessagingException {
         Examination d = new Examination();
-
-
-
-
-
         List<WorkTime> workTimes = workTimeRepository.findWorkTimeByIdDermAndIdPharm(examinationDTO.getIdStaff(), examinationDTO.getIdPharm());
         if (!dermatologistService.checkingThatTheScheduleMatches(workTimes, examinationDTO.getDate(), examinationDTO.getStart(), examinationDTO.getEnd())) {
             throw new IllegalArgumentException("TheScheduleNotMatches");
         }
-
-
         List<Examination> listOfEx = examinationRepository.find(examinationDTO.getIdStaff());
 
         // WorkTime workTimes1 = workTimeRepository.listaWorkTime(examinationDTO.getDate(), examinationDTO.getStart(), examinationDTO.getEnd());
@@ -158,30 +152,14 @@ ili savetovanjem koje pacijent ima zakazano (u bilo kojoj apoteci),
             throw new IllegalArgumentException("Patient have an appointment scheduled at that time ");
         }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         d.setDate(examinationDTO.getDate());
         d.setEndTime(examinationDTO.getEnd());
         d.setStartTime(examinationDTO.getStart());
         d.setStaff(staffService.findById(examinationDTO.getIdStaff()));
         System.out.println("APOTEKAAA "+examinationDTO.getName());
-        d.setPharmacy(pharmacyService.pronadjiPoImenu(examinationDTO.getName()));
-
+//        d.setPharmacy(pharmacyService.pronadjiPoImenu(examinationDTO.getName()));
+        d.setPharmacy(pharmacyService.findById(examinationDTO.getIdPharm()));
+        d.setPrice(examinationDTO.getPrice());
         d.setPatient(patientService.findById(examinationDTO.getIdPatient()));
         d.setStatus(ExaminationStatus.CREATED);
         d.setType(ExaminationType.DERMATOLOGIST_EXAMINATION);
@@ -189,13 +167,11 @@ ili savetovanjem koje pacijent ima zakazano (u bilo kojoj apoteci),
         return examinationRepository.save(d);
     }
     @Override
-    public Examination save1(ExaminationFrontDTO examinationDTO) {
-        Examination d = new Examination();
+    public Examination finishExD(ExaminationFrontDTO examinationDTO,Integer id) {
+        Examination d = examinationRepository.getOne(id);
         Drug drug=drugRepository.findOneByNameDrug(examinationDTO.getName());
         System.out.println(drug.getName());
         d.setDate(examinationDTO.getDate());
-        d.setEndTime(examinationDTO.getEnd());
-        d.setStartTime(examinationDTO.getStart());
         d.setStaff(staffService.findById(examinationDTO.getIdStaff()));
         d.setPharmacy(pharmacyService.findById(examinationDTO.getIdPharm()));
         d.setPatient(patientService.findById(examinationDTO.getIdPatient()));
@@ -205,82 +181,55 @@ ili savetovanjem koje pacijent ima zakazano (u bilo kojoj apoteci),
         d.setReport(examinationDTO.getReport());
         Therapy t=new Therapy(drug,examinationDTO.getNumberOfDay());
         d.setTherapy(t);
+
         therapyRepository.save(t);
         return examinationRepository.save(d);
     }
-    @Override
-    public Examination save(ExaminationDTO examinationDTO) throws MessagingException {
 
+    @Override
+    public Examination finishExP(ExaminationFrontDTO examinationDTO,Integer id) {
+        Examination d = examinationRepository.getOne(id);
+        Drug drug=drugRepository.findOneByNameDrug(examinationDTO.getName());
+        System.out.println(drug.getName());
+        d.setDate(examinationDTO.getDate());
+        //d.setEndTime(examinationDTO.getEnd());
+        //d.setStartTime(examinationDTO.getStart());
+        d.setStaff(staffService.findById(examinationDTO.getIdStaff()));
+        d.setPharmacy(pharmacyService.findById(examinationDTO.getIdPharm()));
+        d.setPatient(patientService.findById(examinationDTO.getIdPatient()));
+        d.setStatus(ExaminationStatus.FINISHED);
+        d.setPrice(examinationDTO.getPrice());
+        d.setType(ExaminationType.PHARMACIST_EXAMINATION);
+        d.setReport(examinationDTO.getReport());
+        Therapy t=new Therapy(drug,examinationDTO.getNumberOfDay());
+        d.setTherapy(t);
+        therapyRepository.save(t);
+        return examinationRepository.save(d);
+    }
+
+
+    @Override
+    public Examination createExP(ExaminationDTO examinationDTO) throws MessagingException {
         List<WorkTime> workTimes = workTimeRepository.findWorkTimeByIdDermAndIdPharm(examinationDTO.getIdStaff(), examinationDTO.getIdPharm());
         if (!dermatologistService.checkingThatTheScheduleMatches(workTimes, examinationDTO.getDate(), examinationDTO.getStart(), examinationDTO.getEnd())) {
             throw new IllegalArgumentException("TheScheduleNotMatches");
         }
-
-
-        List<Examination> listOfEx = examinationRepository.find(examinationDTO.getIdStaff());
-
-       // WorkTime workTimes1 = workTimeRepository.listaWorkTime(examinationDTO.getDate(), examinationDTO.getStart(), examinationDTO.getEnd());
-       // System.out.println("EEEEEEEEEEEEEEE" + workTimes1.getStartTime());
-
-
         boolean check = true;
-      List<Examination> finaList = new ArrayList<Examination>();
-
+        List<Examination> finaList = new ArrayList<Examination>();
         List<Examination> finaList2 = new ArrayList<Examination>();
         List<Examination> exx = examinationRepository.getExaminationsByTime(examinationDTO.getDate(), examinationDTO.getStart(), examinationDTO.getEnd());
-
         for (Examination e:exx){
             if (e.getStaff().getId().equals(examinationDTO.getIdStaff())){
                 finaList.add(e);
             }
         }
 
+        if (finaList.size()==0) {
 
+        } else {
+            throw new IllegalArgumentException("Doctor have an appointment scheduled at that time ");
 
-
-
-            /*
-            kao ni sa
-drugim pregledom koji dermatolog ima zakazan.
-
-             */
-
-            if (finaList.size()==0) {
-
-            } else {
-                throw new IllegalArgumentException("Doctor have an appointment scheduled at that time ");
-
-            }
-
-
-            //******************************************
-
-
-
-
-
-           /*
-
-
-            Termin pregleda ne sme da se preklapa sa drugim pregledom
-ili savetovanjem koje pacijent ima zakazano (u bilo kojoj apoteci),
-
-             */
-
-        /*List<Examination>listExaminationOfAllPatient=examinationService.findAll();
-        Patient patient=patientRepository.getOne(examinationDTO.getIdPatient());
-        List<Examination>listExaminationOfMyPatient=new ArrayList<>();
-        Staff staff=staffRepository.getOne(examinationDTO.getIdStaff());
-
-        for (Examination e:listExaminationOfAllPatient){
-            if(e.getPatient().equals(patient)){
-                listExaminationOfMyPatient.add(e);
-            }
         }
-
-        if(listExaminationOfMyPatient.size()!=0){
-            throw new IllegalArgumentException("Patient have an appointment scheduled at that time ");
-        }*/
 
         for (Examination e:exx){
             if (e.getPatient().getId().equals(examinationDTO.getIdPatient())){
@@ -293,22 +242,66 @@ ili savetovanjem koje pacijent ima zakazano (u bilo kojoj apoteci),
         }else{
             throw new IllegalArgumentException("Patient have an appointment scheduled at that time ");
         }
-
-
-
         Examination d = new Examination();
-        Staff s = new Staff();
         d.setDate(examinationDTO.getDate());
         d.setEndTime(examinationDTO.getEnd());
         d.setStartTime(examinationDTO.getStart());
         d.setStaff(staffService.findById(examinationDTO.getIdStaff()));
         d.setPharmacy(pharmacyService.findById(examinationDTO.getIdPharm()));
         d.setPrice(examinationDTO.getPrice());
-        d.setType(ExaminationType.DERMATOLOGIST_EXAMINATION);
+        d.setType(ExaminationType.PHARMACIST_EXAMINATION);
         d.setPatient(patientService.findById(examinationDTO.getIdPatient()));
         d.setStatus(ExaminationStatus.SCHEDULED);
+        serviceForEmail.sendingAnEmailToInformPatientAboutExamination(examinationDTO);
+        return examinationRepository.save(d);
 
-        //posalji mejl
+    }
+
+    @Override
+    public Examination save(ExaminationDTO examinationDTO) throws MessagingException {
+
+        List<WorkTime> workTimes = workTimeRepository.findWorkTimeByIdDermAndIdPharm(examinationDTO.getIdStaff(), pharmacyService.pronadjiPoImenu(examinationDTO.getName()).getIdPharm());
+        if (!dermatologistService.checkingThatTheScheduleMatches(workTimes, examinationDTO.getDate(), examinationDTO.getStart(), examinationDTO.getEnd())) {
+            throw new IllegalArgumentException("TheScheduleNotMatches");
+        }
+        boolean check = true;
+        List<Examination> finaList = new ArrayList<Examination>();
+        List<Examination> finaList2 = new ArrayList<Examination>();
+        List<Examination> exx = examinationRepository.getExaminationsByTime(examinationDTO.getDate(), examinationDTO.getStart(), examinationDTO.getEnd());
+        for (Examination e:exx){
+            if (e.getStaff().getId().equals(examinationDTO.getIdStaff())){
+                finaList.add(e);
+            }
+        }
+
+        if (finaList.size()==0) {
+
+        } else {
+            throw new IllegalArgumentException("Doctor have an appointment scheduled at that time ");
+
+        }
+
+        for (Examination e:exx){
+            if (e.getPatient().getId().equals(examinationDTO.getIdPatient())){
+                finaList2.add(e);
+            }
+        }
+
+        if (finaList2.size()==0){
+
+        }else{
+            throw new IllegalArgumentException("Patient have an appointment scheduled at that time ");
+        }        Examination d = new Examination();
+        System.out.println(pharmacyService.pronadjiPoImenu(examinationDTO.getName()));
+        d.setPharmacy(pharmacyService.pronadjiPoImenu(examinationDTO.getName()));
+
+        d.setDate(examinationDTO.getDate());
+        d.setEndTime(examinationDTO.getEnd());
+        d.setStartTime(examinationDTO.getStart());
+        d.setStaff(staffService.findById(examinationDTO.getIdStaff()));
+        d.setType(ExaminationType.DERMATOLOGIST_EXAMINATION);
+        d.setPatient(patientService.findById(examinationDTO.getIdPatient()));
+        d.setStatus(ExaminationStatus.CREATED);
         serviceForEmail.sendingAnEmailToInformPatientAboutExamination(examinationDTO);
 
         return examinationRepository.save(d);

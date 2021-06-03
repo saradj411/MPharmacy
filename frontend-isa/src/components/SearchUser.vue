@@ -177,7 +177,10 @@ export default {
       idPatient:"",
       jedanPacijent:{},
       pharmacy:"",
-      apoteka:{}
+      apoteka:{},
+      date :null,
+      start: null,
+      end : null
        
     }
   },
@@ -190,6 +193,8 @@ export default {
          }).catch(res => {
                 console.log(res);
         });   
+                             console.log("oooo"+this.id);
+
     },
       methods:{
             startEx : function(data){
@@ -211,12 +216,14 @@ export default {
                     console.log("ime je "+this.pharmacy)
                      this.axios.get('/pharmacy/findOneByName/'+this.pharmacy)
                            .then(response => {
+                    console.log("ime je "+this.pharmacy)
 
                                     this.apoteka = response.data;
                                                             
                               }).catch(res => {
                                     console.log(res);
                            });
+                           console.log("datum je "+this.date)
                      const infoExamination = {
                               idPatient: this.jedanPacijent.id,
                               idStaff: this.id,
@@ -225,7 +232,8 @@ export default {
                               start : this.start,
                               end : this.end,
                            }
-                        this.axios.post('/examination/createOne',infoExamination,{ 
+
+                        this.axios.post('/examination/createPharmacists',infoExamination,{ 
                         headers: {
                         }}).then(response => {
                                  alert("Examination is successfully created!");

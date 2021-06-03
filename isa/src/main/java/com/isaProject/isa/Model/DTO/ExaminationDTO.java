@@ -17,6 +17,13 @@ public class ExaminationDTO {
      private LocalTime end;
      private double price;
 
+     public ExaminationDTO(String name, LocalDate date, LocalTime start, LocalTime end) {
+          this.name = name;
+          this.date = date;
+          this.start = start;
+          this.end = end;
+     }
+
      public String getName() {
           return name;
      }

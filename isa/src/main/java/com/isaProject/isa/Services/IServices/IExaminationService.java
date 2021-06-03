@@ -12,14 +12,15 @@ import java.util.List;
 public interface IExaminationService {
 
     List<Examination> findAll ();
-
-    void canceling(Integer id);
-    Examination save1(ExaminationFrontDTO examinationDTO);
-    Examination save2(ExaminationDTO examinationDTO) throws MessagingException;
+    Examination createExP(ExaminationDTO examinationDTO) throws MessagingException;
+    Examination finishExP(ExaminationFrontDTO examinationDTO,Integer id);
+    Examination finishExD(ExaminationFrontDTO examinationDTO,Integer id);
+    Examination createExD(ExaminationDTO examinationDTO) throws MessagingException;
     Boolean getExaminationByIdStaff(Integer idPharmacist);
     Examination findById(Integer id);
     Examination save(ExaminationDTO examinationDTO) throws MessagingException;
     List<FrontCreatedExaminationDTO> findCreatedDermatologistExamination();
+    void canceling(Integer id);
 
     void scheduledDermatologistExamination(Integer idPatient,Integer idExamination);
 

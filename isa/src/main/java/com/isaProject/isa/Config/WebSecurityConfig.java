@@ -99,15 +99,21 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
                 .permitAll().antMatchers("/dermatologist/findAllPatient/{id}")
 
+                .permitAll().antMatchers("/pharmacist/getFreeEx/{idStaff}")
+
+
+
+
                 .permitAll().antMatchers("/examination/findPatientById/{id}")
 
                 .permitAll().antMatchers("/examination/findPharmacy/{id}")
                 .permitAll().antMatchers("/specification/getIngredients/{name}")
                 .permitAll().antMatchers("/specification/getSpec/{name}")
 
-                .permitAll().antMatchers("/examination/create")
+                .permitAll().antMatchers("/examination/createDermatologistEx")
+                .permitAll().antMatchers("/examination/createPharmacistEx")
 
-                .permitAll().antMatchers("/examination/createOne")
+                .permitAll().antMatchers("/examination/createPharmacists")
 
                 .permitAll().antMatchers("/pharmacyDrugs/findDrugsByIdPharm/{id}/{name}")
 
@@ -117,6 +123,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 
                 .permitAll().antMatchers("/dermatologist/updateFreeEx/{idEx}")
+
+                .permitAll().antMatchers("/pharmacist/updateFreeEx/{idEx}")
+
                 .permitAll().antMatchers("/pharmacy/findByName/{name}")
                 .permitAll().antMatchers("/pharmacy/findOneByName/{name}")
 
@@ -126,12 +135,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 
                 .permitAll().antMatchers("/examination/findExamination/{id}")
-                .permitAll().antMatchers("/examination/finished")
+                .permitAll().antMatchers("/examination/finished/{id}")
 
 
                 .permitAll().antMatchers("/examination/findStaff/{id}")
                 .permitAll().antMatchers("/patient/findAllergyById/{id}")
                 .permitAll().antMatchers("/patient/findAllergyById/{id}/{name}")
+                .permitAll().antMatchers("/examination/finishedPharmacist/{id}")
+
 
                 .permitAll().antMatchers("/pharmacyDrugs/findDrugsByIdPharm/{id}/{name}")
 

@@ -1,10 +1,14 @@
 package com.isaProject.isa.Services.Implementations;
 
 import com.isaProject.isa.Model.DTO.PharmaceutDTO;
+import com.isaProject.isa.Model.DTO.ScheduleAnExaminationDTO;
 import com.isaProject.isa.Model.Examination.Examination;
+import com.isaProject.isa.Model.Examination.ExaminationStatus;
+import com.isaProject.isa.Model.Users.Patient;
 import com.isaProject.isa.Model.Users.Pharmacist;
 import com.isaProject.isa.Model.Users.WorkTime;
 import com.isaProject.isa.Repositories.ExaminationRepository;
+import com.isaProject.isa.Repositories.PatientRepository;
 import com.isaProject.isa.Repositories.PharmacistRepository;
 import com.isaProject.isa.Repositories.WorkTimeRepository;
 import com.isaProject.isa.Services.IServices.IPharamacistService;
@@ -29,6 +33,8 @@ public class PharmacistService implements IPharamacistService {
     WorkTimeRepository workTimeRepository;
     public @Autowired
     ExaminationService examinationService;
+    public @Autowired
+    PatientRepository patientRepository;
 
     @Override
     public void update(Pharmacist pharmacist) {
@@ -43,6 +49,30 @@ public class PharmacistService implements IPharamacistService {
         pa.setEmail(pharmacist.getEmail());
         pharmacistRepository.save(pa);
     }
+
+    @Override
+    public void patientNotAppear(Integer idEx){
+        Examination e=examinationRepository.getOne(idEx);
+        Patient patient=patientRepository.getOne(e.getPatient().getId());
+        e.setStatus(ExaminationStatus.EXPIRED);
+        Integer penali= patient.getPenalty();
+        patient.setPenalty(penali+1);
+        examinationRepository.save(e);
+        patientRepository.save(patient);
+    }
+
+    @Override
+    public void updateFreeEx(ScheduleAnExaminationDTO scheduleAnExaminationDTO) {
+
+        Patient patient=patientRepository.getOne(scheduleAnExaminationDTO.getIdPatient());
+        Examination examination=examinationRepository.getExaminationsByParams(scheduleAnExaminationDTO.getDate(),scheduleAnExaminationDTO.getStartTime(),scheduleAnExaminationDTO.getEndTime(),scheduleAnExaminationDTO.getPrice(),scheduleAnExaminationDTO.getPharmacyName());
+        examination.setPatient(patient);
+        examination.setStatus(ExaminationStatus.SCHEDULED);
+        examination.setScheduled(true);
+        examinationRepository.save(examination);
+        //dermatologistRepository.save(pa);
+    }
+
 
     @Override
     public String delete(Pharmacist pharmacist) {// ne moze izbrisati farmaceute koji imaju zakazane preglede

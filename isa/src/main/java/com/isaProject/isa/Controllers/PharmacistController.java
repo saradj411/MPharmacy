@@ -1,7 +1,7 @@
 package com.isaProject.isa.Controllers;
 
 
-import com.isaProject.isa.Model.DTO.SearchPharmacistsDTO;
+import com.isaProject.isa.Model.DTO.*;
 import com.isaProject.isa.Model.Drugs.Drug;
 import com.isaProject.isa.Model.Drugs.DrugPricelist;
 import com.isaProject.isa.Model.Users.Dermatologist;
@@ -10,9 +10,6 @@ import com.isaProject.isa.Services.Implementations.DermatologistService;
 import com.isaProject.isa.Services.Implementations.DrugPricelistService;
 import com.isaProject.isa.Services.Implementations.DrugService;
 import com.isaProject.isa.Services.Implementations.PharmacistService;
-import com.isaProject.isa.Model.DTO.DrugDTO;
-import com.isaProject.isa.Model.DTO.PharmaceutDTO;
-import com.isaProject.isa.Model.DTO.WorkTimeDTO;
 import com.isaProject.isa.Model.Examination.Examination;
 import com.isaProject.isa.Model.Pharmacy.Pharmacy;
 import com.isaProject.isa.Model.Users.*;
@@ -46,6 +43,9 @@ public class PharmacistController {
     private PharmacyAdminService pharmacyAdminService;
     @Autowired
     private WorkTimeService workTimeService;
+
+    @Autowired
+    private ExaminationService examinationService;
 
     @Autowired
     private  StaffService staffService;
@@ -105,9 +105,30 @@ public class PharmacistController {
                 ResponseEntity.ok(newP);
     }
 
+    @GetMapping("/updateFreeEx/{idEx}")
+    ResponseEntity<String> patientNotAppearr(@PathVariable Integer idEx)
+    {
+        String answer="The patient received 1 penalty!";
+        pharmacistService.patientNotAppear(idEx);
+        return new ResponseEntity<>(answer, HttpStatus.CREATED);
+
+    }
 
 
+    @GetMapping("/getFreeEx/{idStaff}")
+    public  ResponseEntity<List<FreeExaminationsForRepresentationDTO>> getAllFreeExaminations(@PathVariable Integer idStaff) {
 
+        List<Examination>examinations=examinationService.getExaminationsByIdStaffAndIdPharmacy(idStaff);
+        List<FreeExaminationsForRepresentationDTO>freeEx=new ArrayList<>();
+        for (Examination ex:examinations){
+            System.out.println("imeee pacijenta "+ ex.getPatient().getName());
+
+            System.out.println("imeee "+ ex.getPharmacy().getName());
+            FreeExaminationsForRepresentationDTO freeE=new FreeExaminationsForRepresentationDTO(ex.getDate(),ex.getStartTime(),ex.getEndTime(),ex.getPrice(),ex.getPharmacy().getName(),ex.getPatient().getName(),ex.getPatient().getSurname(),ex.getIdExamination());
+            freeEx.add(freeE);
+        }
+        return new ResponseEntity<>(freeEx, HttpStatus.ACCEPTED);
+    }
 
     @GetMapping(value = "/findById/{id}")
     public ResponseEntity<Pharmacist> findById(@PathVariable Integer id) {

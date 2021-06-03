@@ -99,23 +99,38 @@ public class ExaminationController {
     }
 
 
-    @PostMapping("/create")
+    @PostMapping("/createDermatologistEx")
     public ResponseEntity<String> addDrug(@RequestBody ExaminationDTO examinationDTO) throws MessagingException {
-        Examination examination = examinationService.save(examinationDTO);//////////ne znam dal je ovdje bilo samo save
+        Examination examination = examinationService.createExD(examinationDTO);
         return new ResponseEntity<>("kreirano", HttpStatus.CREATED);
     }
-    @PostMapping("/createOne")
+    @PostMapping("/createPharmacistEx")
+    public ResponseEntity<String> createExamination(@RequestBody ExaminationDTO examinationDTO) throws MessagingException {
+        Examination examination = examinationService.createExP(examinationDTO);
+        return new ResponseEntity<>("kreirano", HttpStatus.CREATED);
+    }
+
+    @PostMapping("/createPharmacists")
     public ResponseEntity<String> create(@RequestBody ExaminationDTO examinationDTO) throws MessagingException {
         Examination examination = examinationService.save(examinationDTO);
         return new ResponseEntity<>("kreirano", HttpStatus.CREATED);
     }
 
-    @PostMapping("/finished")
-    public ResponseEntity<String> finished(@RequestBody ExaminationFrontDTO examinationFrontDTO) {
+    @PostMapping("/finished/{id}")
+    public ResponseEntity<String> finished(@RequestBody ExaminationFrontDTO examinationFrontDTO,@PathVariable Integer id) {
 
-        Examination examination = examinationService.save1(examinationFrontDTO);
+        Examination examination = examinationService.finishExD(examinationFrontDTO,id);
         return new ResponseEntity<>("kreirano", HttpStatus.CREATED);
     }
+
+    @PostMapping("/finishedPharmacist/{id}")
+    public ResponseEntity<String> finishedPharmacist(@RequestBody ExaminationFrontDTO examinationFrontDTO,@PathVariable Integer id) {
+
+        Examination examination = examinationService.finishExP(examinationFrontDTO,id);
+        return new ResponseEntity<>("kreirano", HttpStatus.CREATED);
+    }
+
+
     @GetMapping(value = "/findCreatedPharmacistExamination")
     public ResponseEntity<List<FrontCreatedExaminationDTO>> findCreatedPharmacistExamination() {
         //log.info("dsds:"+id);
