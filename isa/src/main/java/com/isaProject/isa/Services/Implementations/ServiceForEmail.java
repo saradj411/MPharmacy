@@ -88,6 +88,24 @@ public class ServiceForEmail{
         javaMailSender.send(mimeMessage);
         System.out.println("kraj funkc!");
     }
+
+    public void sendingMailToPatientForReservattion(Integer idReservation,Patient patient) throws MessagingException {
+        // TODO Auto-generated method stub
+        System.out.println("usao u funkc za slanje mejla "+patient.getEmail());
+
+        MimeMessage mimeMessage = javaMailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, "utf-8");
+        String htmlMsg =
+                "<p>You have successfully reserve an drug!" +"Unique number of Reservation:"
+                        +idReservation+"</p>";
+
+        helper.setText(htmlMsg, true);
+        helper.setTo(patient.getEmail());
+        helper.setSubject("Reserve drug");
+        helper.setFrom(environment.getProperty("spring.mail.username"));
+        javaMailSender.send(mimeMessage);
+        System.out.println("kraj funkc!");
+    }
     /*
 
 
