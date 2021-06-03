@@ -5,10 +5,13 @@ import com.isaProject.isa.Model.Examination.Examination;
 import com.isaProject.isa.Model.Pharmacy.Pharmacy;
 import com.isaProject.isa.Model.Users.*;
 import com.isaProject.isa.Repositories.ExaminationRepository;
+import com.isaProject.isa.Repositories.StaffRepository;
+import com.isaProject.isa.Repositories.UserRepository;
 import com.isaProject.isa.Services.Implementations.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
@@ -284,6 +287,16 @@ Ukoliko se korisnik ne pojavi na pregledu, dobija 1 penal.
 
         return new ResponseEntity<>("ajdeee", HttpStatus.CREATED);
 
+    }
+
+    @PostMapping(value = "/saveDermatologist",  produces = MediaType.APPLICATION_JSON_VALUE)
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<Dermatologist> saveDermatologist(@RequestBody DermatologistDTO dermDTO)
+    {
+        System.out.println("Usao " + dermDTO.getName());
+        Dermatologist d = dermatologistService.save(dermDTO);
+        return d == null ? new ResponseEntity("Account with this email aleray exists!", HttpStatus.BAD_REQUEST)
+                : new ResponseEntity<>(d, HttpStatus.CREATED);
     }
 
 

@@ -1,9 +1,11 @@
 <template>
    <div >
     <div class="loginHolder">
-    <h1 >Add new admin of the system: </h1>
+    
     <br>
-        <div class="loginDiv">
+        <div class="userInfo">
+        <h1 >Register new dermatologist: </h1>
+        <br>
             <table id="loginTable">
                 <tr>
                     <td><h4 > Name: </h4> </td>
@@ -55,6 +57,12 @@
                     <td>
                     <input type="text" v-model="country" :class="{'input--error':!country}"  class="form-control" placeholder="Enter country"  aria-label="Enter phone nubmer" aria-describedby="addon-wrapping">
                     </td>   
+                </tr>
+                <tr>
+                    <td> <h4> Average grade: </h4> </td>
+                    <td>
+                    <input type="text" v-model="avgGrade" :class="{'input--error':!avgGrade}"  class="form-control" placeholder="Enter average grade"  aria-label="Enter phone nubmer" aria-describedby="addon-wrapping">
+                    </td>   
                 </tr>                 
                 <tr>
                     <td colspan="2">
@@ -67,13 +75,51 @@
                 <br>
                 <tr>        
                     <td colspan="2">
-                        <button class = "btn btn-primary btn-xs"  :disabled="!name || !surname || !email || !address || !phoneNumber || !city
-                        || !country"  style="margin:auto; margin-left:38px;background: #000;margin-top: 10px; width: 200px;" v-on:click="registerAdmin">Confirm</button>
-                    
+                        
                     </td>
                 
                 </tr>
+                <br>
             </table>
+
+            <div class="workTime">
+            <h1>Work time (Optional): </h1>
+            <br>
+                    <table id="loginTable">
+                        <tr>
+                            <td> <h4>Date:</h4> </td>
+                            <td><input type="date" v-model="date" class="form-control"></td>
+                        </tr>
+                        <tr>
+                            <td> <h4>Start Time:</h4></td>
+                            <td><b-form-timepicker v-model="startTime" locale="en"></b-form-timepicker></td>
+                        </tr>
+
+                        <tr>
+                            <td> <h4>End Time:</h4></td>
+                            <td><b-form-timepicker v-model="endTime" locale="en"></b-form-timepicker></td>
+                        </tr>
+
+                        <tr>
+                            <td> <h4>Select pharmacy:</h4></td>
+                            <td>                               
+                                    <select class="form-control" v-model="pharmacyID" placeholder="Select pharmacy" >                                       
+                                        <option
+                                        v-for="pharmacy in this.pharmacies" 
+                                        v-bind:key="pharmacy.idPharm"
+                                        v-bind:value="pharmacy"                                    
+                                         :selected="pharmacy == '<the default value you want>'">
+                                        {{pharmacy.idPharm}}: {{ pharmacy.name }} - {{ pharmacy.address }} </option>
+                                      </select>
+                            </td>
+                        </tr>
+                    
+                    </table>
+                    <br>
+                    <button class = "btn btn-primary btn-xs" :disabled="!name || !surname || !email || !address || !phoneNumber || !city
+                    || !country || !avgGrade"    style="margin:auto; margin-left:38px;background: #000;margin-top: 10px; width: 200px;" v-on:click="registerAdmin">Confirm</button>
+                
+            </div>
         </div>
     </div>
 </div>
@@ -91,8 +137,18 @@ export default{
             address : "",
             phoneNumber : "",
             city : "",
-            country : "",          
-            errorMessage : ""
+            country : "",  
+
+            date: "",
+            startTime: "",
+            endTime: "",   
+            avgGrade: "",         
+            staff: {},        
+            errorMessage : "",
+            pharmacyID: {},
+
+            id : this.$route.params.id,
+            pharmacies : []
 
         }
     },
@@ -118,6 +174,10 @@ export default{
         },
         country : {
             required            
+        },
+        avgGrade:
+        {
+            required
         }
 
 
@@ -126,42 +186,52 @@ export default{
     methods:
     {
         registerAdmin : function()
-        {
-            console.log(this.name);
-                         
-                console.log("Prosao");
-                document.getElementById("errorMessage").innerHTML  = 'Succeseffully!';
-                
-                const patientInfo = 
-            {
+        {   
+                const dermInfo = { 
+            
                 name : this.name,
                 surname : this.surname,
                 email : this.email,                
                 address : this.address,
                 phoneNumber : this.phoneNumber,
                 city : this.city,
-                country : this.country
-            }            
+                country : this.country,
+                avgGrade: this.avgGrade,
+                date: this.date,                
+                startTime: this.startTime,
+                endTime: this.endTime,
+                pharmacyID: this.pharmacyID.idPharm 
 
-            this.axios.post('user/saveAdmin', patientInfo,
+                }
+            console.log( dermInfo );
+
+            this.axios.post('dermatologist/saveDermatologist', dermInfo,
             {
                 headers: 
                 {
                     'Authorization': `Bearer ` + localStorage.getItem('accessToken')
                 }}).then(response => 
                 {
-                    alert("Successfully registered new admin. Email verification is send to " + this.email);
+                    alert("Successfully registered new dermatologist.");
                     console.log(response.data);
-                    this.$router.push('/SystemAdminProfile');                    
+                    this.$router.push('/SystemAdminProfile/'+this.id);                    
                 }).catch(res => {
-                    alert(res.response.data.message);
-                });     
-
-            } 
-        
+                    console.log(res.response.data.message);
+                    alert("Greska. Proverite podatke.");
+                    
+                });                     
+       }                        
     },
     mounted()
     {
+        this.axios.get('/pharmacy/findAll')
+        .then(response => {
+                this.pharmacies = response.data;
+                
+         }).catch(res => {
+                alert("Apoteke nisu pronadjene!");
+                console.log(res);
+        });   
 
     }
     
@@ -177,15 +247,19 @@ export default{
     .loginHolder
     {
         margin: 0 auto;
-        margin-top: 100px;
+        margin-top: 80px;
     }
-    .loginDiv
+    .userInfo
     {
         margin: 0 auto;
         display: block;
         
         width: 600px;
-        height: 300px;
+        height: 450px;
+    }
+    .workTime
+    {
+
     }
     #loginTable
     {

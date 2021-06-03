@@ -58,6 +58,9 @@ public class DermatologistService implements IDermatologistService, Serializable
     public @Autowired
     ExaminationService examinationService;
 
+    public  @Autowired
+    WorkTimeService workTimeService;
+
     public @Autowired
     PharmacyService pharmacyService;
 
@@ -67,6 +70,9 @@ public class DermatologistService implements IDermatologistService, Serializable
 
     public @Autowired
     StaffRepository staffRepository;
+
+    @Autowired
+    UserRepository userRepository;
 
     public @Autowired
     SpecificationRepository specificationRepository;
@@ -180,37 +186,69 @@ public class DermatologistService implements IDermatologistService, Serializable
 
 
     @Override
-    public Dermatologist save(DermatologistDTO dermatologist) {
-        System.out.println(dermatologist.toString());
-
-        List<Authority> auth = authService.findByname("DERMATOLOGIST");
-        for(Dermatologist d : dermatologistRepository.findAll())
+    public Dermatologist save(DermatologistDTO dermDTO) {
+        System.out.println("Usao u servis");
+        List<Authority> auth = authService.findByname("ROLE_DERMATOLOGIST");
+        for(User d : userRepository.findAll())
         {
-            if(d.getEmail().equals(dermatologist.getEmail()))
+            if(d.getEmail().equals(dermDTO.getEmail())) {
+                System.out.println("nasaoistog");
                 return null;
+            }
         }
 
         Dermatologist d = new Dermatologist();
-        //dodati na mejl
-
-        d.setName(dermatologist.getName());
-        d.setSurname(dermatologist.getSurname());
-        d.setEmail(dermatologist.getEmail());
-        d.setPassword(passwordEncoder.encode(dermatologist.getPassword()));
-        d.setAddress(dermatologist.getAddress());
-        d.setPhoneNumber(dermatologist.getPhoneNumber());
-        d.setCity(dermatologist.getCity());
-        d.setCountry(dermatologist.getCountry());
-        d.setAvgGrade(dermatologist.getAvgGrade());
-        d.setWorkTime(null);
-        d.setExaminations(null);
-        d.setVacation(null);
-        pharmOfDerm.add(dermatologist.getPharmacy());
-        d.setPharmacies(pharmOfDerm);
-        d.setAccountEnabled(false);
+        d.setName(dermDTO.getName());
+        d.setSurname(dermDTO.getSurname());
+        d.setEmail(dermDTO.getEmail());
+        String pass = "123";
+        d.setPassword(passwordEncoder.encode(pass));
+        d.setAddress(dermDTO.getAddress());
+        d.setPhoneNumber(dermDTO.getPhoneNumber());
+        d.setCity(dermDTO.getCity());
+        d.setCountry(dermDTO.getCountry());
         d.setAuthorities(auth);
-        return dermatologistRepository.save(d);
+        d.setAccountEnabled(false);
 
+        d.setAvgGrade(dermDTO.getAvgGrade());
+
+        System.out.println("avg" + dermDTO.getAvgGrade());
+        System.out.println("date " + dermDTO.getDate());
+        System.out.println("strartTime " + dermDTO.getStartTime());
+        System.out.println("ID pharm " + dermDTO.getPharmacyID());
+
+        User newUser = userRepository.save(d);
+
+        if(dermDTO.getDate() != null
+                && dermDTO.getStartTime() != null
+                && dermDTO.getEndTime() != null
+                && dermDTO.getPharmacyID() != null)
+        {
+            Pharmacy pharmacy = pharmacyService.findById(dermDTO.getPharmacyID());
+            Staff staff = staffRepository.getOne(newUser.getId());
+
+            HashSet<WorkTime> workTimeList = new HashSet<WorkTime>();
+            HashSet<Pharmacy> pharmacies = new HashSet<Pharmacy>();
+            pharmacies.add(pharmacy);
+
+            WorkTimeDTO workTimeDTO = new WorkTimeDTO();
+            workTimeDTO.setDate(dermDTO.getDate());
+            workTimeDTO.setStartTime(dermDTO.getStartTime());
+            workTimeDTO.setEndTime(dermDTO.getEndTime());
+            workTimeDTO.setStaff(staff);
+            workTimeDTO.setPharmacy(pharmacy);
+
+            d.setPharmacies(pharmacies);
+
+            WorkTime workTime = workTimeService.save(workTimeDTO);
+
+            workTimeList.add(workTime);
+            d.setWorkTime(new HashSet<WorkTime>());
+
+            return d;
+        }
+
+        return d;
     }
 
 /*

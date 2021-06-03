@@ -30,6 +30,7 @@ public class Dermatologist extends Staff {
         super(id, name, surname, email, password, address, phoneNumber, city, country, avgGrade, workTime, examinations, vacation);
         this.pharmacies = pharmacies;
     }
+
     public Dermatologist(){
         super();
 

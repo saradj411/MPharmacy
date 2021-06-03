@@ -69,6 +69,7 @@ public class WorkTimeDTO {
         this.pharmacy = pharmacy;
     }
 
+    public  WorkTimeDTO() {}
     public WorkTimeDTO(Date date, LocalTime startTime, LocalTime endTime, Staff staff, Pharmacy pharmacy) {
         this.date = date;
         this.startTime = startTime;
@@ -76,4 +77,6 @@ public class WorkTimeDTO {
         this.staff = staff;
         this.pharmacy = pharmacy;
     }
+
+
 }
