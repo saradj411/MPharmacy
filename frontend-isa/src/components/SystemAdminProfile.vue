@@ -1,14 +1,14 @@
 <template>
     <div>
-        <h1> Welcome {{ name }} {{ surname }} </h1>
+        <h1> Welcome {{ loggedAdmin.name }} {{ surname }} </h1>
 <div class="button_holder">
     <button class = "btn btn-primary btn-xs" v-on:click = "AddShifarnikPage" style="margin:auto; margin-left:38px;background: #000;margin-top: 10px; width: 200px;" > Add Sifarnik </button>
     <button class = "btn btn-primary btn-xs" v-on:click = "AddSystemAdminPage" style="margin:auto; margin-left:38px;background: #000;margin-top: 10px; width: 200px;" > Register pharmacy & pharmacy admins </button>
-    <button class = "btn btn-primary btn-xs" style="margin:auto; margin-left:38px;background: #000;margin-top: 10px; width: 200px;" > Register dermatologist </button>          
-    <button class = "btn btn-primary btn-xs" style="margin:auto; margin-left:38px;background: #000;margin-top: 10px; width: 200px;" > Register supplier </button>
-    <button class = "btn btn-primary btn-xs" style="margin:auto; margin-left:38px;background: #000;margin-top: 10px; width: 200px;" > Loyality program </button>
-    <button class = "btn btn-primary btn-xs" style="margin:auto; margin-left:38px;background: #000;margin-top: 10px; width: 200px;" > Add new system administrator </button>
-    <button class = "btn btn-primary btn-xs" style="margin:auto; margin-left:38px;background: #000;margin-top: 10px; width: 200px;" > Complains </button>
+    <button class = "btn btn-primary btn-xs" v-on:click = "AddDermatologistPage" style="margin:auto; margin-left:38px;background: #000;margin-top: 10px; width: 200px;" > Register dermatologist </button>          
+    <button class = "btn btn-primary btn-xs" v-on:clicl = "a" style="margin:auto; margin-left:38px;background: #000;margin-top: 10px; width: 200px;" > Register supplier </button>
+    <button class = "btn btn-primary btn-xs" v-on:clicl = "a" style="margin:auto; margin-left:38px;background: #000;margin-top: 10px; width: 200px;" > Loyality program </button>
+    <button class = "btn btn-primary btn-xs" v-on:clicl = "a" style="margin:auto; margin-left:38px;background: #000;margin-top: 10px; width: 200px;" > Add new system administrator </button>
+    <button class = "btn btn-primary btn-xs" v-on:clicl = "a" style="margin:auto; margin-left:38px;background: #000;margin-top: 10px; width: 200px;" > Complains </button>
 
 
 </div>
@@ -25,15 +25,7 @@
 
 </style>
 
-<script>
-    /*import store from './store'
-    import Axios from 'axios'
-
-Vue.prototype.$http = Axios;
-const token = localStorage.getItem('accessToken')
-if (token) {
-  Vue.prototype.$http.defaults.headers.common['Authorization'] = token
-}*/
+<script>    
 
     export default {
       data() {
@@ -41,17 +33,23 @@ if (token) {
             name : "",
             surname: "", 
             token: "",
-            userAuth: localStorage.getItem('accessToken'),                
+            userAuth: localStorage.getItem('accessToken'), 
+            id : this.$route.params.id,
+            loggedAdmin: {}               
            
         }
       },
       methods:{
         AddShifarnikPage : function(){
-              window.location.href = "/AddShifarnikPage";
+              window.location.href = "/AddShifarnikPage/" + this.id;
           },
         AddSystemAdminPage: function()
         {
-            this.$router.push('/RegisterNewSystemAdmin');
+            this.$router.push('/RegisterNewSystemAdmin/' + this.id);
+        },
+        AddDermatologistPage: function()
+        {
+            window.location.href = '/RegisterDermatologist/' + this.id;
         }
         
     },
@@ -64,12 +62,12 @@ if (token) {
         
         console.log(accessToken);
         console.log(expiresIn);
-        if(accessToken != null)
+        /*if(accessToken != null)
         {
 
             console.log("TOKEN Nije istekao." );
-            
-            this.axios.get('/user/loggedUser', {accessToken}, {
+            var auth;
+            this.axios.get('/user/loggedUser', {
             headers: {
                     'Access-Control-Allow-Headers': 'Origin, Content-Type, X-Auth-Token',
                     'Authorization': `Bearer ` + {accessToken},
@@ -79,6 +77,7 @@ if (token) {
             })
         .then(response => {
             console.log("Prosao." );
+            console.log(auth );
                 this.name = response.data.name;
                 this.surname = response.data.surname;
                 
@@ -88,7 +87,24 @@ if (token) {
                 console.log(res.response);
         });
         }
-           
+          */
+        this.axios.get('user/findById/'+ this.id ,{ 
+            headers: {
+                    'Access-Control-Allow-Headers': 'Origin, Content-Type, X-Auth-Token',
+                    'Authorization': `Bearer ` + accessToken,
+                    'Access-Control-Allow-Origin': '*',
+                    'Expires' : expiresIn
+                }
+            }).then(response => {
+
+                  this.loggedAdmin = response.data;
+                  console.log(this.loggedAdmin);
+
+            }).catch(res => {
+                          alert("Token expired!");
+                          window.location.href = '/login';
+                          console.log(res.response.data.message);
+                    });
         
         }
          

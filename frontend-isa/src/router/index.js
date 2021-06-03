@@ -31,6 +31,7 @@ import StartExamination from '../components/StartExamination.vue'
 import SystemAdminProfile from '../components/SystemAdminProfile.vue'
 import AddShifarnikPage from '../components/AddShifarnikPage'
 import RegisterNewSystemAdmin from '../components/RegisterNewSystemAdmin'
+import RegisterDermatologist from '../components/RegisterDermatologist'
 import moment from 'moment'
 
 Vue.use(VueRouter)
@@ -75,7 +76,7 @@ const routes = [
     ,
      
       {
-        path: '/SystemAdminProfile',
+        path: '/SystemAdminProfile/:id',
         name: 'SystemAdminProfile',
         component: SystemAdminProfile
       },
@@ -119,7 +120,7 @@ const routes = [
       }
       ,
       {
-        path: '/AddShifarnikPage',
+        path: '/AddShifarnikPage/:id',
         name: 'AddShifarnikPage',
         component: AddShifarnikPage
       },
@@ -209,9 +210,14 @@ const routes = [
         component: StartExamination
       },
       {
-        path:'/RegisterNewSystemAdmin',
+        path:'/RegisterNewSystemAdmin/:id',
         name: 'RegisterNewSystemAdmin',
         component: RegisterNewSystemAdmin
+      },
+      {
+        path: '/RegisterDermatologist/:id',
+        name: 'RegisterDermatologist',
+        component: RegisterDermatologist
       }
 
      

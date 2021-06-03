@@ -136,25 +136,23 @@ export default{
             {
                 name : this.name,
                 surname : this.surname,
-                email : this.email,
-                password : this.password,
+                email : this.email,                
                 address : this.address,
                 phoneNumber : this.phoneNumber,
                 city : this.city,
                 country : this.country
             }            
 
-            this.axios.post('user/savePatient', patientInfo,
+            this.axios.post('user/saveAdmin', patientInfo,
             {
                 headers: 
                 {
-                    
+                    'Authorization': `Bearer ` + localStorage.getItem('accessToken')
                 }}).then(response => 
                 {
-                    alert("Successfully registered new patient. Please check your email for verification!");
+                    alert("Successfully registered new admin. Email verification is send to " + this.email);
                     console.log(response.data);
-                    //this.$router.push('ProfilePatient/'+ response.data.id);
-                    //Odkomentarisati ovo kad se obavi verifikacija mejla
+                    this.$router.push('/SystemAdminProfile');                    
                 }).catch(res => {
                     alert(res.response.data.message);
                 });     
@@ -163,12 +161,12 @@ export default{
             
 
               
-        }
+        
     },
     mounted()
     {
 
-    },
+    }
     
 }  
 </script>

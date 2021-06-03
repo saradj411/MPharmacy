@@ -34,6 +34,16 @@ public class UserDTO {
         this.country = country;
     }
 
+    public UserDTO(String name, String surname, String email, String address, String phoneNumber, String city, String country) {
+        this.name = name;
+        this.surname = surname;
+        this.email = email;
+        this.address = address;
+        this.phoneNumber = phoneNumber;
+        this.city = city;
+        this.country = country;
+    }
+
     public String getName() {
         return name;
     }
