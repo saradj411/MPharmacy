@@ -154,6 +154,8 @@ insert into alternative_drug values (506,504);
     insert into dermatologists_in_pharmacies values(504,501);
     insert into dermatologists_in_pharmacies values(509,503);
     insert into dermatologists_in_pharmacies values(533,501);
+        insert into dermatologists_in_pharmacies values(501,502);
+
 
     #pharmacy_admin
     insert into pharmacy_admin values(503,501);

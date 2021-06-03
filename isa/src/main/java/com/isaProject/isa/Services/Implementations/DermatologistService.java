@@ -358,6 +358,18 @@ ili savetovanjem koje pacijent ima zakazano (u bilo kojoj apoteci),
 
 
 
+
+
+
+    @Override
+    public Set<Pharmacy> pharmacies(Integer id){//id dermatologa
+        Dermatologist d=dermatologistRepository.getOne(id);
+        return  d.getPharmacies();
+
+    }
+
+
+
     @Override
     public void patientNotAppear(Integer idEx){
 
