@@ -91,13 +91,7 @@
      
 
     </tr>
-    <tr style="font-size:22px;color:#0D184F;">
-      <th></th>
-      <td>Password:</td>
-      <td>{{user.password}} </td>
-     
-
-    </tr>
+    
     
   </tbody>
                         </table>
@@ -137,7 +131,7 @@ export default {
 },
   methods:{
     profile : function(){
-          window.location.href = '/DermatologistPatients/'+501;
+          window.location.href = '/Clients';
         },
         requestForvacation : function(){
           window.location.href = '/RequestForVacation/'+501;

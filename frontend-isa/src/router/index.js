@@ -22,7 +22,6 @@ import updateMyProfile from '../components/updateMyProfile.vue'
 import updateDrug from '../components/updateDrug.vue'
 import updatePharmacistProfile from '../components/updatePharmacistProfile.vue'
 import updateDermatologistProfile from '../components/updateDermatologistProfile.vue'
-import DermatologistPatients from '../components/DermatologistPatients.vue'
 import RequestForVacation from '../components/RequestForVacation.vue'
 import CreatePurchaseOrder from '../components/CreatePurchaseOrder.vue'
 import SearchUser from '../components/SearchUser.vue'
@@ -32,6 +31,7 @@ import SheduleExamination from '../components/SheduleExamination.vue'
 import WorkCalendarPharmacist from '../components/WorkCalendarPharmacist.vue'
 import StartCounseling from '../components/StartCounseling.vue'
 import SearchUserPharmacist from '../components/SearchUserPharmacist.vue'
+import Clients from '../components/Clients.vue'
 
 
 import moment from 'moment'
@@ -180,11 +180,6 @@ const routes = [
       }
       ,
       {
-        path: '/DermatologistPatients/:id',
-        name: 'DermatologistPatients',
-        component: DermatologistPatients
-      },
-      {
         path: '/RequestForVacation/:id',
         name: 'RequestForVacation',
         component: RequestForVacation
@@ -225,6 +220,11 @@ const routes = [
         path: '/SheduleExamination/:id',
         name: 'SheduleExamination',
         component: SheduleExamination
+      },
+      {
+        path: '/Clients',
+        name: 'Clients',
+        component: Clients
       }
       
       

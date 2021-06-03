@@ -13,6 +13,9 @@
                </router-link>
             </span>
 
+<span style="float: left; margin-top: 20px;">
+                  <button class = "btn btn-primary btn-xs" style="margin:auto; margin-left:38px;background:#474A8A" v-on:click = "profile">Clients </button>
+                     </span>
 
                 <span style="float: left; margin-top: 20px;">
                           <b-dropdown id="ddCommodity" name="ddCommodity" text="Counseling" style="margin-left:33px; color:white;"  >
@@ -87,13 +90,7 @@
      
 
     </tr>
-    <tr style="font-size:22px;color:#0D184F;">
-      <th></th>
-      <td>Password:</td>
-      <td>{{user.password}} </td>
-     
-
-    </tr>
+    
     
   </tbody>
                         </table>
@@ -137,6 +134,9 @@ export default {
                  
 },
   methods:{
+     profile : function(){
+          window.location.href = '/Clients';
+        }
 }
 }
 </script>
