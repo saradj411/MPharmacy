@@ -88,7 +88,6 @@ public class PatientService implements IPatientService {
     public void update(Patient patient) {
         Patient pat = patientRepository.getOne(patient.getId());
         Integer ids=pat.getId();
-
         pat.setName(patient.getName());
         pat.setSurname(patient.getSurname());
         pat.setAddress(patient.getAddress());
@@ -97,7 +96,6 @@ public class PatientService implements IPatientService {
         pat.setPhoneNumber(patient.getPhoneNumber());
         pat.setPassword(patient.getPassword());
         pat.setPenalty(patient.getPenalty());
-
         patientRepository.save(pat);
     }
 

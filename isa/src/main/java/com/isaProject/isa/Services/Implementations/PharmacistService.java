@@ -61,6 +61,7 @@ public class PharmacistService implements IPharamacistService {
     @Override
     public void update(Pharmacist pharmacist) {
         Pharmacist pa = pharmacistRepository.getOne(pharmacist.getId());
+        System.out.println("udje u update za farmacceuta ,proslo ime  je "+pa.getName());
         pa.setName(pharmacist.getName());
         pa.setSurname(pharmacist.getSurname());
         pa.setAddress(pharmacist.getAddress());

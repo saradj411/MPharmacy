@@ -42,12 +42,12 @@ public class  Pharmacy implements Serializable {
 
     //cenovnik lekova
     @OneToMany(mappedBy = "pharmacy", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    //@JsonBackReference
+    @JsonBackReference
     private Set<DrugPricelist> drugPricelist = new HashSet<DrugPricelist>();
 
 
     @OneToMany(mappedBy = "pharmacy", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    //@JsonBackReference
+    @JsonBackReference
     private Set<Examination> examinations = new HashSet<Examination>();
 
     public Pharmacy(){}
