@@ -4,9 +4,12 @@ package com.isaProject.isa.Services.Implementations;
 import com.isaProject.isa.Model.DTO.AnnualReportDTO;
 import com.isaProject.isa.Model.DTO.ExaminationQuarterDTO;
 import com.isaProject.isa.Model.DTO.MonthlyReportForExaminationDTO;
+import com.isaProject.isa.Model.Drugs.DrugReservation;
 import com.isaProject.isa.Model.Examination.Examination;
 import com.isaProject.isa.Model.Examination.ExaminationStatus;
+import com.isaProject.isa.Model.Users.Pharmacist;
 import com.isaProject.isa.Model.Users.PharmacyAdmin;
+import com.isaProject.isa.Repositories.DrugReservationRepository;
 import com.isaProject.isa.Repositories.ExaminationRepository;
 import com.isaProject.isa.Repositories.PharmacyAdminRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +30,9 @@ public class ReportService {
 
     @Autowired
     PharmacyAdminRepository pharmacyAdminRepository;
+
+    @Autowired
+    DrugReservationRepository drugReservationRepository;
 
 
     //graficki prikaz
@@ -882,10 +888,88 @@ public class ReportService {
 
 
     }
+    /*
 
-    
+    List<MonthlyReportForExaminationDTO> monthlyReportForExamination(Integer idAdmina){
+        PharmacyAdmin pharmacyAdmin=pharmacyAdminRepository.findOneById(idAdmina);
+        List<DrugReservation>drugReservationList=drugReservationRepository.findAllByPharmacy(pharmacyAdmin.getPharmacy());
+
+        int numberOfExaminationForDay1=0;
+        int numberOfExaminationForDay2=0;
+        int numberOfExaminationForDay3=0;
+        int numberOfExaminationForDay4=0;
+        int numberOfExaminationForDay5=0;
+        int numberOfExaminationForDay6=0;
+        int numberOfExaminationForDay7=0;
+        int numberOfExaminationForDay8=0;
+        int numberOfExaminationForDay9=0;
+        int numberOfExaminationForDay10=0;
+        int numberOfExaminationForDay11=0;
+        int numberOfExaminationForDay12=0;
+        int numberOfExaminationForDay13=0;
+        int numberOfExaminationForDay14=0;
+        int numberOfExaminationForDay15=0;
+        int numberOfExaminationForDay16=0;
+        int numberOfExaminationForDay17=0;
+        int numberOfExaminationForDay18=0;
+        int numberOfExaminationForDay19=0;
+        int numberOfExaminationForDay20=0;
+        int numberOfExaminationForDay21=0;
+        int numberOfExaminationForDay22=0;
+        int numberOfExaminationForDay23=0;
+        int numberOfExaminationForDay24=0;
+        int numberOfExaminationForDay25=0;
+        int numberOfExaminationForDay26=0;
+        int numberOfExaminationForDay27=0;
+        int numberOfExaminationForDay28=0;
+        int numberOfExaminationForDay29=0;
+        int numberOfExaminationForDay30=0;
+        int numberOfExaminationForDay31=0;
+
+        String day1="1";
+        String day2="2";
+        String day3="3";
+        String day4="4";
+        String day5="5";
+        String day6="6";
+        String day7="7";
+        String day8="8";
+        String day9="9";
+        String day10="10";
+        String day11="11";
+        String day12="12";
+        String day13="13";
+        String day14="14";
+        String day15="15";
+        String day16="16";
+        String day17="17";
+        String day18="18";
+        String day19="19";
+        String day20="20";
+        String day21="21";
+        String day22="22";
+        String day23="23";
+        String day24="24";
+        String day25="25";
+        String day26="26";
+        String day27="27";
+        String day28="28";
+        String day29="29";
+        String day30="30";
+        String day31="31";
 
 
+        for (DrugReservation d:drugReservationList){
+            if(d.getPickUpDate().getMonth().equals(LocalDate.now().getMonth())){
+
+
+            }
+
+        }
+
+    }
+
+*/
 
 
 
