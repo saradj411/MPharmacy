@@ -1,10 +1,7 @@
 package com.isaProject.isa.Controllers;
 
 
-import com.isaProject.isa.Model.DTO.AnnualReportDTO;
-import com.isaProject.isa.Model.DTO.ExaminationQuarterDTO;
-import com.isaProject.isa.Model.DTO.FrontCreatedExaminationDTO;
-import com.isaProject.isa.Model.DTO.MonthlyReportForExaminationDTO;
+import com.isaProject.isa.Model.DTO.*;
 import com.isaProject.isa.Services.Implementations.ReportService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,5 +53,40 @@ public class ReportsController {
                 new ResponseEntity<>(HttpStatus.NOT_FOUND) :
                 ResponseEntity.ok(pharm);
     }
+
+
+    @GetMapping(value = "/monthlyReportDrugs/{idAdmina}")
+    public ResponseEntity<List<MonthlyReportForDrugsDTO>> monthlyReportForDrug(@PathVariable Integer idAdmina) {
+        //log.info("dsds:"+id);
+        List<MonthlyReportForDrugsDTO> pharm=reportService.monthlyReportForDrugs(idAdmina);
+        return pharm == null ?
+                new ResponseEntity<>(HttpStatus.NOT_FOUND) :
+                ResponseEntity.ok(pharm);
+    }
+
+
+    @GetMapping(value = "/annualReportDrug/{idAdmina}")
+    public ResponseEntity<AnnualReportForDrugs> AnnualDrugReport(@PathVariable Integer idAdmina) {
+        //log.info("dsds:"+id);
+
+        AnnualReportForDrugs pharm=reportService.annualReportForDrugs8(idAdmina, LocalDate.now().getYear());
+        return pharm == null ?
+                new ResponseEntity<>(HttpStatus.NOT_FOUND) :
+                ResponseEntity.ok(pharm);
+    }
+
+    @GetMapping(value = "/drugQuarter/{idAdmina}")
+    public ResponseEntity<DrugQuarterDTO> drugQuarter(@PathVariable Integer idAdmina) {
+        //log.info("dsds:"+id);
+
+        DrugQuarterDTO pharm=reportService.drugQuarter(idAdmina, LocalDate.now().getYear());
+        return pharm == null ?
+                new ResponseEntity<>(HttpStatus.NOT_FOUND) :
+                ResponseEntity.ok(pharm);
+    }
+
+
+    //drugQuarter
+
 
 }

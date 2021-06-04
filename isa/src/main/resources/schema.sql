@@ -195,6 +195,13 @@ insert into drug_reservation values(507,false,'2021-04-20',true,'2021-08-20',3,5
 insert into drug_reservation values(508,false,'2021-05-18',true,'2021-07-20',3,506,508,504);
 insert into drug_reservation values(509,false,'2021-04-20',false,'2021-05-24',3,507,507,502);
 insert into drug_reservation values(510,false,'2021-04-20',false,'2021-05-24',3,507,508,502);
+insert into drug_reservation values(511,true,'2021-01-25',false,'2021-01-15',3,504,510,501);
+insert into drug_reservation values(512,true,'2021-02-25',false,'2021-02-16',3,504,510,501);
+
+insert into drug_reservation values(513,true,'2021-03-25',false,'2021-03-17',3,504,510,501);
+insert into drug_reservation values(514,true,'2021-04-25',false,'2021-04-18',3,504,510,501);
+
+
 
 #therapy
 insert into therapy values(500,3,504);
