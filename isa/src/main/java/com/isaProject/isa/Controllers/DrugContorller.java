@@ -84,7 +84,7 @@ public class DrugContorller {
                 drugAndSpec.getFormat(),
                 drugAndSpec.getManufacturer());
 
-        Drug u = drugService.save(drugDTO);
+        Drug u = drugService.saveForShifarnik(drugDTO);
         if(u != null)
         {
             SpecificaitonDTO specDTO = new SpecificaitonDTO(

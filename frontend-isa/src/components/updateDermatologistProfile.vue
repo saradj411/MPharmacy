@@ -150,7 +150,9 @@ export default {
       }).then(response => {
                this.nesto=response.data;
                 alert("Changes have been saved!");
-                window.location.href = "/profileDermatologist";
+                console.log(this.id);
+                //window.location.href = "/profileDermatologist/"+this.id;
+                
           }).catch(res => {
                       alert("neceeee!");
 

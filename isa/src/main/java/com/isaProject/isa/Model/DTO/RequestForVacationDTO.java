@@ -12,18 +12,27 @@ public class RequestForVacationDTO {
 
     private LocalDate end;
     private Integer idStaff;
-
-
     private String description;
+    private String name;
+
 
     public RequestForVacationDTO() {
     }
 
-    public RequestForVacationDTO(LocalDate start, LocalDate end, Integer idStaff, String description) {
+    public RequestForVacationDTO(LocalDate start, LocalDate end, Integer idStaff, String description, String name) {
         this.start = start;
         this.end = end;
         this.idStaff = idStaff;
         this.description = description;
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Integer getIdStaff() {

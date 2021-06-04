@@ -156,8 +156,8 @@ export default{
             ingredients : "",
 
             accessToken: localStorage.getItem('accessToken'),
-            expiresIn: localStorage.getItem('expiresIn')
-
+            expiresIn: localStorage.getItem('expiresIn'),
+            id : this.$route.params.id
             
 
         }
@@ -232,7 +232,7 @@ export default{
                 {                  
                     console.log(response);
                     alert("Drug and specification are successeffully added!");                                               
-                    this.$router.push('SystemAdminProfile');
+                   window.location.href = '/SystemAdminProfile/'+this.id;
                     
                     //Odkomentarisati ovo kad se obavi verifikacija mejla
                 }).catch(res => {
@@ -250,6 +250,9 @@ export default{
     {
         var accessToken = localStorage.getItem('accessToken');
         console.log(accessToken.substr(1).slice(0, -1));
+
+
+        
     },
     
 }  

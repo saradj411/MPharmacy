@@ -14,9 +14,6 @@ import java.util.Date;
 @NoArgsConstructor
 public class WorkTimeDTO {
 
-
-
-
     private LocalDate date;
 
 
@@ -83,4 +80,6 @@ public class WorkTimeDTO {
         this.staff = staff;
         this.pharmacy = pharmacy;
     }
+
+
 }

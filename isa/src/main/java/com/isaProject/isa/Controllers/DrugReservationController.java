@@ -97,11 +97,11 @@ public class DrugReservationController {
                 ResponseEntity.ok(reservations);
     }
 
-    @PostMapping("/canceling")
-    ResponseEntity<String> update(@RequestBody DrugReservation dR)
+    @PostMapping("/canceling/{id}")
+    ResponseEntity<String> update(@PathVariable Integer id)
     {
 
-        drugReservationService.canceling(dR);
+        drugReservationService.canceling(id);
         return new ResponseEntity<>("ajdeee", HttpStatus.CREATED);
 
     }

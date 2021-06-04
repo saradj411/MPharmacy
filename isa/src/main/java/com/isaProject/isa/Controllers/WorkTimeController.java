@@ -12,13 +12,17 @@ import com.isaProject.isa.Model.Users.WorkTime;
 import com.isaProject.isa.Services.Implementations.PharmacistService;
 import com.isaProject.isa.Services.Implementations.WorkTimeService;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.tomcat.jni.Local;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -35,8 +39,12 @@ public class WorkTimeController {
     @Autowired
     PharmacistService pharmacistService;
 
-    @PostMapping(value = "/findAllByDate")
-    public ResponseEntity<List<FrontPharmacyForExamination>> findAll(@RequestBody WorkTimeDTO workTimeDTO) {
+    @PostMapping(value = "/findAllByDate/{date}/{time}")
+    public ResponseEntity<List<FrontPharmacyForExamination>> findAll(@PathVariable Date date,
+                                                                     @PathVariable LocalTime time
+                                                                     // @RequestBody WorkTimeDTO workTimeDTO
+    ) {
+        LocalDate dd= date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         List<Pharmacy> pharmacies=new ArrayList<>();
         List<Pharmacy> pharmacies1=new ArrayList<>();
         //List<Staff> staff=new ArrayList<>();
@@ -44,7 +52,8 @@ public class WorkTimeController {
         //System.out.println("eee:"+workTimeDTO.getDate()+"--iii:"+workTimeDTO.getStartTime());
 
         //List<WorkTime> workTimes=workTimeService.listForPatient(workTimeDTO.getDate(),workTimeDTO.getStartTime());
-        List<Staff> staffs=workTimeService.listForPatient(workTimeDTO.getDate(),workTimeDTO.getStartTime());
+        //List<Staff> staffs=workTimeService.listForPatient(workTimeDTO.getDate(),workTimeDTO.getStartTime());
+        List<Staff> staffs=workTimeService.listForPatient(dd,time);
         for(Staff s:staffs){
             System.out.println("eee:"+s.getId());
 

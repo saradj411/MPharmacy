@@ -10,8 +10,9 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 
-public class Dermatologist extends Staff {
+public class Dermatologist extends Staff implements  Serializable{
 
     //apoteke u kojima je zaposlen
     @ManyToMany(fetch = FetchType.LAZY)
@@ -32,9 +33,7 @@ public class Dermatologist extends Staff {
     }
     public Dermatologist(){
         super();
-
     }
-
     public Set<Pharmacy> getPharmacies() {
         return pharmacies;
     }

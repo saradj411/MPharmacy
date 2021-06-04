@@ -63,7 +63,7 @@ public class Examination {
    // @JsonIgnore
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "staffId", referencedColumnName = "id")
-    //@JsonBackReference
+    @JsonBackReference
     private Staff staff;
 
     //kod dermatologa, kod farmaceuta

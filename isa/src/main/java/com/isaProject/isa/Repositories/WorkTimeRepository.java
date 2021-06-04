@@ -22,7 +22,7 @@ public interface WorkTimeRepository  extends JpaRepository<WorkTime, Integer> {
     List<WorkTime> findWorkTimeByIdDermAndIdPharm(Integer id,Integer idPharm);
 
     @Query("select s from WorkTime s where s.date= ?1 and s.startTime= ?2 and s.endTime= ?3")
-    List<WorkTime>listaWorkTime(LocalDate date, LocalTime start, LocalTime end);
+    WorkTime listaWorkTime(LocalDate date, LocalTime start, LocalTime end);
 
     @Query("select s from WorkTime s where s.date= ?1")
     List<WorkTime> listForPatient(LocalDate date);

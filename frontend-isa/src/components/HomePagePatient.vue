@@ -985,7 +985,7 @@ methods:{
                 if(this.jel){
                    // alert("tru je")
                     //nek otkaze ili sta vec, odvede na neku stranicu...
-                     this.axios.post('/reservation/canceling',res,{
+                     this.axios.post('/reservation/canceling/'+idRes,{
                             }).then(response => {
                             this.jel = response.data;
             
@@ -1015,7 +1015,9 @@ methods:{
                if(this.jel1){
                    //alert("tru je")
                     //nek otkaze ili sta vec, odvede na neku stranicu...
-                      this.axios.post('/examination/patientCancelingPharmacistExamination',examination,{
+
+                      this.axios.post('/examination/patientCanceling/'+idEx,{
+
                             }).then(response => {
                             this.jel1 = response.data;
             
@@ -1077,15 +1079,15 @@ methods:{
              this.time=time
              console.log(this.date)
              console.log(this.time)
-              const datum = {
+              /*const datum = {
                 date : this.date,
                 startTime : this.time,
-                endTime:null,
-                staff:null,
-                pharmacy:null,
+               // endTime:null,
+                //staff:null,
+                //pharmacy:null,
                 
-           }
-        this.axios.post('/workTime/findAllByDate',datum)
+           }*/
+        this.axios.post('/workTime/findAllByDate/'+this.date+"/"+this.time)
           .then(response => {
             //this.showCreatedPharmExamination
                 this.freePharmacy= response.data;

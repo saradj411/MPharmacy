@@ -6,20 +6,23 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.isaProject.isa.Model.Examination.Examination;
 import com.isaProject.isa.Model.Pharmacy.Pharmacy;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import java.io.Serializable;
 import java.util.Set;
 
 @Entity
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 
-public class Pharmacist extends Staff {
+public class Pharmacist extends Staff implements Serializable {
 
     //apoteka u kojoj je zaposlen
     @ManyToOne
     @JoinColumn(name = "pharmacistPharmacy", referencedColumnName = "idPharm", nullable = true)
-    //@JsonManagedReference
+    @JsonBackReference
+    //@JsonManagedReference(value="pharmacist-person")
     private Pharmacy pharmacy;
 
     /*
@@ -32,8 +35,10 @@ public class Pharmacist extends Staff {
         this.pharmacy = pharmacy;
     }
 
+    public Pharmacist(Pharmacy pharmacy) {
+        this.pharmacy = pharmacy;
+    }
     public Pharmacist() {
-        super();
     }
 
     public Pharmacy getPharmacy() {

@@ -37,7 +37,7 @@ public class PatientService implements IPatientService {
     DrugRepository drugRepository;
 
     @Override
-    public Patient findById(Integer id) {
+    public Patient findById(Integer id){
         System.out.println("ovdje uslo sada aaaaa:"+id);
         User user=userRepository.getOne(id);
         System.out.println("ovdje uslo sada aaaaa:"+user.getName());
@@ -59,14 +59,35 @@ public class PatientService implements IPatientService {
         allergies.add(dr);
         patient.setAllergies(allergies);
         patientRepository.save(patient);
-
     }
+    @Override
+    public String findAllergy(Integer idPatient,String name) {
+        String answer="The patient isn't allergic to the drug";
+        Patient patient = patientRepository.findById(idPatient).get();
+        Set<Drug> allergies=patient.getAllergies();
+        for (Drug d:allergies){
+            if(d.getName().equals(name)){
+                answer="The patient is allergic to the drug";
+
+            }
+        }
+        return answer;
+    }
+
+    @Override
+    public Set<Drug> getAllergy(Integer idPatient, String name) {
+        Patient patient = patientRepository.findById(idPatient).get();
+        Set<Drug> allergies=patient.getAllergies();
+
+        return allergies;
+    }
+
+
 
     @Override
     public void update(Patient patient) {
         Patient pat = patientRepository.getOne(patient.getId());
         Integer ids=pat.getId();
-
         pat.setName(patient.getName());
         pat.setSurname(patient.getSurname());
         pat.setAddress(patient.getAddress());
@@ -75,7 +96,6 @@ public class PatientService implements IPatientService {
         pat.setPhoneNumber(patient.getPhoneNumber());
         pat.setPassword(patient.getPassword());
         pat.setPenalty(patient.getPenalty());
-
         patientRepository.save(pat);
     }
 

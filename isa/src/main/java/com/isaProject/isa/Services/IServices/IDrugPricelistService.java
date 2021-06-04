@@ -1,5 +1,7 @@
 package com.isaProject.isa.Services.IServices;
 
+import com.isaProject.isa.Model.DTO.DrugPricelistDTO;
+import com.isaProject.isa.Model.DTO.DrugPricelistUpdateDTO;
 import com.isaProject.isa.Model.Drugs.Drug;
 import com.isaProject.isa.Model.Drugs.DrugPricelist;
 
@@ -15,4 +17,10 @@ public interface IDrugPricelistService {
     List<DrugPricelist> findAllDrugsByPharmacy(Integer id);
 
     DrugPricelist findByIdDrugAndIdPharmacy(Integer idDrug, Integer idPharmacy);
+
+    DrugPricelist save(DrugPricelistDTO drugPricelistDTO, Integer idPharmacy);
+
+    void update(DrugPricelistUpdateDTO drugPricelistUpdateDTOs);
+
+    void update(DrugPricelist drugPricelist);
 }

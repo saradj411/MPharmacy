@@ -1,7 +1,7 @@
 package com.isaProject.isa.Controllers;
 
 
-import com.isaProject.isa.Model.DTO.SearchPharmacistsDTO;
+import com.isaProject.isa.Model.DTO.*;
 import com.isaProject.isa.Model.Drugs.Drug;
 import com.isaProject.isa.Model.Drugs.DrugPricelist;
 import com.isaProject.isa.Model.Users.Dermatologist;
@@ -10,9 +10,6 @@ import com.isaProject.isa.Services.Implementations.DermatologistService;
 import com.isaProject.isa.Services.Implementations.DrugPricelistService;
 import com.isaProject.isa.Services.Implementations.DrugService;
 import com.isaProject.isa.Services.Implementations.PharmacistService;
-import com.isaProject.isa.Model.DTO.DrugDTO;
-import com.isaProject.isa.Model.DTO.PharmaceutDTO;
-import com.isaProject.isa.Model.DTO.WorkTimeDTO;
 import com.isaProject.isa.Model.Examination.Examination;
 import com.isaProject.isa.Model.Pharmacy.Pharmacy;
 import com.isaProject.isa.Model.Users.*;
@@ -20,6 +17,7 @@ import com.isaProject.isa.Services.Implementations.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -46,6 +44,9 @@ public class PharmacistController {
     private PharmacyAdminService pharmacyAdminService;
     @Autowired
     private WorkTimeService workTimeService;
+
+    @Autowired
+    private ExaminationService examinationService;
 
     @Autowired
     private  StaffService staffService;
@@ -105,9 +106,36 @@ public class PharmacistController {
                 ResponseEntity.ok(newP);
     }
 
+    @GetMapping("/updateFreeEx/{idEx}")
+    ResponseEntity<String> patientNotAppearr(@PathVariable Integer idEx)
+    {
+        String answer="The patient received 1 penalty!";
+        pharmacistService.patientNotAppear(idEx);
+        return new ResponseEntity<>(answer, HttpStatus.CREATED);
 
+    }
+    @GetMapping(value = "/findClientsPharmacist/{id}")
+    public ResponseEntity<List<ReviewedClientsDTO>> findClientsD(@PathVariable Integer id) {
+        List<ReviewedClientsDTO> reviewedClientsDTOS=pharmacistService.reviewedClientsDermatologist(id);
+        return reviewedClientsDTOS == null ?
+                new ResponseEntity<>(HttpStatus.NOT_FOUND) :
+                ResponseEntity.ok(reviewedClientsDTOS);
+    }
 
+    @GetMapping("/getFreeEx/{idStaff}")
+    public  ResponseEntity<List<FreeExaminationsForRepresentationDTO>> getAllFreeExaminations(@PathVariable Integer idStaff) {
 
+        List<Examination>examinations=examinationService.getExaminationsByIdStaffAndIdPharmacy(idStaff);
+        List<FreeExaminationsForRepresentationDTO>freeEx=new ArrayList<>();
+        for (Examination ex:examinations){
+            System.out.println("imeee pacijenta "+ ex.getPatient().getName());
+
+            System.out.println("imeee "+ ex.getPharmacy().getName());
+            FreeExaminationsForRepresentationDTO freeE=new FreeExaminationsForRepresentationDTO(ex.getDate(),ex.getStartTime(),ex.getEndTime(),ex.getPrice(),ex.getPharmacy().getName(),ex.getPatient().getName(),ex.getPatient().getSurname(),ex.getIdExamination());
+            freeEx.add(freeE);
+        }
+        return new ResponseEntity<>(freeEx, HttpStatus.ACCEPTED);
+    }
 
     @GetMapping(value = "/findById/{id}")
     public ResponseEntity<Pharmacist> findById(@PathVariable Integer id) {
@@ -128,6 +156,7 @@ public class PharmacistController {
 
 
  */
+/*
 
     @GetMapping(value ="create/{name}/{surname}/{email}/{address}/{phoneNumber}/{city}/{country}/{idAdmina}/{date}/{start}/{end}")
     public ResponseEntity<String> addDrug(@PathVariable(value="name") String name,@PathVariable(value="surname") String surname,@PathVariable(value="email") String email,@PathVariable(value="address") String address,@PathVariable(value="phoneNumber") String phoneNumber,@PathVariable(value="city") String city,@PathVariable(value="country") String country,@PathVariable(value="idAdmina") Integer idAdmina,@PathVariable(value="start") String start,@PathVariable(value="end") String end) {
@@ -144,7 +173,7 @@ public class PharmacistController {
         System.out.println(admin.getId()+"id adminaaaaaaaaaaaaa");
         //nece da doda id u pharmacy ps. hoceee :D
         Pharmacy pharmacy=admin.getPharmacy();
-/*
+
 
 
 
@@ -155,11 +184,12 @@ public class PharmacistController {
         PharmacyAdmin adminn=pharmacyAdminService.findById(idAdmina);
         String proba="2011/11/11";
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-*/
-        /*
-        localhost:8083/dermatologist/create/dsdfdd/sdsadd/asdsdd/aSDdd/ASDFdd/ASDddd/asdefrdddd/503/2017-11-11/11:15:45/12:15:45
-         */
-/*
+
+
+
+      // localhost:8083/dermatologist/create/dsdfdd/sdsadd/asdsdd/aSDdd/ASDFdd/ASDddd/asdefrdddd/503/2017-11-11/11:15:45/12:15:45
+
+
 
         Date apptDay = null;
         DateFormat df = new SimpleDateFormat("yyyy/MM/dd");
@@ -205,17 +235,18 @@ public class PharmacistController {
         Pharmacist d = pharmacistService.save(DTO);
 
 
-*/
 
-        return new ResponseEntity<>("kreirano", HttpStatus.CREATED);
+
+       return new ResponseEntity<>("kreirano", HttpStatus.CREATED);
     }
 
 
+*/
 
 
 
 
-    @PostMapping("/updatePharmacist")
+    @PostMapping(value = "/updatePharmacist")
     ResponseEntity<String> update(@RequestBody Pharmacist pharmacist)
     {
         pharmacistService.update(pharmacist);
@@ -226,7 +257,7 @@ public class PharmacistController {
 
 
 
-    @GetMapping(value ="createWorkTime/{idPharmaceut}/{date}/{start}/{end}")//mora se id proslijediti nekako ili mozda email
+   /* @GetMapping(value ="createWorkTime/{idPharmaceut}/{date}/{start}/{end}")//mora se id proslijediti nekako ili mozda email
     public ResponseEntity<String> addWorkTime(@PathVariable(value="idPharmaceut") Integer idPharmaceut,@PathVariable(value="start") String start,@PathVariable(value="end") String end) {
 
         Pharmacist pharmacist=pharmacistService.findById(idPharmaceut);//moze i findbyemail
@@ -272,18 +303,10 @@ public class PharmacistController {
 
         /*WorkTimeDTO workTimeDTO=new WorkTimeDTO(jDate,startt,endd,staff,pharmacy);
         WorkTime ww=workTimeService.save(workTimeDTO);
-*/
-
-
-
-
-
-
-
 
         return new ResponseEntity<>("kreirano", HttpStatus.CREATED);
     }
-
+*/
 
     @GetMapping("/delete/{id}")
     public ResponseEntity<String> deletePharmacist(@PathVariable Integer id) {

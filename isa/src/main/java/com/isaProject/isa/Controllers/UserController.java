@@ -11,14 +11,17 @@ import com.isaProject.isa.Services.Implementations.DermatologistService;
 import com.isaProject.isa.Services.Implementations.PatientService;
 import com.isaProject.isa.Services.Implementations.UserService;
 import lombok.extern.slf4j.Slf4j;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
+import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletResponse;
 import java.time.LocalDate;
 import java.util.List;
@@ -54,15 +57,16 @@ public class UserController {
     }
 
     @GetMapping(value = "/findById/{id}")
+    @Async
+    @PreAuthorize("hasRole('ADMIN') or hasRole('PATIENT')") //mogu se dodati sve role ovde
     public ResponseEntity<User> findById(@PathVariable Integer id) {
-        //log.info("dsds:"+id);
 
-
-        User pharm=userService.findById(id);
-        return pharm == null ?
+        User user = userService.findById(id);
+        return user == null ?
                 new ResponseEntity<>(HttpStatus.NOT_FOUND) :
-                ResponseEntity.ok(pharm);
+                new ResponseEntity<>(user, HttpStatus.OK);
     }
+
     @GetMapping(value = "/updatePenality")
     public ResponseEntity<Boolean> updatePenality(){
 
@@ -102,7 +106,7 @@ public class UserController {
     }
 
     @PostMapping(value = "/login", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<UserTokenState> login(@RequestBody JwtAuthenticationRequest authRequest,
+    public ResponseEntity<UserTokenState> login(@NotNull @RequestBody JwtAuthenticationRequest authRequest,
                                                 HttpServletResponse response)
     {
         System.out.println("USAO");
@@ -111,15 +115,6 @@ public class UserController {
         return token == null ? new ResponseEntity<>(HttpStatus.NOT_FOUND) : ResponseEntity.ok(token);
     }
 
-    @PostMapping(value = "/saveDermatologist", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<User> saveDermatologist(@RequestBody DermatologistDTO dermDTO)
-    {
-        System.out.println("USAO U SAVE DERMATOLOGA SA ADMIN ROLE");
-        System.out.println(dermDTO.getEmail());
-        User u = dermatologistService.save(dermDTO);
-        return  u == null ? new ResponseEntity<>(HttpStatus.IM_USED) :
-               new ResponseEntity<>(u, HttpStatus.CREATED);
-    }
 
     /*@PostMapping(value = "/saveSupplier", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<User> saveDermatologist(@RequestBody SupplierDTO dermDTO)
@@ -140,6 +135,21 @@ public class UserController {
         return  u == null ? new ResponseEntity<>(HttpStatus.BAD_REQUEST) :
                 new ResponseEntity<>(u, HttpStatus.OK);
     }
+
+
+    @PostMapping(value =  "/saveAdmin")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<User> saveAdmin(@RequestBody UserDTO userDTO) throws MessagingException {
+        User u = userService.saveAdmin(userDTO);
+
+        return u == null ? new ResponseEntity<>(HttpStatus.BAD_REQUEST) :
+                new ResponseEntity<>(u, HttpStatus.CREATED);
+
+    }
+
+
+
+
 
 
 
