@@ -10,7 +10,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 
 public class Dermatologist extends Staff {
 
@@ -31,6 +30,7 @@ public class Dermatologist extends Staff {
         super(id, name, surname, email, password, address, phoneNumber, city, country, avgGrade, workTime, examinations, vacation);
         this.pharmacies = pharmacies;
     }
+
     public Dermatologist(){
         super();
 

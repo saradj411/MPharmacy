@@ -1,5 +1,6 @@
 package com.isaProject.isa.Controllers;
 
+import com.isaProject.isa.Model.DTO.FrontDrugReservationDTO;
 import com.isaProject.isa.Model.Drugs.Drug;
 import com.isaProject.isa.Model.Drugs.DrugPricelist;
 import com.isaProject.isa.Model.Drugs.DrugReservation;
@@ -41,31 +42,13 @@ public class DrugReservationController {
 
     //AKTIVNE REZERVACIJE
     @GetMapping(value = "/findById/{id}")
-    public ResponseEntity<List<DrugReservation>> findById(@PathVariable Patient id) {
-        //log.info("dsds:"+id);
-        List<DrugReservation> reserv=drugReservationService.findByIdPatient(id);
-        List<DrugReservation> reserv1=new ArrayList<>();
-        LocalDate now=LocalDate.now();
+    public ResponseEntity<List<FrontDrugReservationDTO>> findById(@PathVariable Patient id) {
 
-        for (DrugReservation dR:reserv){
-            LocalDate pick=dR.getPickUpDate();
-            int rez=now.compareTo(pick);
-            System.out.println(rez);
-            if(rez<0) {
-                System.out.println("uslo");
-                if (!dR.getCancelled()) {
-                    if(!dR.getPickedUp()) {
-                        reserv1.add(dR);
-                        //id.setPenalty(id.getPenalty() + 1);
-                        //patientService.update(id);
-                    }
-                }
-            }
+        List<FrontDrugReservationDTO> reserv=drugReservationService.findActualByIdPatient(id);
 
-        }
-        return reserv1 == null ?
+        return reserv == null ?
                 new ResponseEntity<>(HttpStatus.NOT_FOUND) :
-                ResponseEntity.ok(reserv1);
+                ResponseEntity.ok(reserv);
     }
 
     @GetMapping(value = "/getBool/{id}")
@@ -81,36 +64,27 @@ public class DrugReservationController {
     }
 
     @GetMapping(value = "/findPickedById/{id}")
-    public ResponseEntity<List<DrugReservation>> findPickedById(@PathVariable Patient id) {
-        //log.info("dsds:"+id);
-        List<DrugReservation> reserv=drugReservationService.findByIdPatient(id);
-        List<DrugReservation> reserv1=new ArrayList<>();
-        for (DrugReservation dR:reserv){
-            if(dR.getPickedUp()){
-                reserv1.add(dR);
-            }
-        }
-        return reserv1 == null ?
+    public ResponseEntity<List<FrontDrugReservationDTO>> findPickedById(@PathVariable Patient id) {
+
+        List<FrontDrugReservationDTO> reserv=drugReservationService.findPickedById(id);
+
+        return reserv == null ?
                 new ResponseEntity<>(HttpStatus.NOT_FOUND) :
-                ResponseEntity.ok(reserv1);
+                ResponseEntity.ok(reserv);
     }
     @GetMapping(value = "/findCanceledById/{id}")
-    public ResponseEntity<List<DrugReservation>> findCanceledById(@PathVariable Patient id) {
-        //log.info("dsds:"+id);
-        List<DrugReservation> reserv=drugReservationService.findByIdPatient(id);
-        List<DrugReservation> reserv1=new ArrayList<>();
-        for (DrugReservation dR:reserv){
-            if(dR.getCancelled()){
-                reserv1.add(dR);
-            }
-        }
-        return reserv1 == null ?
+    public ResponseEntity<List<FrontDrugReservationDTO>> findCanceledById(@PathVariable Patient id) {
+
+        List<FrontDrugReservationDTO> reserv=drugReservationService.findCanceledById(id);
+
+        return reserv == null ?
                 new ResponseEntity<>(HttpStatus.NOT_FOUND) :
-                ResponseEntity.ok(reserv1);
+                ResponseEntity.ok(reserv);
     }
     @GetMapping(value = "/findAllPicked")
     public ResponseEntity<List<DrugReservation>> findAllPicked() {
         List<DrugReservation> reservations=this.drugReservationService.findByIsPickedUp(true);
+
         return reservations == null ?
                 new ResponseEntity<>(HttpStatus.NOT_FOUND) :
                 ResponseEntity.ok(reservations);
@@ -124,4 +98,14 @@ public class DrugReservationController {
         return new ResponseEntity<>("ajdeee", HttpStatus.CREATED);
 
     }
+    @PostMapping("/checkReservations")
+    ResponseEntity<String> checkReservations()
+    {
+
+        drugReservationService.checkReservations();
+        return new ResponseEntity<>("ajdeee", HttpStatus.CREATED);
+
+    }
+
+
 }

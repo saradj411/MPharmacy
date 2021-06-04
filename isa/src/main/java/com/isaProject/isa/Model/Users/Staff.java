@@ -38,6 +38,23 @@ public class Staff extends User{
         this.vacation = vacation;
     }
 
+    public Staff(Integer id, String name, String surname, String email, String password, String address, String phoneNumber, String city, String country, double avgGrade, Set<WorkTime> workTime) {
+        super(id, name, surname, email, password, address, phoneNumber, city, country);
+        this.avgGrade = avgGrade;
+        this.workTime = workTime;
+        this.examinations = null;
+        this.vacation = null;
+
+    }
+
+    public Staff(Integer id, String name, String surname, String email, String password, String address, String phoneNumber, String city, String country, double avgGrade) {
+        super(id, name, surname, email, password, address, phoneNumber, city, country);
+        this.avgGrade = avgGrade;
+        this.examinations = null;
+        this.vacation = null;
+
+    }
+
     public Staff() {
 
     }

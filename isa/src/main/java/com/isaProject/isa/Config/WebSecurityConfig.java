@@ -66,8 +66,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .exceptionHandling().authenticationEntryPoint(restAuthenticationEntryPoint).and()
 
                 // svim korisnicima dopusti da pristupe putanjama /auth/**, (/h2-console/** ako se koristi H2 baza) i /api/foo
-                .authorizeRequests().antMatchers("/user/**")
-                .permitAll().antMatchers("/h2-console/**")
+                .authorizeRequests().antMatchers("/h2-console/**")
                 .permitAll().antMatchers("/api/foo")
                 .permitAll().antMatchers("/pharmacy/findAll")
 
@@ -78,8 +77,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll().antMatchers("/reservation/findCanceledById/{id}")
                 .permitAll().antMatchers("/reservation/findPickedById/{id}")
                 .permitAll().antMatchers("/patient/findSheduledDermatologistExamination/{id}")
+                .permitAll().antMatchers("/patient/findFinishedDermatologistExamination/{id}")
                 .permitAll().antMatchers("/reservation/findById/{id}")
                 .permitAll().antMatchers("/patient/findSheduledPharmacistExamination/{id}")
+
+                .permitAll().antMatchers("/patient/findFinishedPharmacistExamination/{id}")
+                .permitAll().antMatchers("/reservation/checkReservations")
+
                 .permitAll().antMatchers("/adminstrator/findPharm/{id}")
                 .permitAll().antMatchers("/adminstrator/findById/{id}")
                 .permitAll().antMatchers("/pharmacist/updatePharmacist")
@@ -174,8 +178,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll().antMatchers("/dermatologist/searchDermatologistName/{id}")
                 .permitAll().antMatchers("/pharmacist/delete/{id}")
 
-
-
                 .permitAll().antMatchers("/patient/findActionPharmacy/{id}")
                 .permitAll().antMatchers("/patient/findERecipe/{id}")
                 .permitAll().antMatchers("/patient/findById/{id}")
@@ -188,11 +190,41 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
                 .permitAll().antMatchers("/examination/patientScheduledDermatologistExamination/{id}/{idExamination}")
                 .permitAll().antMatchers("/reservation/getBool/{id}")
+                .permitAll().antMatchers("/examination/getBool/{id}")
                 .permitAll().antMatchers("/reservation/canceling")
+
+                .permitAll().antMatchers("/examination/patientCanceling")
+                .permitAll().antMatchers("/erecipe/findByIdPatient/{id}")
+
                 .permitAll().antMatchers("/drugPricelist/searchDrugName/{id}")
+                .permitAll().antMatchers("/patient/findOneById/{id}")
+
+
 
 
                 .permitAll()
+                .antMatchers("/pharmacy/findAll").permitAll()
+                .antMatchers("/drugPricelist/findAll").permitAll()
+                .antMatchers("/pharmacy/findByCity/{city}").permitAll()
+                .antMatchers("/pharmacy/findByName/{name}").permitAll()
+
+                //Ovo je dostupno svim korisnicima! Sve ostalo treba da ima pravo pristupa!
+                .antMatchers("/user/savePatient").permitAll()
+                .antMatchers("/user/loggedUser").permitAll()
+                .antMatchers("/user/login").permitAll()
+
+
+
+                //.antMatchers("/dermatologist/saveDermatologist").permitAll()
+
+                //ove zakomentarisati jer imau AUtorizaciju
+                /*.antMatchers("/user/saveSupplier")
+                .permitAll().antMatchers("/user/findAll")
+                .permitAll().antMatchers("/drug/**")
+                .permitAll()antMatchers("/specification/**")
+
+
+                .permitAll()*/
 
                 // za svaki drugi zahtev korisnik mora biti autentifikovan
                 .anyRequest().authenticated().and()

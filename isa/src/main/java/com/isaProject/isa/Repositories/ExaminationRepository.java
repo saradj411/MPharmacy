@@ -18,6 +18,7 @@ public interface ExaminationRepository extends JpaRepository<Examination, Intege
     @Query("select s from Examination s where s.staff.id= ?1")
     List<Examination> find(Integer id);
 
+    Examination findOneByIdExamination(Integer id);
 
     @Query("select s from Examination s where s.staff.id= ?1")
     List<Examination>getAllExaminationsByIdStaffAndIdPharmacy(Integer idStaff);

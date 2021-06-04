@@ -2,12 +2,7 @@ package com.isaProject.isa.Controllers;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.isaProject.isa.Model.DTO.*;
-import com.isaProject.isa.Model.DTO.ChangePasswordDTO;
-import com.isaProject.isa.Model.DTO.DrugDTO;
 import com.isaProject.isa.Model.DTO.FrontCreatedExaminationDTO;
-import com.isaProject.isa.Model.Drugs.Drug;
-import com.isaProject.isa.Model.Drugs.ERecipe;
-import com.isaProject.isa.Model.Examination.Examination;
 import com.isaProject.isa.Model.Pharmacy.Pharmacy;
 import com.isaProject.isa.Model.Users.Patient;
 import com.isaProject.isa.Model.Users.Pharmacist;
@@ -17,8 +12,8 @@ import com.isaProject.isa.Services.Implementations.PharmacyService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -30,7 +25,7 @@ import java.util.Set;
 @CrossOrigin("*")
 @RequestMapping(value="/patient")
 @Slf4j
-@JsonIgnoreProperties(ignoreUnknown = true)
+//@JsonIgnoreProperties(ignoreUnknown = true)
 public class PatientController {
 
     @Autowired
@@ -73,6 +68,10 @@ public class PatientController {
     @GetMapping(value = "/findById/{id}")
     public ResponseEntity<Patient> findById(@PathVariable Integer id) {
 
+    @GetMapping(value = "/findOneById/{id}")
+    @Async
+    public ResponseEntity<Patient> findById(@PathVariable Integer id) {
+        System.out.println("PatientController"+id);
         Patient d= patientService.findById(id);
         return d == null ?
                 new ResponseEntity<>(HttpStatus.NOT_FOUND) :
@@ -124,7 +123,25 @@ public class PatientController {
                 new ResponseEntity<>(HttpStatus.NOT_FOUND) :
                 ResponseEntity.ok(d);
     }
-    @GetMapping(value = "/findERecipe/{id}")
+    @GetMapping(value = "/findFinishedDermatologistExamination/{id}")
+    public ResponseEntity<Set<FrontCreatedExaminationDTO>> findFinishedDermatologistExamination(@PathVariable Integer id) {
+
+        Set<FrontCreatedExaminationDTO> d= patientService.findFinishedDermatologistExamination(id);
+
+        return d == null ?
+                new ResponseEntity<>(HttpStatus.NOT_FOUND) :
+                ResponseEntity.ok(d);
+    }
+    @GetMapping(value = "/findFinishedPharmacistExamination/{id}")
+    public ResponseEntity<Set<FrontCreatedExaminationDTO>> findFinishedPharmacistExamination(@PathVariable Integer id) {
+
+        Set<FrontCreatedExaminationDTO> d= patientService.findFinishedPharmacistExamination(id);
+
+        return d == null ?
+                new ResponseEntity<>(HttpStatus.NOT_FOUND) :
+                ResponseEntity.ok(d);
+    }
+    /*@GetMapping(value = "/findERecipe/{id}")
     public ResponseEntity<List<ERecipe>> findERecipe(@PathVariable Integer id) {
 
         List<ERecipe> d= patientService.findERecipe(id);
@@ -132,7 +149,7 @@ public class PatientController {
         return d == null ?
                 new ResponseEntity<>(HttpStatus.NOT_FOUND) :
                 ResponseEntity.ok(d);
-    }
+    }*/
 
 
     @GetMapping(value = "/findAll")

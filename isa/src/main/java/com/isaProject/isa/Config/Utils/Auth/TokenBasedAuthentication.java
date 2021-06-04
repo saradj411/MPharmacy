@@ -20,6 +20,7 @@ public class TokenBasedAuthentication extends AbstractAuthenticationToken {
     public void setToken(String token) {
         this.token = token;
     }
+
     @Override
     public Object getCredentials() {
         return token;
@@ -29,4 +30,10 @@ public class TokenBasedAuthentication extends AbstractAuthenticationToken {
     public Object getPrincipal() {
         return principle;
     }
+
+    @Override
+    public boolean isAuthenticated() {
+        return true;
+    }
 }
+

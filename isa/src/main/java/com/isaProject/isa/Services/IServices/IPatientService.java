@@ -19,7 +19,9 @@ public interface IPatientService {
     Set<FrontCreatedExaminationDTO> findSheduledPharmacistExamination(Integer id);
     List<ERecipe> findERecipe(Integer id);
      Set<Drug> getAllergy(Integer idPatient, String name) ;
-
+    Set<FrontCreatedExaminationDTO> findFinishedDermatologistExamination(Integer id);
+    Set<FrontCreatedExaminationDTO> findFinishedPharmacistExamination(Integer id);
+    //List<ERecipe> findERecipe(Integer id);
         String findAllergy(Integer idPatient,String name);
 
 }

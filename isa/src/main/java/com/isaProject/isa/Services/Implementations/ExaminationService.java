@@ -7,6 +7,7 @@ import com.isaProject.isa.Model.DTO.RequestForVacationDTO;
 import com.isaProject.isa.Model.DTO.FrontCreatedExaminationDTO;
 import com.isaProject.isa.Model.Drugs.Drug;
 import com.isaProject.isa.Model.Drugs.DrugReservation;
+import com.isaProject.isa.Model.DTO.FrontCreatedExaminationDTO;
 
 import com.isaProject.isa.Model.Examination.Examination;
 import com.isaProject.isa.Model.Examination.ExaminationStatus;
@@ -15,6 +16,10 @@ import com.isaProject.isa.Model.Examination.Therapy;
 import com.isaProject.isa.Model.Pharmacy.Pharmacy;
 import com.isaProject.isa.Model.Users.*;
 import com.isaProject.isa.Repositories.*;
+import com.isaProject.isa.Model.Users.Patient;
+import com.isaProject.isa.Model.Users.Staff;
+import com.isaProject.isa.Repositories.ExaminationRepository;
+import com.isaProject.isa.Repositories.PatientRepository;
 import com.isaProject.isa.Services.IServices.IExaminationService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +34,6 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import java.util.List;
-import java.util.Stack;
 
 @Service
 @Slf4j
@@ -72,6 +76,11 @@ public class ExaminationService implements IExaminationService {
 
     @Override
     public Examination createExD(ExaminationDTO examinationDTO) throws MessagingException {
+    public Examination findById(Integer id) {
+        return examinationRepository.findOneByIdExamination(id);
+    }
+
+    public Examination save(ExaminationDTO examinationDTO) {
         Examination d = new Examination();
         List<WorkTime> workTimes = workTimeRepository.findWorkTimeByIdDermAndIdPharm(examinationDTO.getIdStaff(), examinationDTO.getIdPharm());
         if (!dermatologistService.checkingThatTheScheduleMatches(workTimes, examinationDTO.getDate(), examinationDTO.getStart(), examinationDTO.getEnd())) {
@@ -363,15 +372,12 @@ ili savetovanjem koje pacijent ima zakazano (u bilo kojoj apoteci),
 
 
 
-    @Override
+   /* @Override
     public Examination findById(Integer id) {
         //veki skontalaaa
         Examination examination=examinationRepository.findById(id).get();
         return examination;
-    }
-
-
-
+    }*/
 
     @Override
     public void canceling(Integer id) {
@@ -384,6 +390,19 @@ ili savetovanjem koje pacijent ima zakazano (u bilo kojoj apoteci),
 
         examinationRepository.save(pat);
     }
+
+    @Override
+    public void patientCanceling(Examination examination) {
+        Examination pat = examinationRepository.getOne(examination.getIdExamination());
+
+        pat.setCanceled(true);
+        pat.setStatus(ExaminationStatus.CREATED);
+        pat.setScheduled(false);
+        pat.setPatient(null);
+
+        examinationRepository.save(pat);
+    }
+
     public Boolean getExaminationByIdStaff(Integer idPharmacist){
 
         List<Examination> lista=examinationRepository.findAll();
@@ -433,7 +452,9 @@ ili savetovanjem koje pacijent ima zakazano (u bilo kojoj apoteci),
 
         pat.setStatus(ExaminationStatus.SCHEDULED);
         pat.setScheduled(true);
-        pat.setPatient(patientRepository.getOne(idPatient));
+
+        Patient patient=patientRepository.getOne(idPatient);
+        pat.setPatient(patient);
 
         examinationRepository.save(pat);
     }

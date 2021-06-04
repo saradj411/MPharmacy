@@ -47,5 +47,4 @@ public class SpecificationController {
                 new ResponseEntity<>(HttpStatus.NOT_FOUND) :
                 ResponseEntity.ok(i);
     }
-
 }

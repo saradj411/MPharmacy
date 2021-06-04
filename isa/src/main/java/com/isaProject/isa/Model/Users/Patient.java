@@ -15,9 +15,9 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-
+//@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Patient extends User implements Serializable {
+
 
     @Column(nullable = true)
     private Integer penalty;
@@ -30,25 +30,29 @@ public class Patient extends User implements Serializable {
     private String loyaltyCategory;
 
     //Lijekovi na koje je alergican
-    @ManyToMany
+    //@JsonIgnore
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "allergies", joinColumns = @JoinColumn(name="patientId" ,  referencedColumnName  = "id"),
             inverseJoinColumns = @JoinColumn(name = "drugId", referencedColumnName = "idDrug"))
     private Set<Drug> allergies = new HashSet<Drug>();
 
-
-    @OneToMany(mappedBy = "patient")
+    @JsonIgnore
+    @OneToMany(mappedBy = "patient", fetch = FetchType.EAGER)
     //@JsonBackReference
     private Set<DrugReservation> drugReservation=new HashSet<DrugReservation>();
 
-    @OneToMany(mappedBy = "patient", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JsonBackReference
+    @JsonIgnore
+    @OneToMany(mappedBy = "patient", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    //@JsonBackReference
     private Set<Examination> examinations = new HashSet<Examination>();
+/*
     @OneToMany(mappedBy = "patient", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     //@JsonManagedReference
     private Set<ERecipe> erecipes = new HashSet<ERecipe>();
+*/
     //apoteke na koje je pretplacen
     @JsonIgnore
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "action_patient_pharmacy",
             joinColumns = @JoinColumn(name = "patientId", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "pharmacyId", referencedColumnName = "idPharm"))
@@ -133,7 +137,7 @@ public class Patient extends User implements Serializable {
     public void setActionPharmacies(Set<Pharmacy> actionPharmacies) {
         this.actionPharmacies = actionPharmacies;
     }
-
+/*
     public Set<ERecipe> getErecipes() {
         return erecipes;
     }
@@ -141,7 +145,7 @@ public class Patient extends User implements Serializable {
     public void setErecipes(Set<ERecipe> erecipes) {
         this.erecipes = erecipes;
     }
-
+*/
     /*
     //zalbe
     @OneToMany(mappedBy = "patient", fetch = FetchType.LAZY, cascade = CascadeType.ALL)

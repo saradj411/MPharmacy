@@ -37,7 +37,10 @@ import ReviewedClientsPharmacist from '../components/ReviewedClientsPharmacist.v
 import RequestForVacationPharmacist from '../components/RequestForVacationPharmacist.vue'
 import InssuingDrug from '../components/InssuingDrug.vue'
 
-
+import SystemAdminProfile from '../components/SystemAdminProfile.vue'
+import AddShifarnikPage from '../components/AddShifarnikPage'
+import RegisterNewSystemAdmin from '../components/RegisterNewSystemAdmin'
+import RegisterDermatologist from '../components/RegisterDermatologist'
 import moment from 'moment'
 
 
@@ -77,12 +80,17 @@ const routes = [
       }
       ,
       {
-        path: '/ProfilePatient',
+        path: '/ProfilePatient/:id',
         name: 'ProfilePatient',
         component: ProfilePatient
       }
     ,
      
+      {
+        path: '/SystemAdminProfile/:id',
+        name: 'SystemAdminProfile',
+        component: SystemAdminProfile
+      },
       {
         path: '/updatePharmacyProfile/:id',
         name: 'updatePharmacyProfile',
@@ -133,6 +141,11 @@ const routes = [
         component: DermatologistsPharmacy
       }
       ,
+      {
+        path: '/AddShifarnikPage/:id',
+        name: 'AddShifarnikPage',
+        component: AddShifarnikPage
+      },
       {
         path: '/PharmacistsPharmacy/:id',
         name: 'PharmacistsPharmacy',
@@ -218,6 +231,16 @@ const routes = [
         path: '/StartExamination/:id',
         name: 'StartExamination',
         component: StartExamination
+      },
+      {
+        path:'/RegisterNewSystemAdmin/:id',
+        name: 'RegisterNewSystemAdmin',
+        component: RegisterNewSystemAdmin
+      },
+      {
+        path: '/RegisterDermatologist/:id',
+        name: 'RegisterDermatologist',
+        component: RegisterDermatologist
       }
       ,
       {
@@ -262,7 +285,8 @@ const routes = [
 const router = new VueRouter({
     mode: 'history',
     base: process.env.BASE_URL,
-    routes
+    routes,
+    
   })
   
   export default router

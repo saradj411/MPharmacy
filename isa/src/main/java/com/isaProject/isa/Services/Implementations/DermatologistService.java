@@ -10,13 +10,19 @@ import com.isaProject.isa.Model.Examination.ExaminationStatus;
 import com.isaProject.isa.Model.Examination.ExaminationType;
 import com.isaProject.isa.Model.Examination.Therapy;
 import com.isaProject.isa.Model.Pharmacy.Pharmacy;
+import com.isaProject.isa.Model.Users.Authority;
 import com.isaProject.isa.Model.Users.Dermatologist;
+
 import com.isaProject.isa.Model.Users.Patient;
 import com.isaProject.isa.Model.Users.Staff;
+
+import com.isaProject.isa.Model.Users.User;
+
 import com.isaProject.isa.Model.Users.WorkTime;
 import com.isaProject.isa.Repositories.*;
 import com.isaProject.isa.Services.IServices.IDermatologistService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.io.Serializable;
@@ -32,7 +38,11 @@ public class DermatologistService implements IDermatologistService, Serializable
    //s private static final Logger log = org.slf4j.LoggerFactory.getLogger(DermatologistService.class);
     public @Autowired
     DermatologistRepository dermatologistRepository;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
+    @Autowired
+    private AuthorityService authService;
     public @Autowired
     WorkTimeRepository workTimeRepository;
 
@@ -45,6 +55,9 @@ public class DermatologistService implements IDermatologistService, Serializable
     public @Autowired
     ExaminationService examinationService;
 
+    public  @Autowired
+    WorkTimeService workTimeService;
+
     public @Autowired
     PharmacyService pharmacyService;
 
@@ -54,6 +67,9 @@ public class DermatologistService implements IDermatologistService, Serializable
 
     public @Autowired
     StaffRepository staffRepository;
+
+    @Autowired
+    UserRepository userRepository;
 
     public @Autowired
     SpecificationRepository specificationRepository;
@@ -166,23 +182,69 @@ public class DermatologistService implements IDermatologistService, Serializable
 
 
     @Override
-    public Dermatologist save(DermatologistDTO dermatologist) {
+    public Dermatologist save(DermatologistDTO dermDTO) {
+        System.out.println("Usao u servis");
+        List<Authority> auth = authService.findByname("ROLE_DERMATOLOGIST");
+        for(User d : userRepository.findAll())
+        {
+            if(d.getEmail().equals(dermDTO.getEmail())) {
+                System.out.println("nasaoistog");
+                return null;
+            }
+        }
+
         Dermatologist d = new Dermatologist();
-        d.setName(dermatologist.getName());
-        d.setSurname(dermatologist.getSurname());
-        d.setEmail(dermatologist.getSurname());
-        d.setPassword(dermatologist.getPassword());
-        d.setAddress(dermatologist.getPhoneNumber());
-        d.setPhoneNumber(dermatologist.getPhoneNumber());
-        d.setCity(dermatologist.getCity());
-        d.setCountry(dermatologist.getCountry());
-        d.setAvgGrade(dermatologist.getAvgGrade());
-        d.setWorkTime(null);
-        d.setExaminations(null);
-        d.setVacation(null);
-        pharmOfDerm.add(dermatologist.getPharmacy());
-        d.setPharmacies(pharmOfDerm);
-        return dermatologistRepository.save(d);
+        d.setName(dermDTO.getName());
+        d.setSurname(dermDTO.getSurname());
+        d.setEmail(dermDTO.getEmail());
+        String pass = "123";
+        d.setPassword(passwordEncoder.encode(pass));
+        d.setAddress(dermDTO.getAddress());
+        d.setPhoneNumber(dermDTO.getPhoneNumber());
+        d.setCity(dermDTO.getCity());
+        d.setCountry(dermDTO.getCountry());
+        d.setAuthorities(auth);
+        d.setAccountEnabled(false);
+
+        d.setAvgGrade(dermDTO.getAvgGrade());
+
+        System.out.println("avg" + dermDTO.getAvgGrade());
+        System.out.println("date " + dermDTO.getDate());
+        System.out.println("strartTime " + dermDTO.getStartTime());
+        System.out.println("ID pharm " + dermDTO.getPharmacyID());
+
+        User newUser = userRepository.save(d);
+
+        if(dermDTO.getDate() != null
+                && dermDTO.getStartTime() != null
+                && dermDTO.getEndTime() != null
+                && dermDTO.getPharmacyID() != null)
+        {
+            Pharmacy pharmacy = pharmacyService.findById(dermDTO.getPharmacyID());
+            Staff staff = staffRepository.getOne(newUser.getId());
+
+            HashSet<WorkTime> workTimeList = new HashSet<WorkTime>();
+            HashSet<Pharmacy> pharmacies = new HashSet<Pharmacy>();
+            pharmacies.add(pharmacy);
+
+            WorkTimeDTO workTimeDTO = new WorkTimeDTO();
+            workTimeDTO.setDate(dermDTO.getDate());
+            workTimeDTO.setStartTime(dermDTO.getStartTime());
+            workTimeDTO.setEndTime(dermDTO.getEndTime());
+            workTimeDTO.setStaff(staff);
+            workTimeDTO.setPharmacy(pharmacy);
+
+            d.setPharmacies(pharmacies);
+
+            WorkTime workTime = workTimeService.save(workTimeDTO);
+
+            workTimeList.add(workTime);
+            d.setWorkTime(new HashSet<WorkTime>());
+
+            return d;
+        }
+
+        return d;
     }
 
 /*

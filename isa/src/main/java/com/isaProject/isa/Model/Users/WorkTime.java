@@ -36,6 +36,9 @@ public class WorkTime {
     //@JsonManagedReference
     private Pharmacy pharmacy;
 
+    public WorkTime(Date date, LocalTime startTime, LocalTime endTime, Integer id, Pharmacy p) {
+    }
+
     public Integer getId() {
         return id;
     }
@@ -85,6 +88,18 @@ public class WorkTime {
     }
 
     public WorkTime(Integer id, LocalDate date, LocalTime startTime, LocalTime endTime, Staff staff, Pharmacy pharmacy) {
+    public  WorkTime(){
+
+    }
+
+    public WorkTime(Date date, LocalTime startTime, LocalTime endTime, Staff staff, Pharmacy pharmacy) {
+        this.date = date;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.staff = staff;
+        this.pharmacy = pharmacy;
+    }
+    public WorkTime(Integer id, Date date, LocalTime startTime, LocalTime endTime, Staff staff, Pharmacy pharmacy) {
         this.id = id;
         this.date = date;
         this.startTime = startTime;
@@ -93,7 +108,7 @@ public class WorkTime {
         this.pharmacy = pharmacy;
     }
 
-    public  WorkTime(){
 
-    }
+
+
 }

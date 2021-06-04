@@ -13,6 +13,7 @@ public interface IDrugService {
     List<Drug> findAll ();
     Drug save(DrugDTO drug);
     void update(Drug drug);
+    Drug saveForShifarnik(DrugDTO drugDTO);
     //dodati za rezervaciju kad Sara uradi
     Boolean remove(Drug medication, Integer idAdmin);
 

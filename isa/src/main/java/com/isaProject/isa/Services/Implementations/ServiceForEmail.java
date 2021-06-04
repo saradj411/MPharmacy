@@ -3,6 +3,7 @@ import com.isaProject.isa.Model.DTO.ExaminationDTO;
 import com.isaProject.isa.Model.Drugs.DrugOrder;
 import com.isaProject.isa.Model.Drugs.Offer;
 import com.isaProject.isa.Model.Users.Patient;
+import com.isaProject.isa.Model.Users.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -14,8 +15,6 @@ import javax.mail.internet.MimeMessage;
 
 @Component
 public class ServiceForEmail{
-
-
     @Autowired
     private JavaMailSender javaMailSender;
 
@@ -25,18 +24,11 @@ public class ServiceForEmail{
 /*
     @Autowired
     public JavaMailSender javaMailSender;
-
 */
-
-
-
-
     @Autowired
     private Environment environment;
 
-
     //https://docs.spring.io/spring-framework/docs/3.0.0.M3/reference/html/ch26s03.html
-
 
     public void sendingAnEmailToAcceptTheOffer (DrugOrder order, Offer offer) throws MessagingException {
         // TODO Auto-generated method stub
@@ -71,6 +63,25 @@ public class ServiceForEmail{
         helper.setFrom(environment.getProperty("spring.mail.username"));
         javaMailSender.send(mimeMessage);
         System.out.println("kraj funkc!");
+    }
+
+    public void sendEmailForPasswordChange(String email, String password) throws MessagingException {
+        MimeMessage mimeMessage = javaMailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, "utf-8");
+        String htmlMsg =
+                "<p><b> Welcome! " + email  + " </b> You are the one of admin of the pharmacy system.</p><br>"
+                        + " <p>Your password for login: " + password + "."
+                        + "<p>Please login to page: </p>"
+                        + "<a> http://localhost:3000/login </a>";
+
+        helper.setText(htmlMsg, true);
+        helper.setTo(email);
+        helper.setSubject("M-PHARMACY ADMIN");
+        helper.setFrom(environment.getProperty("spring.mail.username"));
+        javaMailSender.send(mimeMessage);
+        System.out.println("kraj funkc!");
+
+
     }
 
 
