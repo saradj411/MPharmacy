@@ -1,10 +1,15 @@
 package com.isaProject.isa.Services.Implementations;
 
 import com.isaProject.isa.Model.DTO.PharmaceutDTO;
+import com.isaProject.isa.Model.DTO.ReviewedClientsDTO;
+import com.isaProject.isa.Model.DTO.ScheduleAnExaminationDTO;
 import com.isaProject.isa.Model.Examination.Examination;
+import com.isaProject.isa.Model.Examination.ExaminationStatus;
+import com.isaProject.isa.Model.Users.Patient;
 import com.isaProject.isa.Model.Users.Pharmacist;
 import com.isaProject.isa.Model.Users.WorkTime;
 import com.isaProject.isa.Repositories.ExaminationRepository;
+import com.isaProject.isa.Repositories.PatientRepository;
 import com.isaProject.isa.Repositories.PharmacistRepository;
 import com.isaProject.isa.Repositories.WorkTimeRepository;
 import com.isaProject.isa.Services.IServices.IPharamacistService;
@@ -12,6 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -29,7 +35,29 @@ public class PharmacistService implements IPharamacistService {
     WorkTimeRepository workTimeRepository;
     public @Autowired
     ExaminationService examinationService;
+    public @Autowired
+    PatientRepository patientRepository;
 
+
+
+
+    @Override
+    public List<ReviewedClientsDTO> reviewedClientsDermatologist(Integer id){
+        List<Examination> examinations=examinationRepository.findAll();
+        List <ReviewedClientsDTO> reviewedClientsDTOS=new ArrayList<>();
+
+        for (Examination e:examinations){
+            if(e.getStaff().getId().equals(id)){
+                if(e.getStatus().compareTo(ExaminationStatus.FINISHED)==0){
+                    ReviewedClientsDTO reviewedClientsDTO=new ReviewedClientsDTO(e.getDate(),e.getPatient().getName(),e.getPatient().getSurname(),e.getStartTime(),e.getEndTime());
+                    reviewedClientsDTOS.add(reviewedClientsDTO);
+                }
+
+            }
+        }
+        return  reviewedClientsDTOS;
+
+    }
     @Override
     public void update(Pharmacist pharmacist) {
         Pharmacist pa = pharmacistRepository.getOne(pharmacist.getId());
@@ -43,6 +71,30 @@ public class PharmacistService implements IPharamacistService {
         pa.setEmail(pharmacist.getEmail());
         pharmacistRepository.save(pa);
     }
+
+    @Override
+    public void patientNotAppear(Integer idEx){
+        Examination e=examinationRepository.getOne(idEx);
+        Patient patient=patientRepository.getOne(e.getPatient().getId());
+        e.setStatus(ExaminationStatus.EXPIRED);
+        Integer penali= patient.getPenalty();
+        patient.setPenalty(penali+1);
+        examinationRepository.save(e);
+        patientRepository.save(patient);
+    }
+
+    @Override
+    public void updateFreeEx(ScheduleAnExaminationDTO scheduleAnExaminationDTO) {
+
+        Patient patient=patientRepository.getOne(scheduleAnExaminationDTO.getIdPatient());
+        Examination examination=examinationRepository.getExaminationsByParams(scheduleAnExaminationDTO.getDate(),scheduleAnExaminationDTO.getStartTime(),scheduleAnExaminationDTO.getEndTime(),scheduleAnExaminationDTO.getPrice(),scheduleAnExaminationDTO.getPharmacyName());
+        examination.setPatient(patient);
+        examination.setStatus(ExaminationStatus.SCHEDULED);
+        examination.setScheduled(true);
+        examinationRepository.save(examination);
+        //dermatologistRepository.save(pa);
+    }
+
 
     @Override
     public String delete(Pharmacist pharmacist) {// ne moze izbrisati farmaceute koji imaju zakazane preglede

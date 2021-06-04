@@ -2,10 +2,10 @@
   <div id="registration" style="background-image: url(https://image.freepik.com/free-photo/pharmacists-showing-medicine-bottle-discussing-prescription-drug-pharmacy_8087-2630.jpg);background-repeat: no-repeat;
   
      background-size: 150% 111%;  height: 1100px">
-       <label style="color:#0D184F;font-size:35px;" align = "left">Examination</label>
+       <label style="color:#0D184F;font-size:35px;" align = "left">Counseling</label>
 
  <div v-if="showExamination">       
-        <div style="background:#B0B3D6; width:900px;height:700px;margin-left:38px;margin-top:60px;">
+        <div style="background:#B0B3D6; width:800px;height:650px;margin-left:38px;margin-top:60px;">
                     
 
                     <div class="form-row">
@@ -20,6 +20,15 @@
                     </div>
 
 
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                        <label style="font-size:22px;color:#0D184F;">Checking for drug allergy:</label>
+                        </div>
+                        <div class="form-group col-md-6">
+                        <button class="btn btn-info" style="font-size:22px;height:45px;margin-top:5px;width:200px;background:#474A8A;color:white;" type="button" v-on:click = "checkAlergy" >Check</button>
+                      </div>
+                        
+                    </div>
                     <div class="form-row">
                         <div class="form-group col-md-6">
                         <label style="font-size:22px;color:#0D184F;">Checking drug availability:</label>
@@ -49,15 +58,6 @@
                       </div>
                    </div>
                         
-                        
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group col-md-6">
-                        <label style="font-size:22px;color:#0D184F;">Checking for drug allergy:</label>
-                        </div>
-                        <div class="form-group col-md-6">
-                        <button class="btn btn-info" style="font-size:22px;height:45px;margin-top:5px;width:200px;background:#474A8A;color:white;" type="button" v-on:click = "checkAlergy" >Check</button>
-                      </div>
                         
                     </div>
 
@@ -239,10 +239,10 @@ export default {
                                                 price:this.price,
                                                 report:this.report,
                                                 name:this.name,
-                                                numberOfDay:this.numberOfDay,
+                                                numberOfDay:this.numberOfDay
 
                                             }
-                                            this.axios.post('/examination/finished/'+this.id,info,{ 
+                                            this.axios.post('/examination/finishedPharmacist/'+this.id,info,{ 
                                         headers: {
                                         }}).then(response => {
                                                   alert("Examination is successfully created!");
@@ -267,11 +267,10 @@ export default {
                                                 price:this.pregled.price,
                                                 report:this.report,
                                                 name:this.choosenDrug,
-                                                numberOfDay:this.numberOfDay,
-                                                idEx:this.id
+                                                numberOfDay:this.numberOfDay
 
                                             }
-                                            this.axios.post('/examination/finished/'+this.id,info,{ 
+                                            this.axios.post('/examination/finishedPharmacist/'+this.id,info,{ 
                                         headers: {
                                         }}).then(response => {
                                                   alert("Examination is successfully created!");
@@ -316,7 +315,7 @@ export default {
                     end : this.end,
                     price:this.price   
                 }
-             this.axios.post('/examination/createDermatologistEx',infoExamination,{ 
+             this.axios.post('/examination/createPharmacistEx',infoExamination,{ 
              headers: {
              }}).then(response => {
                       alert("Examination is successfully created!");
@@ -333,7 +332,7 @@ export default {
 
 
      alternativeDrugs: function(){
-
+     
         this.axios.get('/pharmacyDrugs/findAlternative/'+this.pharmacy.idPharm+'/'+this.pacijent.id+'/'+this.name)
         .then(response => {
                 this.alternative = response.data;
@@ -366,7 +365,6 @@ export default {
 
       },
       checkAlergy: function(){
-        console.log("pacijent je "+ this.pacijent.id)
           this.axios.get('patient/findAllergyById/'+this.pacijent.id+'/'+this.name)
         .then(response => {
                 this.sastojci = response.data;
@@ -433,7 +431,7 @@ export default {
     this.axios.get('/examination/findPatientById/'+this.id)
         .then(response => {
                 this.pacijent = response.data;
-                console.log("istampaj"+this.pacijent.id);       
+                 
        
          }).catch(res => {
                 alert("Ne valja");
@@ -476,18 +474,5 @@ export default {
 
     
     },
-    
-    
-    /* this.axios.get('/specification/getIngredients/'+this.name)
-        .then(response => {
-                this.sastojci = response.data;
-                 
-       
-         }).catch(res => {
-                alert("Ne valja");
-                console.log(res);
-        });
-    */
-    
 }
 </script>  

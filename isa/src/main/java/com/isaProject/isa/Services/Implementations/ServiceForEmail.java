@@ -1,6 +1,8 @@
 package com.isaProject.isa.Services.Implementations;
+import com.isaProject.isa.Model.DTO.ExaminationDTO;
 import com.isaProject.isa.Model.Drugs.DrugOrder;
 import com.isaProject.isa.Model.Drugs.Offer;
+import com.isaProject.isa.Model.Users.Patient;
 import com.isaProject.isa.Model.Users.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
@@ -15,6 +17,10 @@ import javax.mail.internet.MimeMessage;
 public class ServiceForEmail{
     @Autowired
     private JavaMailSender javaMailSender;
+
+    @Autowired
+    private PatientService patientService;
+
 /*
     @Autowired
     public JavaMailSender javaMailSender;
@@ -76,6 +82,27 @@ public class ServiceForEmail{
         System.out.println("kraj funkc!");
 
 
+    }
+
+
+
+
+    public void sendingAnEmailToInformPatientAboutExamination (ExaminationDTO examinationDTO) throws MessagingException {
+
+       // System.out.println("usao u funkc za slanje mejla "+offer.getSupplier().getEmail() );
+        Patient patient=patientService.findById(examinationDTO.getIdPatient());
+
+        MimeMessage mimeMessage = javaMailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, "utf-8");
+        String htmlMsg =
+                "<p>Hello,you have an appointment at the pharmacy  "+ examinationDTO.getName()+ " Date of examination :"+examinationDTO.getDate()+" .Start date "+examinationDTO.getStart()+" </p>";
+
+        helper.setText(htmlMsg, true);
+        helper.setTo(patient.getEmail());
+        helper.setSubject("Rejected absence");
+        helper.setFrom(environment.getProperty("spring.mail.username"));
+        javaMailSender.send(mimeMessage);
+        System.out.println("kraj funkc!");
     }
 
 

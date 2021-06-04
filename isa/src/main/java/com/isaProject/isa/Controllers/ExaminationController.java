@@ -1,6 +1,8 @@
 package com.isaProject.isa.Controllers;
 
 import com.isaProject.isa.Model.DTO.ExaminationDTO;
+import com.isaProject.isa.Model.DTO.ExaminationFrontDTO;
+import com.isaProject.isa.Model.DTO.RequestForVacationDTO;
 import com.isaProject.isa.Model.DTO.FrontCreatedExaminationDTO;
 import com.isaProject.isa.Model.Examination.Examination;
 
@@ -11,12 +13,15 @@ import com.isaProject.isa.Model.Users.Patient;
 import com.isaProject.isa.Model.Users.Staff;
 
 import com.isaProject.isa.Services.Implementations.ExaminationService;
+import com.isaProject.isa.Services.Implementations.PatientService;
+import com.isaProject.isa.Services.Implementations.PharmacyDrugsService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.mail.MessagingException;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -30,6 +35,25 @@ public class ExaminationController {
     ExaminationService examinationService;
     @Autowired
     DrugReservationService drugReservationService;
+
+    @Autowired
+    PatientService patientService;
+    @Autowired
+    PharmacyDrugsService pharmacyDrugsService;
+
+
+    @GetMapping(value = "/shedule/{id}/{name}")
+    public ResponseEntity<Boolean> findAllergy(@PathVariable (value = "id") Integer id,@PathVariable (value = "name") String name) {
+        Boolean b=false;
+        /*if(pharmacyDrugsService.check(id,name).equals("The drug is not available at the pharmacy")){
+            b=false;
+        }*/
+        if(patientService.findAllergy(id,name).equals("The patient is allergic to the drug")){
+            b=false;
+        }
+        return new ResponseEntity<>(b, HttpStatus.ACCEPTED);
+
+    }
 
     @PostMapping("/canceling/{id}")
     ResponseEntity<String> update(@PathVariable Integer id)
@@ -78,14 +102,45 @@ public class ExaminationController {
     }
 
 
-    @PostMapping("/create")
-    public ResponseEntity<String> addDrug(@RequestBody ExaminationDTO examinationDTO) {
-        System.out.println("Usao u pregleddd");
-        System.out.println("examination  " + examinationDTO.getStart());
-        System.out.println("end " + examinationDTO.getEnd());
+    @PostMapping("/createDermatologistEx")
+    public ResponseEntity<String> addDrug(@RequestBody ExaminationDTO examinationDTO) throws MessagingException {
+        Examination examination = examinationService.createExD(examinationDTO);
+        return new ResponseEntity<>("kreirano", HttpStatus.CREATED);
+    }
+    @PostMapping("/createPharmacistEx")
+    public ResponseEntity<String> createExamination(@RequestBody ExaminationDTO examinationDTO) throws MessagingException {
+        Examination examination = examinationService.createExP(examinationDTO);
+        return new ResponseEntity<>("kreirano", HttpStatus.CREATED);
+    }
+
+    @PostMapping("/createDermatologist")
+    public ResponseEntity<String> create(@RequestBody ExaminationDTO examinationDTO) throws MessagingException {
         Examination examination = examinationService.save(examinationDTO);
         return new ResponseEntity<>("kreirano", HttpStatus.CREATED);
     }
+
+    @PostMapping("/createPharmacists")
+    public ResponseEntity<String> createP(@RequestBody ExaminationDTO examinationDTO) throws MessagingException {
+        Examination examination = examinationService.saveP(examinationDTO);
+        return new ResponseEntity<>("kreirano", HttpStatus.CREATED);
+    }
+
+
+    @PostMapping("/finished/{id}")
+    public ResponseEntity<String> finished(@RequestBody ExaminationFrontDTO examinationFrontDTO,@PathVariable Integer id) {
+
+        Examination examination = examinationService.finishExD(examinationFrontDTO,id);
+        return new ResponseEntity<>("kreirano", HttpStatus.CREATED);
+    }
+
+    @PostMapping("/finishedPharmacist/{id}")
+    public ResponseEntity<String> finishedPharmacist(@RequestBody ExaminationFrontDTO examinationFrontDTO,@PathVariable Integer id) {
+
+        Examination examination = examinationService.finishExP(examinationFrontDTO,id);
+        return new ResponseEntity<>("kreirano", HttpStatus.CREATED);
+    }
+
+
     @GetMapping(value = "/findCreatedPharmacistExamination")
     public ResponseEntity<List<FrontCreatedExaminationDTO>> findCreatedPharmacistExamination() {
         //log.info("dsds:"+id);

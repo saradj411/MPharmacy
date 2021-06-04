@@ -141,12 +141,7 @@
                             <input type="time" class="form-control"  v-model="end" placeholder="Enter end date">
                         </div>
                     </div>
-                    <div >
-                        <div>
-                            <label style="font-size:22px;color:#0D184F;">Pharmacy:</label>
-                            <input type="text" class="form-control"  v-model="pharmacy" placeholder="Enter pharmacy">
-                        </div>
-                    </div>
+
                      <button class="btn btn-primary btn-lg" v-on:click ="shedule" style="margin-left:10px; margin-top:50px;background:#474A8A">Shedule</button>
 
             </div>
@@ -227,13 +222,12 @@ export default {
                      const infoExamination = {
                               idPatient: this.jedanPacijent.id,
                               idStaff: this.id,
-                              name : this.pharmacy,
                               date : this.date,
                               start : this.start,
                               end : this.end,
                            }
 
-                        this.axios.post('/examination/createDermatologist',infoExamination,{ 
+                        this.axios.post('/examination/createPharmacists',infoExamination,{ 
                         headers: {
                         }}).then(response => {
                                  alert("Examination is successfully created!");

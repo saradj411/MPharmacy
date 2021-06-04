@@ -14,6 +14,8 @@ public interface IPharmacyService {
 
     Pharmacy findByNamee(String name);
 
+    Pharmacy pronadjiPoImenu(String name);
+
     List<Pharmacy> findByAddress(String city);
     List<Pharmacy> findAll ();
     Pharmacy save(PharmacyDTO pharmacy);

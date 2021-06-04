@@ -1,5 +1,6 @@
 package com.isaProject.isa.Model.Users;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.isaProject.isa.Model.Examination.Examination;
 
 import javax.persistence.*;
@@ -8,6 +9,8 @@ import java.util.Set;
 
 @Entity
 @Table
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+
 public class Staff extends User{
 
     //ocjena

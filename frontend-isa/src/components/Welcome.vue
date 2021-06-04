@@ -186,13 +186,13 @@ export default {
           window.location.href = "/createDrugPage";
       },
       profileAdmin : function(){
-          window.location.href = "/ProfileAdmin";
+          window.location.href = "/ProfileAdmin/503";
       },
        profilePatient : function(){
           window.location.href = "/HomePagePatient/508";
       }
      ,profileDermatologist: function(){
-          window.location.href = "/profileDermatologist";
+          window.location.href = "/profileDermatologist/501";
       }  
       ,profilePharmacist: function(){
           window.location.href = "/profilePharmacist";

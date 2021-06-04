@@ -6,6 +6,7 @@ import com.isaProject.isa.Model.Users.Staff;
 import javax.persistence.Column;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Date;
 
@@ -14,7 +15,7 @@ public class WorkTimeDTO {
 
 
 
-    private Date date;
+    private LocalDate date;
 
 
     private LocalTime startTime;
@@ -29,7 +30,7 @@ public class WorkTimeDTO {
 
 
 
-    public Date getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
@@ -49,7 +50,7 @@ public class WorkTimeDTO {
         return pharmacy;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 
@@ -69,6 +70,7 @@ public class WorkTimeDTO {
         this.pharmacy = pharmacy;
     }
 
+    public WorkTimeDTO(LocalDate date, LocalTime startTime, LocalTime endTime, Staff staff, Pharmacy pharmacy) {
     public  WorkTimeDTO() {}
     public WorkTimeDTO(Date date, LocalTime startTime, LocalTime endTime, Staff staff, Pharmacy pharmacy) {
         this.date = date;

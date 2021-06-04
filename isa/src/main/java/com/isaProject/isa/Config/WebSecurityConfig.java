@@ -103,8 +103,71 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
                 .permitAll().antMatchers("/dermatologist/findAllPatient/{id}")
 
+                .permitAll().antMatchers("/pharmacist/getFreeEx/{idStaff}")
+
+
+
+
+                .permitAll().antMatchers("/examination/findPatientById/{id}")
+
+                .permitAll().antMatchers("/examination/findPharmacy/{id}")
+                .permitAll().antMatchers("/specification/getIngredients/{name}")
+                .permitAll().antMatchers("/specification/getSpec/{name}")
+
+                .permitAll().antMatchers("/examination/createDermatologistEx")
+
+                .permitAll().antMatchers("/pharmacist/findClientsPharmacist/{id}")
+
+
+                .permitAll().antMatchers("/examination/createPharmacistEx")
+
+                .permitAll().antMatchers("/examination/createPharmacists")
+                .permitAll().antMatchers("/examination/createDermatologist")
+
+                .permitAll().antMatchers("/patient/findAll")
+
+
+                .permitAll().antMatchers("/dermatologist/findClientsDermatologist/{id}")
+                .permitAll().antMatchers("/dermatologist/findPharmacyDermatologist/{id}")
+
+
+                .permitAll().antMatchers("/pharmacyDrugs/findDrugsByIdPharm/{id}/{name}")
+
+                .permitAll().antMatchers("/pharmacyDrugs/findAlternative/{idPharm}/{id}/{name}")
+                .permitAll().antMatchers("/patient/checkAllergy/{id}/{name}")
+                .permitAll().antMatchers("/pharmacyDrugs/checkAvalibility/{id}/{name}")
+
+
+                .permitAll().antMatchers("/dermatologist/updateFreeEx/{idEx}")
+
+                .permitAll().antMatchers("/pharmacist/updateFreeEx/{idEx}")
+
+                .permitAll().antMatchers("/pharmacy/findByName/{name}")
+                .permitAll().antMatchers("/pharmacy/findOneByName/{name}")
+
+
+
+
+
+
+                .permitAll().antMatchers("/examination/findExamination/{id}")
+                .permitAll().antMatchers("/examination/finished/{id}")
+
+
+                .permitAll().antMatchers("/examination/findStaff/{id}")
+                .permitAll().antMatchers("/patient/findAllergyById/{id}")
+                .permitAll().antMatchers("/patient/findAllergyById/{id}/{name}")
+                .permitAll().antMatchers("/examination/finishedPharmacist/{id}")
+
+
+                .permitAll().antMatchers("/pharmacyDrugs/findDrugsByIdPharm/{id}/{name}")
+
+
 
                 .permitAll().antMatchers("/requestVacation/create")
+                .permitAll().antMatchers("/requestVacation/createPharmacist")
+
+
                 .permitAll().antMatchers("/pharmacist/getPharmacist/{id}")
                 .permitAll().antMatchers("/pharmacy/findById/{id}")
                 .permitAll().antMatchers("/pharmacy/getDrugsPharmacy/{id}")

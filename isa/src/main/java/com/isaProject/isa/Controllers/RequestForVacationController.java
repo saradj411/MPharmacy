@@ -25,11 +25,14 @@ public class RequestForVacationController {
     private RequestForVacationService requestForVacationService;
 
 
+
+    @PostMapping("/createPharmacist")
+    public ResponseEntity<String> createPharmacist(@RequestBody RequestForVacationDTO requestForVacationDTO) {
+        RequestForVacation requestForVacation = requestForVacationService.save1(requestForVacationDTO);
+        return new ResponseEntity<>("kreirano", HttpStatus.CREATED);
+    }
     @PostMapping("/create")
     public ResponseEntity<String> addDrug(@RequestBody RequestForVacationDTO requestForVacationDTO) {
-        System.out.println("idemoooooooo start "+requestForVacationDTO.getStart());
-        System.out.println("end "+requestForVacationDTO.getEnd());
-        System.out.println("opis "+requestForVacationDTO.getDescription());
         RequestForVacation requestForVacation = requestForVacationService.save(requestForVacationDTO);
         return new ResponseEntity<>("kreirano", HttpStatus.CREATED);
     }

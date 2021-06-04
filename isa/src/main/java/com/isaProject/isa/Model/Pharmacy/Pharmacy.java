@@ -15,7 +15,6 @@ import java.util.Set;
 
 @Entity
 @Table
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class  Pharmacy implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -38,7 +37,6 @@ public class  Pharmacy implements Serializable {
     //cenovnik lekova
     @OneToMany(mappedBy = "pharmacy", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     //@JsonBackReference
-
     private Set<DrugPricelist> drugPricelist = new HashSet<DrugPricelist>();
 
 

@@ -65,9 +65,9 @@
    </tbody>
 
                         </table>
-                        <router-link :to="{ path: '/StartExamination/'+d.id}" v-slot="{href, navigate}" custom>
+                        <router-link :to="{ path: '/StartCounseling/'+d.id}" v-slot="{href, navigate}" custom>
            <b-link style="font-size: 30px;margin-left:50px;" :href="href" @click="navigate"  elevation="1">
-<button class="btn btn-primary btn-lg"  style="margin-left:110px; margin-top:50px;background:#474A8A">Start examination</button>
+<button class="btn btn-primary btn-lg"  style="margin-left:110px; margin-top:50px;background:#474A8A">Start counseling</button>
             </b-link >
          </router-link>
 
@@ -97,7 +97,7 @@ export default {
     }
   },
   mounted() {
-        this.axios.get('/dermatologist/getFreeEx/'+this.id)
+        this.axios.get('/pharmacist/getFreeEx/'+this.id)
         .then(response => {
                 this.examination = response.data;
                  
@@ -114,7 +114,7 @@ export default {
          
          notAppear : function(data){
             console.log("ispisi"+data);
-            this.axios.get('dermatologist/updateFreeEx/'+data)
+            this.axios.get('pharmacist/updateFreeEx/'+data)
         .then(response => {
                 this.nesto = response.data;
                 alert(response.data);

@@ -1,5 +1,4 @@
 package com.isaProject.isa.Services.Implementations;
-
 import com.isaProject.isa.Model.DTO.*;
 import com.isaProject.isa.Model.Drugs.Drug;
 import com.isaProject.isa.Model.Drugs.Ingredient;
@@ -33,10 +32,8 @@ import java.util.*;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
 @Service
 public class DermatologistService implements IDermatologistService, Serializable {
-
 
    //s private static final Logger log = org.slf4j.LoggerFactory.getLogger(DermatologistService.class);
     public @Autowired
@@ -181,7 +178,6 @@ public class DermatologistService implements IDermatologistService, Serializable
             patients.add(p);
         }
         return  patients;
-
     }
 
 
@@ -305,16 +301,13 @@ zakazivanja pregleda, pacijentu se šalje mail o potvrdi i pregled se dodaje u l
 budućih pregleda kojoj korisnik pristupa sa svog profila. Pregled se dodaje i u radni kalendar derm
      */
 
-
-
     @Override
     public boolean checkingThatTheScheduleMatches(List<WorkTime> list, LocalDate date, LocalTime start, LocalTime end){
-
         boolean check=false;
         for (WorkTime w:list){
             if (w.getDate().equals(date)){
                 if(w.getStartTime().isBefore(start)  || w.getStartTime().equals(start)){
-                    if (end.isBefore(end)){
+                    if (end.isBefore(w.getEndTime())){
                         System.out.println("Vrijeme se poklapa sa radnim vremenom derm laajk/");
                         check=true;
                     }
@@ -338,30 +331,32 @@ budućih pregleda kojoj korisnik pristupa sa svog profila. Pregled se dodaje i u
 
 
 
-
-            if(checkingThatTheScheduleMatches(workTimes,date, start,end)){
+//da li se radno vrijeme poklapa
+            if(!checkingThatTheScheduleMatches(workTimes,date, start,end)){
                 throw new IllegalArgumentException("TheScheduleNotMatches");
         }
             List<Examination>listOfEx=examinationRepository.find(idDerm);
 
-            List<WorkTime>workTimes1=workTimeRepository.listaWorkTime(date,start,end);
+            /*List<WorkTime>workTimes1=workTimeRepository.listaWorkTime(date,start,end);
             List<WorkTime>finaList=new ArrayList<WorkTime>();
 
             for (WorkTime w:workTimes1){
                 if(w.getStaff().getId().equals(idDerm)){
                     finaList.add(w);
                 }
-            }
+            }*/
 
             /*
             kao ni sa
 drugim pregledom koji dermatolog ima zakazan.
 
              */
+/*
 
             if (finaList.size()!=0){
                 throw new IllegalArgumentException("Doctor have an appointment scheduled at that time ");
             }
+*/
 
 
             /*
@@ -386,7 +381,7 @@ ili savetovanjem koje pacijent ima zakazano (u bilo kojoj apoteci),
         if(listExaminationOfMyPatient.size()!=0){
             throw new IllegalArgumentException("Patient have an appointment scheduled at that time ");
         }
-        Examination examination=new Examination();
+        /*Examination examination=new Examination();
         examination.setScheduled(true);
         examination.setStatus(ExaminationStatus.CREATED);
         examination.setCanceled(false);
@@ -399,27 +394,55 @@ ili savetovanjem koje pacijent ima zakazano (u bilo kojoj apoteci),
         examination.setType(ExaminationType.DERMATOLOGIST_EXAMINATION);
         examination.setPrice(price);
         examinationRepository.save(examination);
-
-
+*/
         //mejl o potvrdi
-
-
-
-
-
-
-
-
-
-
 
     }
 
+
     @Override
-    public void patientNotAppear(Integer id){
-        Patient patient=patientRepository.getOne(id);
+    public List<ReviewedClientsDTO> reviewedClientsDermatologist(Integer id){
+        List<Examination> examinations=examinationRepository.findAll();
+        List <ReviewedClientsDTO> reviewedClientsDTOS=new ArrayList<>();
+
+        for (Examination e:examinations){
+            if(e.getStaff().getId().equals(id)){
+                if(e.getStatus().compareTo(ExaminationStatus.FINISHED)==0){
+                    ReviewedClientsDTO reviewedClientsDTO=new ReviewedClientsDTO(e.getDate(),e.getPatient().getName(),e.getPatient().getSurname(),e.getStartTime(),e.getEndTime());
+                    reviewedClientsDTOS.add(reviewedClientsDTO);
+                }
+
+            }
+        }
+        return  reviewedClientsDTOS;
+
+    }
+
+
+
+
+
+
+    @Override
+    public Set<Pharmacy> pharmacies(Integer id){//id dermatologa
+        Dermatologist d=dermatologistRepository.getOne(id);
+        return  d.getPharmacies();
+
+    }
+
+
+
+    @Override
+    public void patientNotAppear(Integer idEx){
+
+        Examination e=examinationRepository.getOne(idEx);
+        Patient patient=patientRepository.getOne(e.getPatient().getId());
+
+        e.setStatus(ExaminationStatus.EXPIRED);
         Integer penali= patient.getPenalty();
         patient.setPenalty(penali+1);
+        examinationRepository.save(e);
+
         patientRepository.save(patient);
     }
 
