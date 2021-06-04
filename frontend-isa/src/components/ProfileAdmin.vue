@@ -21,6 +21,12 @@
                   <button class = "btn btn-primary btn-xs" style="margin:auto; margin-left:38px;background:#474A8A " :href="href" @click="navigate" elevation="1">Create drug order </button>
                </router-link>
 
+  <router-link :to="{ path: '/AcceptRejectVacation/'+user.id}" v-slot="{href, navigate}" custom>
+
+                  <button class = "btn btn-primary btn-xs" style="margin:auto; margin-left:38px;background:#474A8A " :href="href" @click="navigate" elevation="1">Accept/reject vacation</button>
+               </router-link>
+
+
 
             </span>
                                   
@@ -80,13 +86,7 @@
      
 
     </tr>
-    <tr style="font-size:22px;color:#0D184F;">
-      <th></th>
-      <td>Password:</td>
-      <td>{{user.password}} </td>
-     
-
-    </tr>
+    
     <tr style="font-size:22px;color:#0D184F;">
       <th></th>
       <td>Pharmacy:</td>

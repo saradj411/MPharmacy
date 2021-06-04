@@ -13,4 +13,6 @@ public interface IRequestForVacationService {
 
     RequestForVacation acceptOrRefuseRequuest(Integer requestForVacationId, String text) throws MessagingException;
      RequestForVacation save1(RequestForVacationDTO requestForVacationDTO);
+
+    RequestForVacation acceptRequuest(Integer requestForVacationId) throws MessagingException;
 }

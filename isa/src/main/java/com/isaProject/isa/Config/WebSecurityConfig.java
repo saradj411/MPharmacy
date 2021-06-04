@@ -82,11 +82,21 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll().antMatchers("/patient/findSheduledPharmacistExamination/{id}")
 
                 .permitAll().antMatchers("/patient/findFinishedPharmacistExamination/{id}")
-                .permitAll().antMatchers("/reservation/checkReservations").permitAll()
+                .permitAll().antMatchers("/reservation/checkReservations")
+
+                .permitAll().antMatchers("/requestVacation/acceptOrRefuseRequest/{requestForVacationId}/{text}")
+
+                .permitAll().antMatchers("/requestVacation/getRequestById/{id}")
+
+
+                .permitAll().antMatchers("/requestVacation/acceptRequest/{id}")
 
 
 
-                .antMatchers("/adminstrator/findPharm/{id}")
+
+
+
+                .permitAll().antMatchers("/adminstrator/findPharm/{id}")
                 .permitAll().antMatchers("/adminstrator/findById/{id}")
                 .permitAll().antMatchers("/pharmacist/updatePharmacist")
                 .permitAll().antMatchers("/pharmacist/findById/{id}")
@@ -109,8 +119,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
                 .permitAll().antMatchers("/pharmacist/getFreeEx/{idStaff}")
 
-
-
+                .permitAll().antMatchers("/requestVacation/findAll/{idAdmina}")
 
                 .permitAll().antMatchers("/examination/findPatientById/{id}")
 

@@ -15,6 +15,8 @@ import java.util.Set;
 
 @Entity
 @Table
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+
 public class  Pharmacy implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
