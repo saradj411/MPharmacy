@@ -6,6 +6,7 @@ import com.isaProject.isa.Model.Users.Vacation;
 import com.isaProject.isa.Model.Users.WorkTime;
 import org.hibernate.jdbc.Work;
 
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Date;
 import java.util.HashSet;
@@ -42,11 +43,11 @@ public class DermatologistDTO {
     //apoteke u kojima je zaposlen
     private Set<Pharmacy> pharmacies = new HashSet<>();
 
-    public Date getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 
@@ -74,7 +75,7 @@ public class DermatologistDTO {
         this.pharmacyID = pharmacyID;
     }
 
-    private Date date;
+    private LocalDate date;
     private LocalTime startTime;
     private LocalTime endTime;
     private Integer pharmacyID;
@@ -214,7 +215,7 @@ public class DermatologistDTO {
         this.avgGrade = avgGrade;
         this.workTime = workTime;
     }
-    public DermatologistDTO(String name, String surname, String email, String address, String phoneNumber, String city, String country, double avgGrade, Date date, LocalTime startTime, LocalTime endTime, Integer pharmacyID) {
+    public DermatologistDTO(String name, String surname, String email, String address, String phoneNumber, String city, String country, double avgGrade, LocalDate date, LocalTime startTime, LocalTime endTime, Integer pharmacyID) {
         this.name = name;
         this.surname = surname;
         this.email = email;

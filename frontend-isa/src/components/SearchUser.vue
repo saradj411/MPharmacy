@@ -185,6 +185,8 @@ export default {
     }
   },
   mounted() {
+                                   console.log("id pacijenta "+this.jedanPacijent.id);
+
         this.axios.get('/patient/findAll/')
         .then(response => {
                 this.pacijent = response.data;  
@@ -201,9 +203,10 @@ export default {
                console.log(data);
                      this.showNew = true;
                      this.showUsers = false;
-                     this.axios.get('/patient/findById/'+data)
+                     this.axios.get('/patient/findOneById/'+data)
                            .then(response => {
                               this.jedanPacijent = response.data;
+
                                     
                                     
                               }).catch(res => {

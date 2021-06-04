@@ -64,9 +64,11 @@ public class PatientController {
         }
         return new ResponseEntity<>(check, HttpStatus.ACCEPTED);
     }
+/*
 
     @GetMapping(value = "/findById/{id}")
-    public ResponseEntity<Patient> findById(@PathVariable Integer id) {
+    public ResponseEntity<Patient> findById(@PathVariable Integer id) {}
+*/
 
     @GetMapping(value = "/findOneById/{id}")
     @Async

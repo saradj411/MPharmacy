@@ -122,10 +122,10 @@
       <td >Recommended dose:</td>   
        <td>{{specification.recommendedDose}}</td>
     </tr>
-<tr style="font-size:22px;color:#0D184F;">
-      <th></th>
-      <td>Ingredients:</td>   
-       <td v-for="d in this.sastojci"  v-bind:key="d.name">{{d.name}}</td>
+ <tr style="font-size:22px;color:#0D184F;">
+      <th></th> 
+      <td >Ingredients:</td>   
+       <td>{{specification.ingredients}}</td>
     </tr>
   </tbody>
                         </table>
@@ -233,10 +233,10 @@ export default {
                                                 idPatient: this.pacijent.id,
                                                 idStaff: this.staff.id,
                                                 idPharm : this.pharmacy.idPharm,
-                                                date : this.date,
-                                                start : this.start,
-                                                end : this.end,
-                                                price:this.price,
+                                                date : this.pregled.date,
+                                                start : this.pregled.start,
+                                                end : this.pregled.end,
+                                                price:this.pregled.price,
                                                 report:this.report,
                                                 name:this.name,
                                                 numberOfDay:this.numberOfDay
@@ -409,19 +409,6 @@ export default {
                 alert("The drug does not exist in the pharmacy!");
                 console.log(res);
         });
-
-        this.axios.get('/specification/getIngredients/'+this.name)
-        .then(response => {
-                this.sastojci = response.data;
-                 
-       
-         }).catch(res => {
-                alert("Ne valja");
-                console.log(res);
-        });
-
-        
-    
 
       },
       

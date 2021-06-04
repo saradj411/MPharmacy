@@ -30,6 +30,7 @@ public class Therapy {
         this.idTherapy = idTherapy;
         this.drug = drug;
         this.numberOfDay = numberOfDay;
+    }
     public Therapy(Integer idTherapy, Drug drug) {
         this.idTherapy = idTherapy;
         this.drug = drug;

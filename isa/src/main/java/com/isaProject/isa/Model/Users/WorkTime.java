@@ -87,19 +87,18 @@ public class WorkTime {
         this.pharmacy = pharmacy;
     }
 
-    public WorkTime(Integer id, LocalDate date, LocalTime startTime, LocalTime endTime, Staff staff, Pharmacy pharmacy) {
     public  WorkTime(){
 
     }
 
-    public WorkTime(Date date, LocalTime startTime, LocalTime endTime, Staff staff, Pharmacy pharmacy) {
+    public WorkTime(LocalDate date, LocalTime startTime, LocalTime endTime, Staff staff, Pharmacy pharmacy) {
         this.date = date;
         this.startTime = startTime;
         this.endTime = endTime;
         this.staff = staff;
         this.pharmacy = pharmacy;
     }
-    public WorkTime(Integer id, Date date, LocalTime startTime, LocalTime endTime, Staff staff, Pharmacy pharmacy) {
+    public WorkTime(Integer id, LocalDate date, LocalTime startTime, LocalTime endTime, Staff staff, Pharmacy pharmacy) {
         this.id = id;
         this.date = date;
         this.startTime = startTime;

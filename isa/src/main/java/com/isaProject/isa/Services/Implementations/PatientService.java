@@ -37,7 +37,7 @@ public class PatientService implements IPatientService {
     DrugRepository drugRepository;
 
     @Override
-    public Patient findById(Integer id) {
+    public Patient findById(Integer id){
         System.out.println("ovdje uslo sada aaaaa:"+id);
         User user=userRepository.getOne(id);
         System.out.println("ovdje uslo sada aaaaa:"+user.getName());

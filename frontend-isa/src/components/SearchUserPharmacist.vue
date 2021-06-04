@@ -77,7 +77,7 @@
 <!--Lista -->
 <div v-if="showUsers">
 
-        <div  style="width:650px;margin-left:38px;margin-top:60px;"  v-for="d in this.pacijent"  v-bind:key="d.idUser">
+        <div  style="width:650px;margin-left:38px;margin-top:60px;"  v-for="d in this.pacijent"  v-bind:key="d.id">
                    <form>
                       <table style="background:#B0B3D6; " id="table2" class="table" > 
 
@@ -172,7 +172,6 @@ export default {
       idPatient:"",
       jedanPacijent:{},
       pharmacy:"",
-      apoteka:{},
       date :null,
       start: null,
       end : null
@@ -196,7 +195,7 @@ export default {
                console.log(data);
                      this.showNew = true;
                      this.showUsers = false;
-                     this.axios.get('/patient/findById/'+data)
+                     this.axios.get('/patient/findOneById/'+data)
                            .then(response => {
                               this.jedanPacijent = response.data;
                                     
@@ -209,15 +208,7 @@ export default {
 
             shedule : function(){
                     console.log("ime je "+this.pharmacy)
-                     this.axios.get('/pharmacy/findOneByName/'+this.pharmacy)
-                           .then(response => {
-                    console.log("ime je "+this.pharmacy)
-
-                                    this.apoteka = response.data;
-                                                            
-                              }).catch(res => {
-                                    console.log(res);
-                           });   
+                     
                            console.log("datum je "+this.date)
                      const infoExamination = {
                               idPatient: this.jedanPacijent.id,

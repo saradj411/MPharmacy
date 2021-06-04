@@ -73,14 +73,8 @@ public class ExaminationService implements IExaminationService {
     }
 
 
-
     @Override
     public Examination createExD(ExaminationDTO examinationDTO) throws MessagingException {
-    public Examination findById(Integer id) {
-        return examinationRepository.findOneByIdExamination(id);
-    }
-
-    public Examination save(ExaminationDTO examinationDTO) {
         Examination d = new Examination();
         List<WorkTime> workTimes = workTimeRepository.findWorkTimeByIdDermAndIdPharm(examinationDTO.getIdStaff(), examinationDTO.getIdPharm());
         if (!dermatologistService.checkingThatTheScheduleMatches(workTimes, examinationDTO.getDate(), examinationDTO.getStart(), examinationDTO.getEnd())) {
@@ -172,11 +166,118 @@ ili savetovanjem koje pacijent ima zakazano (u bilo kojoj apoteci),
         d.setPharmacy(pharmacyService.findById(examinationDTO.getIdPharm()));
         d.setPrice(examinationDTO.getPrice());
         d.setPatient(patientService.findById(examinationDTO.getIdPatient()));
-        d.setStatus(ExaminationStatus.CREATED);
+        d.setStatus(ExaminationStatus.SCHEDULED);
         d.setType(ExaminationType.DERMATOLOGIST_EXAMINATION);
         serviceForEmail.sendingAnEmailToInformPatientAboutExamination(examinationDTO);
         return examinationRepository.save(d);
     }
+
+
+    /*public Examination findById(Integer id) {
+        return examinationRepository.findOneByIdExamination(id);
+    }*/
+
+
+
+
+
+/*obrisano zbog gita
+    public Examination save(ExaminationDTO examinationDTO) {
+        Examination d = new Examination();
+        List<WorkTime> workTimes = workTimeRepository.findWorkTimeByIdDermAndIdPharm(examinationDTO.getIdStaff(), examinationDTO.getIdPharm());
+        if (!dermatologistService.checkingThatTheScheduleMatches(workTimes, examinationDTO.getDate(), examinationDTO.getStart(), examinationDTO.getEnd())) {
+            throw new IllegalArgumentException("TheScheduleNotMatches");
+        }
+        List<Examination> listOfEx = examinationRepository.find(examinationDTO.getIdStaff());
+
+        // WorkTime workTimes1 = workTimeRepository.listaWorkTime(examinationDTO.getDate(), examinationDTO.getStart(), examinationDTO.getEnd());
+        // System.out.println("EEEEEEEEEEEEEEE" + workTimes1.getStartTime());
+
+
+        boolean check = true;
+        List<Examination> finaList = new ArrayList<Examination>();
+
+        List<Examination> finaList2 = new ArrayList<Examination>();
+        List<Examination> exx = examinationRepository.getExaminationsByTime(examinationDTO.getDate(), examinationDTO.getStart(), examinationDTO.getEnd());
+
+        for (Examination e:exx){
+            if (e.getStaff().getId().equals(examinationDTO.getIdStaff())){
+                finaList.add(e);
+            }
+        }
+
+
+
+
+
+
+            kao ni sa
+drugim pregledom koji dermatolog ima zakazan.
+
+
+
+        if (finaList.size()==0) {
+
+        } else {
+            throw new IllegalArgumentException("Doctor have an appointment scheduled at that time ");
+
+        }
+
+
+
+
+
+
+
+
+
+
+            Termin pregleda ne sme da se preklapa sa drugim pregledom
+ili savetovanjem koje pacijent ima zakazano (u bilo kojoj apoteci),
+
+
+
+        /*List<Examination>listExaminationOfAllPatient=examinationService.findAll();
+        Patient patient=patientRepository.getOne(examinationDTO.getIdPatient());
+        List<Examination>listExaminationOfMyPatient=new ArrayList<>();
+        Staff staff=staffRepository.getOne(examinationDTO.getIdStaff());
+
+        for (Examination e:listExaminationOfAllPatient){
+            if(e.getPatient().equals(patient)){
+                listExaminationOfMyPatient.add(e);
+            }
+        }
+
+        if(listExaminationOfMyPatient.size()!=0){
+            throw new IllegalArgumentException("Patient have an appointment scheduled at that time ");
+        }
+
+        for (Examination e:exx){
+            if (e.getPatient().getId().equals(examinationDTO.getIdPatient())){
+                finaList2.add(e);
+            }
+        }
+
+        if (finaList2.size()==0){
+
+        }else{
+            throw new IllegalArgumentException("Patient have an appointment scheduled at that time ");
+        }
+
+        d.setDate(examinationDTO.getDate());
+        d.setEndTime(examinationDTO.getEnd());
+        d.setStartTime(examinationDTO.getStart());
+        d.setStaff(staffService.findById(examinationDTO.getIdStaff()));
+        System.out.println("APOTEKAAA "+examinationDTO.getName());
+        d.setPharmacy(pharmacyService.pronadjiPoImenu(examinationDTO.getName()));
+        d.setPharmacy(pharmacyService.findById(examinationDTO.getIdPharm()));
+        d.setPrice(examinationDTO.getPrice());
+        d.setPatient(patientService.findById(examinationDTO.getIdPatient()));
+        d.setStatus(ExaminationStatus.CREATED);
+        d.setType(ExaminationType.DERMATOLOGIST_EXAMINATION);
+        serviceForEmail.sendingAnEmailToInformPatientAboutExamination(examinationDTO);
+        return examinationRepository.save(d);
+    }*/
     @Override
     public Examination finishExD(ExaminationFrontDTO examinationDTO,Integer id) {
         Examination d = examinationRepository.getOne(id);
@@ -267,7 +368,6 @@ ili savetovanjem koje pacijent ima zakazano (u bilo kojoj apoteci),
         return examinationRepository.save(d);
 
     }
-
     @Override
     public Examination save(ExaminationDTO examinationDTO) throws MessagingException {
 
@@ -312,7 +412,7 @@ ili savetovanjem koje pacijent ima zakazano (u bilo kojoj apoteci),
         d.setStaff(staffService.findById(examinationDTO.getIdStaff()));
         d.setType(ExaminationType.DERMATOLOGIST_EXAMINATION);
         d.setPatient(patientService.findById(examinationDTO.getIdPatient()));
-        d.setStatus(ExaminationStatus.CREATED);
+        d.setStatus(ExaminationStatus.SCHEDULED);
         serviceForEmail.sendingAnEmailToInformPatientAboutExamination(examinationDTO);
 
         return examinationRepository.save(d);
@@ -363,7 +463,7 @@ ili savetovanjem koje pacijent ima zakazano (u bilo kojoj apoteci),
         d.setStaff(staffService.findById(examinationDTO.getIdStaff()));
         d.setType(ExaminationType.PHARMACIST_EXAMINATION);
         d.setPatient(patientService.findById(examinationDTO.getIdPatient()));
-        d.setStatus(ExaminationStatus.CREATED);
+        d.setStatus(ExaminationStatus.SCHEDULED);
         serviceForEmail.sendingAnEmailToInformPatientAboutExamination(examinationDTO);
 
         return examinationRepository.save(d);
@@ -372,12 +472,13 @@ ili savetovanjem koje pacijent ima zakazano (u bilo kojoj apoteci),
 
 
 
-   /* @Override
+    @Override
     public Examination findById(Integer id) {
         //veki skontalaaa
         Examination examination=examinationRepository.findById(id).get();
         return examination;
-    }*/
+    }
+
 
     @Override
     public void canceling(Integer id) {

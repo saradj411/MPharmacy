@@ -11,7 +11,7 @@ import java.util.Optional;
 public interface ISpecificationService {
 
     List<Specification> findAll ();
-    SpecificationDTO getSpecById(String name);
+    Specification getSpecById(String name);
 
     Optional<Specification> findById(Integer idSpec);
     Specification save(SpecificaitonDTO specDTO);
