@@ -1079,12 +1079,12 @@ methods:{
              this.time=time
              console.log(this.date)
              console.log(this.time)
-              /*const datum = {
+             /* const datum = {
                 date : this.date,
-                startTime : this.time,
-               // endTime:null,
-                //staff:null,
-                //pharmacy:null,
+                startTime : this.time
+                //endTime:null,
+               // staff:null,
+                //pharmacy:null
                 
            }*/
         this.axios.post('/workTime/findAllByDate/'+this.date+"/"+this.time)

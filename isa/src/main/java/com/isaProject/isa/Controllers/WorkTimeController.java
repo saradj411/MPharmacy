@@ -11,9 +11,11 @@ import com.isaProject.isa.Model.Users.Staff;
 import com.isaProject.isa.Model.Users.WorkTime;
 import com.isaProject.isa.Services.Implementations.PharmacistService;
 import com.isaProject.isa.Services.Implementations.WorkTimeService;
+import javassist.LoaderClassPath;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.tomcat.jni.Local;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +23,7 @@ import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
@@ -40,11 +43,14 @@ public class WorkTimeController {
     PharmacistService pharmacistService;
 
     @PostMapping(value = "/findAllByDate/{date}/{time}")
-    public ResponseEntity<List<FrontPharmacyForExamination>> findAll(@PathVariable Date date,
-                                                                     @PathVariable LocalTime time
-                                                                     // @RequestBody WorkTimeDTO workTimeDTO
-    ) {
-        LocalDate dd= date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+    public ResponseEntity<List<FrontPharmacyForExamination>> findAll(@PathVariable String date,
+            @PathVariable String time
+            //@RequestBody WorkTimeDTO workTimeDTO
+            ) {
+     //System.out.println("dsa:"+workTimeDTO.toString());
+        //LocalDate dd= date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        LocalDate dd= LocalDate.parse(date);
+        LocalTime pp=LocalTime.parse(time);
         List<Pharmacy> pharmacies=new ArrayList<>();
         List<Pharmacy> pharmacies1=new ArrayList<>();
         //List<Staff> staff=new ArrayList<>();
@@ -53,7 +59,7 @@ public class WorkTimeController {
 
         //List<WorkTime> workTimes=workTimeService.listForPatient(workTimeDTO.getDate(),workTimeDTO.getStartTime());
         //List<Staff> staffs=workTimeService.listForPatient(workTimeDTO.getDate(),workTimeDTO.getStartTime());
-        List<Staff> staffs=workTimeService.listForPatient(dd,time);
+        List<Staff> staffs=workTimeService.listForPatient(dd,pp);
         for(Staff s:staffs){
             System.out.println("eee:"+s.getId());
 
@@ -79,6 +85,7 @@ public class WorkTimeController {
                     pharmacies1.add(p);
                 }
             }*/
+
             for(ParDTO pD:listPar){
                 pharmacies.add(pD.getIdPharmacy());
             }
