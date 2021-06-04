@@ -625,7 +625,39 @@
       </tr>
         <tr>
           <th></th>
-          <td><button class="btn btn-danger btn-sm" v-on:click = "reserve(dr.id)">Reserve</button></td>
+          <td><button class="btn btn-danger btn-sm" v-on:click = "continue1(dr.idPharm)">Schedule</button></td>
+          
+
+        </tr>
+  </tbody>
+</table>
+           </div>
+
+
+      </div> 
+      <!--FREEEEEEEEEEEEE STAFFFFFFFFFFFFFFFFF!-->
+  <div v-if="showFreeStaff"  style="float:left;margin-left:30px;">
+     <h4 style="margin:30px">FREE:</h4>
+ <div style="background: #a7c1c9;margin-left:30px;"  v-for="staff in this.freeStaffs"  v-bind:key="staff.id">
+      
+<table  style="" id="table2" class="table" >
+ 
+    <tbody>
+      <tr>
+        <th scope="row"></th>
+        <td>Pharmacy:</td>
+         <td>{{staff.idPharm}}</td>
+      </tr>
+        <tr>
+        <th scope="row"></th>
+        
+         <td>Address:</td>
+          <td>{{staff.idStaff}}</td>
+      </tr>
+     
+        <tr>
+          <th></th>
+          <td><button class="btn btn-danger btn-sm" v-on:click = "continue1(dr.idPharm,dr.date,dr.time)">Schedule</button></td>
           
 
         </tr>
@@ -646,6 +678,10 @@
 export default {
   data() {
     return {
+
+      idPharm2:null,
+      date2:null,
+      time2:null,
         patient: {},
 
         showTable:true,
@@ -676,6 +712,8 @@ export default {
         dermatologistCreatedExamination:[],
 
         freePharmacy:[],
+        freeStaffs:[],
+        showFreeStaff:false,
 
         dermatologistFinishedExamination:[],
         pharmacistFinishedExamination:[],
@@ -817,6 +855,7 @@ methods:{
         this.showSearchDrugs=false
          this.showCreatedPharmExamination=false
          this.showScheduleSearch=false
+         this.showFreeStaff=false
        //this.showSearchPharmacy=true
       },
       showReservation:
@@ -834,6 +873,7 @@ methods:{
         this.showSearchDrugs=false
         this.showScheduleSearch=false
          this.showCreatedPharmExamination=false
+           this.showFreeStaff=false
       },
       showConsultation:
        function(){
@@ -849,6 +889,7 @@ methods:{
         this.showSearchDrug=false
         this.showSearchDrugs=false
         this.showScheduleSearch=false
+          this.showFreeStaff=false
          this.showCreatedPharmExamination=false
       },
       showRecipe: function(){
@@ -866,6 +907,7 @@ methods:{
         this.showSearchDrug=false
         this.showSearchDrugs=false
         this.showScheduleSearch=false
+          this.showFreeStaff=false
       },
       showExamination:
        function(){
@@ -882,6 +924,7 @@ methods:{
         this.showSearchDrugs=false
         this.showScheduleSearch=false
          this.showCreatedPharmExamination=false
+           this.showFreeStaff=false
       },
       showCreatedDerm:
        function(){
@@ -898,6 +941,7 @@ methods:{
         this.showSearchDrugs=false
         this.showScheduleSearch=false
          this.showCreatedPharmExamination=false
+           this.showFreeStaff=false
       },
       showCreatedPharmacist:
       function(){
@@ -914,6 +958,7 @@ methods:{
         this.showSearchDrugs=false
         this.showScheduleSearch=true
         this.showCreatedPharmExamination=true
+          this.showFreeStaff=false
       },
       showAllDrugs: function(){
         this.showTable=false
@@ -929,6 +974,7 @@ methods:{
         this.showSearchDrugs=false
         this.showScheduleSearch=false
          this.showCreatedPharmExamination=false
+           this.showFreeStaff=false
       },
       canceling:
        function(res,idRes){
@@ -1009,6 +1055,7 @@ methods:{
         
 
       },
+      
        searchName: function(drugName){
            
              this.drugName = drugName
@@ -1026,6 +1073,8 @@ methods:{
            
              this.date = date
              this.time=time
+             console.log(this.date)
+             console.log(this.time)
               const datum = {
                 date : this.date,
                 startTime : this.time,
@@ -1042,6 +1091,27 @@ methods:{
               
           })
       },
+      continue1:
+        function(idPharm33){
+          this.idPharm2=idPharm33
+           console.log(this.date)
+             console.log(this.time)
+          console.log(this.idPharm2)
+            const parametar={
+             idPharmacy:this.idPharm2,
+             date:this.date,
+             time:this.time
+            }
+             this.axios.post('/workTime/findFreeStaffByPharmacy',parametar)
+          .then(response => {
+            //this.showCreatedPharmExamination
+                this.freeStaffs= response.data;
+                  this.showFreeStaff=true
+                  //this.showCreatedPharmExamination=false
+               
+              
+          })
+        },
 
 }
 }

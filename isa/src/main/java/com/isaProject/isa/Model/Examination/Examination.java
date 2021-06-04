@@ -61,7 +61,7 @@ public class Examination {
 //    @JoinColumn(name = "staffId", referencedColumnName = "idUser")
 //    //@JsonBackReference
    // @JsonIgnore
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "staffId", referencedColumnName = "id")
     //@JsonBackReference
     private Staff staff;

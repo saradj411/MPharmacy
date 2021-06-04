@@ -3,6 +3,7 @@ package com.isaProject.isa.Services.Implementations;
 import com.isaProject.isa.Model.DTO.WorkTimeDTO;
 import com.isaProject.isa.Model.Examination.Examination;
 import com.isaProject.isa.Model.Pharmacy.Pharmacy;
+import com.isaProject.isa.Model.Users.Staff;
 import com.isaProject.isa.Model.Users.WorkTime;
 import com.isaProject.isa.Repositories.ExaminationRepository;
 import com.isaProject.isa.Repositories.WorkTimeRepository;
@@ -57,21 +58,20 @@ public class WorkTimeService implements IWorkTimeService {
 
     }
     @Override
-    public List<WorkTime> listForPatient(LocalDate date, LocalTime time){
+    public List<Staff> listForPatient(LocalDate date, LocalTime time){
         LocalTime newTime=time.plusHours(1);
-        System.out.println("vrijeme:"+time);
-        System.out.println("sat kasnije:"+newTime);
+
         List<WorkTime> workTimes=workTimeRepository.listForPatient(date);
 
         List<WorkTime> wT=new ArrayList<>();
         List<WorkTime> result=new ArrayList<>();
 
+        List<Staff> zaposleni=new ArrayList<>();
         for(WorkTime workT:workTimes){
-            System.out.println("staaaaaaf:"+workT.getStaff().getAuthorityRole());
             if(workT.getStaff().getAuthorityRole().equals("PHARMACIST")){
                   if(workT.getStartTime().isBefore(time)){
                     if(workT.getEndTime().isAfter(time)) {
-                        System.out.println("radno vrije eima tad");
+                        System.out.println("radno vrijeme ima tad");
                         wT.add(workT);
                     }
                 }
@@ -102,10 +102,63 @@ public class WorkTimeService implements IWorkTimeService {
             }
             if(mozeLi){
                 result.add(wrkT);
+                zaposleni.add(wrkT.getStaff());
                 //dodaj ga da ide dalje
             }
         }
 
-        return result;
+        return zaposleni;
+    }
+    @Override
+    public List<Staff> listStaffForPatient(LocalDate date, LocalTime time){
+        LocalTime newTime=time.plusHours(1);
+
+        List<WorkTime> workTimes=workTimeRepository.listForPatient(date);
+
+        List<WorkTime> wT=new ArrayList<>();
+        List<WorkTime> result=new ArrayList<>();
+
+        List<Staff> zaposleni=new ArrayList<>();
+        for(WorkTime workT:workTimes){
+            if(workT.getStaff().getAuthorityRole().equals("PHARMACIST")){
+                if(workT.getStartTime().isBefore(time)){
+                    if(workT.getEndTime().isAfter(time)) {
+                        System.out.println("radno vrijeme ima tad");
+                        wT.add(workT);
+                    }
+                }
+            }
+        }
+
+        for(WorkTime wrkT:wT){
+            Boolean mozeLi=true;
+            System.out.println("uslo u radna vremena ta");
+            List<Examination> ex=examinationRepository.getAllExaminationsByIdStaffAndIdPharmacy(wrkT.getStaff().getId());
+            for(Examination e:ex){
+                if(e.getDate().compareTo(date)==0){
+                    System.out.println("uslo u isti datuuum");
+                    if(e.getStartTime().isBefore(time)){
+                        if(!e.getEndTime().isBefore(time)) {
+                            System.out.println("ima pregled tad");
+                            mozeLi=false;
+                        }
+                    }
+                    if(e.getStartTime().isAfter(time)){
+                        if(e.getStartTime().isBefore(newTime)) {
+
+                            System.out.println("ima pregled tad ovdheeee");
+                            mozeLi=false;
+                        }
+                    }
+                }
+            }
+            if(mozeLi){
+                result.add(wrkT);
+                zaposleni.add(wrkT.getStaff());
+                //dodaj ga da ide dalje
+            }
+        }
+
+        return zaposleni;
     }
 }

@@ -1,6 +1,7 @@
 package com.isaProject.isa.Services.IServices;
 
 import com.isaProject.isa.Model.DTO.WorkTimeDTO;
+import com.isaProject.isa.Model.Users.Staff;
 import com.isaProject.isa.Model.Users.WorkTime;
 
 import java.time.LocalDate;
@@ -17,5 +18,6 @@ public interface IWorkTimeService {
 
     WorkTime save(WorkTimeDTO workTimeDTO);
     List<WorkTime> findAll();
-    List<WorkTime> listForPatient(LocalDate date,LocalTime time);
+    List<Staff> listForPatient(LocalDate date, LocalTime time);
+    List<Staff> listStaffForPatient(LocalDate date, LocalTime time);
 }
