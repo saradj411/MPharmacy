@@ -1,12 +1,9 @@
 <template>
-   <div >
-    <div class="loginHolder">
-    
-    <br>
-        <div class="userInfo">
-        <h1 >Register new dermatologist: </h1>
-        <br>
-            <table id="loginTable">
+<div class="regFormAdmin">
+            <br>
+                <h1> Register new pharmacy admin: </h1>
+                
+            <table style="width: 500px; margin-top:20px">
                 <tr>
                     <td><h4 > Name: </h4> </td>
                     <td>
@@ -72,59 +69,18 @@
                         
                     </td>
                 </tr>
+                             
                 <br>
-                <tr>        
-                    <td colspan="2">
-                        
-                    </td>
+            </table>            
+             <button class = "btn btn-primary btn-xs" :disabled="!name || !surname || !email || !address || !phoneNumber || !city
+                    || !country || !avgGrade"    style="margin:auto; margin-left:38px;background: #000;margin-top: 10px; width: 200px;" v-on:click="regAdmins">Confirm</button>
                 
-                </tr>
-                <br>
-            </table>
-
-            <div class="workTime">
-            <h1>Work time (Optional): </h1>
-            <br>
-                    <table id="loginTable">
-                        <tr>
-                            <td> <h4>Date:</h4> </td>
-                            <td><input type="date" v-model="date" class="form-control"></td>
-                        </tr>
-                        <tr>
-                            <td> <h4>Start Time:</h4></td>
-                            <td><b-form-timepicker v-model="startTime" locale="en"></b-form-timepicker></td>
-                        </tr>
-
-                        <tr>
-                            <td> <h4>End Time:</h4></td>
-                            <td><b-form-timepicker v-model="endTime" locale="en"></b-form-timepicker></td>
-                        </tr>
-
-                        <tr>
-                            <td> <h4>Select pharmacy:</h4></td>
-                            <td>                               
-                                    <select class="form-control" v-model="pharmacyID" placeholder="Select pharmacy" >                                       
-                                        <option
-                                        v-for="pharmacy in this.pharmacies" 
-                                        v-bind:key="pharmacy.idPharm"
-                                        v-bind:value="pharmacy"                                    
-                                         :selected="pharmacy == '<the default value you want>'">
-                                        {{pharmacy.idPharm}}: {{ pharmacy.name }} - {{ pharmacy.address }} </option>
-                                      </select>
-                            </td>
-                        </tr>
-                    
-                    </table>
-                    <br>
-                    <button class = "btn btn-primary btn-xs" :disabled="!name || !surname || !email || !address || !phoneNumber || !city
-                    || !country || !avgGrade"    style="margin:auto; margin-left:38px;background: #000;margin-top: 10px; width: 200px;" v-on:click="registerDerm">Confirm</button>
-                
+            
             </div>
-        </div>
-    </div>
-</div>
+
 </template>
-<script> 
+<script>
+///
 import { required } from 'vuelidate/lib/validators'
 
 export default{
@@ -137,18 +93,12 @@ export default{
             address : "",
             phoneNumber : "",
             city : "",
-            country : "",  
-
-            date: "",
-            startTime: "",
-            endTime: "",   
+            country : "",              
             avgGrade: "",         
             staff: {},        
-            errorMessage : "",
-            pharmacyID: {},
+            errorMessage : "",           
 
-            id : this.$route.params.id,
-            pharmacies : []
+            id : this.$route.params.id           
 
         }
     },
@@ -185,10 +135,9 @@ export default{
 
     methods:
     {
-        registerDerm : function()
+        regAdmins : function()
         {   
-                const dermInfo = { 
-            
+                const pharmacyAdmin = {             
                 name : this.name,
                 surname : this.surname,
                 email : this.email,                
@@ -196,48 +145,48 @@ export default{
                 phoneNumber : this.phoneNumber,
                 city : this.city,
                 country : this.country,
-                avgGrade: this.avgGrade,
-                date: this.date,                
-                startTime: this.startTime,
-                endTime: this.endTime,
-                pharmacyID: this.pharmacyID.idPharm 
+                avgGrade: this.avgGrade          
 
                 }
-            console.log( dermInfo );
+                
+                console.log(pharmacyAdmin);
 
-            this.axios.post('dermatologist/saveDermatologist', dermInfo,
+            this.axios.post('/adminstrator/savePharmacyAdmin', pharmacyAdmin,
             {
                 headers: 
                 {
                     'Authorization': `Bearer ` + localStorage.getItem('accessToken')
                 }}).then(response => 
                 {
-                    alert("Successfully registered new dermatologist.");
+                    alert("Successfully registered new admin.");
                     console.log(response.data);
-                    this.$router.push('/SystemAdminProfile/'+this.id);                    
+                    this.$router.push('/RegisterNewPharmacy/'+ this.id);
+                                        
                 }).catch(res => {
-                    console.log(res.response.data.message);
-                    alert("Greska. Proverite podatke.");
+                    if(localStorage.getItem('accessToken') === null)
+                    {
+                        alert("Token expired! Please login again!");
+                    }
+                    else
+                    {
+                        console.log(res.response.data.message);
+                         alert("Greska. Proverite podatke.");
+                    }
                     
-                });                     
+                    
+                });                    
        }                        
     },
     mounted()
     {
-        this.axios.get('/pharmacy/findAll')
-        .then(response => {
-                this.pharmacies = response.data;
-                
-         }).catch(res => {
-                alert("Apoteke nisu pronadjene!");
-                console.log(res);
-        });   
-
     }
     
 }  
-</script>
 
+
+
+
+</script>
 
 <style scoped>
     *
@@ -264,7 +213,7 @@ export default{
     #loginTable
     {
         margin: 0 auto;
-        width: 500px;
+        width: 700px;
        
         padding: 50px;
     }
@@ -272,5 +221,10 @@ export default{
 .input--error{
     border-color:red;
     }
+.regFormAdmin
+{
+    margin-top: 20px;
+
+}
 
 </style>

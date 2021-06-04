@@ -36,7 +36,8 @@
             token: "",
             userAuth: localStorage.getItem('accessToken'), 
             id : this.$route.params.id,
-            loggedAdmin: {}               
+            loggedAdmin: {} ,
+            allPharmacyAdmins: {}              
            
         }
       },
@@ -46,7 +47,7 @@
           },
         AddSystemAdminPage: function()
         {
-            this.$router.push('/RegisterNewSystemAdmin/' + this.id);
+            this.$router.push('/RegisterNewPharmacy/' + this.id);
         },
         AddDermatologistPage: function()
         {
@@ -54,7 +55,7 @@
         },
         AddSupplierPage: function()
         {
-
+            
         },
         AddLoyalityProgram: function()
         {
@@ -62,7 +63,7 @@
         },
         AddNewPharmacyAndTheirAdmin: function()
         {
-
+            window.location.href = '/RegisterNewPharmacy/' + this.id;
         },
         ComplainsPage: function()
         {
@@ -106,6 +107,7 @@
         });
         }
           */
+         //
         this.axios.get('user/findById/'+ this.id ,{ 
             headers: {
                     'Access-Control-Allow-Headers': 'Origin, Content-Type, X-Auth-Token',
@@ -115,7 +117,7 @@
                 }
             }).then(response => {
 
-                  this.loggedAdmin = response.data;
+                  this.allPharmacyAdmins = response.data;
                   console.log(this.loggedAdmin);
 
             }).catch(res => {

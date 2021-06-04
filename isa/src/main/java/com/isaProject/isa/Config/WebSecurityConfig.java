@@ -82,9 +82,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll().antMatchers("/patient/findSheduledPharmacistExamination/{id}")
 
                 .permitAll().antMatchers("/patient/findFinishedPharmacistExamination/{id}")
-                .permitAll().antMatchers("/reservation/checkReservations")
+                .permitAll().antMatchers("/reservation/checkReservations").permitAll()
 
-                .permitAll().antMatchers("/adminstrator/findPharm/{id}")
+
+
+                .antMatchers("/adminstrator/findPharm/{id}")
                 .permitAll().antMatchers("/adminstrator/findById/{id}")
                 .permitAll().antMatchers("/pharmacist/updatePharmacist")
                 .permitAll().antMatchers("/pharmacist/findById/{id}")
@@ -213,11 +215,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/user/loggedUser").permitAll()
                 .antMatchers("/user/login").permitAll()
 
-
-
-                //.antMatchers("/dermatologist/saveDermatologist").permitAll()
-
                 //ove zakomentarisati jer imau AUtorizaciju
+                .antMatchers("/adminstrator/findAll").permitAll()
+                //.antMatchers("/adminstrator/savePharmacyAdmin").permitAll()
                 /*.antMatchers("/user/saveSupplier")
                 .permitAll().antMatchers("/user/findAll")
                 .permitAll().antMatchers("/drug/**")
