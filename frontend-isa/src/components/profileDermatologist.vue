@@ -130,9 +130,7 @@ export default {
          }).catch(res => {
                        alert("ne valja.");
                        console.log(res);
-                 });
-    
-                            
+                 });      
                  
 },
   methods:{

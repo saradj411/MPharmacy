@@ -36,14 +36,13 @@ import ReviewedClientsDermatologist from '../components/ReviewedClientsDermatolo
 import ReviewedClientsPharmacist from '../components/ReviewedClientsPharmacist.vue'
 import RequestForVacationPharmacist from '../components/RequestForVacationPharmacist.vue'
 import InssuingDrug from '../components/InssuingDrug.vue'
-
 import SystemAdminProfile from '../components/SystemAdminProfile.vue'
 import AddShifarnikPage from '../components/AddShifarnikPage'
 import RegisterNewSystemAdmin from '../components/RegisterNewSystemAdmin'
 import RegisterDermatologist from '../components/RegisterDermatologist'
 import RegisterNewPharmacy from '../components/RegisterNewPharmacy'
 import RegisterAdminPharamcyPage from '../components/RegisterAdminPharamcyPage'
-
+import AcceptRejectVacation from '../components/AcceptRejectVacation'
 
 import moment from 'moment'
 
@@ -291,6 +290,11 @@ const routes = [
         path: '/InssuingDrug/:id',
         name: 'InssuingDrug',
         component: InssuingDrug
+      },
+      {
+        path: '/AcceptRejectVacation/:id',
+        name: 'AcceptRejectVacation',
+        component: AcceptRejectVacation
       }
       
       

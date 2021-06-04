@@ -20,6 +20,8 @@ public class RequestForVacationViewDTO {
 
     private String pharmacyName;
 
+    private Integer id;
+
 
     public LocalDate getStart() {
         return start;
@@ -36,8 +38,6 @@ public class RequestForVacationViewDTO {
     public void setEnd(LocalDate end) {
         this.end = end;
     }
-
-
     public String getNameStaff() {
         return nameStaff;
     }
@@ -66,11 +66,20 @@ public class RequestForVacationViewDTO {
     public RequestForVacationViewDTO() {
     }
 
-    public RequestForVacationViewDTO(LocalDate start, LocalDate end, String nameStaff, String surnameStaff, String pharmacyName) {
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public RequestForVacationViewDTO(LocalDate start, LocalDate end, String nameStaff, String surnameStaff, String pharmacyName, Integer id) {
         this.start = start;
         this.end = end;
         this.nameStaff = nameStaff;
         this.surnameStaff = surnameStaff;
         this.pharmacyName = pharmacyName;
+        this.id = id;
     }
 }

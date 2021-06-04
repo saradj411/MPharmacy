@@ -121,6 +121,32 @@ zaposlenom.
 
 
     }
+
+
+
+
+    @Override
+    public RequestForVacation acceptRequuest(Integer requestForVacationId) throws MessagingException {
+        RequestForVacation requestForVacation=requestForVacationRepository.getOne(requestForVacationId);
+
+            //mejl za prihvatanje
+            serviceForEmail.sendingEmailToAcceptRequestForVacation(requestForVacation);
+            requestForVacation.setAccepted(true);
+
+        requestForVacation.setRequestProcessed(true);
+        requestForVacationRepository.save(requestForVacation);
+
+
+        return requestForVacation;
+
+
+    }
+
+
+
+
+
+
 }
 
 
