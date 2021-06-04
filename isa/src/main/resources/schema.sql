@@ -44,22 +44,7 @@ insert into drug_pricelist values (507,'2021-11-01',300,'2020-07-07',504,502);
 insert into drug_pricelist values (508,'2021-11-01',286,'2020-07-07',508,501);
 insert into drug_pricelist values (509,'2021-11-01',300,'2020-07-07',507,501);
 
-#specification
-#id,contraindikacija,doza,struktura,code
 
-insert into specification values (500,'iritacija sinusa',4,'sastav 1','sifra 1');
-insert into specification values (501,'iritacija oka',6,'sastav 2','sifra 2');
-insert into specification values (502,'nema',7,'sastav 3','sifra 3');
-insert into specification values (503,'iritacija sinusa',2,'sastav 4','sifra 4');
-insert into specification values (504,'nema',9,'sastav 5','sifra 5');
-
-#ingredient
-
-insert into ingredient values(500,'sastojak 1',504);
-insert into ingredient values(501,'sastojak 1',500);
-insert into ingredient values(502,'sastojak 1',503);
-insert into ingredient values(503,'sastojak 1',502);
-insert into ingredient values(504,'sastojak 1',501);
 
 #user
 #id_user,address,city,country,email,name,password,phone_number,surname,avg,loyality,penali,points,id faarmacije u kojoj farmaceut radi,id apoteke za farmaceuta apoteke
@@ -181,20 +166,6 @@ insert into drug_order values(502,false,8,'2021-11-20',503);
 insert into drug_order values(503,true,2,'2021-12-20',503);
 insert into drug_order values(504,true,4,'2021-10-20',503);
 
-#drug_reservation
-#id,cancelled,datum rez,ispicked -da li je preuzet,pick_up_date -do kog,kolicina,id drug,id pattient,id pharmacy
-
-insert into drug_reservation values(500,false,'2021-04-20',false,'2021-06-20',3,503,510,503);
-insert into drug_reservation values(501,true,'2021-05-25',false,'2021-06-15',3,504,510,501);
-insert into drug_reservation values(502,false,'2021-04-20',false,'2021-07-20',3,505,508,503);
-insert into drug_reservation values(503,false,'2021-05-18',true,'2021-07-20',3,506,510,504);
-insert into drug_reservation values(504,true,'2021-04-20',false,'2021-09-20',3,507,507,502);
-insert into drug_reservation values(505,false,'2021-04-20',false,'2021-09-20',3,503,510,503);
-insert into drug_reservation values(506,true,'2021-05-25',false,'2021-06-15',3,504,508,501);
-insert into drug_reservation values(507,false,'2021-04-20',true,'2021-08-20',3,505,507,503);
-insert into drug_reservation values(508,false,'2021-05-18',true,'2021-07-20',3,506,508,504);
-insert into drug_reservation values(509,false,'2021-04-20',false,'2021-05-24',3,507,507,502);
-insert into drug_reservation values(510,false,'2021-04-20',false,'2021-05-24',3,507,508,502);
 
 #therapy
 insert into therapy values(500,3,504);
@@ -271,16 +242,84 @@ insert into request_for_vacation values(606,false,'opiz','2021-06-20',true,'2020
 
 
 
+    insert into allergies values(507,502);
+    insert into allergies values(507,501);
+    insert into allergies values(510,503);
+    insert into allergies values(510,502);
+    insert into allergies values(508,502);
+    insert into allergies values(508,504);
+
+    #drug_order
+    #id order,processed,kolicina,timelimit,admin
+
+    insert into drug_order values(500,true,5,'2021-08-12',503);
+    insert into drug_order values(501,false,4,'2021-09-20',503);
+    insert into drug_order values(502,false,8,'2021-11-20',503);
+    insert into drug_order values(503,true,2,'2021-12-20',503);
+    insert into drug_order values(504,true,4,'2021-10-20',503);
+
+
+    #therapy
+    insert into therapy values(500,3,504);
+    insert into therapy values(501,5,501);
+    insert into therapy values(502,8,502);
+    insert into therapy values(503,9,503);
+    insert into therapy values(504,4,505);
+    insert into therapy values(505,7,506);
+
+    #work_timelimit
+    insert into work_time values(503,'2021-07-12','19:00:00','06:30:00',501,333);
+       insert into work_time values(501,'2021-08-12','19:00:00','06:30:00',501,333);
+       insert into work_time values(504,'2021-05-05','19:00:00','06:30:00',501,501);
+       insert into work_time values(509,'2021-06-20','19:00:00','06:30:00',501,501);
+       insert into work_time values(505,'2021-07-22','19:00:00','06:30:00',501,501);
+
+
+       insert into action_patient_pharmacy values(507,501);
+       insert into action_patient_pharmacy values(507,503);
+       insert into action_patient_pharmacy values(507,504);
+       insert into action_patient_pharmacy values(508,501);
+       insert into action_patient_pharmacy values(508,504);
+       insert into action_patient_pharmacy values(510,502);
+       insert into action_patient_pharmacy values(510,501);
+       insert into action_patient_pharmacy values(510,500);
+
+       insert into erecipe values(500,"12345",'2021-05-24','Ana',"NEW",'Mikic',508,500);//--------------------
+       insert into erecipe values(501,"12346",'2021-05-22','Ana',"NEW",'Mikic',508,500);//--------------------
+
+       insert into erecipe_drug values(500,"sifra 1",'probiotik',7,501);//--------------------
+       insert into erecipe_drug values(501,"sifra 2",'paracetamol',8,501);//--------------------
+       insert into erecipe_drug values(502,"sifra 1",'probiotik',9,501);//--------------------
+       insert into erecipe_drug values(503,"sifra 2",'paracetamol',11,501);//--------------------
+
+
+       insert into erecipe_e_recipe_drug values(500,501);
+       insert into erecipe_e_recipe_drug values(500,500);
+       insert into erecipe_e_recipe_drug values(501,502);
+       insert into erecipe_e_recipe_drug values(501,503);
+
+
+#specification
+#id,contraindikacija,ingridiens, doza,struktura,code(idleka)
+
+insert into specification values (500,'iritacija sinusa','sastojak 1, sastojak 2',4,'sastav 1','sifra 1');
+insert into specification values (501,'iritacija oka','sastojak 1',6,'sastav 2','sifra 2');
+insert into specification values (502,'nema','sastojak 3, sastojak 2',7,'sastav 3','sifra 3');
+insert into specification values (503,'iritacija sinusa','sastojak 13',2,'sastav 4','sifra 4');
+insert into specification values (504,'nema','sastojak 4',9,'sastav 5','sifra 5');
+insert into specification values (505,'iritacija sinusa','sastojak 13',2,'sastav 4','sifra 6');
+insert into specification values (506,'nema','sastojak 4',9,'sastav 5','sifra 7');
 
 
 
-
-
-
-
-
-
-
-
-
+insert into drug_reservation values(500,false,'2021-04-20',false,false,'2021-06-20',3,503,510,503);
+insert into drug_reservation values(501,true,'2021-05-25',false,false,'2021-06-15',3,504,510,501);
+insert into drug_reservation values(502,false,'2021-04-20',false,false,'2021-07-20',3,505,508,503);
+insert into drug_reservation values(503,false,'2021-05-18',false,true,'2021-07-20',3,506,510,504);
+insert into drug_reservation values(504,true,'2021-04-20',false,false,'2021-09-20',3,507,507,502);
+insert into drug_reservation values(505,false,'2021-04-20',false,false,'2021-09-20',3,503,510,503);
+insert into drug_reservation values(506,true,'2021-05-25',false,false,'2021-06-15',3,504,508,501);
+insert into drug_reservation values(507,false,'2021-04-20',false,true,'2021-08-20',3,505,507,503);
+insert into drug_reservation values(508,false,'2021-05-18',false,true,'2021-07-20',3,506,508,504);
+insert into drug_reservation values(509,false,'2021-04-20',false,false,'2021-06-29',3,507,507,502);
 

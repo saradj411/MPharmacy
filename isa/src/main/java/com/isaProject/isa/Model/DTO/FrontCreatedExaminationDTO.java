@@ -30,11 +30,14 @@ public class FrontCreatedExaminationDTO {
     private Double gradeStaff;
 
     private String namePharmacy;
+
+    private String report;
+
+    private Therapy therapy;
     //private Staff staff;
 
+    public FrontCreatedExaminationDTO(Integer idExamination, LocalDate date, LocalTime startTime, LocalTime endTime, double price, String nameStaff, String surnameStaff, Double gradeStaff) {
 
-    public FrontCreatedExaminationDTO(Integer idExamination, LocalDate date, LocalTime startTime, LocalTime endTime,
-                                      double price, String nameStaff, String surnameStaff, Double gradeStaff) {
         this.idExamination = idExamination;
         this.date = date;
         this.startTime = startTime;
@@ -45,8 +48,7 @@ public class FrontCreatedExaminationDTO {
         this.gradeStaff = gradeStaff;
     }
 
-    public FrontCreatedExaminationDTO(Integer idExamination, LocalDate date, LocalTime startTime, LocalTime endTime,
-                                      double price, String nameStaff, String surnameStaff, String namePharmacy) {
+    public FrontCreatedExaminationDTO(Integer idExamination, LocalDate date, LocalTime startTime, LocalTime endTime, double price, String nameStaff, String surnameStaff, String namePharmacy) {
         this.idExamination = idExamination;
         this.date = date;
         this.startTime = startTime;
@@ -55,6 +57,20 @@ public class FrontCreatedExaminationDTO {
         this.nameStaff = nameStaff;
         this.surnameStaff = surnameStaff;
         this.namePharmacy = namePharmacy;
+    }
+
+    public FrontCreatedExaminationDTO(Integer idExamination, LocalDate date, LocalTime startTime, LocalTime endTime, double price, String nameStaff, String surnameStaff, String namePharmacy, String report, Therapy therapy) {
+
+        this.idExamination = idExamination;
+        this.date = date;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.price = price;
+        this.nameStaff = nameStaff;
+        this.surnameStaff = surnameStaff;
+        this.namePharmacy = namePharmacy;
+        this.report = report;
+        this.therapy = therapy;
     }
 
     public Integer getIdExamination() {
@@ -128,5 +144,21 @@ public class FrontCreatedExaminationDTO {
 
     public void setNamePharmacy(String namePharmacy) {
         this.namePharmacy = namePharmacy;
+    }
+
+    public String getReport() {
+        return report;
+    }
+
+    public void setReport(String report) {
+        this.report = report;
+    }
+
+    public Therapy getTherapy() {
+        return therapy;
+    }
+
+    public void setTherapy(Therapy therapy) {
+        this.therapy = therapy;
     }
 }

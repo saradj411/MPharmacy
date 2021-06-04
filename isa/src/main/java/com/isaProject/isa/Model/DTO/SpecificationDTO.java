@@ -8,7 +8,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class SpecificationDTO {
-
+/*
     private String contraindications;
 
     private String structure;
@@ -62,5 +62,5 @@ public class SpecificationDTO {
     }
 
     public SpecificationDTO() {
-    }
+    }*/
 }

@@ -110,12 +110,13 @@ export default {
   data() {
     return {
         user: {},
-    pharmacy : {}
+    pharmacy : {},
+    id : this.$route.params.id,
     }
   },
   
   mounted() {
-        this.axios.get('patient/findById/'+507,{ 
+        this.axios.get('patient/findOneById/'+this.id,{ 
              
          }).then(response => {
                this.user=response.data;

@@ -6,6 +6,7 @@ import com.isaProject.isa.Model.Drugs.Drug;
 import com.isaProject.isa.Model.Pharmacy.Pharmacy;
 import com.isaProject.isa.Model.Users.Dermatologist;
 import com.isaProject.isa.Model.Users.PharmacyAdmin;
+import com.isaProject.isa.Model.Users.Pharmacist;
 import com.isaProject.isa.Model.Users.RequestForVacation;
 import com.isaProject.isa.Model.Users.Staff;
 import com.isaProject.isa.Repositories.PharmacyAdminRepository;
@@ -29,6 +30,8 @@ public class RequestForVacationService implements IRequestForVacationService {
     RequestForVacationRepository requestForVacationRepository;
     @Autowired
     DermatologistService dermatologistService;
+    @Autowired
+    PharmacistService pharmacistService;
 
     @Autowired
     PharmacyService pharmacyService;
@@ -42,16 +45,24 @@ public class RequestForVacationService implements IRequestForVacationService {
     @Override
     public RequestForVacation save(RequestForVacationDTO requestForVacationDTO) {
         RequestForVacation d = new RequestForVacation();
-        Pharmacy p=new Pharmacy();
         Dermatologist der=dermatologistService.findById(requestForVacationDTO.getIdStaff());
-        d.setDescription(requestForVacationDTO.getDescription());
         d.setAccepted(false);
         d.setEnd(requestForVacationDTO.getEnd());
         d.setStart(requestForVacationDTO.getStart());
         d.setStaff(der);
-        d.setPharmacy(pharmacyService.findById(501));
+        d.setPharmacy(pharmacyService.pronadjiPoImenu(requestForVacationDTO.getName()));
+        return requestForVacationRepository.save(d);
+    }
 
-
+    @Override
+    public RequestForVacation save1(RequestForVacationDTO requestForVacationDTO) {
+        RequestForVacation d = new RequestForVacation();
+        Pharmacist pharmacist=pharmacistService.findById(requestForVacationDTO.getIdStaff());
+        d.setAccepted(false);
+        d.setEnd(requestForVacationDTO.getEnd());
+        d.setStart(requestForVacationDTO.getStart());
+        d.setStaff(pharmacist);
+        d.setPharmacy(pharmacist.getPharmacy());
         return requestForVacationRepository.save(d);
     }
 

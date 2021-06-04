@@ -12,6 +12,40 @@
                   <button class = "btn btn-primary btn-xs" style="margin:auto; margin-left:38px;background:#474A8A " :href="href" @click="navigate" elevation="1">Update profile</button>
                </router-link>
             </span>
+             <span style="float: left; margin-top: 20px;">
+                  <button class = "btn btn-primary btn-xs" style="margin:auto; margin-left:38px;background:#474A8A" v-on:click = "clients">Reviewed clients </button>
+                     </span>
+
+<span style="float: left; margin-top: 20px;">
+                  <button class = "btn btn-primary btn-xs" style="margin:auto; margin-left:38px;background:#474A8A" v-on:click = "profile">Clients </button>
+                     </span>
+<span style="float: left; margin-top: 20px;">         
+                              
+                  <button class = "btn btn-primary btn-xs" style="margin:auto; margin-left:38px;background:#474A8A" v-on:click = "requestForvacation">Request for vacation</button>
+                     </span>
+                     <span style="float: left; margin-top: 20px;">         
+                              
+                  <button class = "btn btn-primary btn-xs" style="margin:auto; margin-left:38px;background:#474A8A" v-on:click = "inssuing">Issuing the reserved drug</button>
+                     </span>
+
+                     
+                <span style="float: left; margin-top: 20px;">
+                          <b-dropdown id="ddCommodity" name="ddCommodity" text="Counseling" style="margin-left:33px; color:white;"  >
+                                        
+                                        <b-dropdown-item>
+                                          <router-link :to="{ path: '/SearchUserPharmacist/'+user.id}" v-slot="{href, navigate}" custom>
+              <b-link style="font-size:20px;color:black;" :href="href" @click="navigate"  elevation="1">Search user
+                </b-link></router-link>
+              </b-dropdown-item>
+                                        <b-dropdown-item>
+                                          <router-link :to="{ path: '/WorkCalendarPharmacist/'+user.id}" v-slot="{href, navigate}" custom>
+              <b-link style="font-size:20px;color:black;" :href="href" @click="navigate"  elevation="1">Work calendar
+                </b-link></router-link>
+              </b-dropdown-item>
+                                    </b-dropdown> 
+              </span>
+
+
                                   
         </div>
 
@@ -68,13 +102,7 @@
      
 
     </tr>
-    <tr style="font-size:22px;color:#0D184F;">
-      <th></th>
-      <td>Password:</td>
-      <td>{{user.password}} </td>
-     
-
-    </tr>
+    
     
   </tbody>
                         </table>
@@ -101,19 +129,11 @@ export default {
   },
   
   mounted() {
-    this.axios.get('/pharmacist/findById/'+511,{ 
-             
-         }).then(response => {
-               this.user=response.data;
-
-         }).catch(res => {
-                       alert("ne valja.");
-                       console.log(res);
-        });
+    
 
 
 
-        this.axios.get('pharmacist/findById/'+506,{ 
+        this.axios.get('pharmacist/findById/'+333,{ 
              
          }).then(response => {
                this.user=response.data;
@@ -126,6 +146,20 @@ export default {
                  
 },
   methods:{
+     profile : function(){
+          window.location.href = '/Clients';
+        },
+        clients : function(){
+          window.location.href = '/ReviewedClientsPharmacist/'+333;
+        },
+        requestForvacation : function(){
+          window.location.href = '/RequestForVacationPharmacist/'+333;
+        },
+        
+        inssuing : function(){
+          window.location.href = '/InssuingDrug/'+333;
+        }
+        
 }
 }
 </script>

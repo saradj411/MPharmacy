@@ -3,6 +3,7 @@ package com.isaProject.isa.Controllers;
 
 import com.isaProject.isa.Model.DTO.IngredientDTO;
 import com.isaProject.isa.Model.DTO.SpecificationDTO;
+import com.isaProject.isa.Model.Drugs.Specification;
 import com.isaProject.isa.Services.Implementations.SpecificationService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,28 +25,11 @@ public class SpecificationController {
     private SpecificationService specificationService;
 
     @GetMapping(value = "/getSpec/{name}")//radiii
-    public ResponseEntity<SpecificationDTO> getSpecc(@PathVariable String name) {
-
+    public ResponseEntity<Specification> getSpecc(@PathVariable String name) {
         System.out.println("ime lijka je "+name);
-
-        SpecificationDTO d= specificationService.getSpecById(name);
-        Set<IngredientDTO> i=d.getIngredients();
-
+        Specification d= specificationService.getSpecById(name);
         return d == null ?
                 new ResponseEntity<>(HttpStatus.NOT_FOUND) :
                 ResponseEntity.ok(d);
     }
-    @GetMapping(value = "/getIngredients/{name}")//radiii
-    public ResponseEntity<Set<IngredientDTO>> getSpec(@PathVariable String name) {
-
-        System.out.println("ime lijka je "+name);
-
-        SpecificationDTO d= specificationService.getSpecById(name);
-        Set<IngredientDTO> i=d.getIngredients();
-
-        return i == null ?
-                new ResponseEntity<>(HttpStatus.NOT_FOUND) :
-                ResponseEntity.ok(i);
-    }
-
 }

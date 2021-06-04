@@ -4,7 +4,11 @@ import com.isaProject.isa.Model.Examination.Examination;
 import com.isaProject.isa.Model.Pharmacy.Pharmacy;
 import com.isaProject.isa.Model.Users.Vacation;
 import com.isaProject.isa.Model.Users.WorkTime;
+import org.hibernate.jdbc.Work;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -38,6 +42,45 @@ public class DermatologistDTO {
 
     //apoteke u kojima je zaposlen
     private Set<Pharmacy> pharmacies = new HashSet<>();
+
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
+    }
+
+    public LocalTime getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(LocalTime startTime) {
+        this.startTime = startTime;
+    }
+
+    public LocalTime getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(LocalTime endTime) {
+        this.endTime = endTime;
+    }
+
+    public Integer getPharmacyID() {
+        return pharmacyID;
+    }
+
+    public void setPharmacyID(Integer pharmacyID) {
+        this.pharmacyID = pharmacyID;
+    }
+
+    private LocalDate date;
+    private LocalTime startTime;
+    private LocalTime endTime;
+    private Integer pharmacyID;
+
+    Pharmacy pharmacy;
 
     public String getName() {
         return name;
@@ -142,7 +185,8 @@ public class DermatologistDTO {
     public void setPharmacies(Set<Pharmacy> pharmacies) {
         this.pharmacies = pharmacies;
     }
-    Pharmacy pharmacy;
+
+    public DermatologistDTO(){}
 
     public DermatologistDTO(String name, String surname, String email, String password, String address, String phoneNumber, String city, String country, double avgGrade, Set<WorkTime> workTime, Set<Examination> examinations, Set<Vacation> vacation,Pharmacy pharmacy) {
         this.name = name;
@@ -160,8 +204,56 @@ public class DermatologistDTO {
         this.pharmacy = pharmacy;
     }
 
+    public DermatologistDTO(String name, String surname, String email, String address, String phoneNumber, String city, String country, double avgGrade, Set<WorkTime> workTime) {
+        this.name = name;
+        this.surname = surname;
+        this.email = email;
+        this.address = address;
+        this.phoneNumber = phoneNumber;
+        this.city = city;
+        this.country = country;
+        this.avgGrade = avgGrade;
+        this.workTime = workTime;
+    }
+    public DermatologistDTO(String name, String surname, String email, String address, String phoneNumber, String city, String country, double avgGrade, LocalDate date, LocalTime startTime, LocalTime endTime, Integer pharmacyID) {
+        this.name = name;
+        this.surname = surname;
+        this.email = email;
+        this.address = address;
+        this.phoneNumber = phoneNumber;
+        this.city = city;
+        this.country = country;
+        this.avgGrade = avgGrade;
+        this.date = date;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.pharmacyID = pharmacyID;
+
+    }
+
+
     public Pharmacy getPharmacy() {
         return pharmacy;
+    }
+
+    @Override
+    public String toString() {
+        return "DermatologistDTO{" +
+                "name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", address='" + address + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", city='" + city + '\'' +
+                ", country='" + country + '\'' +
+                ", avgGrade=" + avgGrade +
+                ", workTime=" + workTime +
+                ", examinations=" + examinations +
+                ", vacation=" + vacation +
+                ", pharmacies=" + pharmacies +
+                ", pharmacy=" + pharmacy +
+                '}';
     }
 
     public void setPharmacy(Pharmacy pharmacy) {

@@ -3,17 +3,21 @@ package com.isaProject.isa.Model.Drugs;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.isaProject.isa.Model.Pharmacy.Pharmacy;
 import com.isaProject.isa.Model.Users.Patient;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
 @Table
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+
 public class ERecipe {
 
     @Id
@@ -33,28 +37,28 @@ public class ERecipe {
 
     //● Datum izdavanja
     @Column
-    private Date dateOfIssue;
+    private LocalDate dateOfIssue;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     //@JsonBackReference
     private Set<ERecipeDrug> eRecipeDrug = new HashSet<ERecipeDrug>();
 
-    @JsonIgnore
+    //@JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "pharmacyId", referencedColumnName = "idPharm")
-    //@JsonBackReference
+    //@JsonManagedReference
     private Pharmacy pharmacy;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "patientId", referencedColumnName = "id")
-    @JsonBackReference
+    //@JsonBackReference
     private Patient patient;
 
     @Column
     @Enumerated(EnumType.STRING)
     private ERecipeStatus status;
 
-    public ERecipe(Integer idRecipe, String code, String name, String surname, Date dateOfIssue, Set<ERecipeDrug> eRecipeDrug, Pharmacy pharmacy, Patient patient, ERecipeStatus status) {
+    public ERecipe(Integer idRecipe, String code, String name, String surname, LocalDate dateOfIssue, Set<ERecipeDrug> eRecipeDrug, Pharmacy pharmacy, Patient patient, ERecipeStatus status) {
         this.idRecipe = idRecipe;
         this.code = code;
         this.name = name;
@@ -101,11 +105,11 @@ public class ERecipe {
         this.surname = surname;
     }
 
-    public Date getDateOfIssue() {
+    public LocalDate getDateOfIssue() {
         return dateOfIssue;
     }
 
-    public void setDateOfIssue(Date dateOfIssue) {
+    public void setDateOfIssue(LocalDate dateOfIssue) {
         this.dateOfIssue = dateOfIssue;
     }
 

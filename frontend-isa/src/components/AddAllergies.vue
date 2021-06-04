@@ -68,7 +68,7 @@ export default {
   },
   
   mounted() {
-        this.axios.get('patient/findById/'+this.id,{ 
+        this.axios.get('patient/findOneById/'+this.id,{ 
              
          }).then(response => {
                this.user=response.data;

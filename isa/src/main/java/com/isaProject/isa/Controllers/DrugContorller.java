@@ -1,13 +1,19 @@
 package com.isaProject.isa.Controllers;
 
 
+import com.isaProject.isa.Model.DTO.DrugAndSpecDTO;
 import com.isaProject.isa.Model.DTO.DrugDTO;
+import com.isaProject.isa.Model.DTO.SpecificaitonDTO;
 import com.isaProject.isa.Model.Drugs.Drug;
+import com.isaProject.isa.Model.Drugs.Specification;
+import com.isaProject.isa.Model.Users.PharmacyAdmin;
 import com.isaProject.isa.Services.Implementations.DrugService;
+import com.isaProject.isa.Services.Implementations.SpecificationService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,6 +26,8 @@ public class DrugContorller {
 
     @Autowired
     private DrugService drugService;
+    @Autowired
+    private SpecificationService specificationService;
 
     @GetMapping(value = "/findAll")
     public ResponseEntity<List<Drug>> findAll() {
@@ -52,11 +60,12 @@ public class DrugContorller {
                 ResponseEntity.ok(pharm);
     }
     @PostMapping("/create")
-    public ResponseEntity<String> addDrug(@RequestBody DrugDTO drugDTO) {
+    public ResponseEntity<Drug> addDrug(@RequestBody DrugDTO drugDTO) {
 
         Drug drug = drugService.save(drugDTO);
-        return new ResponseEntity<>("kreirano", HttpStatus.CREATED);
+        return new ResponseEntity<>(drug, HttpStatus.CREATED);
     }
+
     @PostMapping("/updateDrug")
     ResponseEntity<String> update(@RequestBody Drug drug)
     {
@@ -64,6 +73,37 @@ public class DrugContorller {
         return new ResponseEntity<>("ajdeee", HttpStatus.CREATED);
 
     }
+
+    @PostMapping("/addDrugAndSpecification")
+    @PreAuthorize("hasRole('ADMIN')")
+    ResponseEntity<String> addSpecificationAndDrug(@RequestBody DrugAndSpecDTO drugAndSpec) {
+        DrugDTO drugDTO = new DrugDTO(drugAndSpec.getName(),
+                drugAndSpec.getCode(),
+                drugAndSpec.isRecipeNeed(),
+                drugAndSpec.getDrugType(),
+                drugAndSpec.getFormat(),
+                drugAndSpec.getManufacturer());
+
+        Drug u = drugService.saveForShifarnik(drugDTO);
+        if(u != null)
+        {
+            SpecificaitonDTO specDTO = new SpecificaitonDTO(
+                    drugAndSpec.getContraindications(),
+                    drugAndSpec.getStructure(),
+                    drugAndSpec.getRecommendedDose(),
+                    u,
+                    drugAndSpec.getIngredients()
+            );
+
+            Specification s = specificationService.save(specDTO);
+            return new ResponseEntity<>("Successeffully created sifarnik!", HttpStatus.CREATED);
+        }
+
+        return new ResponseEntity<>("Something went wrong!", HttpStatus.BAD_REQUEST);
+
+    }
+
+
 
 
 

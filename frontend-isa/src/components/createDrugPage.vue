@@ -124,7 +124,7 @@ export default {
           this.axios.post('/drug/create',medicationInfo,{ 
              headers: {
              }}).then(response => {
-                       alert("Lijek je dodat!");
+                       alert("Drug is added!");
                         this.nesto=response.data;
           window.location.href = "/ProfileAdmin";
 
