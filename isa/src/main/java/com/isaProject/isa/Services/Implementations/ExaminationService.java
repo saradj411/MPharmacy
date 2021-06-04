@@ -493,8 +493,10 @@ ili savetovanjem koje pacijent ima zakazano (u bilo kojoj apoteci),
     }
 
     @Override
-    public void patientCanceling(Examination examination) {
-        Examination pat = examinationRepository.getOne(examination.getIdExamination());
+    public void patientCanceling(Integer examination) {
+        System.out.println("EEEEEEEEEEEEEEE");
+
+        Examination pat = examinationRepository.getOne(examination);
 
         pat.setCanceled(true);
         pat.setStatus(ExaminationStatus.CREATED);

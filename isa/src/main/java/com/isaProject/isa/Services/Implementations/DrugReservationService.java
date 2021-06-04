@@ -74,8 +74,8 @@ public class DrugReservationService implements IDrugReservationService {
 
     }
     @Override
-    public void canceling(DrugReservation drugReservation) {
-        DrugReservation pat = drugRepository.getOne(drugReservation.getIdReservation());
+    public void canceling(Integer id) {
+        DrugReservation pat = drugRepository.getOne(id);
 
 
         pat.setCancelled(true);

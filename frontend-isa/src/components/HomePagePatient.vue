@@ -710,7 +710,7 @@ methods:{
                 if(this.jel){
                    // alert("tru je")
                     //nek otkaze ili sta vec, odvede na neku stranicu...
-                     this.axios.post('/reservation/canceling',res,{
+                     this.axios.post('/reservation/canceling/'+idRes,{
                             }).then(response => {
                             this.jel = response.data;
             
@@ -740,7 +740,7 @@ methods:{
                if(this.jel1){
                    //alert("tru je")
                     //nek otkaze ili sta vec, odvede na neku stranicu...
-                      this.axios.post('/examination/patientCanceling',examination,{
+                      this.axios.post('/examination/patientCanceling/'+idEx,{
                             }).then(response => {
                             this.jel1 = response.data;
             

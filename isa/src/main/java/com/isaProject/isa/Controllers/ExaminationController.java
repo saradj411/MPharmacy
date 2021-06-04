@@ -170,11 +170,12 @@ public class ExaminationController {
                 ResponseEntity.ok(res);
     }
     @CrossOrigin
-    @PostMapping("/patientCanceling")
-    ResponseEntity<String> update(@RequestBody Examination examination)
+    @PostMapping("/patientCanceling/{id}")
+    ResponseEntity<String> cancelingA(@PathVariable Integer id)
     {
+        System.out.println("KONTROLEEEEER");
 
-        examinationService.patientCanceling(examination);
+        examinationService.patientCanceling(id);
         return new ResponseEntity<>("ajdeee", HttpStatus.CREATED);
 
     }

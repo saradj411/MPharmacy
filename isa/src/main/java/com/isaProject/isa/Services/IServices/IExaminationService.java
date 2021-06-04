@@ -19,7 +19,7 @@ public interface IExaminationService {
     Boolean getExaminationByIdStaff(Integer idPharmacist);
     Examination saveP(ExaminationDTO examinationDTO) throws MessagingException;
     Examination findById(Integer id);
-    void patientCanceling(Examination examination);
+    void patientCanceling(Integer examination);
     Examination save(ExaminationDTO examinationDTO) throws MessagingException;
     List<FrontCreatedExaminationDTO> findCreatedDermatologistExamination();
     void canceling(Integer id);
