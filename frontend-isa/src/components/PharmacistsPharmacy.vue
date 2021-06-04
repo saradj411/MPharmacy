@@ -75,8 +75,8 @@
 <!--Lista farmamceuta-->
 <div v-if="showPharmacists">
 
-        <div  style="background:#B0B3D6; width:650px;margin-left:38px;margin-top:60px;"  v-for="d in this.farmaceut"  v-bind:key="d.id">
-                   <form>
+        <div  style=" width:650px;margin-left:38px;margin-top:60px;"  v-for="d in this.farmaceut"  v-bind:key="d.id">
+                   <form style="background:#B0B3D6;">
                       <table style="" id="table2" class="table" > 
 
                        <tbody>
@@ -130,16 +130,11 @@
       <td >Average grade:</td>   
        <td>{{d.avgGrade}}</td>
     </tr>
-    <tr style="font-size:22px;color:#0D184F;">
-      <th></th>
-      <td >Pharmacy:</td>   
-       <td>{{d.pharmacy.name}}</td>
-    </tr>
   </tbody>
                         </table>
-                                                <button class="btn btn-primary btn-lg" v-on:click = "canceling(d.id)" style="margin-left:30px; margin-top:42px;background:#474A8A">Delete pharmacist</button>
 
                 </form>
+                                                <button class="btn btn-primary btn-lg" v-on:click = "canceling(d.id)" style="margin-left:30px; margin-top:42px;background:#474A8A">Delete pharmacist</button>
       
       
         </div>

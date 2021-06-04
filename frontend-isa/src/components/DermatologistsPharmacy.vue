@@ -61,7 +61,26 @@
    </tbody>
 
                         </table>
+                        
 </div>
+<div >
+                        
+                        <div >
+                        <label style="font-size:22px;color:#0D184F;">List of all pharmacies in which dermatologist is employed </label>
+                         <div style="color:#0D184F;">
+                       
+                            <b-dropdown id="ddCommodity" style="font-size:22px;height:45px;margin-top:5px;width:200px;background:#474A8A;color:white;"  name="ddCommodity" text="Pharmacies "  >
+                                <b-dropdown-item  v-for="item in this.pharmacies" v-on:click ="typeIsSelected1($event, item.name)" v-bind:key="item.name"> {{item.name }}</b-dropdown-item>
+                            </b-dropdown> 
+                          </div>
+                        </div>
+
+                      <div>
+
+                                                  <span style="font-size:22px;color:#474A8A;">{{choosen}}</span>
+
+                      </div>
+                   </div>
      
       </div>   
 
@@ -152,12 +171,26 @@ export default {
      dermatologistSurname:"",
      dermatologists:"",
      showDermatologists : true,
-     showDermatologistsTable : false
+     showDermatologistsTable : false,
+     pharmacies:{},
+      choosen:""
 
        
     }
   },
   mounted() {
+        this.axios.get('/dermatologist/findPharmacyDermatologist/'+this.id)
+        .then(response => {
+                this.pharmacies = response.data;  
+
+         }).catch(res => {
+                console.log(res);
+        });   
+    
+
+
+     
+
         this.axios.get('/dermatologist/getDermatologists/'+this.id)
         .then(response => {
                 this.dermatolog = response.data;
@@ -170,7 +203,11 @@ export default {
        
     }
      ,
-      methods:{
+ methods:{
+
+   typeIsSelected1 : function(event, type) { 
+           this.choosen = type;
+      },
 
       searchByName: function(){
         
