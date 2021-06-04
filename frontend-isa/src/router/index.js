@@ -34,7 +34,7 @@ import SearchUserPharmacist from '../components/SearchUserPharmacist.vue'
 import Clients from '../components/Clients.vue'
 import ReviewedClientsDermatologist from '../components/ReviewedClientsDermatologist.vue'
 import ReviewedClientsPharmacist from '../components/ReviewedClientsPharmacist.vue'
-
+import RequestForVacationPharmacist from '../components/RequestForVacationPharmacist.vue'
 
 import moment from 'moment'
 
@@ -239,6 +239,11 @@ const routes = [
         path: '/ReviewedClientsPharmacist/:id',
         name: 'ReviewedClientsPharmacist',
         component: ReviewedClientsPharmacist
+      },
+      {
+        path: '/RequestForVacationPharmacist/:id',
+        name: 'RequestForVacationPharmacist',
+        component: RequestForVacationPharmacist
       }
       
       
