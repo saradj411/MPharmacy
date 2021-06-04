@@ -24,12 +24,25 @@ public class PharmacyAdminDTO {
     private String city;
 
     private String country;
+
     private Integer idPharm;
+
+    private double avgGrade;
+
+    public double getAvgGrade() {
+        return avgGrade;
+    }
+
+    public void setAvgGrade(double avgGrade) {
+        this.avgGrade = avgGrade;
+    }
+
+
 
     public PharmacyAdminDTO() {
     }
 
-    public PharmacyAdminDTO(String name, String surname, String email, String password, String address, String phoneNumber, String city, String country, Integer idPharm) {
+    public PharmacyAdminDTO(String name, String surname, String email, String password, String address, String phoneNumber, String city, String country,double avgGrade, Integer idPharm) {
         this.name = name;
         this.surname = surname;
         this.email = email;
@@ -38,7 +51,20 @@ public class PharmacyAdminDTO {
         this.phoneNumber = phoneNumber;
         this.city = city;
         this.country = country;
+        this.avgGrade = avgGrade;
         this.idPharm = idPharm;
+    }
+
+    public PharmacyAdminDTO(String name, String surname, String email, String password, String address, String phoneNumber, String city, String country, double avgGrade) {
+        this.name = name;
+        this.surname = surname;
+        this.email = email;
+        this.password = password;
+        this.address = address;
+        this.phoneNumber = phoneNumber;
+        this.city = city;
+        this.country = country;
+        this.avgGrade = avgGrade;
     }
 
     public void setAddress(String address) {
