@@ -3,6 +3,7 @@ import com.isaProject.isa.Model.DTO.ExaminationDTO;
 import com.isaProject.isa.Model.Drugs.DrugOrder;
 import com.isaProject.isa.Model.Drugs.Offer;
 import com.isaProject.isa.Model.Users.Patient;
+import com.isaProject.isa.Model.Users.RequestForVacation;
 import com.isaProject.isa.Model.Users.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
@@ -106,16 +107,63 @@ public class ServiceForEmail{
     }
 
 
+    public void sendingEmailsForActionAndPromotions (Patient patient,String pharmacyName,String text) throws MessagingException {
+        // TODO Auto-generated method stub
+
+
+        MimeMessage mimeMessage = javaMailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, "utf-8");
+        String htmlMsg =
+                "<p>Hello,pharmacy "+pharmacyName+"has new action:"+text+"</p>";
+
+        helper.setText(htmlMsg, true);
+        helper.setTo(patient.getEmail());
+        helper.setSubject("Rejected absence");///////////////////////ovo promijeni
+        helper.setFrom(environment.getProperty("spring.mail.username"));
+        javaMailSender.send(mimeMessage);
+        System.out.println("kraj funkc!");
+    }
+
+
+    public void sendingEmailToAcceptRequestForVacation (RequestForVacation requestForVacation) throws MessagingException {
+        // TODO Auto-generated method stub
+
+
+        MimeMessage mimeMessage = javaMailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, "utf-8");
+        String htmlMsg =
+                "<p>Hello "+requestForVacation.getStaff().getName() +", Your request for vacation is accept.</p>";
+
+        helper.setText(htmlMsg, true);
+        helper.setTo(requestForVacation.getStaff().getEmail());
+        helper.setSubject("Rejected absence");///////////////////////ovo promijeni
+        helper.setFrom(environment.getProperty("spring.mail.username"));
+        javaMailSender.send(mimeMessage);
+        System.out.println("kraj funkc!");
+    }
+
+    public void sendingEmailToRejectRequestForVacation (RequestForVacation requestForVacation,String text) throws MessagingException {
+        // TODO Auto-generated method stub
+
+
+        MimeMessage mimeMessage = javaMailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, "utf-8");
+        String htmlMsg =
+                "<p>Hello "+requestForVacation.getStaff().getName() +", Your request for vacation is reject because "+text+" .</p>";
+
+        helper.setText(htmlMsg, true);
+        helper.setTo(requestForVacation.getStaff().getEmail());
+        helper.setSubject("Rejected absence");///////////////////////ovo promijeni
+        helper.setFrom(environment.getProperty("spring.mail.username"));
+        javaMailSender.send(mimeMessage);
+        System.out.println("kraj funkc!");
+    }
+
+
+
+
+
     /*
-
-
-
-
-
-
-
-
-
 
 
 
@@ -128,7 +176,7 @@ public class ServiceForEmail{
 
 		spring.mail.host = smtp.gmail.com
 spring.mail.username = kristinamucibabic321@gmail.com
-spring.mail.password = ljeskovdub
+spring.mail.password =
 spring.mail.port=587
 spring.mail.properties.mail.smtp.starttls.enable = true
 spring.mail.properties.mail.smtp.starttls.required=true

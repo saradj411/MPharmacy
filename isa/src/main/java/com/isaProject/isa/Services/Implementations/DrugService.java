@@ -6,7 +6,6 @@ import com.isaProject.isa.Model.Drugs.Drug;
 import com.isaProject.isa.Model.Drugs.DrugPricelist;
 import com.isaProject.isa.Model.Drugs.PharmacyDrugs;
 import com.isaProject.isa.Model.Pharmacy.Pharmacy;
-import com.isaProject.isa.Model.Users.PharmacyAdmin;
 import com.isaProject.isa.Repositories.*;
 import com.isaProject.isa.Services.IServices.IDrugService;
 import lombok.extern.slf4j.Slf4j;
@@ -187,9 +186,13 @@ public class DrugService implements IDrugService {
     @Override
     public List<Drug> findByName(String name) {
         //veki skontalaaa
-        d=drugRepository.findOneByName(name);
-        return d;
+        return  drugRepository.findOneByName(name);
+
+
     }
+
+
+
 
 
     @Override
