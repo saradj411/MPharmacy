@@ -23,6 +23,12 @@
                               
                   <button class = "btn btn-primary btn-xs" style="margin:auto; margin-left:38px;background:#474A8A" v-on:click = "requestForvacation">Request for vacation</button>
                      </span>
+                     <span style="float: left; margin-top: 20px;">         
+                              
+                  <button class = "btn btn-primary btn-xs" style="margin:auto; margin-left:38px;background:#474A8A" v-on:click = "inssuing">Issuing the reserved drug</button>
+                     </span>
+
+                     
                 <span style="float: left; margin-top: 20px;">
                           <b-dropdown id="ddCommodity" name="ddCommodity" text="Counseling" style="margin-left:33px; color:white;"  >
                                         
@@ -149,6 +155,11 @@ export default {
         requestForvacation : function(){
           window.location.href = '/RequestForVacationPharmacist/'+333;
         },
+        
+        inssuing : function(){
+          window.location.href = '/InssuingDrug/'+333;
+        }
+        
 }
 }
 </script>

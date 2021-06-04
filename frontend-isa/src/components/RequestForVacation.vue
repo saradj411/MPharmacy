@@ -26,12 +26,7 @@
                       </div>
                    </div>
 
-                    <div >
-                        <div>
-                        <label style="font-size:22px;color:#0D184F;">Description:</label>
-                        <input type="text" class="form-control" v-model="description" placeholder="Enter description">
-                        </div>
-                    </div>
+                  
 
                     
  
@@ -86,7 +81,6 @@ typeIsSelected1 : function(event, type) {
         requestForvacation : function() {
             const vacation = {
             idStaff:this.id,
-            description : this.description,
             start : this.start,
             end  :this.end,
             name:this.choosen

@@ -8,12 +8,7 @@
         <div style="background:#B0B3D6; width:650px;margin-left:38px;margin-top:60px;">
                     
                     
-                    <div >
-                        <div>
-                        <label style="font-size:22px;color:#0D184F;">Description:</label>
-                        <input type="text" class="form-control" v-model="description" placeholder="Enter description">
-                        </div>
-                    </div>
+                   
 
                     <div >
                         <div >
@@ -46,7 +41,6 @@ export default {
   data() {
     return {
       
-      description : "",
       start: null,
       end : null,
       id : this.$route.params.id,
@@ -64,7 +58,6 @@ export default {
         requestForvacation : function() {
             const vacation = {
             idStaff:this.id,
-            description : this.description,
             start : this.start,
             end  :this.end,
         }

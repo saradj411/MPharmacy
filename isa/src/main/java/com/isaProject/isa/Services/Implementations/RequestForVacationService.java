@@ -34,7 +34,6 @@ public class RequestForVacationService implements IRequestForVacationService {
     public RequestForVacation save(RequestForVacationDTO requestForVacationDTO) {
         RequestForVacation d = new RequestForVacation();
         Dermatologist der=dermatologistService.findById(requestForVacationDTO.getIdStaff());
-        d.setDescription(requestForVacationDTO.getDescription());
         d.setAccepted(false);
         d.setEnd(requestForVacationDTO.getEnd());
         d.setStart(requestForVacationDTO.getStart());
@@ -47,7 +46,6 @@ public class RequestForVacationService implements IRequestForVacationService {
     public RequestForVacation save1(RequestForVacationDTO requestForVacationDTO) {
         RequestForVacation d = new RequestForVacation();
         Pharmacist pharmacist=pharmacistService.findById(requestForVacationDTO.getIdStaff());
-        d.setDescription(requestForVacationDTO.getDescription());
         d.setAccepted(false);
         d.setEnd(requestForVacationDTO.getEnd());
         d.setStart(requestForVacationDTO.getStart());
