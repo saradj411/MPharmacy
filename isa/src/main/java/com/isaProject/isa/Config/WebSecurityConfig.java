@@ -110,6 +110,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll().antMatchers("/pharmacist/searchPharmacistName/{id}")
                 .permitAll().antMatchers("/dermatologist/searchDermatologistName/{id}")
                 .permitAll().antMatchers("/pharmacist/delete/{id}")
+                .permitAll().antMatchers("/reports/monthlyReport/{idAdmina}/{month}")
+
+
+                .permitAll().antMatchers("/reports/annualReport/{idAdmina}")
+                .permitAll().antMatchers("/reports/examinationQuarter/{idAdmina}")
+
+
 
 
 

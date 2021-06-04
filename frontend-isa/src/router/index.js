@@ -28,6 +28,10 @@ import CreatePurchaseOrder from '../components/CreatePurchaseOrder.vue'
 import SearchUser from '../components/SearchUser.vue'
 import WorkCalendar from '../components/WorkCalendar.vue'
 import StartExamination from '../components/StartExamination.vue'
+import AnnualReport from '../components/AnnualReport.vue'
+import QuarterReport from '../components/QuarterReport.vue'
+
+
 import moment from 'moment'
 
 Vue.use(VueRouter)
@@ -194,6 +198,17 @@ const routes = [
         path: '/StartExamination/:id',
         name: 'StartExamination',
         component: StartExamination
+      }
+      ,
+      {
+        path: '/AnnualReport/:id',
+        name: 'AnnualReport',
+        component: AnnualReport
+      },
+      {
+        path: '/QuarterReport/:id',
+        name: 'QuarterReport',
+        component: QuarterReport
       }
 
      
