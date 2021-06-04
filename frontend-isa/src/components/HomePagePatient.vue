@@ -725,7 +725,8 @@ export default {
         canceledReservations:[],
         id : this.$route.params.id,
         jel:false,
-        jel1:false
+        jel1:false,
+        poruka:""
 
     }
   },
@@ -1129,10 +1130,9 @@ methods:{
              this.axios.post('/examination/patientScheduledPharmacistExamination',parametar)
           .then(response => {
             //this.showCreatedPharmExamination
-               this.freeStaffs= response.data;
-                 // this.showFreeStaff=true
-                 // this.showCreatedPharmExamination=false
-                  //this.showCreatedPharmExamination=false
+               this.poruka= response.data;
+               alert("Examination is scheduled.Check your email!")
+                window.location.href = "/HomePagePatient/"+this.id;
                
               
           })

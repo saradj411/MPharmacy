@@ -186,6 +186,8 @@ public class ExaminationService implements IExaminationService {
 
         examinationRepository.save(examination);
 
+        serviceForEmail.sendingMailToPatientForExamination(examination,patient);
+
     }
 
 
