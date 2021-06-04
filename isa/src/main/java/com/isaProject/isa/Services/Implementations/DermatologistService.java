@@ -212,11 +212,6 @@ public class DermatologistService implements IDermatologistService, Serializable
 
         d.setAvgGrade(dermDTO.getAvgGrade());
 
-        System.out.println("avg" + dermDTO.getAvgGrade());
-        System.out.println("date " + dermDTO.getDate());
-        System.out.println("strartTime " + dermDTO.getStartTime());
-        System.out.println("ID pharm " + dermDTO.getPharmacyID());
-
         User newUser = userRepository.save(d);
 
         if(dermDTO.getDate() != null

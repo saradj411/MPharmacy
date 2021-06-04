@@ -30,7 +30,7 @@ public class RequestForVacationService implements IRequestForVacationService {
     @Override
     public RequestForVacation save(RequestForVacationDTO requestForVacationDTO) {
         RequestForVacation d = new RequestForVacation();
-        Pharmacy p=new Pharmacy();
+        Pharmacy  p= new Pharmacy();
         Dermatologist der=dermatologistService.findById(requestForVacationDTO.getIdStaff());
         d.setDescription(requestForVacationDTO.getDescription());
         d.setAccepted(false);

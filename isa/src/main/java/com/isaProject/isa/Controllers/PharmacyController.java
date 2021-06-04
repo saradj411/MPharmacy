@@ -14,6 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -128,10 +129,13 @@ public class PharmacyController {
                 ResponseEntity.ok(pharm);
     }
     @PostMapping("/register")
-    public ResponseEntity<String> addPharmacy(@RequestBody PharmacyDTO pharmacyDTO) {
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<Pharmacy> addPharmacy(@RequestBody PharmacyDTO pharmacyDTO) {
 
+        System.out.println("Usao u controller add pharmacy");
         Pharmacy pharmacy = pharmacyService.save(pharmacyDTO);
-        return new ResponseEntity<>("SACUVANOOO", HttpStatus.CREATED);
+        return pharmacy != null ? new ResponseEntity<>(pharmacy, HttpStatus.CREATED)
+                : new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
     @PostMapping("/updatePharmacy")

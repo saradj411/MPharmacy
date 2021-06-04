@@ -32,6 +32,10 @@ import SystemAdminProfile from '../components/SystemAdminProfile.vue'
 import AddShifarnikPage from '../components/AddShifarnikPage'
 import RegisterNewSystemAdmin from '../components/RegisterNewSystemAdmin'
 import RegisterDermatologist from '../components/RegisterDermatologist'
+import RegisterNewPharmacy from '../components/RegisterNewPharmacy'
+import RegisterAdminPharamcyPage from '../components/RegisterAdminPharamcyPage'
+
+
 import moment from 'moment'
 
 Vue.use(VueRouter)
@@ -210,17 +214,32 @@ const routes = [
         component: StartExamination
       },
       {
-        path:'/RegisterNewSystemAdmin/:id',
-        name: 'RegisterNewSystemAdmin',
-        component: RegisterNewSystemAdmin
+        //registracija admina za apoteke
+        path:'/RegisterAdminPharamcyPage/:id',
+        name: 'RegisterAdminPharamcyPage',
+        component: RegisterAdminPharamcyPage
       },
       {
         path: '/RegisterDermatologist/:id',
         name: 'RegisterDermatologist',
         component: RegisterDermatologist
+      },      
+      {
+        //registracija nove apoteke
+        path: '/RegisterNewPharmacy/:id',
+        name: 'RegisterNewPharmacy',
+        component: RegisterNewPharmacy
+      },               
+      {
+        //registracija nove apoteke
+        path: '/RegisterNewSystemAdmin/:id',
+        name: 'RegisterNewSystemAdmin',
+        component: RegisterNewSystemAdmin
       }
+      
+      
 
-     
+      
       
     ]
 
