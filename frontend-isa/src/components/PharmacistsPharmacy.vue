@@ -55,8 +55,12 @@
     <tr style="font-size:22px;color:#0D184F;">
       <th></th>
       <td >Pharmacy:</td>   
-       <td>{{d.pharmacy.name}}</td>
+       <td>{{apoteka.name}}</td>
     </tr>
+    
+
+    
+   
    </tbody>
 
                         </table>
@@ -130,6 +134,7 @@
       <td >Average grade:</td>   
        <td>{{d.avgGrade}}</td>
     </tr>
+
   </tbody>
                         </table>
 
@@ -147,7 +152,6 @@
 export default {
   data() {
     return {
-      
        id : this.$route.params.id,
        farmaceut : {},
        showPharmacists: true,
@@ -156,7 +160,8 @@ export default {
        name : "",
      pharmacistName:"",
      phrmacistSurname:"",
-       pharmacists:[]
+       pharmacists:[],
+       apoteka:{}
        
     }
   },
@@ -170,6 +175,21 @@ export default {
                 alert("Ne valja");
                 console.log(res);
         });
+
+
+         this.axios.get('/pharmacy/findById/'+this.id)
+        .then(response => {
+                this.apoteka = response.data;
+                console.log("ksjndsjncjdsnchnd"+this.apoteka.name);
+                 
+       
+         }).catch(res => {
+                alert("Ne valja");
+                console.log(res);
+        });
+
+
+        
     }
      ,
       methods:{
