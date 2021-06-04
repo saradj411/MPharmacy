@@ -112,7 +112,7 @@ public class UserService implements IUserService {
         u.setCountry(userDTO.getCountry());
         u.setAccountEnabled(false);
         u.setAuthorities(auth);
-        serviceForEmail.sendEmailForPasswordChange(userDTO.getEmail(),newPassword);
+        //serviceForEmail.sendEmailForPasswordChange(userDTO.getEmail(),newPassword);
 
         return userRepository.save(u);
     }

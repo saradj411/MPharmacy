@@ -4,6 +4,7 @@ import com.isaProject.isa.Model.DTO.ExaminationDTO;
 import com.isaProject.isa.Model.DTO.ExaminationFrontDTO;
 import com.isaProject.isa.Model.DTO.RequestForVacationDTO;
 import com.isaProject.isa.Model.DTO.FrontCreatedExaminationDTO;
+import com.isaProject.isa.Model.DTO.SchedulePharmacistExaminationDTO;
 import com.isaProject.isa.Model.Examination.Examination;
 
 import com.isaProject.isa.Services.Implementations.DrugReservationService;
@@ -151,8 +152,7 @@ public class ExaminationController {
     }
 
     @PostMapping("/patientScheduledDermatologistExamination/{id}/{idExamination}")
-    ResponseEntity<String> scheduledDermatologistExamination(@PathVariable Integer id,@PathVariable Integer idExamination)
-    {
+    ResponseEntity<String> scheduledDermatologistExamination(@PathVariable Integer id,@PathVariable Integer idExamination) throws MessagingException {
 
         examinationService.scheduledDermatologistExamination(id,idExamination);
         return new ResponseEntity<>("ajdeee", HttpStatus.CREATED);
@@ -172,11 +172,29 @@ public class ExaminationController {
     @CrossOrigin
     @PostMapping("/patientCanceling/{id}")
     ResponseEntity<String> cancelingA(@PathVariable Integer id)
+
     {
         System.out.println("KONTROLEEEEER");
 
         examinationService.patientCanceling(id);
         return new ResponseEntity<>("ajdeee", HttpStatus.CREATED);
+
+    }
+    @CrossOrigin
+    @PostMapping("/patientCancelingPharmacistExamination")
+    ResponseEntity<String> patientCancelingPharmacistExamination(@RequestBody Examination examination)
+    {
+
+        examinationService.patientCancelingPharmacistExamination(examination);
+        return new ResponseEntity<>("ajdeee", HttpStatus.CREATED);
+
+    }
+    @PostMapping("/patientScheduledPharmacistExamination")
+    ResponseEntity<Boolean> scheduledPharmacistExamination(@RequestBody SchedulePharmacistExaminationDTO schedulePharmacistExaminationDTO) throws MessagingException {
+
+        Boolean res=examinationService.schedulePharmacistExamination(schedulePharmacistExaminationDTO);
+
+        return new ResponseEntity<>(res, HttpStatus.OK);
 
     }
 }

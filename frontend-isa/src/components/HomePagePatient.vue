@@ -14,10 +14,44 @@
            <button class="btn btn-danger btn-lg" style="float:left;margin-top:15px;margin-left:10px" v-on:click = "showRecipe">eRecipe</button>
            <button class="btn btn-danger btn-lg" style="float:left;margin-top:15px;margin-left:10px" v-on:click = "showCreatedDerm">Schedule Examination</button>
            
+           <button class="btn btn-danger btn-lg" style="float:left;margin-top:15px;margin-left:10px" v-on:click = "showCreatedPharmacist">Schedule Consultation</button>
+           <button class="btn btn-danger btn-lg" style="float:left;margin-top:15px;margin-left:10px" v-on:click = "showAllDrugs">Reserve drug</button>
+           
             
                                   
         </div>
 
+  <div v-if="showSearchDrug"  style="background:#B0B3D6; height: 70px; margin-top: 10px">
+            
+      <span  style="float:right;margin:15px">
+                    
+          <div class="input-group mb-3">
+              <input type="text" v-model="drugName" class="form-control" placeholder="Enter drug name" aria-label="Enter name" aria-describedby="addon-wrapping">
+              <div class="input-group-append">
+                  <button class="btn btn-info" type="button"  v-on:click = "searchName(drugName)" >Search</button>
+                </div>
+           </div>
+      </span>
+             
+            
+  </div>
+   <div v-if="showScheduleSearch"  style="background:#B0B3D6; height: 70px; margin-top: 10px">
+            
+      <span  style="float:right;margin:15px">
+                    
+          <div class="input-group mb-6">
+              <input style="width: 200px" type="date" v-model = "date" class="form-control" placeholder = "choose a date">
+                <input style="width: 200px" type="time" v-model = "time" class="form-control" placeholder = "choose the time">
+          <div class="input-group-append">
+                  <button class="btn btn-info" type="button"  v-on:click = "searchFreePharmacy(date,time)" >Search</button>
+                </div>
+           </div>
+      </span>
+             
+            
+  </div>
+
+ 
 <!-- all PHARMACIES!-->
   <div v-if="showTable"  style="float:left;margin-left:30px;">
      <h4 style="margin:30px">ALL PHARMACIES:</h4>    
@@ -226,9 +260,11 @@
         <tr>
           <th></th>
           <td style="font-size:25px;">{{examination1.price}}RSD </td>
-          
+    <td><button class="btn btn-danger btn-sm" v-on:click = "cancelExamination(examination1,examination1.idExamination)">Cancel</button></td>
+
 
         </tr>
+
   </tbody>
 </table>
            </div>
@@ -283,8 +319,6 @@
           <td >{{examination2.therapy.drug.name}}</td>
           <td >Daily dose:</td>
           
-        
-
         </tr>
   </tbody>
 </table>
@@ -491,6 +525,148 @@
 
 
       </div> 
+
+      
+       <!--ALL DRUG IN PHARMACIES !-->
+  <div v-if="showDrugsInPharmacies"  style="float:left;margin-left:30px;">
+     <h4 style="margin:30px">DRUGS IN PHARMACIES:</h4>
+ <div style="background: #a7c1c9;margin-left:30px;"  v-for="dr in this.drugInPharmacies"  v-bind:key="dr.id">
+      
+<table  style="" id="table2" class="table" >
+ 
+    <tbody>
+      <tr>
+        <th scope="row"></th>
+        <td>Drug:</td>
+         <td>{{dr.drug.name}}</td>
+      </tr>
+        <tr>
+        <th scope="row"></th>
+        
+         <td>Pharmacy:</td>
+          <td>{{dr.pharmacy.name}}</td>
+      </tr>
+        <tr>
+          <th></th>
+          <td><button class="btn btn-danger btn-sm" v-on:click = "reserve(dr.id)">Reserve</button></td>
+          
+
+
+        </tr>
+  </tbody>
+</table>
+           </div>
+
+
+      </div> 
+      <!--SEARCH DRUG!-->
+  <div v-if="showSearchDrugs"  style="float:left;margin-left:30px;">
+     <h4 style="margin:30px">DRUGS IN PHARMACIES:</h4>
+ <div style="background: #a7c1c9;margin-left:30px;"  v-for="dr in this.searchDrugs"  v-bind:key="dr.id">
+      
+<table  style="" id="table2" class="table" >
+ 
+    <tbody>
+      <tr>
+        <th scope="row"></th>
+        <td>Drug:</td>
+         <td>{{dr.drug.name}}</td>
+      </tr>
+        <tr>
+        <th scope="row"></th>
+        
+         <td>Pharmacy:</td>
+          <td>{{dr.pharmacy.name}}</td>
+      </tr>
+        <tr>
+          <th></th>
+          <td><button class="btn btn-danger btn-sm" v-on:click = "reserve(dr.id)">Reserve</button></td>
+          
+
+        </tr>
+  </tbody>
+</table>
+           </div>
+
+
+      </div> 
+
+
+      <!--SPROBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA  FREE PHARMACY!-->
+  <div v-if="showCreatedPharmExamination"  style="float:left;margin-left:30px;">
+     <h4 style="margin:30px">FREE PHARMACIES:</h4>
+ <div style="background: #a7c1c9;margin-left:30px;"  v-for="dr in this.freePharmacy"  v-bind:key="dr.id">
+      
+<table  style="" id="table2" class="table" >
+ 
+    <tbody>
+      <tr>
+        <th scope="row"></th>
+        <td>Pharmacy:</td>
+         <td>{{dr.name}}</td>
+      </tr>
+        <tr>
+        <th scope="row"></th>
+        
+         <td>Address:</td>
+          <td>{{dr.addres}}</td>
+      </tr>
+       <tr>
+        <th scope="row"></th>
+        
+         <td>Grade:</td>
+          <td>{{dr.avgGrade}}</td>
+      </tr>
+       <tr>
+        <th scope="row"></th>
+        
+         <td>Consultation price:</td>
+          <td></td>
+      </tr>
+        <tr>
+          <th></th>
+          <td><button class="btn btn-danger btn-sm" v-on:click = "continue1(dr.idPharm)">Schedule</button></td>
+          
+
+        </tr>
+  </tbody>
+</table>
+           </div>
+
+
+      </div> 
+      <!--FREEEEEEEEEEEEE STAFFFFFFFFFFFFFFFFF!-->
+  <div v-if="showFreeStaff"  style="float:left;margin-left:30px;">
+     <h4 style="margin:30px">FREE PHARMACISTS:</h4>
+ <div style="background: #a7c1c9;margin-left:30px;"  v-for="staff in this.freeStaffs"  v-bind:key="staff.id">
+      
+<table  style="" id="table2" class="table" >
+ 
+    <tbody>
+      <tr>
+        <th scope="row"></th>
+        <td>Pharmacist:</td>
+         <td>{{staff.nameStaff}} {{staff.surnameStaff}}</td>
+      </tr>
+        <tr>
+        <th scope="row"></th>
+        
+         <td>Pharmacist grade:</td>
+          <td>{{staff.gradeStaff}}</td>
+      </tr>
+     
+        <tr>
+          <th></th>
+          <td><button class="btn btn-danger btn-sm" v-on:click = "continue2(staff.idStaff,staff.idPharm)">Schedule</button></td>
+          
+
+        </tr>
+  </tbody>
+</table>
+           </div>
+
+
+      </div> 
 </div>
 
   
@@ -502,6 +678,10 @@
 export default {
   data() {
     return {
+
+      idPharm2:null,
+      date2:null,
+      time2:null,
         patient: {},
 
         showTable:true,
@@ -510,11 +690,20 @@ export default {
         showPharmExam:false,
         showERecipe:false,
         showCreatedDermExamination:false,
+        
+        showCreatedPharmExamination:false,
         showFinishedDerm:false,
         showFinishedPharm:false,
+        showDrugsInPharmacies:false,
+        showSearchDrugs:false,
+        showSearchDrug:false,
+        showScheduleSearch:false,
 
         pharmacies : [],
         pharmacies1 : [],
+        drugName:null,
+        date:null,
+        time:null,
 
         reservations:[],
         dermatologistScheduledExamination:[],
@@ -522,14 +711,22 @@ export default {
         recepies:[],
         dermatologistCreatedExamination:[],
 
+        freePharmacy:[],
+        freeStaffs:[],
+        showFreeStaff:false,
+
         dermatologistFinishedExamination:[],
         pharmacistFinishedExamination:[],
+        drugInPharmacies:[],
+        searchDrugs:[],
+    
 
         pickedReservations:[],
         canceledReservations:[],
         id : this.$route.params.id,
         jel:false,
-        jel1:false
+        jel1:false,
+        poruka:""
 
     }
   },
@@ -630,6 +827,14 @@ export default {
                 alert("Nesto ne valja");
                 console.log(res);
         });
+        this.axios.get('/pharmacyDrugs/getAll')
+        .then(response => {
+                this.drugInPharmacies= response.data;
+                
+         }).catch(res => {
+                alert("Nesto ne valja");
+                console.log(res);
+        });
                
                
 },
@@ -646,6 +851,12 @@ methods:{
         this.showCreatedDermExamination=false
         this.showFinishedDerm=false
         this.showFinishedPharm=false
+        this.showDrugsInPharmacies=false
+        this.showSearchDrug=false
+        this.showSearchDrugs=false
+         this.showCreatedPharmExamination=false
+         this.showScheduleSearch=false
+         this.showFreeStaff=false
        //this.showSearchPharmacy=true
       },
       showReservation:
@@ -658,6 +869,12 @@ methods:{
          this.showCreatedDermExamination=false
          this.showFinishedDerm=false
         this.showFinishedPharm=false
+        this.showDrugsInPharmacies=false
+        this.showSearchDrug=false
+        this.showSearchDrugs=false
+        this.showScheduleSearch=false
+         this.showCreatedPharmExamination=false
+           this.showFreeStaff=false
       },
       showConsultation:
        function(){
@@ -669,8 +886,16 @@ methods:{
          this.showCreatedDermExamination=false
          this.showFinishedDerm=false
         this.showFinishedPharm=true
+        this.showDrugsInPharmacies=false
+        this.showSearchDrug=false
+        this.showSearchDrugs=false
+        this.showScheduleSearch=false
+          this.showFreeStaff=false
+         this.showCreatedPharmExamination=false
       },
       showRecipe: function(){
+        
+         this.showCreatedPharmExamination=false
         this.showTable=false
         this.showReserveTable=false
        this.showDermExam=false
@@ -679,6 +904,11 @@ methods:{
         this.showCreatedDermExamination=false
         this.showFinishedDerm=false
         this.showFinishedPharm=false
+        this.showDrugsInPharmacies=false
+        this.showSearchDrug=false
+        this.showSearchDrugs=false
+        this.showScheduleSearch=false
+          this.showFreeStaff=false
       },
       showExamination:
        function(){
@@ -690,6 +920,12 @@ methods:{
         this.showCreatedDermExamination=false
         this.showFinishedDerm=true
         this.showFinishedPharm=false
+        this.showDrugsInPharmacies=false
+        this.showSearchDrug=false
+        this.showSearchDrugs=false
+        this.showScheduleSearch=false
+         this.showCreatedPharmExamination=false
+           this.showFreeStaff=false
       },
       showCreatedDerm:
        function(){
@@ -701,6 +937,45 @@ methods:{
         this.showCreatedDermExamination=true
         this.showFinishedDerm=false
         this.showFinishedPharm=false
+        this.showDrugsInPharmacies=false
+        this.showSearchDrug=false
+        this.showSearchDrugs=false
+        this.showScheduleSearch=false
+         this.showCreatedPharmExamination=false
+           this.showFreeStaff=false
+      },
+      showCreatedPharmacist:
+      function(){
+        this.showTable=false
+        this.showReserveTable=false
+       this.showDermExam=false
+       this.showPharmExam=false
+        this.showERecipe=false
+        this.showCreatedDermExamination=false
+        this.showFinishedDerm=false
+        this.showFinishedPharm=false
+        this.showDrugsInPharmacies=false
+        this.showSearchDrug=false
+        this.showSearchDrugs=false
+        this.showScheduleSearch=true
+        this.showCreatedPharmExamination=true
+          this.showFreeStaff=false
+      },
+      showAllDrugs: function(){
+        this.showTable=false
+        this.showReserveTable=false
+       this.showDermExam=false
+       this.showPharmExam=false
+        this.showERecipe=false
+        this.showCreatedDermExamination=false
+        this.showFinishedDerm=false
+        this.showFinishedPharm=false
+        this.showDrugsInPharmacies=true
+        this.showSearchDrug=true
+        this.showSearchDrugs=false
+        this.showScheduleSearch=false
+         this.showCreatedPharmExamination=false
+           this.showFreeStaff=false
       },
       canceling:
        function(res,idRes){
@@ -740,7 +1015,9 @@ methods:{
                if(this.jel1){
                    //alert("tru je")
                     //nek otkaze ili sta vec, odvede na neku stranicu...
+
                       this.axios.post('/examination/patientCanceling/'+idEx,{
+
                             }).then(response => {
                             this.jel1 = response.data;
             
@@ -767,13 +1044,106 @@ methods:{
         .then(response => {
                 this.jel = response.data;
                 alert("Examination is scheduled.Check your email!")
-                
+                window.location.href = "/HomePagePatient/"+this.id;
          }).catch(res => {
                 alert("Nesto ne valja");
                 console.log(res);
         });
 
       },
+      reserve:
+       function(idTab){
+       
+         window.location.href = "/ReserveDrug/"+idTab+"/"+this.id;
+        
+
+      },
+      
+       searchName: function(drugName){
+           
+             this.drugName = drugName
+        this.axios.get('/pharmacyDrugs/getAllByName/'+ this.drugName)
+          .then(response => {
+              this.showDrugsInPharmacies = false;
+              this.showSearchDrugs = true;
+                this.searchDrugs= response.data;
+                
+              
+          })
+      },
+      
+      searchFreePharmacy: function(date,time){
+           this.showCreatedPharmExamination=true
+           this.showFreeStaff=false
+             this.date = date
+             this.time=time
+             console.log(this.date)
+             console.log(this.time)
+              /*const datum = {
+                date : this.date,
+                startTime : this.time,
+               // endTime:null,
+                //staff:null,
+                //pharmacy:null,
+                
+           }*/
+        this.axios.post('/workTime/findAllByDate/'+this.date+"/"+this.time)
+          .then(response => {
+            //this.showCreatedPharmExamination
+                this.freePharmacy= response.data;
+               
+              
+          })
+      },
+      continue1:
+        function(idPharm33){
+          this.idPharm2=idPharm33
+           console.log(this.date)
+             console.log(this.time)
+          console.log(this.idPharm2)
+            const parametar={
+             idPharmacy:this.idPharm2,
+             date:this.date,
+             time:this.time
+            }
+             this.axios.post('/workTime/findFreeStaffByPharmacy',parametar)
+          .then(response => {
+            //this.showCreatedPharmExamination
+                this.freeStaffs= response.data;
+                  this.showFreeStaff=true
+                  this.showCreatedPharmExamination=false
+                  //this.showCreatedPharmExamination=false
+               
+              
+          })
+        },
+        continue2:
+        function(idStaff44,idPharm44){
+         
+            const parametar={
+             date:this.date,
+             startTime:this.time,
+             price:500,
+             pharmacy:idPharm44,
+             patient:this.id,
+             staff:idStaff44
+
+            }
+             this.axios.post('/examination/patientScheduledPharmacistExamination',parametar)
+          .then(response => {
+            //this.showCreatedPharmExamination
+               this.poruka= response.data;
+               if(!this.poruka){
+                 alert("prc")
+               }else{
+                alert("Examination is scheduled.Check your email!")
+                window.location.href = "/HomePagePatient/"+this.id;
+               }
+               
+               
+              
+          })
+        },
 
 }
 }

@@ -1,12 +1,14 @@
 package com.isaProject.isa.Services.Implementations;
 
+import com.isaProject.isa.Model.DTO.DrugDTO;
+import com.isaProject.isa.Model.DTO.DrugReservationDTO;
 import com.isaProject.isa.Model.DTO.FrontDrugReservationDTO;
+import com.isaProject.isa.Model.Drugs.Drug;
 import com.isaProject.isa.Model.Drugs.DrugPricelist;
 import com.isaProject.isa.Model.Drugs.DrugReservation;
+import com.isaProject.isa.Model.Drugs.PharmacyDrugs;
 import com.isaProject.isa.Model.Users.Patient;
-import com.isaProject.isa.Repositories.DrugRepository;
-import com.isaProject.isa.Repositories.DrugReservationRepository;
-import com.isaProject.isa.Repositories.PatientRepository;
+import com.isaProject.isa.Repositories.*;
 import com.isaProject.isa.Services.IServices.IDrugReservationService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +32,14 @@ public class DrugReservationService implements IDrugReservationService {
     DrugReservationRepository drugRepository;
     @Autowired
     PatientRepository patientRepository;
+    @Autowired
+    PharmacyRepository pharmacyRepository;
+    @Autowired
+    DrugRepository drugRepository2;
+    @Autowired
+    PharmacyDrugsRepository pharmacyDrugsRepository;
+
+
 
     @Override
     public List<DrugReservation> findAll() {
@@ -137,6 +147,7 @@ public class DrugReservationService implements IDrugReservationService {
     @Override
     public List<FrontDrugReservationDTO> findPickedById(Patient id) {
         List<DrugReservation> reserv = drugRepository.findAllByPatient(id);
+
         List<FrontDrugReservationDTO> reserv1=new ArrayList<>();
         for (DrugReservation dR:reserv){
             if(dR.getPickedUp()){
@@ -162,6 +173,30 @@ public class DrugReservationService implements IDrugReservationService {
             }
         }
         return reserv1;
+    }
+
+    @Override
+    public DrugReservation save(DrugReservationDTO drug) {
+            DrugReservation d = new DrugReservation();
+            PharmacyDrugs pd=pharmacyDrugsRepository.findOneById(drug.getIdPharmacyDrug());
+
+            d.setDrug(drugRepository2.findOneByIdDrug(drug.getDrug()));
+            d.setPharmacy(pharmacyRepository.findOneByIdPharm(drug.getPharmacy()));
+            d.setPatient(patientRepository.findOneById(drug.getPatient()));
+            d.setPickUpDate(drug.getPickUpDate());
+            d.setCancelled(false);
+            d.setExpired(false);
+            d.setDateOfReservation(LocalDate.now());
+            d.setPickedUp(false);
+            d.setQuantity(1);
+
+            pd.setQuantity(pd.getQuantity()-1);
+            DrugReservation novi=drugRepository.save(d);
+            pharmacyDrugsRepository.save(pd);
+            //pd.setDrug(novi);
+            //drugRepository.save(pd);
+            return novi;
+
     }
 
 }

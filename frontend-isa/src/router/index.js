@@ -39,6 +39,9 @@ import InssuingDrug from '../components/InssuingDrug.vue'
 import SystemAdminProfile from '../components/SystemAdminProfile.vue'
 import AddShifarnikPage from '../components/AddShifarnikPage'
 import RegisterNewSystemAdmin from '../components/RegisterNewSystemAdmin'
+
+import ReserveDrug from '../components/ReserveDrug'
+
 import RegisterDermatologist from '../components/RegisterDermatologist'
 import RegisterNewPharmacy from '../components/RegisterNewPharmacy'
 import RegisterAdminPharamcyPage from '../components/RegisterAdminPharamcyPage'
@@ -257,6 +260,11 @@ const routes = [
         path: '/RegisterNewSystemAdmin/:id',
         name: 'RegisterNewSystemAdmin',
         component: RegisterNewSystemAdmin
+      },
+      {
+        path:'/ReserveDrug/:id/:idPatient',
+        name: 'ReserveDrug',
+        component: ReserveDrug
       }
       ,
       {

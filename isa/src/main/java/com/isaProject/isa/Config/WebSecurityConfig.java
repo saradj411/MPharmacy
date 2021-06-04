@@ -202,6 +202,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll().antMatchers("/examination/findCreatedPharmacistExamination")
 
                 .permitAll().antMatchers("/examination/patientScheduledDermatologistExamination/{id}/{idExamination}")
+                .permitAll().antMatchers("/examination/patientScheduledPharmacistExamination")
                 .permitAll().antMatchers("/reservation/getBool/{id}")
                 .permitAll().antMatchers("/examination/getBool/{id}")
                 .permitAll().antMatchers("/reservation/canceling/{id}")
@@ -211,20 +212,29 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
                 .permitAll().antMatchers("/drugPricelist/searchDrugName/{id}")
                 .permitAll().antMatchers("/patient/findOneById/{id}")
+                .permitAll().antMatchers("/examination/patientCancelingPharmacistExamination")
 
 
 
 
                 .permitAll()
                 .antMatchers("/pharmacy/findAll").permitAll()
+                .antMatchers("/pharmacyDrugs/getAll").permitAll()
+                .antMatchers("/pharmacyDrugs/getAllByName/{name}").permitAll()
+                .antMatchers("/pharmacyDrugs/getById/{id}").permitAll()
                 .antMatchers("/drugPricelist/findAll").permitAll()
                 .antMatchers("/pharmacy/findByCity/{city}").permitAll()
                 .antMatchers("/pharmacy/findByName/{name}").permitAll()
+                .antMatchers("/reservation/create").permitAll()
 
                 //Ovo je dostupno svim korisnicima! Sve ostalo treba da ima pravo pristupa!
                 .antMatchers("/user/savePatient").permitAll()
                 .antMatchers("/user/loggedUser").permitAll()
                 .antMatchers("/user/login").permitAll()
+                .antMatchers("/workTime/findAll").permitAll()
+                .antMatchers("/workTime/findAllByDate").permitAll()
+                .antMatchers("/workTime/findAllByDate/{date}/{time}").permitAll()
+                .antMatchers("/workTime/findFreeStaffByPharmacy").permitAll()
 
                 //ove zakomentarisati jer imau AUtorizaciju
                 .antMatchers("/adminstrator/findAll").permitAll()

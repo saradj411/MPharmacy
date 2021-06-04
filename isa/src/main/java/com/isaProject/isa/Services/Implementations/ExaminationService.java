@@ -9,17 +9,23 @@ import com.isaProject.isa.Model.Drugs.Drug;
 import com.isaProject.isa.Model.Drugs.DrugReservation;
 import com.isaProject.isa.Model.DTO.FrontCreatedExaminationDTO;
 
+import com.isaProject.isa.Model.DTO.SchedulePharmacistExaminationDTO;
 import com.isaProject.isa.Model.Examination.Examination;
 import com.isaProject.isa.Model.Examination.ExaminationStatus;
 import com.isaProject.isa.Model.Examination.ExaminationType;
-import com.isaProject.isa.Model.Examination.Therapy;
+
 import com.isaProject.isa.Model.Pharmacy.Pharmacy;
+
+import com.isaProject.isa.Model.Examination.Therapy;
 import com.isaProject.isa.Model.Users.*;
 import com.isaProject.isa.Repositories.*;
+
 import com.isaProject.isa.Model.Users.Patient;
 import com.isaProject.isa.Model.Users.Staff;
 import com.isaProject.isa.Repositories.ExaminationRepository;
 import com.isaProject.isa.Repositories.PatientRepository;
+import com.isaProject.isa.Repositories.PharmacyRepository;
+import com.isaProject.isa.Repositories.StaffRepository;
 import com.isaProject.isa.Services.IServices.IExaminationService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,13 +33,16 @@ import org.springframework.stereotype.Service;
 
 
 import javax.mail.MessagingException;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+
 import java.util.ArrayList;
 import java.util.Date;
 
 import java.util.List;
+import java.util.Set;
 
 @Service
 @Slf4j
@@ -50,6 +59,8 @@ public class ExaminationService implements IExaminationService {
     @Autowired
     PatientRepository patientRepository;
     @Autowired
+    PharmacyRepository pharmacyRepository;
+
     DermatologistService dermatologistService;
     @Autowired
     DrugRepository drugRepository;
@@ -57,16 +68,19 @@ public class ExaminationService implements IExaminationService {
     WorkTimeRepository workTimeRepository;
     @Autowired
     ExaminationService examinationService;
+
     @Autowired
     StaffRepository staffRepository;
 
     @Autowired
     ServiceForEmail serviceForEmail;
+
     @Autowired
     PharmacistRepository pharmacistRepository;
 
     @Autowired
     TherapyRepository therapyRepository;
+
     @Override
     public List<Examination> findAll() {
         return examinationRepository.findAll();
@@ -168,7 +182,7 @@ ili savetovanjem koje pacijent ima zakazano (u bilo kojoj apoteci),
         d.setPatient(patientService.findById(examinationDTO.getIdPatient()));
         d.setStatus(ExaminationStatus.SCHEDULED);
         d.setType(ExaminationType.DERMATOLOGIST_EXAMINATION);
-        serviceForEmail.sendingAnEmailToInformPatientAboutExamination(examinationDTO);
+        //serviceForEmail.sendingAnEmailToInformPatientAboutExamination(examinationDTO);
         return examinationRepository.save(d);
     }
 
@@ -364,7 +378,7 @@ ili savetovanjem koje pacijent ima zakazano (u bilo kojoj apoteci),
         d.setType(ExaminationType.PHARMACIST_EXAMINATION);
         d.setPatient(patientService.findById(examinationDTO.getIdPatient()));
         d.setStatus(ExaminationStatus.SCHEDULED);
-        serviceForEmail.sendingAnEmailToInformPatientAboutExamination(examinationDTO);
+        //serviceForEmail.sendingAnEmailToInformPatientAboutExamination(examinationDTO);
         return examinationRepository.save(d);
 
     }
@@ -413,7 +427,7 @@ ili savetovanjem koje pacijent ima zakazano (u bilo kojoj apoteci),
         d.setType(ExaminationType.DERMATOLOGIST_EXAMINATION);
         d.setPatient(patientService.findById(examinationDTO.getIdPatient()));
         d.setStatus(ExaminationStatus.SCHEDULED);
-        serviceForEmail.sendingAnEmailToInformPatientAboutExamination(examinationDTO);
+        //serviceForEmail.sendingAnEmailToInformPatientAboutExamination(examinationDTO);
 
         return examinationRepository.save(d);
 
@@ -464,7 +478,7 @@ ili savetovanjem koje pacijent ima zakazano (u bilo kojoj apoteci),
         d.setType(ExaminationType.PHARMACIST_EXAMINATION);
         d.setPatient(patientService.findById(examinationDTO.getIdPatient()));
         d.setStatus(ExaminationStatus.SCHEDULED);
-        serviceForEmail.sendingAnEmailToInformPatientAboutExamination(examinationDTO);
+        //serviceForEmail.sendingAnEmailToInformPatientAboutExamination(examinationDTO);
 
         return examinationRepository.save(d);
 
@@ -502,6 +516,16 @@ ili savetovanjem koje pacijent ima zakazano (u bilo kojoj apoteci),
         pat.setStatus(ExaminationStatus.CREATED);
         pat.setScheduled(false);
         pat.setPatient(null);
+
+        examinationRepository.save(pat);
+    }
+    @Override
+    public void patientCancelingPharmacistExamination(Examination examination) {
+        Examination pat = examinationRepository.getOne(examination.getIdExamination());
+
+        pat.setCanceled(true);
+        pat.setStatus(ExaminationStatus.CANCELED);
+        pat.setScheduled(false);
 
         examinationRepository.save(pat);
     }
@@ -549,7 +573,7 @@ ili savetovanjem koje pacijent ima zakazano (u bilo kojoj apoteci),
         return  newList;
     }
     @Override
-    public void scheduledDermatologistExamination(Integer idPatient, Integer idExamination) {
+    public void scheduledDermatologistExamination(Integer idPatient, Integer idExamination) throws MessagingException {
         Examination pat = examinationRepository.getOne(idExamination);
 
 
@@ -560,6 +584,52 @@ ili savetovanjem koje pacijent ima zakazano (u bilo kojoj apoteci),
         pat.setPatient(patient);
 
         examinationRepository.save(pat);
+        serviceForEmail.sendingMailToPatientForExamination(pat,patient);
+    }
+
+    @Override
+    public Boolean schedulePharmacistExamination(SchedulePharmacistExaminationDTO schedulePharmacistExaminationDTO) throws MessagingException {
+        Examination examination=new Examination();
+        Patient patient=patientRepository.findOneById(schedulePharmacistExaminationDTO.getPatient());
+        Pharmacy pharmacy=pharmacyRepository.findOneByIdPharm(schedulePharmacistExaminationDTO.getPharmacy());
+        Staff staff=staffRepository.getOne(schedulePharmacistExaminationDTO.getStaff());
+
+        Boolean res=true;
+        Set<Examination> list=patient.getExaminations();
+        for(Examination e:list){
+            if(e.getStatus().compareTo(ExaminationStatus.CANCELED)==0){
+                if(e.getDate().compareTo(schedulePharmacistExaminationDTO.getDate())==0){
+                    if(e.getStartTime().compareTo(schedulePharmacistExaminationDTO.getStartTime())==0){
+                        if(e.getStaff().getId()==staff.getId()){
+                            res=false;
+                        }
+
+                    }
+                }
+            }
+        }
+        if(res) {
+            examination.setCanceled(false);
+            examination.setDate(schedulePharmacistExaminationDTO.getDate());
+            examination.setEndTime(schedulePharmacistExaminationDTO.getStartTime().plusHours(1));
+            examination.setStartTime(schedulePharmacistExaminationDTO.getStartTime());
+            examination.setScheduled(true);
+            examination.setPrice(schedulePharmacistExaminationDTO.getPrice());
+            examination.setReport(null);
+            examination.setStatus(ExaminationStatus.SCHEDULED);
+            examination.setType(ExaminationType.PHARMACIST_EXAMINATION);
+            examination.setPatient(patient);
+            examination.setPharmacy(pharmacy);
+            examination.setStaff(staff);
+            examination.setTherapy(null);
+
+            examinationRepository.save(examination);
+
+            serviceForEmail.sendingMailToPatientForExamination(examination, patient);
+            return true;
+        }else{
+            return false;
+        }
     }
 
 

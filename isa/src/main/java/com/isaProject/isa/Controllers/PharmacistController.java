@@ -185,10 +185,9 @@ public class PharmacistController {
         String proba="2011/11/11";
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 
-        */
-/*
-        localhost:8083/dermatologist/create/dsdfdd/sdsadd/asdsdd/aSDdd/ASDFdd/ASDddd/asdefrdddd/503/2017-11-11/11:15:45/12:15:45
-         *//*
+
+
+      // localhost:8083/dermatologist/create/dsdfdd/sdsadd/asdsdd/aSDdd/ASDFdd/ASDddd/asdefrdddd/503/2017-11-11/11:15:45/12:15:45
 
 
 
@@ -238,11 +237,11 @@ public class PharmacistController {
 
 
 
-        return new ResponseEntity<>("kreirano", HttpStatus.CREATED);
+       return new ResponseEntity<>("kreirano", HttpStatus.CREATED);
     }
+
+
 */
-
-
 
 
 
@@ -301,16 +300,9 @@ public class PharmacistController {
 
 
         //idUser, name, surname, email, password, address, phoneNumber, city, country
-        WorkTimeDTO workTimeDTO=new WorkTimeDTO(jDate,startt,endd,staff,pharmacy);
+
+        /*WorkTimeDTO workTimeDTO=new WorkTimeDTO(jDate,startt,endd,staff,pharmacy);
         WorkTime ww=workTimeService.save(workTimeDTO);
-
-
-
-
-
-
-
-
 
         return new ResponseEntity<>("kreirano", HttpStatus.CREATED);
     }

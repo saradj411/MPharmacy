@@ -1,5 +1,7 @@
 package com.isaProject.isa.Controllers;
 
+import com.isaProject.isa.Model.DTO.DrugDTO;
+import com.isaProject.isa.Model.DTO.DrugReservationDTO;
 import com.isaProject.isa.Model.DTO.FrontDrugReservationDTO;
 import com.isaProject.isa.Model.Drugs.Drug;
 import com.isaProject.isa.Model.Drugs.DrugPricelist;
@@ -9,6 +11,7 @@ import com.isaProject.isa.Model.Users.Pharmacist;
 import com.isaProject.isa.Services.Implementations.DrugReservationService;
 import com.isaProject.isa.Services.Implementations.DrugService;
 import com.isaProject.isa.Services.Implementations.PatientService;
+import com.isaProject.isa.Services.Implementations.ServiceForEmail;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.tomcat.jni.Local;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +19,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.mail.MessagingException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +35,9 @@ public class DrugReservationController {
 
     @Autowired
     private PatientService patientService;
+
+    @Autowired
+    ServiceForEmail serviceForEmail;
 
     @GetMapping(value = "/findAll")
     public ResponseEntity<List<DrugReservation>> findAll() {
@@ -107,5 +114,11 @@ public class DrugReservationController {
 
     }
 
+    @PostMapping("/create")
+    public ResponseEntity<DrugReservation> createReservation(@RequestBody DrugReservationDTO drugDTO) throws MessagingException {
 
+        DrugReservation drug = drugReservationService.save(drugDTO);
+        serviceForEmail.sendingMailToPatientForReservattion(drug.getIdReservation(),drug.getPatient());
+        return new ResponseEntity<>(drug, HttpStatus.CREATED);
+    }
 }

@@ -2,9 +2,10 @@ package com.isaProject.isa.Services.Implementations;
 import com.isaProject.isa.Model.DTO.ExaminationDTO;
 import com.isaProject.isa.Model.Drugs.DrugOrder;
 import com.isaProject.isa.Model.Drugs.Offer;
+import com.isaProject.isa.Model.Examination.Examination;
 import com.isaProject.isa.Model.Users.Patient;
+
 import com.isaProject.isa.Model.Users.RequestForVacation;
-import com.isaProject.isa.Model.Users.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -66,6 +67,43 @@ public class ServiceForEmail{
         System.out.println("kraj funkc!");
     }
 
+
+    public void sendingMailToPatientForExamination(Examination ex,Patient patient) throws MessagingException {
+        // TODO Auto-generated method stub
+        System.out.println("usao u funkc za slanje mejla "+patient.getEmail());
+
+        MimeMessage mimeMessage = javaMailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, "utf-8");
+        String htmlMsg =
+                "<p>You have successfully scheduled an examination!" +
+                        ex.getDate()+" "+ex.getStartTime()+"-"+ex.getEndTime()+"</p>";
+
+        helper.setText(htmlMsg, true);
+        helper.setTo(patient.getEmail());
+        helper.setSubject("Schedule examination");
+        helper.setFrom(environment.getProperty("spring.mail.username"));
+        javaMailSender.send(mimeMessage);
+        System.out.println("kraj funkc!");
+    }
+
+    public void sendingMailToPatientForReservattion(Integer idReservation,Patient patient) throws MessagingException {
+        // TODO Auto-generated method stub
+        System.out.println("usao u funkc za slanje mejla "+patient.getEmail());
+
+        MimeMessage mimeMessage = javaMailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, "utf-8");
+        String htmlMsg =
+                "<p>You have successfully reserve an drug!" +"Unique number of Reservation:"
+                        +idReservation+"</p>";
+
+        helper.setText(htmlMsg, true);
+        helper.setTo(patient.getEmail());
+        helper.setSubject("Reserve drug");
+        helper.setFrom(environment.getProperty("spring.mail.username"));
+        javaMailSender.send(mimeMessage);
+        System.out.println("kraj funkc!");
+    }
+/*
     public void sendEmailForPasswordChange(String email, String password) throws MessagingException {
         MimeMessage mimeMessage = javaMailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, "utf-8");
@@ -85,7 +123,7 @@ public class ServiceForEmail{
 
     }
 
-
+*/
 
 
     public void sendingAnEmailToInformPatientAboutExamination (ExaminationDTO examinationDTO) throws MessagingException {

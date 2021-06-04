@@ -2,6 +2,7 @@ package com.isaProject.isa.Model.DTO;
 
 import com.isaProject.isa.Model.Pharmacy.Pharmacy;
 import com.isaProject.isa.Model.Users.Staff;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
 import javax.persistence.JoinColumn;
@@ -10,10 +11,8 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Date;
 
+@NoArgsConstructor
 public class WorkTimeDTO {
-
-
-
 
     private LocalDate date;
 
@@ -28,6 +27,10 @@ public class WorkTimeDTO {
 
     private Pharmacy pharmacy;
 
+    public WorkTimeDTO(LocalDate date, LocalTime startTime) {
+        this.date = date;
+        this.startTime = startTime;
+    }
 
 
     public LocalDate getDate() {
@@ -70,7 +73,6 @@ public class WorkTimeDTO {
         this.pharmacy = pharmacy;
     }
 
-    public  WorkTimeDTO() {}
     public WorkTimeDTO(LocalDate date, LocalTime startTime, LocalTime endTime, Staff staff, Pharmacy pharmacy) {
         this.date = date;
         this.startTime = startTime;
