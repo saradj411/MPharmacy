@@ -3,13 +3,17 @@ package com.isaProject.isa.Services.Implementations;
 import com.isaProject.isa.Model.DTO.ExaminationDTO;
 import com.isaProject.isa.Model.DTO.FrontCreatedExaminationDTO;
 
+import com.isaProject.isa.Model.DTO.SchedulePharmacistExaminationDTO;
 import com.isaProject.isa.Model.Examination.Examination;
 import com.isaProject.isa.Model.Examination.ExaminationStatus;
 import com.isaProject.isa.Model.Examination.ExaminationType;
+import com.isaProject.isa.Model.Pharmacy.Pharmacy;
 import com.isaProject.isa.Model.Users.Patient;
 import com.isaProject.isa.Model.Users.Staff;
 import com.isaProject.isa.Repositories.ExaminationRepository;
 import com.isaProject.isa.Repositories.PatientRepository;
+import com.isaProject.isa.Repositories.PharmacyRepository;
+import com.isaProject.isa.Repositories.StaffRepository;
 import com.isaProject.isa.Services.IServices.IExaminationService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +40,10 @@ public class ExaminationService implements IExaminationService {
     StaffService staffService;
     @Autowired
     PatientRepository patientRepository;
+    @Autowired
+    PharmacyRepository pharmacyRepository;
+    @Autowired
+    StaffRepository staffRepository;
 
     @Autowired
     ServiceForEmail serviceForEmail;
@@ -153,6 +161,31 @@ public class ExaminationService implements IExaminationService {
 
         examinationRepository.save(pat);
         serviceForEmail.sendingMailToPatientForExamination(pat,patient);
+    }
+
+    @Override
+    public void schedulePharmacistExamination(SchedulePharmacistExaminationDTO schedulePharmacistExaminationDTO) throws MessagingException {
+        Examination examination=new Examination();
+        Patient patient=patientRepository.findOneById(schedulePharmacistExaminationDTO.getPatient());
+        Pharmacy pharmacy=pharmacyRepository.findOneByIdPharm(schedulePharmacistExaminationDTO.getPharmacy());
+        Staff staff=staffRepository.getOne(schedulePharmacistExaminationDTO.getStaff());
+
+        examination.setCanceled(false);
+        examination.setDate(schedulePharmacistExaminationDTO.getDate());
+        examination.setEndTime(schedulePharmacistExaminationDTO.getStartTime().plusHours(1));
+        examination.setStartTime(schedulePharmacistExaminationDTO.getStartTime());
+        examination.setScheduled(true);
+        examination.setPrice(schedulePharmacistExaminationDTO.getPrice());
+        examination.setReport(null);
+        examination.setStatus(ExaminationStatus.SCHEDULED);
+        examination.setType(ExaminationType.PHARMACIST_EXAMINATION);
+        examination.setPatient(patient);
+        examination.setPharmacy(pharmacy);
+        examination.setStaff(staff);
+        examination.setTherapy(null);
+
+        examinationRepository.save(examination);
+
     }
 
 

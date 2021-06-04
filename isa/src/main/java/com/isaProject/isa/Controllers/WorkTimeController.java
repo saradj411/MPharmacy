@@ -91,15 +91,20 @@ public class WorkTimeController {
 
     @PostMapping(value = "/findFreeStaffByPharmacy")
     public ResponseEntity<List<FrontPharmacyForExamination>> findStaff(@RequestBody PomocniDTO pomocniDTO) {
-        System.out.println("eee:"+pomocniDTO.getIdPharmacy()+"LLL"+pomocniDTO.getTime()+
-                "ksalkja"+pomocniDTO.getDate());
-        List<Staff> staffs=workTimeService.listStaffForPatient(pomocniDTO.getDate(),pomocniDTO.getTime());
+
+        List<Staff> staffs=workTimeService.listForPatient(pomocniDTO.getDate(),pomocniDTO.getTime());
         List<FrontPharmacyForExamination> newList=new ArrayList<>();
 
         for(Staff s:staffs){
-            FrontPharmacyForExamination front=new FrontPharmacyForExamination(pomocniDTO.getIdPharmacy(),
-                    s.getId());
-            newList.add(front);
+            Pharmacist pharmacist=pharmacistService.findById(s.getId());
+            Pharmacy pharmacy=pharmacist.getPharmacy();
+            if(pharmacy.getIdPharm().compareTo(pomocniDTO.getIdPharmacy())==0){
+                System.out.println("eee:"+pomocniDTO.getIdPharmacy()+"jh:"+pharmacy.getIdPharm());
+                FrontPharmacyForExamination front=new FrontPharmacyForExamination(pharmacy.getIdPharm(),s.getId(),
+                        s.getName(),s.getSurname(),s.getAvgGrade());
+                newList.add(front);
+            }
+
         }
         return newList == null ?
                 new ResponseEntity<>(HttpStatus.NOT_FOUND) :

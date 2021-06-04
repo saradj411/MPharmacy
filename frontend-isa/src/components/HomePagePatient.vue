@@ -592,9 +592,9 @@
       </div> 
 
 
-      <!--SPROBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA!-->
+      <!--SPROBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA  FREE PHARMACY!-->
   <div v-if="showCreatedPharmExamination"  style="float:left;margin-left:30px;">
-     <h4 style="margin:30px">FREE:</h4>
+     <h4 style="margin:30px">FREE PHARMACIES:</h4>
  <div style="background: #a7c1c9;margin-left:30px;"  v-for="dr in this.freePharmacy"  v-bind:key="dr.id">
       
 <table  style="" id="table2" class="table" >
@@ -637,7 +637,7 @@
       </div> 
       <!--FREEEEEEEEEEEEE STAFFFFFFFFFFFFFFFFF!-->
   <div v-if="showFreeStaff"  style="float:left;margin-left:30px;">
-     <h4 style="margin:30px">FREE:</h4>
+     <h4 style="margin:30px">FREE PHARMACISTS:</h4>
  <div style="background: #a7c1c9;margin-left:30px;"  v-for="staff in this.freeStaffs"  v-bind:key="staff.id">
       
 <table  style="" id="table2" class="table" >
@@ -645,19 +645,19 @@
     <tbody>
       <tr>
         <th scope="row"></th>
-        <td>Pharmacy:</td>
-         <td>{{staff.idPharm}}</td>
+        <td>Pharmacist:</td>
+         <td>{{staff.nameStaff}} {{staff.surnameStaff}}</td>
       </tr>
         <tr>
         <th scope="row"></th>
         
-         <td>Address:</td>
-          <td>{{staff.idStaff}}</td>
+         <td>Pharmacist grade:</td>
+          <td>{{staff.gradeStaff}}</td>
       </tr>
      
         <tr>
           <th></th>
-          <td><button class="btn btn-danger btn-sm" v-on:click = "continue1(dr.idPharm,dr.date,dr.time)">Schedule</button></td>
+          <td><button class="btn btn-danger btn-sm" v-on:click = "continue2(staff.idStaff,staff.idPharm)">Schedule</button></td>
           
 
         </tr>
@@ -1070,7 +1070,8 @@ methods:{
       },
       
       searchFreePharmacy: function(date,time){
-           
+           this.showCreatedPharmExamination=true
+           this.showFreeStaff=false
              this.date = date
              this.time=time
              console.log(this.date)
@@ -1107,6 +1108,30 @@ methods:{
             //this.showCreatedPharmExamination
                 this.freeStaffs= response.data;
                   this.showFreeStaff=true
+                  this.showCreatedPharmExamination=false
+                  //this.showCreatedPharmExamination=false
+               
+              
+          })
+        },
+        continue2:
+        function(idStaff44,idPharm44){
+         
+            const parametar={
+             date:this.date,
+             startTime:this.time,
+             price:500,
+             pharmacy:idPharm44,
+             patient:this.id,
+             staff:idStaff44
+
+            }
+             this.axios.post('/examination/patientScheduledPharmacistExamination',parametar)
+          .then(response => {
+            //this.showCreatedPharmExamination
+               this.freeStaffs= response.data;
+                 // this.showFreeStaff=true
+                 // this.showCreatedPharmExamination=false
                   //this.showCreatedPharmExamination=false
                
               

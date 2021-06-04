@@ -18,6 +18,10 @@ public class FrontPharmacyForExamination {
     private LocalTime time;
 
     private Integer idStaff;
+    private String nameStaff;
+    private String surnameStaff;
+    private Double gradeStaff;
+
 
     public FrontPharmacyForExamination(String name, String addres, Double avgGrade, Double priceConsultation, Integer idStaff) {
         this.name = name;
@@ -43,9 +47,14 @@ public class FrontPharmacyForExamination {
         this.priceConsultation = priceConsultation;
     }
 
-    public FrontPharmacyForExamination(Integer idPharm, Integer idStaff) {
+
+
+    public FrontPharmacyForExamination(Integer idPharm, Integer idStaff, String nameStaff, String surnameStaff, Double gradeStaff) {
         this.idPharm = idPharm;
         this.idStaff = idStaff;
+        this.nameStaff = nameStaff;
+        this.surnameStaff = surnameStaff;
+        this.gradeStaff = gradeStaff;
     }
 
     public String getName() {
@@ -110,5 +119,29 @@ public class FrontPharmacyForExamination {
 
     public void setIdPharm(Integer idPharm) {
         this.idPharm = idPharm;
+    }
+
+    public String getNameStaff() {
+        return nameStaff;
+    }
+
+    public void setNameStaff(String nameStaff) {
+        this.nameStaff = nameStaff;
+    }
+
+    public String getSurnameStaff() {
+        return surnameStaff;
+    }
+
+    public void setSurnameStaff(String surnameStaff) {
+        this.surnameStaff = surnameStaff;
+    }
+
+    public Double getGradeStaff() {
+        return gradeStaff;
+    }
+
+    public void setGradeStaff(Double gradeStaff) {
+        this.gradeStaff = gradeStaff;
     }
 }

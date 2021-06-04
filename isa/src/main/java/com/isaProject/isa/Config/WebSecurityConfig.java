@@ -126,6 +126,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll().antMatchers("/examination/findCreatedPharmacistExamination")
 
                 .permitAll().antMatchers("/examination/patientScheduledDermatologistExamination/{id}/{idExamination}")
+                .permitAll().antMatchers("/examination/patientScheduledPharmacistExamination")
                 .permitAll().antMatchers("/reservation/getBool/{id}")
                 .permitAll().antMatchers("/examination/getBool/{id}")
                 .permitAll().antMatchers("/reservation/canceling")

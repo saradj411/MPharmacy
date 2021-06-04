@@ -19,5 +19,4 @@ public interface IWorkTimeService {
     WorkTime save(WorkTimeDTO workTimeDTO);
     List<WorkTime> findAll();
     List<Staff> listForPatient(LocalDate date, LocalTime time);
-    List<Staff> listStaffForPatient(LocalDate date, LocalTime time);
 }

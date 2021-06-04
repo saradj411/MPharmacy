@@ -2,6 +2,7 @@ package com.isaProject.isa.Controllers;
 
 import com.isaProject.isa.Model.DTO.ExaminationDTO;
 import com.isaProject.isa.Model.DTO.FrontCreatedExaminationDTO;
+import com.isaProject.isa.Model.DTO.SchedulePharmacistExaminationDTO;
 import com.isaProject.isa.Model.Examination.Examination;
 
 import com.isaProject.isa.Services.Implementations.DrugReservationService;
@@ -120,6 +121,18 @@ public class ExaminationController {
     {
 
         examinationService.patientCanceling(examination);
+        return new ResponseEntity<>("ajdeee", HttpStatus.CREATED);
+
+    }
+
+    @PostMapping("/patientScheduledPharmacistExamination")
+    ResponseEntity<String> scheduledPharmacistExamination(@RequestBody SchedulePharmacistExaminationDTO schedulePharmacistExaminationDTO) throws MessagingException {
+        System.out.println("pharm  " + schedulePharmacistExaminationDTO.getPharmacy());
+        System.out.println("patient  " + schedulePharmacistExaminationDTO.getPatient());
+        System.out.println("date  " + schedulePharmacistExaminationDTO.getDate());
+        System.out.println("staff  " + schedulePharmacistExaminationDTO.getStaff());
+        System.out.println("time  " + schedulePharmacistExaminationDTO.getStartTime());
+        examinationService.schedulePharmacistExamination(schedulePharmacistExaminationDTO);
         return new ResponseEntity<>("ajdeee", HttpStatus.CREATED);
 
     }
