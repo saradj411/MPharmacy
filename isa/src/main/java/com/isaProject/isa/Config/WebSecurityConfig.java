@@ -153,6 +153,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/user/savePatient").permitAll()
                 .antMatchers("/user/loggedUser").permitAll()
                 .antMatchers("/user/login").permitAll()
+                .antMatchers("/workTime/findAll").permitAll()
+                .antMatchers("/workTime/findAllByDate").permitAll()
 
                 
                 //ove zakomentarisati jer imau AUtorizaciju

@@ -13,13 +13,15 @@
             <button class="btn btn-danger btn-lg" style="float:left;margin-top:15px;margin-left:10px" v-on:click = "showExamination">Examination</button>
            <button class="btn btn-danger btn-lg" style="float:left;margin-top:15px;margin-left:10px" v-on:click = "showRecipe">eRecipe</button>
            <button class="btn btn-danger btn-lg" style="float:left;margin-top:15px;margin-left:10px" v-on:click = "showCreatedDerm">Schedule Examination</button>
+           
+           <button class="btn btn-danger btn-lg" style="float:left;margin-top:15px;margin-left:10px" v-on:click = "showCreatedPharmacist">Schedule Consultation</button>
            <button class="btn btn-danger btn-lg" style="float:left;margin-top:15px;margin-left:10px" v-on:click = "showAllDrugs">Reserve drug</button>
            
             
                                   
         </div>
 
-        <div v-if="showSearchDrug"  style="background:#B0B3D6; height: 70px; margin-top: 10px">
+  <div v-if="showSearchDrug"  style="background:#B0B3D6; height: 70px; margin-top: 10px">
             
       <span  style="float:right;margin:15px">
                     
@@ -33,7 +35,23 @@
              
             
   </div>
+   <div v-if="showScheduleSearch"  style="background:#B0B3D6; height: 70px; margin-top: 10px">
+            
+      <span  style="float:right;margin:15px">
+                    
+          <div class="input-group mb-6">
+              <input style="width: 200px" type="date" v-model = "date" class="form-control" placeholder = "choose a date">
+                <input style="width: 200px" type="time" v-model = "time" class="form-control" placeholder = "choose the time">
+          <div class="input-group-append">
+                  <button class="btn btn-info" type="button"  v-on:click = "searchFreePharmacy(date,time)" >Search</button>
+                </div>
+           </div>
+      </span>
+             
+            
+  </div>
 
+ 
 <!-- all PHARMACIES!-->
   <div v-if="showTable"  style="float:left;margin-left:30px;">
      <h4 style="margin:30px">ALL PHARMACIES:</h4>    
@@ -572,6 +590,51 @@
 
 
       </div> 
+
+
+      <!--SPROBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA!-->
+  <div v-if="showCreatedPharmExamination"  style="float:left;margin-left:30px;">
+     <h4 style="margin:30px">FREE:</h4>
+ <div style="background: #a7c1c9;margin-left:30px;"  v-for="dr in this.freePharmacy"  v-bind:key="dr.id">
+      
+<table  style="" id="table2" class="table" >
+ 
+    <tbody>
+      <tr>
+        <th scope="row"></th>
+        <td>Pharmacy:</td>
+         <td>{{dr.name}}</td>
+      </tr>
+        <tr>
+        <th scope="row"></th>
+        
+         <td>Address:</td>
+          <td>{{dr.addres}}</td>
+      </tr>
+       <tr>
+        <th scope="row"></th>
+        
+         <td>Grade:</td>
+          <td>{{dr.avgGrade}}</td>
+      </tr>
+       <tr>
+        <th scope="row"></th>
+        
+         <td>Consultation price:</td>
+          <td></td>
+      </tr>
+        <tr>
+          <th></th>
+          <td><button class="btn btn-danger btn-sm" v-on:click = "reserve(dr.id)">Reserve</button></td>
+          
+
+        </tr>
+  </tbody>
+</table>
+           </div>
+
+
+      </div> 
 </div>
 
   
@@ -591,21 +654,28 @@ export default {
         showPharmExam:false,
         showERecipe:false,
         showCreatedDermExamination:false,
+        
+        showCreatedPharmExamination:false,
         showFinishedDerm:false,
         showFinishedPharm:false,
         showDrugsInPharmacies:false,
         showSearchDrugs:false,
         showSearchDrug:false,
+        showScheduleSearch:false,
 
         pharmacies : [],
         pharmacies1 : [],
         drugName:null,
+        date:null,
+        time:null,
 
         reservations:[],
         dermatologistScheduledExamination:[],
         pharmacistScheduledExamination:[],
         recepies:[],
         dermatologistCreatedExamination:[],
+
+        freePharmacy:[],
 
         dermatologistFinishedExamination:[],
         pharmacistFinishedExamination:[],
@@ -745,6 +815,8 @@ methods:{
         this.showDrugsInPharmacies=false
         this.showSearchDrug=false
         this.showSearchDrugs=false
+         this.showCreatedPharmExamination=false
+         this.showScheduleSearch=false
        //this.showSearchPharmacy=true
       },
       showReservation:
@@ -760,6 +832,8 @@ methods:{
         this.showDrugsInPharmacies=false
         this.showSearchDrug=false
         this.showSearchDrugs=false
+        this.showScheduleSearch=false
+         this.showCreatedPharmExamination=false
       },
       showConsultation:
        function(){
@@ -774,8 +848,12 @@ methods:{
         this.showDrugsInPharmacies=false
         this.showSearchDrug=false
         this.showSearchDrugs=false
+        this.showScheduleSearch=false
+         this.showCreatedPharmExamination=false
       },
       showRecipe: function(){
+        
+         this.showCreatedPharmExamination=false
         this.showTable=false
         this.showReserveTable=false
        this.showDermExam=false
@@ -787,6 +865,7 @@ methods:{
         this.showDrugsInPharmacies=false
         this.showSearchDrug=false
         this.showSearchDrugs=false
+        this.showScheduleSearch=false
       },
       showExamination:
        function(){
@@ -801,6 +880,8 @@ methods:{
         this.showDrugsInPharmacies=false
         this.showSearchDrug=false
         this.showSearchDrugs=false
+        this.showScheduleSearch=false
+         this.showCreatedPharmExamination=false
       },
       showCreatedDerm:
        function(){
@@ -815,6 +896,24 @@ methods:{
         this.showDrugsInPharmacies=false
         this.showSearchDrug=false
         this.showSearchDrugs=false
+        this.showScheduleSearch=false
+         this.showCreatedPharmExamination=false
+      },
+      showCreatedPharmacist:
+      function(){
+        this.showTable=false
+        this.showReserveTable=false
+       this.showDermExam=false
+       this.showPharmExam=false
+        this.showERecipe=false
+        this.showCreatedDermExamination=false
+        this.showFinishedDerm=false
+        this.showFinishedPharm=false
+        this.showDrugsInPharmacies=false
+        this.showSearchDrug=false
+        this.showSearchDrugs=false
+        this.showScheduleSearch=true
+        this.showCreatedPharmExamination=true
       },
       showAllDrugs: function(){
         this.showTable=false
@@ -828,6 +927,8 @@ methods:{
         this.showDrugsInPharmacies=true
         this.showSearchDrug=true
         this.showSearchDrugs=false
+        this.showScheduleSearch=false
+         this.showCreatedPharmExamination=false
       },
       canceling:
        function(res,idRes){
@@ -917,6 +1018,27 @@ methods:{
               this.showSearchDrugs = true;
                 this.searchDrugs= response.data;
                 
+              
+          })
+      },
+      
+      searchFreePharmacy: function(date,time){
+           
+             this.date = date
+             this.time=time
+              const datum = {
+                date : this.date,
+                startTime : this.time,
+                endTime:null,
+                staff:null,
+                pharmacy:null,
+                
+           }
+        this.axios.post('/workTime/findAllByDate',datum)
+          .then(response => {
+            //this.showCreatedPharmExamination
+                this.freePharmacy= response.data;
+               
               
           })
       },

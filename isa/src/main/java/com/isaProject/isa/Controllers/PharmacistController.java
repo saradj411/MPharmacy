@@ -144,7 +144,7 @@ public class PharmacistController {
         System.out.println(admin.getId()+"id adminaaaaaaaaaaaaa");
         //nece da doda id u pharmacy ps. hoceee :D
         Pharmacy pharmacy=admin.getPharmacy();
-
+/*
 
 
 
@@ -155,11 +155,11 @@ public class PharmacistController {
         PharmacyAdmin adminn=pharmacyAdminService.findById(idAdmina);
         String proba="2011/11/11";
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-
+*/
         /*
         localhost:8083/dermatologist/create/dsdfdd/sdsadd/asdsdd/aSDdd/ASDFdd/ASDddd/asdefrdddd/503/2017-11-11/11:15:45/12:15:45
          */
-
+/*
 
         Date apptDay = null;
         DateFormat df = new SimpleDateFormat("yyyy/MM/dd");
@@ -205,7 +205,7 @@ public class PharmacistController {
         Pharmacist d = pharmacistService.save(DTO);
 
 
-
+*/
 
         return new ResponseEntity<>("kreirano", HttpStatus.CREATED);
     }
@@ -269,9 +269,10 @@ public class PharmacistController {
 
 
         //idUser, name, surname, email, password, address, phoneNumber, city, country
-        WorkTimeDTO workTimeDTO=new WorkTimeDTO(jDate,startt,endd,staff,pharmacy);
-        WorkTime ww=workTimeService.save(workTimeDTO);
 
+        /*WorkTimeDTO workTimeDTO=new WorkTimeDTO(jDate,startt,endd,staff,pharmacy);
+        WorkTime ww=workTimeService.save(workTimeDTO);
+*/
 
 
 
