@@ -2,6 +2,7 @@ package com.isaProject.isa.Services.Implementations;
 
 import com.isaProject.isa.Model.DTO.WorkTimeDTO;
 import com.isaProject.isa.Model.Examination.Examination;
+import com.isaProject.isa.Model.Examination.ExaminationStatus;
 import com.isaProject.isa.Model.Pharmacy.Pharmacy;
 import com.isaProject.isa.Model.Users.Staff;
 import com.isaProject.isa.Model.Users.WorkTime;
@@ -82,28 +83,34 @@ public class WorkTimeService implements IWorkTimeService {
             Boolean mozeLi=true;
             System.out.println("uslo u radna vremena ta");
             List<Examination> ex=examinationRepository.getAllExaminationsByIdStaffAndIdPharmacy(wrkT.getStaff().getId());
-            for(Examination e:ex){
-                if(e.getDate().compareTo(date)==0){
-                    System.out.println("uslo u isti datuuum");
-                    if(e.getStartTime().isBefore(time)){
-                        if(!e.getEndTime().isBefore(time)) {
-                           System.out.println("ima pregled tad");
-                            mozeLi=false;
-                        }
-                    }
-                    if(e.getStartTime().isAfter(time)){
-                        if(e.getStartTime().isBefore(newTime)) {
+            for(Examination e:ex) {
+                System.out.println("uslo u isti datuuum:" + e.getIdExamination());
+                if (e.getStatus().compareTo(ExaminationStatus.CANCELED) != 0) {
+                    if (e.getDate().compareTo(date) == 0) {
+                        System.out.println(e.getStartTime());
+                        System.out.println("uslo u isti datuuum");
+                        if (e.getStartTime().isBefore(time)) {
 
-                            System.out.println("ima pregled tad ovdheeee");
-                            mozeLi=false;
+                            if (!e.getEndTime().isBefore(time)) {
+                                System.out.println("ima pregled tad");
+                                mozeLi = false;
+                            }
+                        }
+                        if (e.getStartTime().isAfter(time)) {
+                            if (e.getStartTime().isBefore(newTime)) {
+
+                                System.out.println("ima pregled tad ovdheeee");
+                                mozeLi = false;
+                            }
                         }
                     }
                 }
             }
-            if(mozeLi){
-                result.add(wrkT);
-                zaposleni.add(wrkT.getStaff());
-                //dodaj ga da ide dalje
+                if (mozeLi) {
+                    result.add(wrkT);
+                    zaposleni.add(wrkT.getStaff());
+                    //dodaj ga da ide dalje
+
             }
         }
 

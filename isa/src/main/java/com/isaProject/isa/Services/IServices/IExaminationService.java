@@ -16,13 +16,14 @@ public interface IExaminationService {
 
     void canceling(Integer id);
     void patientCanceling(Examination examination);
+    void patientCancelingPharmacistExamination(Examination examination);
     Boolean getExaminationByIdStaff(Integer idPharmacist);
     //Examination findById(Integer id);
     Examination save(ExaminationDTO examinationDTO);
     List<FrontCreatedExaminationDTO> findCreatedDermatologistExamination();
 
     void scheduledDermatologistExamination(Integer idPatient,Integer idExamination) throws MessagingException;
-    void schedulePharmacistExamination(SchedulePharmacistExaminationDTO schedulePharmacistExaminationDTO) throws MessagingException;
+    Boolean schedulePharmacistExamination(SchedulePharmacistExaminationDTO schedulePharmacistExaminationDTO) throws MessagingException;
 
 
     }

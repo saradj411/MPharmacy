@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import java.util.List;
+import java.util.Set;
 
 @Service
 @Slf4j
@@ -106,6 +107,16 @@ public class ExaminationService implements IExaminationService {
 
         examinationRepository.save(pat);
     }
+    @Override
+    public void patientCancelingPharmacistExamination(Examination examination) {
+        Examination pat = examinationRepository.getOne(examination.getIdExamination());
+
+        pat.setCanceled(true);
+        pat.setStatus(ExaminationStatus.CANCELED);
+        pat.setScheduled(false);
+
+        examinationRepository.save(pat);
+    }
 
     public Boolean getExaminationByIdStaff(Integer idPharmacist){
 
@@ -164,30 +175,48 @@ public class ExaminationService implements IExaminationService {
     }
 
     @Override
-    public void schedulePharmacistExamination(SchedulePharmacistExaminationDTO schedulePharmacistExaminationDTO) throws MessagingException {
+    public Boolean schedulePharmacistExamination(SchedulePharmacistExaminationDTO schedulePharmacistExaminationDTO) throws MessagingException {
         Examination examination=new Examination();
         Patient patient=patientRepository.findOneById(schedulePharmacistExaminationDTO.getPatient());
         Pharmacy pharmacy=pharmacyRepository.findOneByIdPharm(schedulePharmacistExaminationDTO.getPharmacy());
         Staff staff=staffRepository.getOne(schedulePharmacistExaminationDTO.getStaff());
 
-        examination.setCanceled(false);
-        examination.setDate(schedulePharmacistExaminationDTO.getDate());
-        examination.setEndTime(schedulePharmacistExaminationDTO.getStartTime().plusHours(1));
-        examination.setStartTime(schedulePharmacistExaminationDTO.getStartTime());
-        examination.setScheduled(true);
-        examination.setPrice(schedulePharmacistExaminationDTO.getPrice());
-        examination.setReport(null);
-        examination.setStatus(ExaminationStatus.SCHEDULED);
-        examination.setType(ExaminationType.PHARMACIST_EXAMINATION);
-        examination.setPatient(patient);
-        examination.setPharmacy(pharmacy);
-        examination.setStaff(staff);
-        examination.setTherapy(null);
+        Boolean res=true;
+        Set<Examination> list=patient.getExaminations();
+        for(Examination e:list){
+            if(e.getStatus().compareTo(ExaminationStatus.CANCELED)==0){
+                if(e.getDate().compareTo(schedulePharmacistExaminationDTO.getDate())==0){
+                    if(e.getStartTime().compareTo(schedulePharmacistExaminationDTO.getStartTime())==0){
+                        if(e.getStaff().getId()==staff.getId()){
+                            res=false;
+                        }
 
-        examinationRepository.save(examination);
+                    }
+                }
+            }
+        }
+        if(res) {
+            examination.setCanceled(false);
+            examination.setDate(schedulePharmacistExaminationDTO.getDate());
+            examination.setEndTime(schedulePharmacistExaminationDTO.getStartTime().plusHours(1));
+            examination.setStartTime(schedulePharmacistExaminationDTO.getStartTime());
+            examination.setScheduled(true);
+            examination.setPrice(schedulePharmacistExaminationDTO.getPrice());
+            examination.setReport(null);
+            examination.setStatus(ExaminationStatus.SCHEDULED);
+            examination.setType(ExaminationType.PHARMACIST_EXAMINATION);
+            examination.setPatient(patient);
+            examination.setPharmacy(pharmacy);
+            examination.setStaff(staff);
+            examination.setTherapy(null);
 
-        serviceForEmail.sendingMailToPatientForExamination(examination,patient);
+            examinationRepository.save(examination);
 
+            serviceForEmail.sendingMailToPatientForExamination(examination, patient);
+            return true;
+        }else{
+            return false;
+        }
     }
 
 

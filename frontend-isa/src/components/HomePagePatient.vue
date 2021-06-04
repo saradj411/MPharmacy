@@ -260,9 +260,11 @@
         <tr>
           <th></th>
           <td style="font-size:25px;">{{examination1.price}}RSD </td>
-          
+    <td><button class="btn btn-danger btn-sm" v-on:click = "cancelExamination(examination1,examination1.idExamination)">Cancel</button></td>
+
 
         </tr>
+
   </tbody>
 </table>
            </div>
@@ -317,8 +319,6 @@
           <td >{{examination2.therapy.drug.name}}</td>
           <td >Daily dose:</td>
           
-        
-
         </tr>
   </tbody>
 </table>
@@ -1015,7 +1015,7 @@ methods:{
                if(this.jel1){
                    //alert("tru je")
                     //nek otkaze ili sta vec, odvede na neku stranicu...
-                      this.axios.post('/examination/patientCanceling',examination,{
+                      this.axios.post('/examination/patientCancelingPharmacistExamination',examination,{
                             }).then(response => {
                             this.jel1 = response.data;
             
@@ -1131,8 +1131,13 @@ methods:{
           .then(response => {
             //this.showCreatedPharmExamination
                this.poruka= response.data;
-               alert("Examination is scheduled.Check your email!")
+               if(!this.poruka){
+                 alert("prc")
+               }else{
+                alert("Examination is scheduled.Check your email!")
                 window.location.href = "/HomePagePatient/"+this.id;
+               }
+               
                
               
           })

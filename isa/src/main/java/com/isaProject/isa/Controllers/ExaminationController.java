@@ -117,23 +117,28 @@ public class ExaminationController {
     }
     @CrossOrigin
     @PostMapping("/patientCanceling")
-    ResponseEntity<String> update(@RequestBody Examination examination)
+    ResponseEntity<String> patientCanceling(@RequestBody Examination examination)
     {
 
         examinationService.patientCanceling(examination);
         return new ResponseEntity<>("ajdeee", HttpStatus.CREATED);
 
     }
+    @CrossOrigin
+    @PostMapping("/patientCancelingPharmacistExamination")
+    ResponseEntity<String> patientCancelingPharmacistExamination(@RequestBody Examination examination)
+    {
 
-    @PostMapping("/patientScheduledPharmacistExamination")
-    ResponseEntity<String> scheduledPharmacistExamination(@RequestBody SchedulePharmacistExaminationDTO schedulePharmacistExaminationDTO) throws MessagingException {
-        System.out.println("pharm  " + schedulePharmacistExaminationDTO.getPharmacy());
-        System.out.println("patient  " + schedulePharmacistExaminationDTO.getPatient());
-        System.out.println("date  " + schedulePharmacistExaminationDTO.getDate());
-        System.out.println("staff  " + schedulePharmacistExaminationDTO.getStaff());
-        System.out.println("time  " + schedulePharmacistExaminationDTO.getStartTime());
-        examinationService.schedulePharmacistExamination(schedulePharmacistExaminationDTO);
+        examinationService.patientCancelingPharmacistExamination(examination);
         return new ResponseEntity<>("ajdeee", HttpStatus.CREATED);
+
+    }
+    @PostMapping("/patientScheduledPharmacistExamination")
+    ResponseEntity<Boolean> scheduledPharmacistExamination(@RequestBody SchedulePharmacistExaminationDTO schedulePharmacistExaminationDTO) throws MessagingException {
+
+        Boolean res=examinationService.schedulePharmacistExamination(schedulePharmacistExaminationDTO);
+
+        return new ResponseEntity<>(res, HttpStatus.OK);
 
     }
 }
