@@ -43,6 +43,8 @@ import RegisterDermatologist from '../components/RegisterDermatologist'
 import RegisterNewPharmacy from '../components/RegisterNewPharmacy'
 import RegisterAdminPharamcyPage from '../components/RegisterAdminPharamcyPage'
 import AcceptRejectVacation from '../components/AcceptRejectVacation'
+import CreatePricelist from '../components/CreatePricelist'
+
 
 import moment from 'moment'
 
@@ -295,6 +297,12 @@ const routes = [
         path: '/AcceptRejectVacation/:id',
         name: 'AcceptRejectVacation',
         component: AcceptRejectVacation
+      }
+      ,
+      {
+        path: '/CreatePricelist/:id',
+        name: 'CreatePricelist',
+        component: CreatePricelist
       }
       
       
