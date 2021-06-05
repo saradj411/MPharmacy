@@ -46,6 +46,7 @@ import AcceptRejectVacation from '../components/AcceptRejectVacation'
 import CreatePricelist from '../components/CreatePricelist'
 import UpdatePricelist from '../components/UpdatePricelist'
 import ActionAndPromotion from '../components/ActionAndPromotion'
+import DrugOrders from '../components/DrugOrders'
 
 import moment from 'moment'
 
@@ -316,9 +317,14 @@ const routes = [
         name: 'ActionAndPromotion',
         component: ActionAndPromotion
       }
+      ,
+      {
+        path: '/DrugOrders/:id',
+        name: 'DrugOrders',
+        component: DrugOrders
+      }
       
       
-
       
       
     ]
