@@ -67,7 +67,7 @@
     <div v-if="showSortCreatedDermatologistExamination"  style="background:#B0B3D6; height: 90px; margin-top:15px;margin-left:15px;margin-right:15px;">
 
               <div class="column">
-                 <h4 style="margin:5px">SORT EXAMINATION BY:</h4>  
+                 <h4 style="margin:5px">SORT EXAMINATIONS BY:</h4>  
                   <button class="btn btn-danger btn-lg" style="float:left;margin-left:20px;" v-on:click = "sortCDExamByGradeR">GradeR</button>
             <button class="btn btn-danger btn-lg" style="float:left;margin-left:10px" v-on:click = "sortCDExamByGradeO">GradeO</button>
            
@@ -77,7 +77,15 @@
 
               </div>
     </div>
- 
+ <div v-if="showSortERecipes"  style="background:#B0B3D6; height: 90px; margin-top:15px;margin-left:15px;margin-right:15px;">
+
+              <div class="column">
+                 <h4 style="margin:5px">SORT eRECIPES BY:</h4>  
+                  <button class="btn btn-danger btn-lg" style="float:left;margin-left:20px;" v-on:click = "sortERecipeByDateR">Date Of Issue R</button>
+           <button class="btn btn-danger btn-lg" style="float:left;margin-left:20px;" v-on:click = "sortERecipeByDateO">Date Of Issue O</button>
+          
+              </div>
+    </div>
 
 <!-- all PHARMACIES!-->
   <div v-if="showTable"  style="float:left;margin-left:30px;">
@@ -727,6 +735,7 @@ export default {
         showScheduleSearch:false,
         showSortPharmacies:true,
         showSortCreatedDermatologistExamination:false,
+        showSortERecipes:false,
 
         pharmacies : [],
         pharmacies1 : [],
@@ -888,6 +897,7 @@ methods:{
          this.showFreeStaff=false
          this.showSortPharmacies=true
          this.showSortCreatedDermatologistExamination=false
+         this.showSortERecipes=false
        //this.showSearchPharmacy=true
       },
       showReservation:
@@ -908,6 +918,7 @@ methods:{
            this.showFreeStaff=false
             this.showSortPharmacies=false
             this.showSortCreatedDermatologistExamination=false
+            this.showSortERecipes=false
       },
       showConsultation:
        function(){
@@ -927,6 +938,7 @@ methods:{
          this.showCreatedPharmExamination=false
          this.showSortPharmacies=false
          this.showSortCreatedDermatologistExamination=false
+         this.showSortERecipes=false
       },
       showRecipe: function(){
         
@@ -946,6 +958,7 @@ methods:{
           this.showFreeStaff=false
           this.showSortPharmacies=false
           this.showSortCreatedDermatologistExamination=false
+          this.showSortERecipes=true
       },
       showExamination:
        function(){
@@ -965,6 +978,7 @@ methods:{
            this.showFreeStaff=false
            this.showSortPharmacies=false
            this.showSortCreatedDermatologistExamination=false
+           this.showSortERecipes=false
       },
       showCreatedDerm:
        function(){
@@ -984,6 +998,7 @@ methods:{
            this.showFreeStaff=false
            this.showSortPharmacies=false
            this.showSortCreatedDermatologistExamination=true
+           this.showSortERecipes=false
       },
       showCreatedPharmacist:
       function(){
@@ -1003,6 +1018,7 @@ methods:{
           this.showFreeStaff=false
           this.showSortPharmacies=
           this.showSortCreatedDermatologistExamination=false
+          this.showSortERecipes=false
       },
       showAllDrugs: function(){
         this.showTable=false
@@ -1021,6 +1037,7 @@ methods:{
            this.showFreeStaff=false
            this.showSortPharmacies=false
            this.showSortCreatedDermatologistExamination=false
+           this.showSortERecipes=false
       },
       canceling:
        function(res,idRes){
@@ -1296,16 +1313,35 @@ methods:{
                          alert("Sorting is currently not possible");
                         console.log(res)
                     })
+      },
+      sortERecipeByDateR: function(){
+      this.axios.get('/erecipe/sortByDateAscending/'+this.id)
+          .then(response => {
+               console.log(response.data);
+              this.recepies = response.data;
+              
+                })
+                .catch(res => {
+                     
+                        alert("Sorting is currently not possible");
+                        console.log(res)
+                    })
+      },
+       sortERecipeByDateO: function(){
+      this.axios.get('/erecipe/sortByDateDescending/'+this.id)
+          .then(response => {
+               console.log(response.data);
+              this.recepies = response.data;
+              
+                })
+                .catch(res => {
+                     
+                         alert("Sorting is currently not possible");
+                        console.log(res)
+                    })
       }
           
 
 }
 }
 </script>
-
-    <button class="btn btn-danger btn-lg" style="float:left;margin-left:20px;" v-on:click = "sortCDExamByGradeR">GradeR</button>
-            <button class="btn btn-danger btn-lg" style="float:left;margin-left:10px" v-on:click = "sortCDExamByGradeO">GradeO</button>
-           
-           <button class="btn btn-danger btn-lg" style="float:left;margin-left:10px" v-on:click = "sortCDExamByPriceAscending">PriceR</button>
-            <button class="btn btn-danger btn-lg" style="float:left;margin-left:10px" v-on:click = "sortCDExamByPriceDescending">PriceO</button>
-            

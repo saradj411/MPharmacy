@@ -242,6 +242,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/pharmacy/findByCity/{city}").permitAll()
                 .antMatchers("/pharmacy/findByName/{name}").permitAll()
                 .antMatchers("/reservation/create").permitAll()
+
                 .antMatchers("/pharmacy/sortByGradeDescending").permitAll()
                 .antMatchers("/examination/sortByGradeDescending").permitAll()
                 .antMatchers("/examination/sortByPriceAscending").permitAll()
@@ -250,6 +251,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/examination/sortByGradeAscending").permitAll()
                 .antMatchers("/pharmacy/sortByNameDescending").permitAll()
                 .antMatchers("/pharmacy/sortByNameAscending").permitAll()
+                .antMatchers("/erecipe/sortByDateAscending/{id}").permitAll()
+                .antMatchers("/erecipe/sortByDateDescending/{id}").permitAll()
 
                 //Ovo je dostupno svim korisnicima! Sve ostalo treba da ima pravo pristupa!
                 .antMatchers("/user/savePatient").permitAll()
