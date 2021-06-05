@@ -1,19 +1,26 @@
 package com.isaProject.isa.Services.Implementations;
 
+import com.isaProject.isa.Model.DTO.DrugDTO;
+import com.isaProject.isa.Model.DTO.DrugReservationDTO;
+import com.isaProject.isa.Model.DTO.FrontDrugReservationDTO;
+import com.isaProject.isa.Model.Drugs.Drug;
 import com.isaProject.isa.Model.Drugs.DrugPricelist;
 import com.isaProject.isa.Model.Drugs.DrugReservation;
+import com.isaProject.isa.Model.Drugs.PharmacyDrugs;
 import com.isaProject.isa.Model.Users.Patient;
-import com.isaProject.isa.Repositories.DrugRepository;
-import com.isaProject.isa.Repositories.DrugReservationRepository;
+import com.isaProject.isa.Repositories.*;
 import com.isaProject.isa.Services.IServices.IDrugReservationService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.text.DateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -23,6 +30,16 @@ import java.util.List;
 public class DrugReservationService implements IDrugReservationService {
     @Autowired
     DrugReservationRepository drugRepository;
+    @Autowired
+    PatientRepository patientRepository;
+    @Autowired
+    PharmacyRepository pharmacyRepository;
+    @Autowired
+    DrugRepository drugRepository2;
+    @Autowired
+    PharmacyDrugsRepository pharmacyDrugsRepository;
+
+
 
     @Override
     public List<DrugReservation> findAll() {
@@ -50,31 +67,25 @@ public class DrugReservationService implements IDrugReservationService {
         Boolean rez=false;
         //trenutno vrijeme
         LocalDate now=LocalDate.now();
-        //jedan dan manje nego danas
-        LocalDate day=now.minusDays(1);
-          int dan= dateRes.getDayOfMonth();
-        //poredim dan manje sa danom kad se mora pokupiti rez
-        int res=dateRes.compareTo(day);
+        LocalDate minusDan=dateRes.minusDays(1);
+
+        int res=minusDan.compareTo(now);
         if(res==0){
             //poklapaju se, ne moze otkazati
             rez=false;
-
         }else if (res>0){
             //moguce
             rez=true;
         }else{
             rez=false;
         }
-        //System.out.println(wd);
-        //System.out.println(dsd);
-        System.out.println("res:"+res);
-        System.out.println("dan:"+dan);
+        //System.out.println("dan:"+dan);
         return rez;
 
     }
     @Override
-    public void canceling(DrugReservation drugReservation) {
-        DrugReservation pat = drugRepository.getOne(drugReservation.getIdReservation());
+    public void canceling(Integer id) {
+        DrugReservation pat = drugRepository.getOne(id);
 
 
         pat.setCancelled(true);
@@ -82,4 +93,110 @@ public class DrugReservationService implements IDrugReservationService {
 
         drugRepository.save(pat);
     }
+
+    @Override
+    public void checkReservations() {
+        List<DrugReservation> list=drugRepository.findAll();
+        LocalDate now=LocalDate.now();
+        for(DrugReservation dR:list){
+            if(dR.getPickUpDate().compareTo(now)==0){
+                if(!dR.getCancelled()){
+                    if(!dR.getPickedUp()){
+                        if(!dR.getExpired()) {
+                            Patient pat = dR.getPatient();
+                            pat.setPenalty(pat.getPenalty() + 1);
+                            patientRepository.save(pat);
+
+                            dR.setExpired(true);
+                            drugRepository.save(dR);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    @Override
+    public List<FrontDrugReservationDTO> findActualByIdPatient(Patient id) {
+        List<DrugReservation> reserv = drugRepository.findAllByPatient(id);
+        List<FrontDrugReservationDTO> reserv1 = new ArrayList<>();
+        LocalDate now = LocalDate.now();
+
+        for (DrugReservation dR : reserv) {
+            LocalDate pick = dR.getPickUpDate();
+            int rez = now.compareTo(pick);
+            System.out.println(rez);
+            if (rez < 0) {
+                System.out.println("uslo:" + dR.getDrug().getName());
+                if (!dR.getCancelled()) {
+                    if (!dR.getPickedUp()) {
+                        FrontDrugReservationDTO drDTO = new FrontDrugReservationDTO(dR.getIdReservation(),
+                                dR.getQuantity(), dR.getDrug().getName(), dR.getPharmacy().getName(),
+                                dR.getDateOfReservation(), dR.getPickUpDate());
+                        reserv1.add(drDTO);
+                        //id.setPenalty(id.getPenalty() + 1);
+                        //patientService.update(id);
+                    }
+                }
+            }
+
+        }
+        return reserv1;
+    }
+
+    @Override
+    public List<FrontDrugReservationDTO> findPickedById(Patient id) {
+        List<DrugReservation> reserv = drugRepository.findAllByPatient(id);
+
+        List<FrontDrugReservationDTO> reserv1=new ArrayList<>();
+        for (DrugReservation dR:reserv){
+            if(dR.getPickedUp()){
+                FrontDrugReservationDTO drDTO=new FrontDrugReservationDTO(dR.getIdReservation(),
+                        dR.getQuantity(),dR.getDrug().getName(),dR.getPharmacy().getName(),
+                        dR.getDateOfReservation(),dR.getPickUpDate());
+                reserv1.add(drDTO);
+            }
+        }
+        return reserv1;
+    }
+
+    @Override
+    public List<FrontDrugReservationDTO> findCanceledById(Patient id) {
+        List<DrugReservation> reserv = drugRepository.findAllByPatient(id);
+        List<FrontDrugReservationDTO> reserv1=new ArrayList<>();
+        for (DrugReservation dR:reserv){
+            if(dR.getCancelled()){
+                FrontDrugReservationDTO drDTO=new FrontDrugReservationDTO(dR.getIdReservation(),
+                        dR.getQuantity(),dR.getDrug().getName(),dR.getPharmacy().getName(),
+                        dR.getDateOfReservation(),dR.getPickUpDate());
+                reserv1.add(drDTO);
+            }
+        }
+        return reserv1;
+    }
+
+    @Override
+    public DrugReservation save(DrugReservationDTO drug) {
+            DrugReservation d = new DrugReservation();
+            PharmacyDrugs pd=pharmacyDrugsRepository.findOneById(drug.getIdPharmacyDrug());
+
+            d.setDrug(drugRepository2.findOneByIdDrug(drug.getDrug()));
+            d.setPharmacy(pharmacyRepository.findOneByIdPharm(drug.getPharmacy()));
+            d.setPatient(patientRepository.findOneById(drug.getPatient()));
+            d.setPickUpDate(drug.getPickUpDate());
+            d.setCancelled(false);
+            d.setExpired(false);
+            d.setDateOfReservation(LocalDate.now());
+            d.setPickedUp(false);
+            d.setQuantity(1);
+
+            pd.setQuantity(pd.getQuantity()-1);
+            DrugReservation novi=drugRepository.save(d);
+            pharmacyDrugsRepository.save(pd);
+            //pd.setDrug(novi);
+            //drugRepository.save(pd);
+            return novi;
+
+    }
+
 }

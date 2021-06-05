@@ -16,6 +16,7 @@ import java.util.Set;
 @Entity
 @Table
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+
 public class  Pharmacy implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -31,31 +32,27 @@ public class  Pharmacy implements Serializable {
     @Column
     private double avgGrade;
 
+    //DODATO
+    @Column
+    private String city;
+    @Column
+    private  String country;
 
-//proba za grane eeeee
-
-
-///
-///fsds
-
-//proba za grane
-
-
-//@OneToMany(cascade = CascadeType.REMOVE, orphanRemoval = true)
     @OneToMany(mappedBy = "pharmacy", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     //@JsonBackReference
     private Set<PharmacyAdmin> pharmacyAdmins = new HashSet<PharmacyAdmin>();
 
     //cenovnik lekova
     @OneToMany(mappedBy = "pharmacy", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    //@JsonBackReference
-
+    @JsonBackReference
     private Set<DrugPricelist> drugPricelist = new HashSet<DrugPricelist>();
 
 
     @OneToMany(mappedBy = "pharmacy", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    //@JsonBackReference
+    @JsonBackReference
     private Set<Examination> examinations = new HashSet<Examination>();
+
+    public Pharmacy(){}
 
     public Integer getIdPharm() {
         return idPharm;
@@ -119,5 +116,55 @@ public class  Pharmacy implements Serializable {
     public Set<PharmacyAdmin> getPharmacyAdmins() {
         return pharmacyAdmins;
     }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public Set<DrugPricelist> getDrugPricelist() {
+        return drugPricelist;
+    }
+
+    public Set<Examination> getExaminations() {
+        return examinations;
+    }
+
+    public Pharmacy(String name, String address, String description, double avgGrade, String city, String country,Set<PharmacyAdmin> pharmacyAdmins) {
+        this.name = name;
+        this.address = address;
+        this.description = description;
+        this.avgGrade = avgGrade;
+        this.city = city;
+        this.country = country;
+        this.pharmacyAdmins = pharmacyAdmins;
+        this.examinations = null;
+        this.drugPricelist = null;
+    }
+
+    public Pharmacy(Integer idPharm, String name, String address, String description, double avgGrade, String city, String country, Set<PharmacyAdmin> pharmacyAdmins, Set<DrugPricelist> drugPricelist, Set<Examination> examinations) {
+        this.idPharm = idPharm;
+        this.name = name;
+        this.address = address;
+        this.description = description;
+        this.avgGrade = avgGrade;
+        this.city = city;
+        this.country = country;
+        this.pharmacyAdmins = pharmacyAdmins;
+        this.drugPricelist = drugPricelist;
+        this.examinations = examinations;
+    }
+
 
 }

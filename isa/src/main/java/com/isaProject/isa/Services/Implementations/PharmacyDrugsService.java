@@ -13,7 +13,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 @Slf4j
@@ -32,6 +34,23 @@ public class PharmacyDrugsService implements IPharmacyDrugsService {
 
     public List<PharmacyDrugs> findAll() {
         return pharmacyDrugsRepository.findAll();
+    }
+
+    public String check(Integer id,String name) {
+        String answer="The drug is not available at the pharmacy";
+        List<PharmacyDrugs> pharmacyDrugs= pharmacyDrugsRepository.findAll();
+        for(PharmacyDrugs drug:pharmacyDrugs){
+             if(drug.getDrug().getName().equals(name) && drug.getPharmacy().getIdPharm().equals(id)){
+                  answer="The drug is available at the pharmacy";
+
+             }
+        }
+        return  answer;
+    }
+    public Set<Drug> find(Integer id,String name) {
+        Drug d=drugRepository.findOneByNameDrug(name);
+        Set<Drug> drugs=d.getAlternativeDrugs();
+        return  drugs;
     }
 
 
@@ -77,6 +96,16 @@ public class PharmacyDrugsService implements IPharmacyDrugsService {
            // }
        // }
        // return false;
+    }
+
+    @Override
+    public List<PharmacyDrugs> findByName(String name) {
+        return pharmacyDrugsRepository.findByName(name);
+    }
+
+    @Override
+    public PharmacyDrugs findById(Integer id) {
+        return pharmacyDrugsRepository.findOneById(id);
     }
 
 }

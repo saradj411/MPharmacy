@@ -72,7 +72,7 @@
          </router-link>
 
 
-<button class="btn btn-primary btn-lg" v-on:click = "canceling(d.idDrug)" style="margin-left:60px; margin-top:42px;background:#474A8A">Patient did not come</button>
+<button class="btn btn-primary btn-lg" v-on:click = "notAppear(d.id)" style="margin-left:60px; margin-top:42px;background:#474A8A">Patient did not come</button>
 
                 </form>
       </div>
@@ -91,7 +91,7 @@ export default {
     return {
       
        id : this.$route.params.id,
-       examination : [],
+       examination : {},
 
        
     }
@@ -111,6 +111,20 @@ export default {
         
     },
       methods:{
+         
+         notAppear : function(data){
+            console.log("ispisi"+data);
+            this.axios.get('dermatologist/updateFreeEx/'+data)
+        .then(response => {
+                this.nesto = response.data;
+                alert(response.data);
+        
+         }).catch(res => {
+                console.log(res);
+                alert("nee");
+        });
+
+      },
 
 
       }

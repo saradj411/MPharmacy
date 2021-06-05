@@ -11,9 +11,7 @@ import com.isaProject.isa.Model.Users.Staff;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.Date;
 
 @Entity
 @Table
@@ -46,6 +44,7 @@ public class Examination {
     // a false samo je kreiran od strane admina i pacijent ga moze zakazati
     @Column
     private Boolean isScheduled;
+
 //eager
     @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.MERGE)
     @JoinColumn(name = "pharmacyId", referencedColumnName = "idPharm")
@@ -55,16 +54,16 @@ public class Examination {
     //@JsonIgnore
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "patient", referencedColumnName = "id")
-    @JsonBackReference
+    //@JsonBackReference
     private Patient patient;
 
 //    @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.MERGE)
 //    @JoinColumn(name = "staffId", referencedColumnName = "idUser")
 //    //@JsonBackReference
-    @JsonIgnore
-    @ManyToOne(cascade = CascadeType.MERGE)
+   // @JsonIgnore
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "staffId", referencedColumnName = "id")
-    //@JsonBackReference
+    @JsonBackReference
     private Staff staff;
 
     //kod dermatologa, kod farmaceuta
@@ -230,6 +229,9 @@ public class Examination {
 
     }
 
+    public Boolean getCanceled() {
+        return canceled;
+    }
 }
   /*
 ---stranicu za započinjanje pregleda i unos informacija o pregledu gde može

@@ -13,17 +13,23 @@
                </router-link>
             </span>
                      <span style="float: left; margin-top: 20px;">
-                  <button class = "btn btn-primary btn-xs" style="margin:auto; margin-left:38px;background:#474A8A" v-on:click = "profile">Dermatologist clients </button>
+                  <button class = "btn btn-primary btn-xs" style="margin:auto; margin-left:38px;background:#474A8A" v-on:click = "profile">Clients </button>
                      </span>
+                     <span style="float: left; margin-top: 20px;">
+                  <button class = "btn btn-primary btn-xs" style="margin:auto; margin-left:38px;background:#474A8A" v-on:click = "clients">Reviewed clients </button>
+                     </span>
+
+                      
+
                      <span style="float: left; margin-top: 20px;">         
                               
                   <button class = "btn btn-primary btn-xs" style="margin:auto; margin-left:38px;background:#474A8A" v-on:click = "requestForvacation">Request for vacation</button>
                      </span>
                      <span style="float: left; margin-top: 20px;">
-                      <b-dropdown id="ddCommodity" name="ddCommodity" text="Choose user" style="margin-left:33px; color:white;"  >
+                      <b-dropdown id="ddCommodity" name="ddCommodity" text="Examination" style="margin-left:33px; color:white;"  >
                                     
                                     <b-dropdown-item>
-                                      <router-link :to="{ path: '/SearchUser/'}" v-slot="{href, navigate}" custom>
+                                      <router-link :to="{ path: '/SearchUser/'+user.id}" v-slot="{href, navigate}" custom>
            <b-link style="font-size:20px;color:black;" :href="href" @click="navigate"  elevation="1">Search user
              </b-link></router-link>
            </b-dropdown-item>
@@ -91,13 +97,7 @@
      
 
     </tr>
-    <tr style="font-size:22px;color:#0D184F;">
-      <th></th>
-      <td>Password:</td>
-      <td>{{user.password}} </td>
-     
-
-    </tr>
+    
     
   </tbody>
                         </table>
@@ -130,18 +130,21 @@ export default {
          }).catch(res => {
                        alert("ne valja.");
                        console.log(res);
-                 });
-    
-                            
+                 });      
                  
 },
   methods:{
     profile : function(){
-          window.location.href = '/DermatologistPatients/'+501;
+          window.location.href = '/Clients';
         },
         requestForvacation : function(){
           window.location.href = '/RequestForVacation/'+501;
         },
+        clients : function(){
+          window.location.href = '/ReviewedClientsDermatologist/'+501;
+        },
+
+        
 
         
 

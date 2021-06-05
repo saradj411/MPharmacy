@@ -1,5 +1,8 @@
 package com.isaProject.isa.Controllers;
 
+import com.isaProject.isa.Model.DTO.DrugDTO;
+import com.isaProject.isa.Model.DTO.DrugReservationDTO;
+import com.isaProject.isa.Model.DTO.FrontDrugReservationDTO;
 import com.isaProject.isa.Model.Drugs.Drug;
 import com.isaProject.isa.Model.Drugs.DrugPricelist;
 import com.isaProject.isa.Model.Drugs.DrugReservation;
@@ -8,6 +11,7 @@ import com.isaProject.isa.Model.Users.Pharmacist;
 import com.isaProject.isa.Services.Implementations.DrugReservationService;
 import com.isaProject.isa.Services.Implementations.DrugService;
 import com.isaProject.isa.Services.Implementations.PatientService;
+import com.isaProject.isa.Services.Implementations.ServiceForEmail;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.tomcat.jni.Local;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +19,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.mail.MessagingException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +36,9 @@ public class DrugReservationController {
     @Autowired
     private PatientService patientService;
 
+    @Autowired
+    ServiceForEmail serviceForEmail;
+
     @GetMapping(value = "/findAll")
     public ResponseEntity<List<DrugReservation>> findAll() {
         List<DrugReservation> reservations=this.drugReservationService.findAll();
@@ -41,31 +49,13 @@ public class DrugReservationController {
 
     //AKTIVNE REZERVACIJE
     @GetMapping(value = "/findById/{id}")
-    public ResponseEntity<List<DrugReservation>> findById(@PathVariable Patient id) {
-        //log.info("dsds:"+id);
-        List<DrugReservation> reserv=drugReservationService.findByIdPatient(id);
-        List<DrugReservation> reserv1=new ArrayList<>();
-        LocalDate now=LocalDate.now();
+    public ResponseEntity<List<FrontDrugReservationDTO>> findById(@PathVariable Patient id) {
 
-        for (DrugReservation dR:reserv){
-            LocalDate pick=dR.getPickUpDate();
-            int rez=now.compareTo(pick);
-            System.out.println(rez);
-            if(rez<0) {
-                System.out.println("uslo");
-                if (!dR.getCancelled()) {
-                    if(!dR.getPickedUp()) {
-                        reserv1.add(dR);
-                        //id.setPenalty(id.getPenalty() + 1);
-                        //patientService.update(id);
-                    }
-                }
-            }
+        List<FrontDrugReservationDTO> reserv=drugReservationService.findActualByIdPatient(id);
 
-        }
-        return reserv1 == null ?
+        return reserv == null ?
                 new ResponseEntity<>(HttpStatus.NOT_FOUND) :
-                ResponseEntity.ok(reserv1);
+                ResponseEntity.ok(reserv);
     }
 
     @GetMapping(value = "/getBool/{id}")
@@ -81,47 +71,54 @@ public class DrugReservationController {
     }
 
     @GetMapping(value = "/findPickedById/{id}")
-    public ResponseEntity<List<DrugReservation>> findPickedById(@PathVariable Patient id) {
-        //log.info("dsds:"+id);
-        List<DrugReservation> reserv=drugReservationService.findByIdPatient(id);
-        List<DrugReservation> reserv1=new ArrayList<>();
-        for (DrugReservation dR:reserv){
-            if(dR.getPickedUp()){
-                reserv1.add(dR);
-            }
-        }
-        return reserv1 == null ?
+    public ResponseEntity<List<FrontDrugReservationDTO>> findPickedById(@PathVariable Patient id) {
+
+        List<FrontDrugReservationDTO> reserv=drugReservationService.findPickedById(id);
+
+        return reserv == null ?
                 new ResponseEntity<>(HttpStatus.NOT_FOUND) :
-                ResponseEntity.ok(reserv1);
+                ResponseEntity.ok(reserv);
     }
     @GetMapping(value = "/findCanceledById/{id}")
-    public ResponseEntity<List<DrugReservation>> findCanceledById(@PathVariable Patient id) {
-        //log.info("dsds:"+id);
-        List<DrugReservation> reserv=drugReservationService.findByIdPatient(id);
-        List<DrugReservation> reserv1=new ArrayList<>();
-        for (DrugReservation dR:reserv){
-            if(dR.getCancelled()){
-                reserv1.add(dR);
-            }
-        }
-        return reserv1 == null ?
+    public ResponseEntity<List<FrontDrugReservationDTO>> findCanceledById(@PathVariable Patient id) {
+
+        List<FrontDrugReservationDTO> reserv=drugReservationService.findCanceledById(id);
+
+        return reserv == null ?
                 new ResponseEntity<>(HttpStatus.NOT_FOUND) :
-                ResponseEntity.ok(reserv1);
+                ResponseEntity.ok(reserv);
     }
     @GetMapping(value = "/findAllPicked")
     public ResponseEntity<List<DrugReservation>> findAllPicked() {
         List<DrugReservation> reservations=this.drugReservationService.findByIsPickedUp(true);
+
         return reservations == null ?
                 new ResponseEntity<>(HttpStatus.NOT_FOUND) :
                 ResponseEntity.ok(reservations);
     }
 
-    @PostMapping("/canceling")
-    ResponseEntity<String> update(@RequestBody DrugReservation dR)
+    @PostMapping("/canceling/{id}")
+    ResponseEntity<String> update(@PathVariable Integer id)
     {
 
-        drugReservationService.canceling(dR);
+        drugReservationService.canceling(id);
         return new ResponseEntity<>("ajdeee", HttpStatus.CREATED);
 
+    }
+    @PostMapping("/checkReservations")
+    ResponseEntity<String> checkReservations()
+    {
+
+        drugReservationService.checkReservations();
+        return new ResponseEntity<>("ajdeee", HttpStatus.CREATED);
+
+    }
+
+    @PostMapping("/create")
+    public ResponseEntity<DrugReservation> createReservation(@RequestBody DrugReservationDTO drugDTO) throws MessagingException {
+
+        DrugReservation drug = drugReservationService.save(drugDTO);
+        serviceForEmail.sendingMailToPatientForReservattion(drug.getIdReservation(),drug.getPatient());
+        return new ResponseEntity<>(drug, HttpStatus.CREATED);
     }
 }

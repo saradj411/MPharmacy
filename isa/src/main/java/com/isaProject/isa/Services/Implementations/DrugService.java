@@ -6,7 +6,6 @@ import com.isaProject.isa.Model.Drugs.Drug;
 import com.isaProject.isa.Model.Drugs.DrugPricelist;
 import com.isaProject.isa.Model.Drugs.PharmacyDrugs;
 import com.isaProject.isa.Model.Pharmacy.Pharmacy;
-import com.isaProject.isa.Model.Users.PharmacyAdmin;
 import com.isaProject.isa.Repositories.*;
 import com.isaProject.isa.Services.IServices.IDrugService;
 import lombok.extern.slf4j.Slf4j;
@@ -187,9 +186,13 @@ public class DrugService implements IDrugService {
     @Override
     public List<Drug> findByName(String name) {
         //veki skontalaaa
-        d=drugRepository.findOneByName(name);
-        return d;
+        return  drugRepository.findOneByName(name);
+
+
     }
+
+
+
 
 
     @Override
@@ -201,7 +204,7 @@ public class DrugService implements IDrugService {
     @Override
     public Drug save(DrugDTO drug) {
         Drug d = new Drug();
-        PharmacyDrugs pd=new PharmacyDrugs();
+        PharmacyDrugs pd = new PharmacyDrugs();
         d.setName(drug.getName());
         d.setCode(drug.getCode());
         d.setDrugType(drug.getDrugType());
@@ -210,7 +213,7 @@ public class DrugService implements IDrugService {
 //        d.setRecipeNeed(true);
         pd.setQuantity(drug.getQuantity());
         pd.setPharmacy(drug.getPharmacy());
-        Drug novi=drugRepository.save(d);
+        Drug novi = drugRepository.save(d);
         pd.setDrug(novi);
         pharmacyDrugsRepository.save(pd);
         return novi;
@@ -227,5 +230,17 @@ public class DrugService implements IDrugService {
 
         drugRepository.save(d);
 
+    }
+
+    @Override
+    public Drug saveForShifarnik(DrugDTO drugDTO) {
+        Drug d = new Drug();
+        d.setName(drugDTO.getName());
+        d.setCode(drugDTO.getCode());
+        d.setDrugType(drugDTO.getDrugType());
+        d.setFormat(drugDTO.getFormat());
+        d.setManufacturer(drugDTO.getManufacturer());
+        d.setRecipeNeed(drugDTO.isRecipeNeed());
+        return drugRepository.save(d);
     }
 }

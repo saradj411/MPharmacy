@@ -1,35 +1,41 @@
 package com.isaProject.isa.Model.DTO;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.isaProject.isa.Model.Pharmacy.Pharmacy;
 import com.isaProject.isa.Model.Users.Staff;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import java.io.Serializable;
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Date;
 
-public class WorkTimeDTO {
 
+public class WorkTimeDTO implements Serializable {
 
-
-
-    private Date date;
-
+    private LocalDate date;
 
     private LocalTime startTime;
 
-
     private LocalTime endTime;
-
 
     private Staff staff;
 
     private Pharmacy pharmacy;
 
 
+    public WorkTimeDTO() {
+    }
 
-    public Date getDate() {
+    public WorkTimeDTO(LocalDate date, LocalTime startTime) {
+        this.date = date;
+        this.startTime = startTime;
+    }
+
+    public LocalDate getDate() {
         return date;
     }
 
@@ -49,7 +55,7 @@ public class WorkTimeDTO {
         return pharmacy;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 
@@ -69,11 +75,23 @@ public class WorkTimeDTO {
         this.pharmacy = pharmacy;
     }
 
-    public WorkTimeDTO(Date date, LocalTime startTime, LocalTime endTime, Staff staff, Pharmacy pharmacy) {
+    public WorkTimeDTO(LocalDate date, LocalTime startTime, LocalTime endTime, Staff staff, Pharmacy pharmacy) {
         this.date = date;
         this.startTime = startTime;
         this.endTime = endTime;
         this.staff = staff;
         this.pharmacy = pharmacy;
+    }
+
+
+    @Override
+    public String toString() {
+        return "WorkTimeDTO{" +
+                "date=" + date +
+                ", startTime=" + startTime +
+                ", endTime=" + endTime +
+                ", staff=" + staff +
+                ", pharmacy=" + pharmacy +
+                '}';
     }
 }

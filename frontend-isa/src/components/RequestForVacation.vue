@@ -8,11 +8,30 @@
         <div style="background:#B0B3D6; width:650px;margin-left:38px;margin-top:60px;">
                     
                     <div >
-                        <div>
-                        <label style="font-size:22px;color:#0D184F;">Description:</label>
-                        <input type="text" class="form-control" v-model="description" placeholder="Enter description">
+                        
+                        <div >
+                        <label style="font-size:22px;color:#0D184F;">Choose the pharmacy for which you want to request a vacation:</label>
+                         <div style="color:#0D184F;">
+                       
+                            <b-dropdown id="ddCommodity" style="font-size:22px;height:45px;margin-top:5px;width:200px;background:#474A8A;color:white;"  name="ddCommodity" text="Choose pharmacy "  >
+                                <b-dropdown-item  v-for="item in this.pharmacies" v-on:click ="typeIsSelected1($event, item.name)" v-bind:key="item.name"> {{item.name }}</b-dropdown-item>
+                            </b-dropdown> 
+                          </div>
                         </div>
-                    </div>
+
+                      <div>
+
+                                                  <span style="font-size:22px;color:#474A8A;">{{choosen}}</span>
+
+                      </div>
+                   </div>
+
+                  
+
+                    
+ 
+
+
                     <div >
                         <div >
                         <label style="font-size:22px;color:#0D184F;">Start date:</label>
@@ -25,6 +44,8 @@
                             <input type="date" class="form-control"  v-model="end" placeholder="Enter end date">
                         </div>
                     </div>
+
+
                     
                     
                   
@@ -46,19 +67,23 @@ export default {
       start: null,
       end : null,
       id : this.$route.params.id,
+      pharmacies:{},
+      choosen:""
 
       
     }
   },
 
     methods:{
-
+typeIsSelected1 : function(event, type) { 
+           this.choosen = type;
+      },
         requestForvacation : function() {
             const vacation = {
             idStaff:this.id,
-            description : this.description,
             start : this.start,
-            end  :this.end
+            end  :this.end,
+            name:this.choosen
         }
         console.log(this.start);
            this.axios.post('/requestVacation/create',vacation,{ 
@@ -77,6 +102,13 @@ export default {
      
 },
  mounted() {
+   this.axios.get('/dermatologist/findPharmacyDermatologist/'+this.id)
+        .then(response => {
+                this.pharmacies = response.data;  
+
+         }).catch(res => {
+                console.log(res);
+        });   
     }
 }
 </script>  

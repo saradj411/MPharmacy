@@ -7,11 +7,14 @@ import com.isaProject.isa.Model.DTO.FrontCreatedExaminationDTO;
 import com.isaProject.isa.Model.Drugs.Drug;
 import com.isaProject.isa.Model.Drugs.ERecipe;
 import com.isaProject.isa.Model.Examination.Examination;
+import com.isaProject.isa.Model.Examination.ExaminationStatus;
 import com.isaProject.isa.Model.Examination.ExaminationType;
 import com.isaProject.isa.Model.Pharmacy.Pharmacy;
 import com.isaProject.isa.Model.Users.Patient;
+import com.isaProject.isa.Model.Users.User;
 import com.isaProject.isa.Repositories.DrugRepository;
 import com.isaProject.isa.Repositories.PatientRepository;
+import com.isaProject.isa.Repositories.UserRepository;
 import com.isaProject.isa.Services.IServices.IPatientService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,12 +32,17 @@ public class PatientService implements IPatientService {
     @Autowired
     PatientRepository patientRepository;
     @Autowired
+    UserRepository userRepository;
+    @Autowired
     DrugRepository drugRepository;
 
     @Override
-    public Patient findById(Integer id) {
-
-        return patientRepository.findById(id).get();
+    public Patient findById(Integer id){
+        System.out.println("ovdje uslo sada aaaaa:"+id);
+        User user=userRepository.getOne(id);
+        System.out.println("ovdje uslo sada aaaaa:"+user.getName());
+        Patient patient=patientRepository.getOne(id);
+        return patient;
 
     }
 
@@ -51,14 +59,35 @@ public class PatientService implements IPatientService {
         allergies.add(dr);
         patient.setAllergies(allergies);
         patientRepository.save(patient);
-
     }
+    @Override
+    public String findAllergy(Integer idPatient,String name) {
+        String answer="The patient isn't allergic to the drug";
+        Patient patient = patientRepository.findById(idPatient).get();
+        Set<Drug> allergies=patient.getAllergies();
+        for (Drug d:allergies){
+            if(d.getName().equals(name)){
+                answer="The patient is allergic to the drug";
+
+            }
+        }
+        return answer;
+    }
+
+    @Override
+    public Set<Drug> getAllergy(Integer idPatient, String name) {
+        Patient patient = patientRepository.findById(idPatient).get();
+        Set<Drug> allergies=patient.getAllergies();
+
+        return allergies;
+    }
+
+
 
     @Override
     public void update(Patient patient) {
         Patient pat = patientRepository.getOne(patient.getId());
         Integer ids=pat.getId();
-
         pat.setName(patient.getName());
         pat.setSurname(patient.getSurname());
         pat.setAddress(patient.getAddress());
@@ -67,7 +96,6 @@ public class PatientService implements IPatientService {
         pat.setPhoneNumber(patient.getPhoneNumber());
         pat.setPassword(patient.getPassword());
         pat.setPenalty(patient.getPenalty());
-
         patientRepository.save(pat);
     }
 
@@ -79,9 +107,9 @@ public class PatientService implements IPatientService {
         examinations=patient.getExaminations();
         for (Examination e:examinations){
 
-            if(e.getScheduled()){
+            if((e.getStatus().compareTo(ExaminationStatus.SCHEDULED))==0){
 
-                if(e.getType().compareTo(ExaminationType.DERMATOLOGIST_EXAMINATION)==0){
+                if((e.getType().compareTo(ExaminationType.DERMATOLOGIST_EXAMINATION))==0){
                     FrontCreatedExaminationDTO exDTO=new FrontCreatedExaminationDTO(
                             e.getIdExamination(),e.getDate(),
                             e.getStartTime(),e.getEndTime(),e.getPrice(),
@@ -100,9 +128,9 @@ public class PatientService implements IPatientService {
         examinations=patient.getExaminations();
         for (Examination e:examinations){
 
-            if(e.getScheduled()){
+            if((e.getStatus().compareTo(ExaminationStatus.SCHEDULED))==0){
 
-                if(e.getType().compareTo(ExaminationType.PHARMACIST_EXAMINATION)==0){
+                if((e.getType().compareTo(ExaminationType.PHARMACIST_EXAMINATION))==0){
                     FrontCreatedExaminationDTO exDTO=new FrontCreatedExaminationDTO(e.getIdExamination(),e.getDate(),
                             e.getStartTime(),e.getEndTime(),e.getPrice(),
                             e.getStaff().getName(),e.getStaff().getSurname(),e.getPharmacy().getName());
@@ -114,6 +142,51 @@ public class PatientService implements IPatientService {
     }
 
     @Override
+    public Set<FrontCreatedExaminationDTO> findFinishedDermatologistExamination(Integer id) {
+        Patient patient=patientRepository.findById(id).get();
+        Set<Examination> examinations=new HashSet<>();
+        Set<FrontCreatedExaminationDTO> dermExaminations=new HashSet<>();
+        examinations=patient.getExaminations();
+        for (Examination e:examinations){
+
+            if((e.getStatus().compareTo(ExaminationStatus.FINISHED))==0){
+
+                if((e.getType().compareTo(ExaminationType.DERMATOLOGIST_EXAMINATION))==0){
+                    FrontCreatedExaminationDTO exDTO=new FrontCreatedExaminationDTO(e.getIdExamination(),e.getDate(),
+                            e.getStartTime(),e.getEndTime(),e.getPrice(),
+                            e.getStaff().getName(),e.getStaff().getSurname(),e.getPharmacy().getName(),
+                    e.getReport(),e.getTherapy());
+
+                    dermExaminations.add(exDTO);
+                }
+            }
+        }
+        return dermExaminations;
+    }
+
+    @Override
+    public Set<FrontCreatedExaminationDTO> findFinishedPharmacistExamination(Integer id) {
+        Patient patient=patientRepository.findById(id).get();
+        Set<Examination> examinations=new HashSet<>();
+        Set<FrontCreatedExaminationDTO> dermExaminations=new HashSet<>();
+        examinations=patient.getExaminations();
+        for (Examination e:examinations){
+
+            if((e.getStatus().compareTo(ExaminationStatus.FINISHED))==0){
+
+                if((e.getType().compareTo(ExaminationType.PHARMACIST_EXAMINATION))==0){
+                    FrontCreatedExaminationDTO exDTO=new FrontCreatedExaminationDTO(e.getIdExamination(),e.getDate(),
+                            e.getStartTime(),e.getEndTime(),e.getPrice(),
+                            e.getStaff().getName(),e.getStaff().getSurname(),e.getPharmacy().getName(),
+                            e.getReport(),e.getTherapy());
+                    dermExaminations.add(exDTO);
+                }
+            }
+        }
+        return dermExaminations;
+    }
+
+    /*@Override
     public List<ERecipe> findERecipe(Integer id) {
         Patient patient=patientRepository.findById(id).get();
         Set<ERecipe> recepies=new HashSet<>();
@@ -124,7 +197,7 @@ public class PatientService implements IPatientService {
         }
 
         return dermExaminations;
-    }
+    }*/
 
 }
 

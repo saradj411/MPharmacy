@@ -97,12 +97,13 @@ export default {
         currentPassword : "",
         newPassword : "",
         newPasswordRepeat : "",
-        sifra:""
+        sifra:"",
+         idU : this.$route.params.id,
     }
   },
   
   mounted() {
-        this.axios.get('patient/findById/'+507,{ 
+        this.axios.get('patient/findOneById/'+this.idU,{ 
              
          }).then(response => {
                this.patient=response.data;
@@ -143,7 +144,7 @@ export default {
       }).then(response => {
                this.nesto=response.data;
                 alert("Changes have been saved!");
-                window.location.href = "/ProfilePatient";
+                window.location.href = "/ProfilePatient/"+this.patient.id;
           }).catch(res => {
                        //alert("Please first choose allergy!");
                        console.log(res);

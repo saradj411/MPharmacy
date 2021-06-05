@@ -22,7 +22,6 @@ import updateMyProfile from '../components/updateMyProfile.vue'
 import updateDrug from '../components/updateDrug.vue'
 import updatePharmacistProfile from '../components/updatePharmacistProfile.vue'
 import updateDermatologistProfile from '../components/updateDermatologistProfile.vue'
-import DermatologistPatients from '../components/DermatologistPatients.vue'
 import RequestForVacation from '../components/RequestForVacation.vue'
 import CreatePurchaseOrder from '../components/CreatePurchaseOrder.vue'
 import SearchUser from '../components/SearchUser.vue'
@@ -38,8 +37,29 @@ import IncomeReport from '../components/IncomeReport.vue'
 
 
 
+import SheduleExamination from '../components/SheduleExamination.vue'
+import WorkCalendarPharmacist from '../components/WorkCalendarPharmacist.vue'
+import StartCounseling from '../components/StartCounseling.vue'
+import SearchUserPharmacist from '../components/SearchUserPharmacist.vue'
+import Clients from '../components/Clients.vue'
+import ReviewedClientsDermatologist from '../components/ReviewedClientsDermatologist.vue'
+import ReviewedClientsPharmacist from '../components/ReviewedClientsPharmacist.vue'
+import RequestForVacationPharmacist from '../components/RequestForVacationPharmacist.vue'
+import InssuingDrug from '../components/InssuingDrug.vue'
+import SystemAdminProfile from '../components/SystemAdminProfile.vue'
+import AddShifarnikPage from '../components/AddShifarnikPage'
+import RegisterNewSystemAdmin from '../components/RegisterNewSystemAdmin'
+
+import ReserveDrug from '../components/ReserveDrug'
+
+import RegisterDermatologist from '../components/RegisterDermatologist'
+import RegisterNewPharmacy from '../components/RegisterNewPharmacy'
+import RegisterAdminPharamcyPage from '../components/RegisterAdminPharamcyPage'
+import AcceptRejectVacation from '../components/AcceptRejectVacation'
 
 import moment from 'moment'
+
+
 
 Vue.use(VueRouter)
 Vue.use(BootstrapVue)
@@ -70,18 +90,23 @@ const routes = [
         component: createDrugPage
       },
       {
-        path: '/ProfileAdmin',
+        path: '/ProfileAdmin/:id',
         name: 'ProfileAdmin',
         component: ProfileAdmin
       }
       ,
       {
-        path: '/ProfilePatient',
+        path: '/ProfilePatient/:id',
         name: 'ProfilePatient',
         component: ProfilePatient
       }
     ,
      
+      {
+        path: '/SystemAdminProfile/:id',
+        name: 'SystemAdminProfile',
+        component: SystemAdminProfile
+      },
       {
         path: '/updatePharmacyProfile/:id',
         name: 'updatePharmacyProfile',
@@ -92,13 +117,24 @@ const routes = [
         name: 'UpdatePatientProfil',
         component: UpdatePatientProfil
       },
+      {
+        path: '/StartCounseling/:id',
+        name: 'StartCounseling',
+        component: StartCounseling
+      },
      
       
       {
 
-        path: '/profileDermatologist',
+        path: '/profileDermatologist/:id',
         name: 'profileDermatologist',
         component: profileDermatologist
+      },
+      {
+
+        path: '/SearchUserPharmacist/:id',
+        name: 'SearchUserPharmacist',
+        component: SearchUserPharmacist
       },
       {
         path: '/profilePharmacist',
@@ -121,6 +157,11 @@ const routes = [
         component: DermatologistsPharmacy
       }
       ,
+      {
+        path: '/AddShifarnikPage/:id',
+        name: 'AddShifarnikPage',
+        component: AddShifarnikPage
+      },
       {
         path: '/PharmacistsPharmacy/:id',
         name: 'PharmacistsPharmacy',
@@ -172,11 +213,6 @@ const routes = [
       }
       ,
       {
-        path: '/DermatologistPatients/:id',
-        name: 'DermatologistPatients',
-        component: DermatologistPatients
-      },
-      {
         path: '/RequestForVacation/:id',
         name: 'RequestForVacation',
         component: RequestForVacation
@@ -189,7 +225,7 @@ const routes = [
       }
       ,
       {
-        path: '/SearchUser',
+        path: '/SearchUser/:id',
         name: 'SearchUser',
         component: SearchUser
       }
@@ -199,12 +235,84 @@ const routes = [
         name: 'WorkCalendar',
         component: WorkCalendar
       }
+      ,
+      {
+        path: '/WorkCalendarPharmacist/:id',
+        name: 'WorkCalendarPharmacist',
+        component: WorkCalendarPharmacist
+      }
       
       ,
       {
         path: '/StartExamination/:id',
         name: 'StartExamination',
         component: StartExamination
+      },
+      {
+        //registracija admina za apoteke
+        path:'/RegisterAdminPharamcyPage/:id',
+        name: 'RegisterAdminPharamcyPage',
+        component: RegisterAdminPharamcyPage
+      },
+      {
+        path: '/RegisterDermatologist/:id',
+        name: 'RegisterDermatologist',
+        component: RegisterDermatologist
+      },      
+      {
+        //registracija nove apoteke
+        path: '/RegisterNewPharmacy/:id',
+        name: 'RegisterNewPharmacy',
+        component: RegisterNewPharmacy
+      },               
+      {
+        //registracija nove apoteke
+        path: '/RegisterNewSystemAdmin/:id',
+        name: 'RegisterNewSystemAdmin',
+        component: RegisterNewSystemAdmin
+      },
+      {
+        path:'/ReserveDrug/:id/:idPatient',
+        name: 'ReserveDrug',
+        component: ReserveDrug
+      }
+      ,
+      {
+        path: '/SheduleExamination/:id',
+        name: 'SheduleExamination',
+        component: SheduleExamination
+      },
+      {
+        path: '/Clients',
+        name: 'Clients',
+        component: Clients
+      }
+      ,
+      {
+        path: '/ReviewedClientsDermatologist/:id',
+        name: 'ReviewedClientsDermatologist',
+        component: ReviewedClientsDermatologist
+      }
+      ,
+      {
+        path: '/ReviewedClientsPharmacist/:id',
+        name: 'ReviewedClientsPharmacist',
+        component: ReviewedClientsPharmacist
+      },
+      {
+        path: '/RequestForVacationPharmacist/:id',
+        name: 'RequestForVacationPharmacist',
+        component: RequestForVacationPharmacist
+      },
+      {
+        path: '/InssuingDrug/:id',
+        name: 'InssuingDrug',
+        component: InssuingDrug
+      },
+      {
+        path: '/AcceptRejectVacation/:id',
+        name: 'AcceptRejectVacation',
+        component: AcceptRejectVacation
       }
       ,
       {
@@ -244,12 +352,6 @@ const routes = [
         component: IncomeReport
       }
       
-      
-      
-
-      
-      
-    ]
 
 
 
@@ -257,7 +359,8 @@ const routes = [
 const router = new VueRouter({
     mode: 'history',
     base: process.env.BASE_URL,
-    routes
+    routes,
+    
   })
   
   export default router

@@ -1,5 +1,6 @@
 package com.isaProject.isa.Model.Users;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.isaProject.isa.Model.Examination.Examination;
 
 import javax.persistence.*;
@@ -8,6 +9,8 @@ import java.util.Set;
 
 @Entity
 @Table
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+
 public class Staff extends User{
 
     //ocjena
@@ -15,15 +18,15 @@ public class Staff extends User{
     private double avgGrade;
 
     //radno vrijemeidUser
-    @OneToMany(mappedBy = "staff", fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "staff", fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     private Set<WorkTime> workTime = new HashSet<WorkTime>();
 
     //savetovanja farmacut,pregledi dermatolog
-    @OneToMany(mappedBy = "staff",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "staff",fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     private Set<Examination> examinations = new HashSet<Examination>();
 
     //odmor
-    @OneToMany(mappedBy = "staff", fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "staff", fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     //@JsonManagedReference
     private Set<Vacation> vacation = new HashSet<Vacation>();
 
@@ -33,6 +36,23 @@ public class Staff extends User{
         this.workTime = workTime;
         this.examinations = examinations;
         this.vacation = vacation;
+    }
+
+    public Staff(Integer id, String name, String surname, String email, String password, String address, String phoneNumber, String city, String country, double avgGrade, Set<WorkTime> workTime) {
+        super(id, name, surname, email, password, address, phoneNumber, city, country);
+        this.avgGrade = avgGrade;
+        this.workTime = workTime;
+        this.examinations = null;
+        this.vacation = null;
+
+    }
+
+    public Staff(Integer id, String name, String surname, String email, String password, String address, String phoneNumber, String city, String country, double avgGrade) {
+        super(id, name, surname, email, password, address, phoneNumber, city, country);
+        this.avgGrade = avgGrade;
+        this.examinations = null;
+        this.vacation = null;
+
     }
 
     public Staff() {

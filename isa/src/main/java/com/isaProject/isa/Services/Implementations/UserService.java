@@ -15,7 +15,10 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.mail.MessagingException;
+import java.nio.charset.Charset;
 import java.util.List;
+import java.util.Random;
 
 @Service
 public class UserService implements IUserService {
@@ -31,6 +34,9 @@ public class UserService implements IUserService {
 
     @Autowired
     private AuthenticationManager authenticationManager;
+
+    @Autowired
+    private ServiceForEmail serviceForEmail;
 
     @Override
     public User findById(Integer id) {
@@ -52,9 +58,9 @@ public class UserService implements IUserService {
 
     @Override
     public User save(UserDTO user) {
-        List<Authority> auth = authService.findByname("PATIENT");
-        for(User u : userRepository.findAll())
-        {
+        List<Authority> auth = authService.findByname("ROLE_PATIENT");
+
+        for(User u : userRepository.findAll()) {
             if(u.getEmail().equals(user.getEmail()))
                 return null;
         }
@@ -70,7 +76,8 @@ public class UserService implements IUserService {
         u.setCountry(user.getCountry());
         u.setAccountEnabled(false);
         u.setAuthorities(auth);
-        //dodati na mejl
+
+
         return userRepository.save(u);
     }
 
@@ -84,6 +91,33 @@ public class UserService implements IUserService {
     }
 
     @Override
+    public User saveAdmin(UserDTO userDTO) throws MessagingException {
+        List<Authority> auth = authService.findByname("ROLE_ADMIN");
+        for(User u : userRepository.findAll())
+        {
+            if(u.getEmail().equals(userDTO.getEmail()))
+                return null;
+        }
+        String newPassword = "SRECKOSOJIC";
+
+        System.out.println("Lozinka: " + newPassword );
+        User u = new User();
+        u.setName(userDTO.getName());
+        u.setSurname(userDTO.getSurname());
+        u.setEmail(userDTO.getEmail());
+        u.setPassword(passwordEncoder.encode(newPassword));
+        u.setAddress(userDTO.getAddress());
+        u.setPhoneNumber(userDTO.getPhoneNumber());
+        u.setCity(userDTO.getCity());
+        u.setCountry(userDTO.getCountry());
+        u.setAccountEnabled(false);
+        u.setAuthorities(auth);
+        //serviceForEmail.sendEmailForPasswordChange(userDTO.getEmail(),newPassword);
+
+        return userRepository.save(u);
+    }
+
+    @Override
     public UserTokenState Login(String username, String password) {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(username, password));
@@ -92,11 +126,30 @@ public class UserService implements IUserService {
 
         // Create a token for that user
         User user = (User) authentication.getPrincipal();
-        String jwt = tokenUtils.generateToken(user);
+        String jwt = tokenUtils.generateToken(user.getEmail());
         int expiresIn = tokenUtils.getExpiredIn();
 
         return new UserTokenState(jwt, expiresIn);
         }
+
+    @Override
+    public User getLoggedUser() {
+        Authentication loggedUser = SecurityContextHolder.getContext().getAuthentication();
+        String email = loggedUser.getName();
+        User u = userRepository.findByEmail(email);
+        return  u;
+    }
+
+
+    private String PasswordGenerator()
+    {
+        byte[] array = new byte[7]; // length is bounded by 7
+        new Random().nextBytes(array);
+        String generatedString = new String(array, Charset.forName("UTF-8"));
+        System.out.println(generatedString);
+        return  generatedString;
+
+    }
 
 
 }

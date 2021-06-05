@@ -1,15 +1,19 @@
 package com.isaProject.isa.Model.Users;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.isaProject.isa.Model.Pharmacy.Pharmacy;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Date;
 
 @Entity
 @Table
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class WorkTime {
 
     @Id
@@ -17,7 +21,7 @@ public class WorkTime {
     private Integer id;
 
     @Column
-    private Date date;
+    private LocalDate date;
 
     @Column
     private LocalTime startTime;
@@ -25,21 +29,25 @@ public class WorkTime {
     @Column
     private LocalTime endTime;
 
-    @ManyToOne
+    //@JsonIgnore
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "staffId", referencedColumnName = "id", nullable = false)
     @JsonBackReference
     private Staff staff;
 
-    @ManyToOne
+
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "pharmacyId", referencedColumnName = "idPharm", nullable = false)
-    //@JsonManagedReference
     private Pharmacy pharmacy;
+
+    public WorkTime(Date date, LocalTime startTime, LocalTime endTime, Integer id, Pharmacy p) {
+    }
 
     public Integer getId() {
         return id;
     }
 
-    public Date getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
@@ -63,7 +71,7 @@ public class WorkTime {
         this.id = id;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 
@@ -83,7 +91,19 @@ public class WorkTime {
         this.pharmacy = pharmacy;
     }
 
-    public WorkTime(Integer id, Date date, LocalTime startTime, LocalTime endTime, Staff staff, Pharmacy pharmacy) {
+    public  WorkTime(){
+
+    }
+
+    public WorkTime(LocalDate date, LocalTime startTime, LocalTime endTime, Staff staff, Pharmacy pharmacy) {
+        this.date = date;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.staff = staff;
+        this.pharmacy = pharmacy;
+    }
+
+    public WorkTime(Integer id, LocalDate date, LocalTime startTime, LocalTime endTime, Staff staff, Pharmacy pharmacy) {
         this.id = id;
         this.date = date;
         this.startTime = startTime;
@@ -92,7 +112,7 @@ public class WorkTime {
         this.pharmacy = pharmacy;
     }
 
-    public  WorkTime(){
 
-    }
+
+
 }
