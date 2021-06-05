@@ -233,6 +233,15 @@ insert into examination values(509,false,'2021-08-27','12:00:00',false,1050,'inf
 
 
 
+
+insert into examination values(544,false,'2021-01-20','2021-01-20 09:00:00',true,600,'info1','2021-01-20 08:00:00','SCHEDULED','DERMATOLOGIST_EXAMINATION',508,501,501,null);
+insert into examination values(541,false,'2021-02-23','2021-02-23 11:00:00',true,880,'info2','2021-02-23 09:30:00','SCHEDULED','DERMATOLOGIST_EXAMINATION',508,501,504,null);//--------------------
+
+insert into examination values(542,false,'2021-03-27','12:00:00',false,1050,'info2','10:30:00','CREATED','PHARMACIST_EXAMINATION',null,501,511,null);
+
+
+
+
 insert into examination values(510,false,'2021-08-29','11:00:00',false,1030,'info2','09:30:00','CREATED','DERMATOLOGIST_EXAMINATION',null,500,501,null);
 insert into examination values(511,false,'2021-08-27','12:00:00',false,1050,'info2','10:30:00','CREATED','DERMATOLOGIST_EXAMINATION',null,501,504,null);
 

@@ -110,7 +110,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll().antMatchers("/pharmacist/searchPharmacistName/{id}")
                 .permitAll().antMatchers("/dermatologist/searchDermatologistName/{id}")
                 .permitAll().antMatchers("/pharmacist/delete/{id}")
-                .permitAll().antMatchers("/reports/monthlyReport/{idAdmina}/{month}")
+                .permitAll().antMatchers("/reports/monthlyReport/{idAdmina}")
 
                 .permitAll().antMatchers("/reports/monthlyReportDrugs/{idAdmina}")
 
@@ -119,6 +119,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll().antMatchers("/reports/examinationQuarter/{idAdmina}")
                 .permitAll().antMatchers("/reports/annualReportDrug/{idAdmina}")
                 .permitAll().antMatchers("/reports/drugQuarter/{idAdmina}")
+
+                .permitAll().antMatchers("/reports/incomeReport/{idAdmina}")
+
 
 
 

@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -24,10 +25,11 @@ public class ReportsController {
     ReportService reportService;
 
 
-    @GetMapping(value = "/monthlyReport/{idAdmina}/{month}")
-    public ResponseEntity<List<MonthlyReportForExaminationDTO>> findCreatedPharmacistExamination(@PathVariable Integer idAdmina, @PathVariable Integer month) {
+    @GetMapping(value = "/monthlyReport/{idAdmina}")
+    public ResponseEntity<DaysDTO> findCreatedPharmacistExaminationn(@PathVariable Integer idAdmina) {
         //log.info("dsds:"+id);
-        List<MonthlyReportForExaminationDTO> pharm=reportService.monthlyReport(idAdmina,month);
+        DaysDTO pharm=reportService.monthlyReportDay(idAdmina,LocalDate.now().getMonthValue());
+
         return pharm == null ?
                 new ResponseEntity<>(HttpStatus.NOT_FOUND) :
                 ResponseEntity.ok(pharm);
@@ -44,6 +46,7 @@ public class ReportsController {
                 ResponseEntity.ok(pharm);
     }
 
+
     @GetMapping(value = "/examinationQuarter/{idAdmina}")
     public ResponseEntity<ExaminationQuarterDTO> examinationQuarter(@PathVariable Integer idAdmina) {
         //log.info("dsds:"+id);
@@ -56,9 +59,10 @@ public class ReportsController {
 
 
     @GetMapping(value = "/monthlyReportDrugs/{idAdmina}")
-    public ResponseEntity<List<MonthlyReportForDrugsDTO>> monthlyReportForDrug(@PathVariable Integer idAdmina) {
+    public ResponseEntity<DaysDTO> monthlyReportForDrug(@PathVariable Integer idAdmina) {
         //log.info("dsds:"+id);
-        List<MonthlyReportForDrugsDTO> pharm=reportService.monthlyReportForDrugs(idAdmina);
+
+        DaysDTO pharm=reportService.monthlyReportForDrugsDays(idAdmina,LocalDate.now().getMonthValue(), LocalDate.now().getYear());
         return pharm == null ?
                 new ResponseEntity<>(HttpStatus.NOT_FOUND) :
                 ResponseEntity.ok(pharm);
@@ -85,6 +89,15 @@ public class ReportsController {
                 ResponseEntity.ok(pharm);
     }
 
+    @GetMapping(value = "/incomeReport/{idAdmina}")
+    public ResponseEntity<IncomeDTO> incomeReport(@PathVariable Integer idAdmina) {
+        //log.info("dsds:"+id);
+
+        IncomeDTO pharm=reportService.incomeReport(idAdmina);
+        return pharm == null ?
+                new ResponseEntity<>(HttpStatus.NOT_FOUND) :
+                ResponseEntity.ok(pharm);
+    }
 
     //drugQuarter
 

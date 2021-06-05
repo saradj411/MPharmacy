@@ -26,6 +26,15 @@
                   <button class = "btn btn-primary btn-xs" style="margin:auto; margin-left:38px;background:#474A8A " :href="href" @click="navigate" elevation="1">Quarter report examination</button>
                </router-link>
 
+<router-link :to="{ path: '/QuarterReportDrug/'+user.id}" v-slot="{href, navigate}" custom>
+
+                  <button class = "btn btn-primary btn-xs" style="margin:auto; margin-left:38px;background:#474A8A " :href="href" @click="navigate" elevation="1">Quarter report drug</button>
+               </router-link>
+
+<router-link :to="{ path: '/AnnualReportDrug/'+user.id}" v-slot="{href, navigate}" custom>
+
+                  <button class = "btn btn-primary btn-xs" style="margin:auto; margin-left:38px;background:#474A8A " :href="href" @click="navigate" elevation="1">Annual report drug</button>
+               </router-link>
 
 
 
@@ -33,6 +42,25 @@
 
                   <button class = "btn btn-primary btn-xs" style="margin:auto; margin-left:38px;background:#474A8A " :href="href" @click="navigate" elevation="1">Create drug order </button>
                </router-link>
+
+
+                     <router-link :to="{ path: '/MonthDrugReport/'+user.id}" v-slot="{href, navigate}" custom>
+
+                  <button class = "btn btn-primary btn-xs" style="margin:auto; margin-left:38px;background:#474A8A " :href="href" @click="navigate" elevation="1">Month Drug Report </button>
+               </router-link>
+
+
+                   <router-link :to="{ path: '/MonthExaminationReport/'+user.id}" v-slot="{href, navigate}" custom>
+
+                  <button class = "btn btn-primary btn-xs" style="margin:auto; margin-left:38px;background:#474A8A " :href="href" @click="navigate" elevation="1">Month Examination Report</button>
+               </router-link>
+
+                <router-link :to="{ path: '/IncomeReport/'+user.id}" v-slot="{href, navigate}" custom>
+
+                  <button class = "btn btn-primary btn-xs" style="margin:auto; margin-left:38px;background:#474A8A " :href="href" @click="navigate" elevation="1">Income Report</button>
+               </router-link>
+
+               
 
 
 
