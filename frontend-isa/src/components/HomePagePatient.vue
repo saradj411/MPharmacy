@@ -17,6 +17,7 @@
            <button class="btn btn-danger btn-lg" style="float:left;margin-top:15px;margin-left:10px" v-on:click = "showCreatedPharmacist">Schedule Consultation</button>
            <button class="btn btn-danger btn-lg" style="float:left;margin-top:15px;margin-left:10px" v-on:click = "showAllDrugs">Reserve drug</button>
            
+           <button class="btn btn-danger btn-lg" style="float:left;margin-top:15px;margin-left:10px" v-on:click = "showMarks">Grades</button>
             <button class="btn btn-danger btn-lg" style="float:left;margin-top:15px;margin-left:10px" v-on:click = "writeComplaint">Complaint</button>
            
                                   
@@ -95,6 +96,17 @@
                    <button class="btn btn-dark" style="float:left;margin-left:20px;" v-on:click = "sortFDExamByPriceO">PriceO</button>
               <button class="btn btn-dark" style="float:left;margin-left:20px;" v-on:click = "sortFDExamByDateR">DateR</button>
                    <button class="btn btn-dark" style="float:left;margin-left:20px;" v-on:click = "sortFDExamByDateO">DateO</button>
+          
+              </div>
+    </div>
+
+     <div v-if="showMarksBar"  style="background:#B0B3D6; height: 60px; margin-top:15px;margin-left:15px;margin-right:15px;">
+
+              <div class="column">
+                   <button class="btn btn-dark" style="float:left;margin-left:20px;margin-top:10px;" v-on:click = "showPharmacyGrade">Pharmacies</button> 
+                  <button class="btn btn-dark" style="float:left;margin-left:20px;margin-top:10px;" v-on:click = "showDermatologistGrade">Dermatologists</button>
+                   <button class="btn btn-dark" style="float:left;margin-left:20px;margin-top:10px;" v-on:click = "showPharmacistGrade">Pharmacists</button>
+             <button class="btn btn-dark" style="float:left;margin-left:20px;margin-top:10px;" v-on:click = "showDrugsGrade">Drugs</button>
           
               </div>
     </div>
@@ -719,6 +731,44 @@
 
 
       </div> 
+
+<!-------GRADES DERMATOLOGIST!-->
+
+      <div v-if="showGradeDermatologist"  style="float:left;margin-left:30px;">
+     <h4 style="margin:30px">GRADES:</h4>
+ <div style="background: #a7c1c9;margin-left:30px;"  v-for="dr in this.pharmacies"  v-bind:key="dr.id">
+      
+<table  style="" id="table2" class="table" >
+ 
+    <tbody>
+      <tr>
+        <th scope="row"></th>
+        <td>Dermatologist:</td>
+         <td>{{dr.name}}</td>
+      </tr>
+
+        <tr>
+        <th scope="row"></th>
+        
+         <td>Grade:</td>
+          <td><input type="text"  class="form-control" ></td>
+      </tr>
+      <!-- v-model = "s"
+       v-on:click = "continue2(staff.idStaff,staff.idPharm)"!-->
+        <tr>
+          <th></th>
+          <td></td>
+          <td><button class="btn btn-danger btn-sm">Confirm</button></td>
+          
+
+        </tr>
+        
+  </tbody>
+</table>
+           </div>
+
+
+      </div> 
 </div>
 
   
@@ -754,6 +804,12 @@ export default {
         showSortCreatedDermatologistExamination:false,
         showSortERecipes:false,
         showSortFinishedDE:false,
+
+        showMarksBar:false,
+        showGradeDermatologist:false,
+        showGradePharmacist:false,
+        showGradePharmacy:false,
+        showGradeDrug:false,
 
         pharmacies : [],
         pharmacies1 : [],
@@ -901,7 +957,56 @@ methods:{
       writeComplaint:function(){
           window.location.href = "/WriteComplaint/"+this.id;
       },
+      showPharmacyGrade:function(){
+        this.showG
+        this.showGradeDermatologist=false
+        this.showGradePharmacist=false
+        this.showGradePharmacy=true
+        this.showGradeDrug=false
+
+      },
+      showDermatologistGrade:function(){
+        this.showGradeDermatologist=true
+        this.showGradePharmacist=false
+        this.showGradePharmacy=false
+        this.showGradeDrug=false
+      },
+      showPharmacistGrade:function(){
+        this.showGradeDermatologist=false
+        this.showGradePharmacist=true
+        this.showGradePharmacy=false
+        this.showGradeDrug=false
+      },
+      showDrugsGrade:function(){
+        this.showGradeDermatologist=false
+        this.showGradePharmacist=false
+        this.showGradePharmacy=false
+        this.showGradeDrug=true
+      },
+      showMarks: function(){
+        this.showMarksBar=true
+        this.showTable=false
+        this.showReserveTable=false
+        this.showDermExam=false
+        this.showPharmExam=false
+        this.showERecipe=false
+        this.showCreatedDermExamination=false
+        this.showFinishedDerm=false
+        this.showFinishedPharm=false
+        this.showDrugsInPharmacies=false
+        this.showSearchDrug=false
+        this.showSearchDrugs=false
+         this.showCreatedPharmExamination=false
+         this.showScheduleSearch=false
+         this.showFreeStaff=false
+         this.showSortPharmacies=false
+         this.showSortCreatedDermatologistExamination=false
+         this.showSortERecipes=false
+         this.showSortFinishedDE=false
+       //this.showSearchPharmacy=true
+      },
        showPharmacies: function(){
+         this.showMarksBar=false
         this.showTable=true
         this.showReserveTable=false
         this.showDermExam=false
@@ -924,6 +1029,7 @@ methods:{
       },
       showReservation:
        function(){
+         this.showMarksBar=false
         this.showTable=false
         this.showReserveTable=true
         this.showDermExam=false
@@ -963,6 +1069,7 @@ methods:{
          this.showSortCreatedDermatologistExamination=false
          this.showSortERecipes=false
           this.showSortFinishedDE=false
+          this.showMarksBar=false
       },
       showRecipe: function(){
         
@@ -984,6 +1091,7 @@ methods:{
           this.showSortCreatedDermatologistExamination=false
           this.showSortERecipes=true
            this.showSortFinishedDE=false
+           this.showMarksBar=false
       },
       showExamination:
        function(){
@@ -1005,6 +1113,7 @@ methods:{
            this.showSortCreatedDermatologistExamination=false
            this.showSortERecipes=false
             this.showSortFinishedDE=true
+            this.showMarksBar=false
       },
       showCreatedDerm:
        function(){
@@ -1026,6 +1135,7 @@ methods:{
            this.showSortCreatedDermatologistExamination=true
            this.showSortERecipes=false
             this.showSortFinishedDE=false
+            this.showMarksBar=false
       },
       showCreatedPharmacist:
       function(){
@@ -1047,6 +1157,7 @@ methods:{
           this.showSortCreatedDermatologistExamination=false
           this.showSortERecipes=false
            this.showSortFinishedDE=false
+           this.showMarksBar=false
       },
       showAllDrugs: function(){
         this.showTable=false
@@ -1067,6 +1178,7 @@ methods:{
            this.showSortCreatedDermatologistExamination=false
            this.showSortERecipes=false
             this.showSortFinishedDE=false
+            this.showMarksBar=false
       },
       canceling:
        function(res,idRes){
