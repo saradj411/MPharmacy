@@ -91,7 +91,9 @@
               <div class="column">
                  <h4 style="margin:5px">SORT FINISHED EXAMINATIONS BY:</h4>  
                   <button class="btn btn-danger btn-lg" style="float:left;margin-left:20px;" v-on:click = "sortFDExamByPriceR">PriceR</button>
-           <button class="btn btn-danger btn-lg" style="float:left;margin-left:20px;" v-on:click = "sortFDExamByPriceO">PriceO</button>
+                   <button class="btn btn-danger btn-lg" style="float:left;margin-left:20px;" v-on:click = "sortFDExamByPriceO">PriceO</button>
+              <button class="btn btn-danger btn-lg" style="float:left;margin-left:20px;" v-on:click = "sortFDExamByDateR">DateR</button>
+                   <button class="btn btn-danger btn-lg" style="float:left;margin-left:20px;" v-on:click = "sortFDExamByDateO">DateO</button>
           
               </div>
     </div>
@@ -1373,6 +1375,32 @@ methods:{
       },
        sortFDExamByPriceO: function(){
       this.axios.get('/examination/sortFinishedDEByPriceDesc/'+this.id)
+          .then(response => {
+               console.log(response.data);
+              this.dermatologistFinishedExamination = response.data;
+              
+                })
+                .catch(res => {
+                     
+                         alert("Sorting is currently not possible");
+                        console.log(res)
+                    })
+      },
+      sortFDExamByDateR: function(){
+      this.axios.get('/examination/sortFinishedDEByDateAsc/'+this.id)
+          .then(response => {
+               console.log(response.data);
+              this.dermatologistFinishedExamination = response.data;
+              
+                })
+                .catch(res => {
+                     
+                        alert("Sorting is currently not possible");
+                        console.log(res)
+                    })
+      },
+       sortFDExamByDateO: function(){
+      this.axios.get('/examination/sortFinishedDEByDateDesc/'+this.id)
           .then(response => {
                console.log(response.data);
               this.dermatologistFinishedExamination = response.data;
