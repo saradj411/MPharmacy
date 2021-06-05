@@ -15,6 +15,14 @@
 
                   <button class = "btn btn-primary btn-xs" style="margin:auto; margin-left:38px;background:#474A8A " :href="href" @click="navigate" elevation="1">Update profile</button>
                </router-link>
+               
+
+
+               <router-link :to="{ path: '/ActionAndPromotion/'+user.id}" v-slot="{href, navigate}" custom>
+
+                  <button class = "btn btn-primary btn-xs" style="margin:auto; margin-left:38px;background:#474A8A " :href="href" @click="navigate" elevation="1">Define action and promotion</button>
+               </router-link>
+
 
                 <router-link :to="{ path: '/CreatePurchaseOrder/'+user.id}" v-slot="{href, navigate}" custom>
 
