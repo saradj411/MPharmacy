@@ -17,4 +17,6 @@ public interface IUserService {
 
     UserTokenState Login(String email, String password);
     User getLoggedUser();
+
+    User changePassword(String newPassword, String email);
 }

@@ -58,6 +58,8 @@ import RegisterAdminPharamcyPage from '../components/RegisterAdminPharamcyPage'
 import AcceptRejectVacation from '../components/AcceptRejectVacation'
 
 import WriteComplaint from '../components/WriteComplaint.vue'
+import RegisterNewSupplier from '../components/RegisterNewSupplier'
+import SupplierHomePage from '../components/SupplierHomePage'
 
 import moment from 'moment'
 
@@ -358,6 +360,18 @@ const routes = [
         name: 'WriteComplaint',
         component: WriteComplaint
       },
+      {
+        path: '/RegisterNewSupplier/:id',
+        name: 'RegisterNewSupplier',
+        component: RegisterNewSupplier
+      },
+      {
+        path: '/SupplierHomePage/:id',
+        name: 'SupplierHomePage',
+        component: SupplierHomePage
+      }
+
+      
       
 
 

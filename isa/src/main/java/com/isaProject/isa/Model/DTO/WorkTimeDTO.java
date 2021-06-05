@@ -74,7 +74,7 @@ public class WorkTimeDTO implements Serializable {
     public void setPharmacy(Pharmacy pharmacy) {
         this.pharmacy = pharmacy;
     }
-
+  
     public WorkTimeDTO(LocalDate date, LocalTime startTime, LocalTime endTime, Staff staff, Pharmacy pharmacy) {
         this.date = date;
         this.startTime = startTime;

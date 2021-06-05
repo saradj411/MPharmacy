@@ -28,6 +28,7 @@ import org.springframework.stereotype.Service;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.ZoneId;
 import java.util.*;
 import java.util.HashSet;
 import java.util.List;
@@ -223,7 +224,12 @@ public class DermatologistService implements IDermatologistService, Serializable
             pharmacies.add(pharmacy);
 
             WorkTimeDTO workTimeDTO = new WorkTimeDTO();
-            workTimeDTO.setDate(dermDTO.getDate());
+            LocalDate date = (dermDTO.getDate()).toInstant()
+                    .atZone(ZoneId.systemDefault())
+                    .toLocalDate();
+
+
+            workTimeDTO.setDate(date);
             workTimeDTO.setStartTime(dermDTO.getStartTime());
             workTimeDTO.setEndTime(dermDTO.getEndTime());
             workTimeDTO.setStaff(staff);

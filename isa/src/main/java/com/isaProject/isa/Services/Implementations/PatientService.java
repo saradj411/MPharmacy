@@ -142,6 +142,11 @@ public class PatientService implements IPatientService {
     }
 
     @Override
+    public List<ERecipe> findERecipe(Integer id) {
+        return null;
+    }
+
+    @Override
     public Set<FrontCreatedExaminationDTO> findFinishedDermatologistExamination(Integer id) {
         Patient patient=patientRepository.findById(id).get();
         Set<Examination> examinations=new HashSet<>();

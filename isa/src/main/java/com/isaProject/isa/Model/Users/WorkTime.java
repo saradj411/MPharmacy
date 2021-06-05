@@ -103,6 +103,7 @@ public class WorkTime {
         this.pharmacy = pharmacy;
     }
 
+    
     public WorkTime(Integer id, LocalDate date, LocalTime startTime, LocalTime endTime, Staff staff, Pharmacy pharmacy) {
         this.id = id;
         this.date = date;
