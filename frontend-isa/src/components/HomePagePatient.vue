@@ -17,7 +17,8 @@
            <button class="btn btn-danger btn-lg" style="float:left;margin-top:15px;margin-left:10px" v-on:click = "showCreatedPharmacist">Schedule Consultation</button>
            <button class="btn btn-danger btn-lg" style="float:left;margin-top:15px;margin-left:10px" v-on:click = "showAllDrugs">Reserve drug</button>
            
-            
+            <button class="btn btn-danger btn-lg" style="float:left;margin-top:15px;margin-left:10px" v-on:click = "writeComplaint">Complaint</button>
+           
                                   
         </div>
 
@@ -55,11 +56,11 @@
 
               <div class="column">
                  <h4 style="margin:5px">SORT PHARMACIES BY:</h4>  
-                  <button class="btn btn-danger btn-lg" style="float:left;margin-left:20px;" v-on:click = "sortByGradeR">GradeR</button>
-            <button class="btn btn-danger btn-lg" style="float:left;margin-left:10px" v-on:click = "sortByGradeO">GradeO</button>
+                  <button class="btn btn-dark" style="float:left;margin-left:30px;" v-on:click = "sortByGradeR">GradeR</button>
+            <button class="btn btn-dark" style="float:left;margin-left:10px" v-on:click = "sortByGradeO">GradeO</button>
            
-           <button class="btn btn-danger btn-lg" style="float:left;margin-left:10px" v-on:click = "sortByNameAscending">NameR</button>
-            <button class="btn btn-danger btn-lg" style="float:left;margin-left:10px" v-on:click = "sortByNameDescending">nameO</button>
+           <button class="btn btn-dark" style="float:left;margin-left:10px" v-on:click = "sortByNameAscending">NameR</button>
+            <button class="btn btn-dark" style="float:left;margin-left:10px" v-on:click = "sortByNameDescending">nameO</button>
             
 
               </div>
@@ -68,11 +69,11 @@
 
               <div class="column">
                  <h4 style="margin:5px">SORT EXAMINATIONS BY:</h4>  
-                  <button class="btn btn-danger btn-lg" style="float:left;margin-left:20px;" v-on:click = "sortCDExamByGradeR">GradeR</button>
-            <button class="btn btn-danger btn-lg" style="float:left;margin-left:10px" v-on:click = "sortCDExamByGradeO">GradeO</button>
+                  <button class="btn btn-dark" style="float:left;margin-left:20px;" v-on:click = "sortCDExamByGradeR">GradeR</button>
+            <button class="btn btn-dark" style="float:left;margin-left:10px" v-on:click = "sortCDExamByGradeO">GradeO</button>
            
-           <button class="btn btn-danger btn-lg" style="float:left;margin-left:10px" v-on:click = "sortCDExamByPriceAscending">PriceR</button>
-            <button class="btn btn-danger btn-lg" style="float:left;margin-left:10px" v-on:click = "sortCDExamByPriceDescending">PriceO</button>
+           <button class="btn btn-dark" style="float:left;margin-left:10px" v-on:click = "sortCDExamByPriceAscending">PriceR</button>
+            <button class="btn btn-dark" style="float:left;margin-left:10px" v-on:click = "sortCDExamByPriceDescending">PriceO</button>
             
 
               </div>
@@ -81,8 +82,8 @@
 
               <div class="column">
                  <h4 style="margin:5px">SORT eRECIPES BY:</h4>  
-                  <button class="btn btn-danger btn-lg" style="float:left;margin-left:20px;" v-on:click = "sortERecipeByDateR">Date Of Issue R</button>
-           <button class="btn btn-danger btn-lg" style="float:left;margin-left:20px;" v-on:click = "sortERecipeByDateO">Date Of Issue O</button>
+                  <button class="btn btn-dark" style="float:left;margin-left:20px;" v-on:click = "sortERecipeByDateR">Date Of Issue R</button>
+           <button class="btn btn-dark" style="float:left;margin-left:20px;" v-on:click = "sortERecipeByDateO">Date Of Issue O</button>
           
               </div>
     </div>
@@ -90,10 +91,10 @@
 
               <div class="column">
                  <h4 style="margin:5px">SORT FINISHED EXAMINATIONS BY:</h4>  
-                  <button class="btn btn-danger btn-lg" style="float:left;margin-left:20px;" v-on:click = "sortFDExamByPriceR">PriceR</button>
-                   <button class="btn btn-danger btn-lg" style="float:left;margin-left:20px;" v-on:click = "sortFDExamByPriceO">PriceO</button>
-              <button class="btn btn-danger btn-lg" style="float:left;margin-left:20px;" v-on:click = "sortFDExamByDateR">DateR</button>
-                   <button class="btn btn-danger btn-lg" style="float:left;margin-left:20px;" v-on:click = "sortFDExamByDateO">DateO</button>
+                  <button class="btn btn-dark" style="float:left;margin-left:20px;" v-on:click = "sortFDExamByPriceR">PriceR</button>
+                   <button class="btn btn-dark" style="float:left;margin-left:20px;" v-on:click = "sortFDExamByPriceO">PriceO</button>
+              <button class="btn btn-dark" style="float:left;margin-left:20px;" v-on:click = "sortFDExamByDateR">DateR</button>
+                   <button class="btn btn-dark" style="float:left;margin-left:20px;" v-on:click = "sortFDExamByDateO">DateO</button>
           
               </div>
     </div>
@@ -150,7 +151,12 @@
        <td>{{pharmacy.address}}</td>
 
     </tr>
-   
+   <tr>
+      <th></th>
+      <td ></td>   
+        <td><button class="btn btn-danger btn-sm" v-on:click = "unsubscribe(pharmacy.idPharm)">Unsubscribe</button></td>
+
+    </tr>
   </tbody>
 </table>
            </div>
@@ -892,6 +898,9 @@ methods:{
      myProfile : function(){
           window.location.href = "/ProfilePatient/"+this.id;
       },
+      writeComplaint:function(){
+          window.location.href = "/WriteComplaint/"+this.id;
+      },
        showPharmacies: function(){
         this.showTable=true
         this.showReserveTable=false
@@ -1411,6 +1420,11 @@ methods:{
                          alert("Sorting is currently not possible");
                         console.log(res)
                     })
+      },
+      
+      unsubscribe: function(idPharmacy){
+        console.log(idPharmacy)
+      //OVDJE POZVATI FUNKCIJU ZA ODJAVU APOTEKA
       }
          
           
