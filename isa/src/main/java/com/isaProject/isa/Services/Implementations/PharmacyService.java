@@ -6,7 +6,9 @@ import com.isaProject.isa.Model.Users.PharmacyAdmin;
 import com.isaProject.isa.Repositories.PharmacyRepository;
 import com.isaProject.isa.Services.IServices.IPharmacyService;
 import lombok.extern.slf4j.Slf4j;
+import lombok.var;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
@@ -23,8 +25,16 @@ public class PharmacyService implements IPharmacyService {
     @Autowired
     PharmacyAdminService pharmacyAdminService;
 
+    @Override
+    public List<Pharmacy> findAllOrderByNameAsc() {
 
+        return pharmacyRepository.findAllOrderByNameAsc(Sort.by("name").ascending());
+    }
+    @Override
+    public List<Pharmacy> findAllOrderByNameDesc() {
 
+        return pharmacyRepository.findAllOrderByNameAsc(Sort.by("name").descending());
+    }
 
     @Override
     public Pharmacy findById(Integer id) {

@@ -175,7 +175,7 @@ public class PharmacyController {
 
         return ResponseEntity.ok(pharmacies);
     }
-    @GetMapping("/sortByGradeGrowing")
+    @GetMapping("/sortByGradeAscending")
     ResponseEntity<List<Pharmacy>> sortByGradeGrowing()
     {
         List<Pharmacy> pharmacies = pharmacyService.findAll();
@@ -193,22 +193,16 @@ public class PharmacyController {
     @GetMapping("/sortByNameDescending")
     ResponseEntity<List<Pharmacy>> sortByNameDescending()
     {
-        List<Pharmacy> pharmacies = pharmacyService.findAll();
-        
+        List<Pharmacy> pharmacies = pharmacyService.findAllOrderByNameDesc();
+
 
         return ResponseEntity.ok(pharmacies);
     }
-    @GetMapping("/sortByNameGrowing")
+    @GetMapping("/sortByNameAscending")
     ResponseEntity<List<Pharmacy>> sortByNameGrowing()
     {
-        List<Pharmacy> pharmacies = pharmacyService.findAll();
-        Collections.sort(pharmacies, new Comparator<Pharmacy>() {
-            @Override
-            public int compare(Pharmacy c1, Pharmacy c2) {
-                return Double.compare(c1.getAvgGrade(), c2.getAvgGrade());
+        List<Pharmacy> pharmacies = pharmacyService.findAllOrderByNameAsc();
 
-            }
-        });
 
         return ResponseEntity.ok(pharmacies);
     }

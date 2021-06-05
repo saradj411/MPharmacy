@@ -58,12 +58,9 @@
                   <button class="btn btn-danger btn-lg" style="float:left;margin-left:20px;" v-on:click = "sortByGradeR">GradeR</button>
             <button class="btn btn-danger btn-lg" style="float:left;margin-left:10px" v-on:click = "sortByGradeO">GradeO</button>
            
-           <button class="btn btn-danger btn-lg" style="float:left;margin-left:10px" v-on:click = "showReservation">Drug reservation</button>
-            <button class="btn btn-danger btn-lg" style="float:left;margin-left:10px" v-on:click = "showConsultation">Consultation</button>
-            <button class="btn btn-danger btn-lg" style="float:left;margin-left:10px" v-on:click = "showExamination">Examination</button>
-           <button class="btn btn-danger btn-lg" style="float:left;margin-left:10px" v-on:click = "showRecipe">eRecipe</button>
-           <button class="btn btn-danger btn-lg" style="float:left;margin-left:10px" v-on:click = "showCreatedDerm">Schedule Examination</button>
-           
+           <button class="btn btn-danger btn-lg" style="float:left;margin-left:10px" v-on:click = "sortByNameAscending">NameR</button>
+            <button class="btn btn-danger btn-lg" style="float:left;margin-left:10px" v-on:click = "sortByNameDescending">nameO</button>
+            
 
               </div>
  </div>
@@ -1172,7 +1169,7 @@ methods:{
 
 
         sortByGradeR: function(){
-      this.axios.get('/pharmacy/sortByGradeGrowing')
+      this.axios.get('/pharmacy/sortByGradeAscending')
           .then(response => {
                console.log(response.data);
               this.pharmacies = response.data;
@@ -1180,7 +1177,7 @@ methods:{
                 })
                 .catch(res => {
                      
-                        alert("Unable to apply filter right now.");
+                        alert("Sorting is currently not possible");
                         console.log(res)
                     })
       },
@@ -1193,73 +1190,38 @@ methods:{
                 })
                 .catch(res => {
                      
-                        alert("Unable to apply filter right now.");
+                         alert("Sorting is currently not possible");
                         console.log(res)
                     })
       },
       
-     
-           cityfromatoz: function(){
-   
-      this.axios.get('/pharmacy/cityfromatoz')
+     sortByNameDescending: function(){
+      this.axios.get('/pharmacy/sortByNameDescending')
           .then(response => {
                console.log(response.data);
-                   this.dermatologistAppointments = response.data;
-              this.showTable = false;
-              this.showTable = true;
-               })
-                .catch(res => {
-                     
-                      alert("Unable to apply filter right now.");
-                        console.log(res)
-                    })
-      },
-  
-        cityfromztoa: function(){
-   
-      this.axios.get('/pharmacy/cityfromztoa')
-          .then(response => {
-               console.log(response.data);
-                   this.dermatologistAppointments = response.data;
-              this.showTable = false;
-              this.showTable = true;
+              this.pharmacies = response.data;
+              
                 })
                 .catch(res => {
                      
-                       alert("Unable to apply filter right now.");
+                        alert("Sorting is currently not possible");
                         console.log(res)
                     })
       },
-      namefromatoz: function(){
-   
-      this.axios.get('/pharmacy/namefromatoz')
+       sortByNameAscending: function(){
+      this.axios.get('/pharmacy/sortByNameAscending')
           .then(response => {
                console.log(response.data);
-                  this.dermatologistAppointments = response.data;
-              this.showTable = false;
-              this.showTable = true;
-               })
-                .catch(res => {
-                     
-                        alert("Unable to apply filter right now.");
-                        console.log(res)
-                    })
-      },
-            namefromztoa: function(){
-   
-      this.axios.get('/pharmacy/namefromztoa')
-          .then(response => {
-               console.log(response.data);
-                  this.dermatologistAppointments = response.data;
-              this.showTable = false;
-              this.showTable = true;
+              this.pharmacies = response.data;
+              
                 })
                 .catch(res => {
                      
-                        alert("Unable to apply filter right now.");
+                         alert("Sorting is currently not possible");
                         console.log(res)
                     })
-      },
+      }
+          
 
 }
 }
