@@ -243,6 +243,21 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/pharmacy/findByName/{name}").permitAll()
                 .antMatchers("/reservation/create").permitAll()
 
+                .antMatchers("/pharmacy/sortByGradeDescending").permitAll()
+                .antMatchers("/examination/sortByGradeDescending").permitAll()
+                .antMatchers("/examination/sortByPriceAscending").permitAll()
+                .antMatchers("/examination/sortByPriceDescending").permitAll()
+                .antMatchers("/pharmacy/sortByGradeAscending").permitAll()
+                .antMatchers("/examination/sortByGradeAscending").permitAll()
+                .antMatchers("/pharmacy/sortByNameDescending").permitAll()
+                .antMatchers("/pharmacy/sortByNameAscending").permitAll()
+                .antMatchers("/erecipe/sortByDateAscending/{id}").permitAll()
+                .antMatchers("/erecipe/sortByDateDescending/{id}").permitAll()
+                .antMatchers("/examination/sortFinishedDEByPriceDesc/{id}").permitAll()
+                .antMatchers("/examination/sortFinishedDEByDateDesc/{id}").permitAll()
+                .antMatchers("/examination/sortFinishedDEByPriceAsc/{id}").permitAll()
+                .antMatchers("/examination/sortFinishedDEByDateAsc/{id}").permitAll()
+
                 //Ovo je dostupno svim korisnicima! Sve ostalo treba da ima pravo pristupa!
                 .antMatchers("/user/savePatient").permitAll()
                 .antMatchers("/user/loggedUser").permitAll()

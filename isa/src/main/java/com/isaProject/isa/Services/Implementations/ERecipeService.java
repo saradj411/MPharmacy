@@ -6,13 +6,18 @@ import com.isaProject.isa.Model.Drugs.ERecipe;
 import com.isaProject.isa.Model.Examination.Examination;
 import com.isaProject.isa.Model.Examination.ExaminationStatus;
 import com.isaProject.isa.Model.Examination.ExaminationType;
+import com.isaProject.isa.Model.Pharmacy.Pharmacy;
 import com.isaProject.isa.Repositories.ERecipeRepository;
 import com.isaProject.isa.Services.IServices.IERecipeService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 @Service
@@ -34,8 +39,8 @@ public class ERecipeService implements IERecipeService {
                     );
                     newList.add(exDTO);
                 }
-
-
         return newList;
     }
+
+
 }

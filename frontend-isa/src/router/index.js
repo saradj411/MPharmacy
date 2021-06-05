@@ -57,6 +57,8 @@ import RegisterNewPharmacy from '../components/RegisterNewPharmacy'
 import RegisterAdminPharamcyPage from '../components/RegisterAdminPharamcyPage'
 import AcceptRejectVacation from '../components/AcceptRejectVacation'
 
+import WriteComplaint from '../components/WriteComplaint.vue'
+
 import moment from 'moment'
 
 
@@ -350,7 +352,12 @@ const routes = [
         path: '/IncomeReport/:id',
         name: 'IncomeReport',
         component: IncomeReport
-      }
+      },
+      {
+        path: '/WriteComplaint/:id',
+        name: 'WriteComplaint',
+        component: WriteComplaint
+      },
       
 
 

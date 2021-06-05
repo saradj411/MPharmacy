@@ -143,15 +143,6 @@ public class PatientController {
                 new ResponseEntity<>(HttpStatus.NOT_FOUND) :
                 ResponseEntity.ok(d);
     }
-    /*@GetMapping(value = "/findERecipe/{id}")
-    public ResponseEntity<List<ERecipe>> findERecipe(@PathVariable Integer id) {
-
-        List<ERecipe> d= patientService.findERecipe(id);
-
-        return d == null ?
-                new ResponseEntity<>(HttpStatus.NOT_FOUND) :
-                ResponseEntity.ok(d);
-    }*/
 
 
     @GetMapping(value = "/findAll")
