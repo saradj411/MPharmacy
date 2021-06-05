@@ -24,6 +24,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.mail.MessagingException;
 import java.time.LocalDate;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 
@@ -196,5 +198,37 @@ public class ExaminationController {
 
         return new ResponseEntity<>(res, HttpStatus.OK);
 
+    }
+
+    @GetMapping("/sortByGradeDescending")
+    ResponseEntity<List<FrontCreatedExaminationDTO>> sortByGradedescending()
+    {
+        List<FrontCreatedExaminationDTO> pharmacies = examinationService.findCreatedDermatologistExamination();
+        Collections.sort(pharmacies, new Comparator<FrontCreatedExaminationDTO>() {
+            @Override
+            public int compare(FrontCreatedExaminationDTO p1, FrontCreatedExaminationDTO p2) {
+                return Double.compare(p1.getGradeStaff(), p2.getGradeStaff());
+
+            }
+        });
+
+        Collections.reverse(pharmacies);
+
+        return ResponseEntity.ok(pharmacies);
+    }
+
+    @GetMapping("/sortByGradeAscending")
+    ResponseEntity<List<FrontCreatedExaminationDTO>> sortByGradeAscending()
+    {
+        List<FrontCreatedExaminationDTO> pharmacies = examinationService.findCreatedDermatologistExamination();
+        Collections.sort(pharmacies, new Comparator<FrontCreatedExaminationDTO>() {
+            @Override
+            public int compare(FrontCreatedExaminationDTO p1, FrontCreatedExaminationDTO p2) {
+                return Double.compare(p1.getGradeStaff(), p2.getGradeStaff());
+
+            }
+        });
+
+        return ResponseEntity.ok(pharmacies);
     }
 }

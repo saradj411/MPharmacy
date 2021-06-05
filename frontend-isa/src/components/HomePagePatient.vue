@@ -63,7 +63,21 @@
             
 
               </div>
- </div>
+    </div>
+    <div v-if="showSortCreatedDermatologistExamination"  style="background:#B0B3D6; height: 90px; margin-top:15px;margin-left:15px;margin-right:15px;">
+
+              <div class="column">
+                 <h4 style="margin:5px">SORT EXAMINATION BY:</h4>  
+                  <button class="btn btn-danger btn-lg" style="float:left;margin-left:20px;" v-on:click = "sortCDExamByGradeR">GradeR</button>
+            <button class="btn btn-danger btn-lg" style="float:left;margin-left:10px" v-on:click = "sortCDExamByGradeO">GradeO</button>
+           
+           <button class="btn btn-danger btn-lg" style="float:left;margin-left:10px" v-on:click = "sortCDExamByPriceAscending">PriceR</button>
+            <button class="btn btn-danger btn-lg" style="float:left;margin-left:10px" v-on:click = "sortCDExamByPriceDescending">PriceO</button>
+            
+
+              </div>
+    </div>
+ 
 
 <!-- all PHARMACIES!-->
   <div v-if="showTable"  style="float:left;margin-left:30px;">
@@ -712,6 +726,7 @@ export default {
         showSearchDrug:false,
         showScheduleSearch:false,
         showSortPharmacies:true,
+        showSortCreatedDermatologistExamination:false,
 
         pharmacies : [],
         pharmacies1 : [],
@@ -872,6 +887,7 @@ methods:{
          this.showScheduleSearch=false
          this.showFreeStaff=false
          this.showSortPharmacies=true
+         this.showSortCreatedDermatologistExamination=false
        //this.showSearchPharmacy=true
       },
       showReservation:
@@ -891,6 +907,7 @@ methods:{
          this.showCreatedPharmExamination=false
            this.showFreeStaff=false
             this.showSortPharmacies=false
+            this.showSortCreatedDermatologistExamination=false
       },
       showConsultation:
        function(){
@@ -909,6 +926,7 @@ methods:{
           this.showFreeStaff=false
          this.showCreatedPharmExamination=false
          this.showSortPharmacies=false
+         this.showSortCreatedDermatologistExamination=false
       },
       showRecipe: function(){
         
@@ -927,6 +945,7 @@ methods:{
         this.showScheduleSearch=false
           this.showFreeStaff=false
           this.showSortPharmacies=false
+          this.showSortCreatedDermatologistExamination=false
       },
       showExamination:
        function(){
@@ -945,6 +964,7 @@ methods:{
          this.showCreatedPharmExamination=false
            this.showFreeStaff=false
            this.showSortPharmacies=false
+           this.showSortCreatedDermatologistExamination=false
       },
       showCreatedDerm:
        function(){
@@ -963,6 +983,7 @@ methods:{
          this.showCreatedPharmExamination=false
            this.showFreeStaff=false
            this.showSortPharmacies=false
+           this.showSortCreatedDermatologistExamination=true
       },
       showCreatedPharmacist:
       function(){
@@ -980,7 +1001,8 @@ methods:{
         this.showScheduleSearch=true
         this.showCreatedPharmExamination=true
           this.showFreeStaff=false
-          this.showSortPharmacies=false
+          this.showSortPharmacies=
+          this.showSortCreatedDermatologistExamination=false
       },
       showAllDrugs: function(){
         this.showTable=false
@@ -998,6 +1020,7 @@ methods:{
          this.showCreatedPharmExamination=false
            this.showFreeStaff=false
            this.showSortPharmacies=false
+           this.showSortCreatedDermatologistExamination=false
       },
       canceling:
        function(res,idRes){
@@ -1220,6 +1243,59 @@ methods:{
                          alert("Sorting is currently not possible");
                         console.log(res)
                     })
+      },
+      sortCDExamByGradeR: function(){
+      this.axios.get('/examination/sortByGradeAscending')
+          .then(response => {
+               console.log(response.data);
+              this.dermatologistCreatedExamination = response.data;
+              
+                })
+                .catch(res => {
+                     
+                        alert("Sorting is currently not possible");
+                        console.log(res)
+                    })
+      },
+       sortCDExamByGradeO: function(){
+      this.axios.get('/examination/sortByGradeDescending')
+          .then(response => {
+               console.log(response.data);
+              this.dermatologistCreatedExamination = response.data;
+              
+                })
+                .catch(res => {
+                     
+                         alert("Sorting is currently not possible");
+                        console.log(res)
+                    })
+      },
+      
+     sortCDExamByPriceAscending: function(){
+      this.axios.get('/examination/sortByNameDescending')
+          .then(response => {
+               console.log(response.data);
+              this.dermatologistCreatedExamination = response.data;
+              
+                })
+                .catch(res => {
+                     
+                        alert("Sorting is currently not possible");
+                        console.log(res)
+                    })
+      },
+       sortCDExamByPriceDescending: function(){
+      this.axios.get('/examination/sortByNameAscending')
+          .then(response => {
+               console.log(response.data);
+              this.dermatologistCreatedExamination = response.data;
+              
+                })
+                .catch(res => {
+                     
+                         alert("Sorting is currently not possible");
+                        console.log(res)
+                    })
       }
           
 
@@ -1227,4 +1303,9 @@ methods:{
 }
 </script>
 
-  
+    <button class="btn btn-danger btn-lg" style="float:left;margin-left:20px;" v-on:click = "sortCDExamByGradeR">GradeR</button>
+            <button class="btn btn-danger btn-lg" style="float:left;margin-left:10px" v-on:click = "sortCDExamByGradeO">GradeO</button>
+           
+           <button class="btn btn-danger btn-lg" style="float:left;margin-left:10px" v-on:click = "sortCDExamByPriceAscending">PriceR</button>
+            <button class="btn btn-danger btn-lg" style="float:left;margin-left:10px" v-on:click = "sortCDExamByPriceDescending">PriceO</button>
+            

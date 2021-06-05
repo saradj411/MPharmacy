@@ -243,7 +243,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/pharmacy/findByName/{name}").permitAll()
                 .antMatchers("/reservation/create").permitAll()
                 .antMatchers("/pharmacy/sortByGradeDescending").permitAll()
+                .antMatchers("/examination/sortByGradeDescending").permitAll()
                 .antMatchers("/pharmacy/sortByGradeAscending").permitAll()
+                .antMatchers("/examination/sortByGradeAscending").permitAll()
                 .antMatchers("/pharmacy/sortByNameDescending").permitAll()
                 .antMatchers("/pharmacy/sortByNameAscending").permitAll()
 
