@@ -1272,7 +1272,7 @@ methods:{
       },
       
      sortCDExamByPriceAscending: function(){
-      this.axios.get('/examination/sortByNameDescending')
+      this.axios.get('/examination/sortByPriceAscending')
           .then(response => {
                console.log(response.data);
               this.dermatologistCreatedExamination = response.data;
@@ -1285,7 +1285,7 @@ methods:{
                     })
       },
        sortCDExamByPriceDescending: function(){
-      this.axios.get('/examination/sortByNameAscending')
+      this.axios.get('/examination/sortByPriceDescending')
           .then(response => {
                console.log(response.data);
               this.dermatologistCreatedExamination = response.data;

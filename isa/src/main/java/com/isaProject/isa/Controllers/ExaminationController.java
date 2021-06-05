@@ -231,4 +231,36 @@ public class ExaminationController {
 
         return ResponseEntity.ok(pharmacies);
     }
+
+    @GetMapping("/sortByPriceDescending")
+    ResponseEntity<List<FrontCreatedExaminationDTO>> sortByPriceDescending()
+    {
+        List<FrontCreatedExaminationDTO> pharmacies = examinationService.findCreatedDermatologistExamination();
+        Collections.sort(pharmacies, new Comparator<FrontCreatedExaminationDTO>() {
+            @Override
+            public int compare(FrontCreatedExaminationDTO p1, FrontCreatedExaminationDTO p2) {
+                return Double.compare(p1.getPrice(), p2.getPrice());
+
+            }
+        });
+
+        Collections.reverse(pharmacies);
+
+        return ResponseEntity.ok(pharmacies);
+    }
+
+    @GetMapping("/sortByPriceAscending")
+    ResponseEntity<List<FrontCreatedExaminationDTO>> sortByPriceAscending()
+    {
+        List<FrontCreatedExaminationDTO> pharmacies = examinationService.findCreatedDermatologistExamination();
+        Collections.sort(pharmacies, new Comparator<FrontCreatedExaminationDTO>() {
+            @Override
+            public int compare(FrontCreatedExaminationDTO p1, FrontCreatedExaminationDTO p2) {
+                return Double.compare(p1.getPrice(), p2.getPrice());
+
+            }
+        });
+
+        return ResponseEntity.ok(pharmacies);
+    }
 }
