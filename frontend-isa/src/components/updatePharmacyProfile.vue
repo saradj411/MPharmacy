@@ -40,12 +40,6 @@
            <b-link style="font-size:20px;color:black;" :href="href" @click="navigate"  elevation="1">List of drugs
              </b-link></router-link>
            </b-dropdown-item>
-                                    <b-dropdown-item>
-
-                                      <router-link :to="{ path: '/DrugPricelist/'+pharmacy.idPharm}" v-slot="{href, navigate}" custom>
-           <b-link style="font-size:20px;color:black;" :href="href" @click="navigate"  elevation="1">Drug price list
-             </b-link></router-link>
-           </b-dropdown-item>
 
            <b-dropdown-item>
 
@@ -53,13 +47,25 @@
            <b-link style="font-size:20px;color:black;" :href="href" @click="navigate"  elevation="1">Add drug
              </b-link></router-link>
            </b-dropdown-item>
+                                    <b-dropdown-item>
+
+                                      <router-link :to="{ path: '/DrugPricelist/'+pharmacy.idPharm}" v-slot="{href, navigate}" custom>
+           <b-link style="font-size:20px;color:black;" :href="href" @click="navigate"  elevation="1">Drug price list
+             </b-link></router-link>
+           </b-dropdown-item>
+
+           
+
+           <b-dropdown-item>
+
+                                      <router-link :to="{ path: '/CreatePricelist/'+pharmacy.idPharm}" v-slot="{href, navigate}" custom>
+           <b-link style="font-size:20px;color:black;" :href="href" @click="navigate"  elevation="1">Create price list
+             </b-link></router-link>
+           </b-dropdown-item>
        
                                 </b-dropdown>
 
-                                 <router-link :to="{ path: '/CreatePricelist/'+pharmacy.idPharm}" v-slot="{href, navigate}" custom>
-
-                  <button class = "btn btn-primary btn-xs" style="margin:auto; margin-left:38px;background:#474A8A " :href="href" @click="navigate" elevation="1">Create pricelist</button>
-               </router-link>
+                                 
             </span>
                                   
         </div>

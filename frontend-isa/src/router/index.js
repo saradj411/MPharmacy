@@ -44,6 +44,7 @@ import RegisterNewPharmacy from '../components/RegisterNewPharmacy'
 import RegisterAdminPharamcyPage from '../components/RegisterAdminPharamcyPage'
 import AcceptRejectVacation from '../components/AcceptRejectVacation'
 import CreatePricelist from '../components/CreatePricelist'
+import UpdatePricelist from '../components/UpdatePricelist'
 
 
 import moment from 'moment'
@@ -303,6 +304,11 @@ const routes = [
         path: '/CreatePricelist/:id',
         name: 'CreatePricelist',
         component: CreatePricelist
+      },
+      {
+        path: '/UpdatePricelist/:id',
+        name: 'UpdatePricelist',
+        component: UpdatePricelist
       }
       
       

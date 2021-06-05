@@ -7,10 +7,10 @@
         
                      <label style="color:#474A8A;font-size:35px;" align = "center">Drug price list:</label>
 
-        <div style="background:#B0B3D6; width:650px;margin-left:38px;"  v-for="d in this.drug"  v-bind:key="d.idDrug">
+        <div style=" width:650px;margin-left:38px;"  v-for="d in this.drugpricelist"  v-bind:key="d.idPricelist">
 
                    <form>
-                      <table style="" id="table2" class="table" >
+                      <table id="table2" class="table" style="background:#B0B3D6;" >
 
                        <tbody>
 <tr style="font-size:22px;color:#0D184F;">
@@ -32,6 +32,16 @@
     
   </tbody>
                         </table>
+
+ <router-link :to="{ path: '/UpdatePricelist/'+d.idPricelist}" v-slot="{href, navigate}" custom>
+
+                  <button class = "btn btn-primary btn-xs" style="margin:auto; margin-left:38px;background:#474A8A " :href="href" @click="navigate" elevation="1">Update pricelist</button>
+               </router-link>
+
+
+
+
+
                 </form>
       
                     </div>
@@ -51,36 +61,30 @@ export default {
     return {
       
        id : this.$route.params.id,
-       drug : {},
-       drugs : {},
+       drugpricelist : {},
+       pricelist:{}
 
        
     }
   },
   mounted() {
-        this.axios.get('/drugPricelist/getDrugsPharmacy/'+this.id)
+        this.axios.get('/drugPricelist/getDrugsPricelistByIdPharm/'+this.id)
         .then(response => {
-                this.drug = response.data;
+                this.drugpricelist = response.data;
                  
        
          }).catch(res => {
                 alert("Ne valja");
                 console.log(res);
         });
-        this.axios.get('/pharmacy/getDrugsPharmacy/'+this.id)
-        .then(response => {
-                this.drugs = response.data;
-                 
-       
-         }).catch(res => {
-                alert("Ne valja");
-                console.log(res);
-        });
+        
+        
        
        
     }
      ,
       methods:{
+       
     
       
       }
