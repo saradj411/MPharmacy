@@ -43,7 +43,8 @@ import RegisterNewSystemAdmin from '../components/RegisterNewSystemAdmin'
 import RegisterDermatologist from '../components/RegisterDermatologist'
 import RegisterNewPharmacy from '../components/RegisterNewPharmacy'
 import RegisterAdminPharamcyPage from '../components/RegisterAdminPharamcyPage'
-
+import RegisterNewSupplier from '../components/RegisterNewSupplier'
+import SupplierHomePage from '../components/SupplierHomePage'
 
 import moment from 'moment'
 
@@ -292,6 +293,19 @@ const routes = [
         name: 'InssuingDrug',
         component: InssuingDrug
       }
+      ,
+      {
+        path: '/RegisterNewSupplier/:id',
+        name: 'RegisterNewSupplier',
+        component: RegisterNewSupplier
+      },
+      {
+        path: '/SupplierHomePage/:id',
+        name: 'RegisterNewSupplier',
+        component: SupplierHomePage
+      }
+
+      
       
       
 

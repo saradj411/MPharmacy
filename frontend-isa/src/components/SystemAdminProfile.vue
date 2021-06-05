@@ -36,8 +36,7 @@
             token: "",
             userAuth: localStorage.getItem('accessToken'), 
             id : this.$route.params.id,
-            loggedAdmin: {} ,
-            allPharmacyAdmins: {}              
+            loggedAdmin: {}              
            
         }
       },
@@ -54,8 +53,8 @@
             window.location.href = '/RegisterDermatologist/' + this.id;
         },
         AddSupplierPage: function()
-        {
-            
+        {            
+            window.location.href = '/RegisterNewSupplier/' + this.id;
         },
         AddLoyalityProgram: function()
         {
@@ -117,7 +116,7 @@
                 }
             }).then(response => {
 
-                  this.allPharmacyAdmins = response.data;
+                  this.loggedAdmin = response.data;
                   console.log(this.loggedAdmin);
 
             }).catch(res => {

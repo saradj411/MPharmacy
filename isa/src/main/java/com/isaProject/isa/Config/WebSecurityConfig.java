@@ -214,9 +214,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/user/savePatient").permitAll()
                 .antMatchers("/user/loggedUser").permitAll()
                 .antMatchers("/user/login").permitAll()
-
+                .antMatchers("/drugOrder/**").permitAll()
                 //ove zakomentarisati jer imau AUtorizaciju
                 .antMatchers("/adminstrator/findAll").permitAll()
+                .antMatchers("/offer/**").permitAll()
+                .antMatchers("/user/findByEmail/**").permitAll()
+
                 //.antMatchers("/adminstrator/savePharmacyAdmin").permitAll()
                 /*.antMatchers("/user/saveSupplier")
                 .permitAll().antMatchers("/user/findAll")

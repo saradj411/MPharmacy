@@ -84,9 +84,6 @@ public class ServiceForEmail{
 
     }
 
-
-
-
     public void sendingAnEmailToInformPatientAboutExamination (ExaminationDTO examinationDTO) throws MessagingException {
 
        // System.out.println("usao u funkc za slanje mejla "+offer.getSupplier().getEmail() );

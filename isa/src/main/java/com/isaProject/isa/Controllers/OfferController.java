@@ -1,5 +1,6 @@
 package com.isaProject.isa.Controllers;
 
+import com.isaProject.isa.Model.DTO.OfferDTO;
 import com.isaProject.isa.Model.Drugs.DrugPricelist;
 import com.isaProject.isa.Model.Drugs.Offer;
 import com.isaProject.isa.Model.Users.Patient;
@@ -25,16 +26,11 @@ public class OfferController {
     @Autowired
     OfferService offerService;
 
-    @Autowired
-    OfferRepository offerRepository;
-
 
    /*
     Za svaku narudžbenicu administrator apoteke može da vidi sve ponude koje su
 dobavljači dali.Uzmi ponude po id-ju narudzbenice
      */
-
-
 
     @GetMapping(value = "/getOfferByIdOrder/{id}")
     public ResponseEntity<List<Offer>> getOfferByIdOrder(@PathVariable Integer id) {
@@ -64,6 +60,15 @@ dobavljači dali.Uzmi ponude po id-ju narudzbenice
         return offer == null ?
                 new ResponseEntity<>(HttpStatus.NOT_FOUND) :
                 ResponseEntity.ok(offer);
+    }
+
+    @PostMapping(value = "/newOffer")
+    public ResponseEntity<Offer> newOffer(@RequestBody OfferDTO offerDTO)
+    {
+        Offer offer = offerService.save(offerDTO);
+
+        return offer == null ? new ResponseEntity<>(HttpStatus.BAD_REQUEST)
+                : new ResponseEntity<>(offer, HttpStatus.CREATED);
     }
 
     /*

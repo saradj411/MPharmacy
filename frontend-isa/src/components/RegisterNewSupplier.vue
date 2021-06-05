@@ -1,9 +1,11 @@
 <template>
    <div >
     <div class="loginHolder">
-    <h1 >Add new admin of the system: </h1>
+    
     <br>
-        <div class="loginDiv">
+        <div class="userInfo">
+        <h1 >Register new supplier: </h1>
+        <br>
             <table id="loginTable">
                 <tr>
                     <td><h4 > Name: </h4> </td>
@@ -55,7 +57,7 @@
                     <td>
                     <input type="text" v-model="country" :class="{'input--error':!country}"  class="form-control" placeholder="Enter country"  aria-label="Enter phone nubmer" aria-describedby="addon-wrapping">
                     </td>   
-                </tr>                 
+                </tr>                                
                 <tr>
                     <td colspan="2">
                         <div id="errorMessage" > 
@@ -67,13 +69,16 @@
                 <br>
                 <tr>        
                     <td colspan="2">
-                        <button class = "btn btn-primary btn-xs"  :disabled="!name || !surname || !email || !address || !phoneNumber || !city
-                        || !country"  style="margin:auto; margin-left:38px;background: #000;margin-top: 10px; width: 200px;" v-on:click="registerAdmin">Confirm</button>
-                    
+                        
                     </td>
                 
                 </tr>
+                <br>
             </table>
+
+            <button class = "btn btn-primary btn-xs" :disabled="!name || !surname || !email || !address || !phoneNumber || !city
+                    || !country "    style="margin:auto; margin-left:38px;background: #000;margin-top: 10px; width: 200px;" v-on:click="registerDerm">Confirm</button>
+                
         </div>
     </div>
 </div>
@@ -91,9 +96,11 @@ export default{
             address : "",
             phoneNumber : "",
             city : "",
-            country : "",          
-            errorMessage : "",
+            country : "",      
+           
             id : this.$route.params.id,
+            
+
         }
     },
     validations:
@@ -118,51 +125,56 @@ export default{
         },
         country : {
             required            
-        }
-
+        } 
 
     },
 
     methods:
     {
-        registerAdmin : function()
-        {
-            console.log(this.name);
-                         
-                console.log("Prosao");
-                document.getElementById("errorMessage").innerHTML  = 'Succeseffully!';
-                
-                const patientInfo = 
-            {
+        registerDerm : function()
+        {   
+                const supplierInfo = { 
+            
                 name : this.name,
                 surname : this.surname,
                 email : this.email,                
                 address : this.address,
                 phoneNumber : this.phoneNumber,
                 city : this.city,
-                country : this.country
-            }            
+                country : this.country,                
 
-            this.axios.post('user/saveAdmin', patientInfo,
+                }
+            console.log( supplierInfo );
+
+            this.axios.post('/supplier/saveSupplier', supplierInfo,
             {
                 headers: 
                 {
                     'Authorization': `Bearer ` + localStorage.getItem('accessToken')
                 }}).then(response => 
                 {
-                    alert("Successfully registered new admin. Email verification is send to " + this.email);
+                    alert("Successfully registered new supplier.");
                     console.log(response.data);
-                    this.$router.push('/SystemAdminProfile/'+ this.id);                    
+                    this.$router.push('/SystemAdminProfile/'+this.id);                    
                 }).catch(res => {
-                    alert(res.response.data.message);
-                });     
-
-            } 
-        
+                    if(localStorage.getItem('accessToken') === null)
+                    {
+                        alert("Please login again.");
+                         window.location.href = '/login'
+                    }
+                    else
+                    {
+                        console.log(res.response.data.message);
+                        alert("Greska. Mozda nemate pristup ovoj stranici!");
+                    }
+                   
+                    
+                });                     
+       }                        
     },
     mounted()
     {
-
+       
     }
     
 }  
@@ -177,15 +189,19 @@ export default{
     .loginHolder
     {
         margin: 0 auto;
-        margin-top: 100px;
+        margin-top: 80px;
     }
-    .loginDiv
+    .userInfo
     {
         margin: 0 auto;
         display: block;
         
         width: 600px;
-        height: 300px;
+        height: 450px;
+    }
+    .workTime
+    {
+
     }
     #loginTable
     {

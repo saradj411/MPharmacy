@@ -58,7 +58,7 @@ public class UserController {
 
     @GetMapping(value = "/findById/{id}")
     @Async
-    @PreAuthorize("hasRole('ADMIN') or hasRole('PATIENT')") //mogu se dodati sve role ovde
+    @PreAuthorize("hasRole('ADMIN') or hasRole('PATIENT') or hasRole('SUPPLIER')") //mogu se dodati sve role ovde
     public ResponseEntity<User> findById(@PathVariable Integer id) {
 
         User user = userService.findById(id);
@@ -66,6 +66,17 @@ public class UserController {
                 new ResponseEntity<>(HttpStatus.NOT_FOUND) :
                 new ResponseEntity<>(user, HttpStatus.OK);
     }
+
+    @GetMapping(value = "/findByEmail/{email}")
+    public ResponseEntity<User> findByEmail(@PathVariable String email) {
+
+        User user = userService.findByEmail(email);
+        return user == null ?
+                new ResponseEntity<>(HttpStatus.NOT_FOUND) :
+                new ResponseEntity<>(user, HttpStatus.OK);
+    }
+
+
 
     @GetMapping(value = "/updatePenality")
     public ResponseEntity<Boolean> updatePenality(){
@@ -136,7 +147,6 @@ public class UserController {
                 new ResponseEntity<>(u, HttpStatus.OK);
     }
 
-
     @PostMapping(value =  "/saveAdmin")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<User> saveAdmin(@RequestBody UserDTO userDTO) throws MessagingException {
@@ -147,10 +157,11 @@ public class UserController {
 
     }
 
+    @PostMapping(value =  "/updateUser")
+    @PreAuthorize("hasRole('SUPPLIER') or hasRole('PATIENT') or hasROLE('ADMIN')")
+    public ResponseEntity<User> update(@RequestBody User user) throws MessagingException {
+        userService.update(user);
+        return new ResponseEntity<>(HttpStatus.OK);
 
-
-
-
-
-
+    }
 }

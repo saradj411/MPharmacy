@@ -13,7 +13,8 @@
                         <input type="text" v-model="username" 
                         class="form-control" :class="{'input--error':!username}" 
                         placeholder="Enter email" aria-label="Enter name" 
-                        aria-describedby="addon-wrapping">
+                        aria-describedby="addon-wrapping"
+                        v-on:change="emailChecked(username)">
                         
                     </td> 
                         
@@ -84,9 +85,11 @@ export default
 {
     data()
     {
+
         return{
             username: "",
-            password: ""
+            password: "",
+            user: []
         }
     },
     validations:
@@ -101,21 +104,41 @@ export default
         }
     },
     methods:
-    {
+    {   emailChecked: function(username)
+        {
+            this.axios.get('/user/findByEmail/'+ username)
+                                .then(response => {
+                                    console.log()
+                                        this.user = response.data;   
+                                                             
+                                }).catch(res => {
+                                       // alert("User doesnt exists!");
+                                        console.log(res);
+                                }); 
+                                
+                                
+                        console.log("STA:" + this.user.email);
+        },
+
         userForLogin: function()
         {
-            if(this.username == '' || this.password == '')
+            console.log("USER");  
+            console.log(this.user.email);           
+  
+
+            if(this.user.accountEnabled == false)
             {
-                console.log("PRAZNA POLJA");
+                alert("AC DIS");
             }
             else
             {
-                console.log("UDJE?");
+                
                 const loginInfo = 
                 {
                     username: this.username,
                     password: this.password
                 }
+                
 
                this.axios.post('/user/login', loginInfo, {
                     headers: 
@@ -124,7 +147,7 @@ export default
                         
                     }}).then(response => 
                     {                        
-                        localStorage.setItem( 'accessToken', response.data.accessToken);
+                        localStorage.setItem('accessToken', response.data.accessToken);
                         localStorage.setItem('expiresIn', new Date(new Date().getTime() + response.data.expiresIn).getTime());
                         this.axios.defaults.headers.common['Authorization'] = 'Bearer ' + response.data.accessToken;
                         //console.log(response.data);
@@ -135,7 +158,9 @@ export default
                                     //'Authorization': `Bearer ` + localStorage.getItem('accessToken')
                                     
                                 }}).then(response => 
-                                {                        
+                                {    
+                                    console.log("ENABLE: " +response.data.accountEnabled);
+
                                     if(response.data.authorityRole === "ROLE_ADMIN")
                                     {
                                         console.log("USAO ADMIN");
@@ -167,19 +192,20 @@ export default
                                     else if(response.data.authorityRole === "ROLE_SUPPLIER")
                                     {
                                         console.log('Supplier');
-                                            //this.$router.push('HomePagePatient/'+ response.data.id);
+                                        console.log(response.data);
+                                        this.$router.push('SupplierHomePage/'+ response.data.id);
                                     }
                                     else
                                     {
                                         console.log(response.data);
-                                        alert("User has no account!");
+                                        alert("User has no authority!");
                                     }
                                    
                                     
                                     
                                     //Odkomentarisati ovo kad se obavi verifikacija mejla
                                 }).catch(res => {                 
-                                
+                                    
                                     console.log("GRESKA");
                                     console.log(res.response);
                                     this.errorMessage = res.response.data.message;
@@ -192,13 +218,13 @@ export default
                         
                         
                         //Odkomentarisati ovo kad se obavi verifikacija mejla
-                    }).catch(res => {      
-                       
+                    }).catch(res => { 
                         if(res.response.status === 401)
-                            alert("Wrong password or email.");
+                           alert("Wrong password or email.");
                         
                         console.log(res.response);
                         this.errorMessage = res.response.data.message;
+                       
                     });    
                 /*this.$store.dispatch('login', loginInfo)
                     .then(() => this.$router.push('SystemAdminProfile'))
@@ -208,7 +234,11 @@ export default
     },
     mounted()
     {
-        
+
+        if(localStorage.getItem('accessToken') != null)
+        {
+            localStorage.clear();
+        }
     }
     
 }

@@ -82,7 +82,16 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public void update(User drug) {
+    public void update(User user) {
+        User u = findById(user.getId());
+        u.setName(user.getName());
+        u.setSurname(user.getSurname());
+        u.setEmail(user.getEmail());
+        u.setAddress(user.getAddress());
+        u.setCity(user.getCity());
+        u.setCountry(user.getCountry());
+        u.setPhoneNumber(user.getPhoneNumber());
+        userRepository.save(u);
     }
 
     @Override

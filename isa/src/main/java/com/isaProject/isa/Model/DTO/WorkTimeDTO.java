@@ -12,9 +12,6 @@ import java.util.Date;
 
 public class WorkTimeDTO {
 
-
-
-
     private LocalDate date;
 
 
@@ -69,10 +66,8 @@ public class WorkTimeDTO {
     public void setPharmacy(Pharmacy pharmacy) {
         this.pharmacy = pharmacy;
     }
-
-    public WorkTimeDTO(LocalDate date, LocalTime startTime, LocalTime endTime, Staff staff, Pharmacy pharmacy) {
     public  WorkTimeDTO() {}
-    public WorkTimeDTO(Date date, LocalTime startTime, LocalTime endTime, Staff staff, Pharmacy pharmacy) {
+    public WorkTimeDTO(LocalDate date, LocalTime startTime, LocalTime endTime, Staff staff, Pharmacy pharmacy) {
         this.date = date;
         this.startTime = startTime;
         this.endTime = endTime;

@@ -16,14 +16,14 @@ public interface IExaminationService {
     Examination finishExP(ExaminationFrontDTO examinationDTO,Integer id);
     Examination finishExD(ExaminationFrontDTO examinationDTO,Integer id);
     Examination createExD(ExaminationDTO examinationDTO) throws MessagingException;
-    Boolean getExaminationByIdStaff(Integer idPharmacist);
-    Examination findById(Integer id);
+    //Boolean getExaminationByIdStaff(Integer idPharmacist);
+    //Examination findById(Integer id);
     Examination saveP(ExaminationDTO examinationDTO) throws MessagingException;
 
-        Examination save(ExaminationDTO examinationDTO) throws MessagingException;
+    //Examination save(ExaminationDTO examinationDTO) throws MessagingException;
     Examination findById(Integer id);
 
-    void canceling(Integer id);
+    //void canceling(Integer id);
     void patientCanceling(Examination examination);
     Boolean getExaminationByIdStaff(Integer idPharmacist);
     //Examination findById(Integer id);
