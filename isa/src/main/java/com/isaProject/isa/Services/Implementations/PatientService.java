@@ -10,7 +10,9 @@ import com.isaProject.isa.Model.Examination.Examination;
 import com.isaProject.isa.Model.Examination.ExaminationStatus;
 import com.isaProject.isa.Model.Examination.ExaminationType;
 import com.isaProject.isa.Model.Pharmacy.Pharmacy;
+import com.isaProject.isa.Model.Users.Dermatologist;
 import com.isaProject.isa.Model.Users.Patient;
+import com.isaProject.isa.Model.Users.Pharmacist;
 import com.isaProject.isa.Model.Users.User;
 import com.isaProject.isa.Repositories.DrugRepository;
 import com.isaProject.isa.Repositories.PatientRepository;
@@ -72,6 +74,30 @@ public class PatientService implements IPatientService {
             }
         }
         return answer;
+    }
+
+    @Override
+    public Set<Integer> findDermatologistForGrade(Integer id) {
+        Patient patient=patientRepository.findById(id).get();
+        Set<Examination> examinations=new HashSet<>();
+        Set<Integer> list=new HashSet<>();
+        examinations=patient.getExaminations();
+        for (Examination e:examinations){
+
+            if((e.getStatus().compareTo(ExaminationStatus.FINISHED))==0){
+
+                if((e.getType().compareTo(ExaminationType.DERMATOLOGIST_EXAMINATION))==0){
+
+                    list.add(e.getStaff().getId());
+                }
+            }
+        }
+        return list;
+    }
+
+    @Override
+    public Set<Integer> findPharmacistForGrade(Integer id) {
+        return null;
     }
 
     @Override

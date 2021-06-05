@@ -736,7 +736,7 @@
 
       <div v-if="showGradeDermatologist"  style="float:left;margin-left:30px;">
      <h4 style="margin:30px">GRADES:</h4>
- <div style="background: #a7c1c9;margin-left:30px;"  v-for="dr in this.pharmacies"  v-bind:key="dr.id">
+ <div style="background: #a7c1c9;margin-left:30px;"  v-for="g1 in this.dermatologistGrades"  v-bind:key="g1.idDermatologist">
       
 <table  style="" id="table2" class="table" >
  
@@ -744,14 +744,14 @@
       <tr>
         <th scope="row"></th>
         <td>Dermatologist:</td>
-         <td>{{dr.name}}</td>
+         <td>{{g1.name}} {{g1.surname}}</td>
       </tr>
 
         <tr>
         <th scope="row"></th>
         
          <td>Grade:</td>
-          <td><input type="text"  class="form-control" ></td>
+          <td><input type="text"  class="form-control" v-model = "g1.grade"></td>
       </tr>
       <!-- v-model = "s"
        v-on:click = "continue2(staff.idStaff,staff.idPharm)"!-->
@@ -813,6 +813,10 @@ export default {
 
         pharmacies : [],
         pharmacies1 : [],
+
+        dermatologistGrades:[],
+        pharmaistGrades:[],
+
         drugName:null,
         date:null,
         time:null,
@@ -942,6 +946,15 @@ export default {
         this.axios.get('/pharmacyDrugs/getAll')
         .then(response => {
                 this.drugInPharmacies= response.data;
+                
+         }).catch(res => {
+                alert("Nesto ne valja");
+                console.log(res);
+        });
+
+        this.axios.get('/grade/findDermatologistForGrade/'+this.id)
+        .then(response => {
+                this.dermatologistGrades = response.data;
                 
          }).catch(res => {
                 alert("Nesto ne valja");

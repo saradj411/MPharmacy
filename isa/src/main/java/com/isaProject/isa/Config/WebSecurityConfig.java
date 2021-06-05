@@ -78,8 +78,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll().antMatchers("/reservation/findPickedById/{id}")
                 .permitAll().antMatchers("/patient/findSheduledDermatologistExamination/{id}")
                 .permitAll().antMatchers("/patient/findFinishedDermatologistExamination/{id}")
+                .permitAll().antMatchers("/patient/findDermatologistForGrade/{id}")
                 .permitAll().antMatchers("/reservation/findById/{id}")
                 .permitAll().antMatchers("/patient/findSheduledPharmacistExamination/{id}")
+
+                .permitAll().antMatchers("/grade/findDermatologistForGrade/{id}")
 
                 .permitAll().antMatchers("/patient/findFinishedPharmacistExamination/{id}")
                 .permitAll().antMatchers("/reservation/checkReservations")
