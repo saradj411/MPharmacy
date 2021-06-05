@@ -12,13 +12,13 @@
 
                     <div>
                         <div>
-                                                        <label style="font-size:22px;color:#0D184F;">Choose drug:</label>
+                                                        <label style="font-size:22px;color:#0D184F;">Pharmacy drugs:</label>
 
-                            <b-dropdown id="ddCommodity" name="ddCommodity" text="drugs"
+                            <b-dropdown id="ddCommodity" name="ddCommodity" text="choose drug"
                                         class = "btn btn-link btn-lg" style="font-size:20px;color:black;">
                             
                                             <b-dropdown-item v-for="medicine in this.drugs" v-bind:key="medicine.idDrug"
-                                            v-on:click = "dermatologistIsSelected($event, medicine)"> 
+                                            v-on:click = "selektovani($event, medicine)"> 
                                             {{ medicine.name}}
                                             </b-dropdown-item>
                                             <b-dropdown-item>
@@ -93,7 +93,8 @@ export default {
        quantity:"",
        user:{},
        pharmacy:{},
-       drug:{}
+       drug:{},
+    
 
 
       
@@ -106,27 +107,24 @@ export default {
           const order = {
                     orderItemDTO: this.medicationQuantityList,
                     timeLimit: this.timeLimit,
-                    id : this.user.id,
-                    processed : true
+                    id : this.id,
+                    //processed : false//ceka ponude za narudjbenicu ,false
                 };
-                console.log(this.timeLimit);
-                console.log(this.timeLimit);
+                console.log("time "+this.timeLimit);
+                console.log("admin je"+this.id);
                 
             this.axios.post('/drugOrder/create',order,{ 
              headers: {
              }}).then(response => {
-                       alert(response.data);    
-                       window.location.href = "/ProfileAdmin";
-
+                       console.log(response.data);
+                       console.log("Purchase order successfully created!");   
+                       alert("Purchase order successfully created!"); 
                 })
                 .catch(response => {
-                    alert("neceeeee");
-                    alert(response.response.data.message);
-                        console.log(response);
-                        alert("neceeeee");
+                        alert(response);
                  });    
       },
-      dermatologistIsSelected : function(event, medicine) {
+      selektovani : function(event, medicine) {
             this.selectedMedication = medicine;
             console.log(event);
       }
@@ -134,13 +132,12 @@ export default {
 
        addNewMedicine : function(){
                this.showTable = true;
-                const medicineWithQuantity = {
+               const medicineWithQuantity = {
                     drug: this.selectedMedication,
                     quantity: this.quantity,
                     };
-                    console.log(this.drug.name);
                     console.log(this.quantity);
-                this.medicationQuantityList.push(medicineWithQuantity)
+                this.medicationQuantityList.push(medicineWithQuantity)//orderItemDTO
       },
            
      
