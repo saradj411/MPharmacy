@@ -86,6 +86,15 @@
           
               </div>
     </div>
+    <div v-if="showSortFinishedDE"  style="background:#B0B3D6; height: 90px; margin-top:15px;margin-left:15px;margin-right:15px;">
+
+              <div class="column">
+                 <h4 style="margin:5px">SORT FINISHED EXAMINATIONS BY:</h4>  
+                  <button class="btn btn-danger btn-lg" style="float:left;margin-left:20px;" v-on:click = "sortFDExamByPriceR">PriceR</button>
+           <button class="btn btn-danger btn-lg" style="float:left;margin-left:20px;" v-on:click = "sortFDExamByPriceO">PriceO</button>
+          
+              </div>
+    </div>
 
 <!-- all PHARMACIES!-->
   <div v-if="showTable"  style="float:left;margin-left:30px;">
@@ -352,7 +361,7 @@
          <tr>
           <th></th>
           <td >{{examination2.therapy.drug.name}}</td>
-          <td >Daily dose:</td>
+          <td >Daily dose:{{examination2.therapy.numberOfDay}}</td>
           
         </tr>
   </tbody>
@@ -455,7 +464,7 @@
          <tr>
           <th></th>
           <td >{{examination3.therapy.drug.name}}</td>
-          <td >Daily dose:</td>
+          <td >Daily dose:{{examination3.therapy.numberOfDay}}</td>
           
         
 
@@ -736,6 +745,7 @@ export default {
         showSortPharmacies:true,
         showSortCreatedDermatologistExamination:false,
         showSortERecipes:false,
+        showSortFinishedDE:false,
 
         pharmacies : [],
         pharmacies1 : [],
@@ -898,6 +908,7 @@ methods:{
          this.showSortPharmacies=true
          this.showSortCreatedDermatologistExamination=false
          this.showSortERecipes=false
+         this.showSortFinishedDE=false
        //this.showSearchPharmacy=true
       },
       showReservation:
@@ -919,6 +930,7 @@ methods:{
             this.showSortPharmacies=false
             this.showSortCreatedDermatologistExamination=false
             this.showSortERecipes=false
+             this.showSortFinishedDE=false
       },
       showConsultation:
        function(){
@@ -939,6 +951,7 @@ methods:{
          this.showSortPharmacies=false
          this.showSortCreatedDermatologistExamination=false
          this.showSortERecipes=false
+          this.showSortFinishedDE=false
       },
       showRecipe: function(){
         
@@ -959,6 +972,7 @@ methods:{
           this.showSortPharmacies=false
           this.showSortCreatedDermatologistExamination=false
           this.showSortERecipes=true
+           this.showSortFinishedDE=false
       },
       showExamination:
        function(){
@@ -979,6 +993,7 @@ methods:{
            this.showSortPharmacies=false
            this.showSortCreatedDermatologistExamination=false
            this.showSortERecipes=false
+            this.showSortFinishedDE=true
       },
       showCreatedDerm:
        function(){
@@ -999,6 +1014,7 @@ methods:{
            this.showSortPharmacies=false
            this.showSortCreatedDermatologistExamination=true
            this.showSortERecipes=false
+            this.showSortFinishedDE=false
       },
       showCreatedPharmacist:
       function(){
@@ -1019,6 +1035,7 @@ methods:{
           this.showSortPharmacies=
           this.showSortCreatedDermatologistExamination=false
           this.showSortERecipes=false
+           this.showSortFinishedDE=false
       },
       showAllDrugs: function(){
         this.showTable=false
@@ -1038,6 +1055,7 @@ methods:{
            this.showSortPharmacies=false
            this.showSortCreatedDermatologistExamination=false
            this.showSortERecipes=false
+            this.showSortFinishedDE=false
       },
       canceling:
        function(res,idRes){
@@ -1339,7 +1357,34 @@ methods:{
                          alert("Sorting is currently not possible");
                         console.log(res)
                     })
+      },
+      sortFDExamByPriceR: function(){
+      this.axios.get('/examination/sortFinishedDEByPriceAsc/'+this.id)
+          .then(response => {
+               console.log(response.data);
+              this.dermatologistFinishedExamination = response.data;
+              
+                })
+                .catch(res => {
+                     
+                        alert("Sorting is currently not possible");
+                        console.log(res)
+                    })
+      },
+       sortFDExamByPriceO: function(){
+      this.axios.get('/examination/sortFinishedDEByPriceDesc/'+this.id)
+          .then(response => {
+               console.log(response.data);
+              this.dermatologistFinishedExamination = response.data;
+              
+                })
+                .catch(res => {
+                     
+                         alert("Sorting is currently not possible");
+                        console.log(res)
+                    })
       }
+         
           
 
 }
