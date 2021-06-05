@@ -18,6 +18,8 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 @RestController
@@ -154,5 +156,60 @@ public class PharmacyController {
         pharmacyService.update(pharmacy);
         return new ResponseEntity<>("ajdeee", HttpStatus.CREATED);
 
+    }
+
+
+    @GetMapping("/sortByGradeDescending")
+    ResponseEntity<List<Pharmacy>> sortByGradedescending()
+    {
+        List<Pharmacy> pharmacies = pharmacyService.findAll();
+        Collections.sort(pharmacies, new Comparator<Pharmacy>() {
+            @Override
+            public int compare(Pharmacy p1, Pharmacy p2) {
+                return Double.compare(p1.getAvgGrade(), p2.getAvgGrade());
+
+            }
+        });
+
+        Collections.reverse(pharmacies);
+
+        return ResponseEntity.ok(pharmacies);
+    }
+    @GetMapping("/sortByGradeGrowing")
+    ResponseEntity<List<Pharmacy>> sortByGradeGrowing()
+    {
+        List<Pharmacy> pharmacies = pharmacyService.findAll();
+        Collections.sort(pharmacies, new Comparator<Pharmacy>() {
+            @Override
+            public int compare(Pharmacy p1, Pharmacy p2) {
+                return Double.compare(p1.getAvgGrade(), p2.getAvgGrade());
+
+            }
+        });
+
+        return ResponseEntity.ok(pharmacies);
+    }
+
+    @GetMapping("/sortByNameDescending")
+    ResponseEntity<List<Pharmacy>> sortByNameDescending()
+    {
+        List<Pharmacy> pharmacies = pharmacyService.findAll();
+        
+
+        return ResponseEntity.ok(pharmacies);
+    }
+    @GetMapping("/sortByNameGrowing")
+    ResponseEntity<List<Pharmacy>> sortByNameGrowing()
+    {
+        List<Pharmacy> pharmacies = pharmacyService.findAll();
+        Collections.sort(pharmacies, new Comparator<Pharmacy>() {
+            @Override
+            public int compare(Pharmacy c1, Pharmacy c2) {
+                return Double.compare(c1.getAvgGrade(), c2.getAvgGrade());
+
+            }
+        });
+
+        return ResponseEntity.ok(pharmacies);
     }
 }

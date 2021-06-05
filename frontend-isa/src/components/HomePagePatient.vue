@@ -4,7 +4,7 @@
      background-size: 200% 150%;  height: 2000px">
                      <label style="color:#474A8A;font-size:35px;" align = "center">Patient profile</label>
 
-        <div style="background: #B0B3D6; height: 80px;">
+        <div style="background: #B0B3D6; height: 140px;">
           <button class="btn btn-danger btn-lg" style="float:left;margin-left:20px;margin-top:15px" v-on:click = "showPharmacies">Home</button>
             <button class="btn btn-danger btn-lg" style="float:left;margin-top:15px;margin-left:10px" v-on:click = "myProfile">Profile</button>
            
@@ -51,7 +51,23 @@
             
   </div>
 
- 
+ <div v-if="showSortPharmacies"  style="background:#B0B3D6; height: 90px; margin-top:15px;margin-left:15px;margin-right:15px;">
+
+              <div class="column">
+                 <h4 style="margin:5px">SORT PHARMACIES BY:</h4>  
+                  <button class="btn btn-danger btn-lg" style="float:left;margin-left:20px;" v-on:click = "sortByGradeR">GradeR</button>
+            <button class="btn btn-danger btn-lg" style="float:left;margin-left:10px" v-on:click = "sortByGradeO">GradeO</button>
+           
+           <button class="btn btn-danger btn-lg" style="float:left;margin-left:10px" v-on:click = "showReservation">Drug reservation</button>
+            <button class="btn btn-danger btn-lg" style="float:left;margin-left:10px" v-on:click = "showConsultation">Consultation</button>
+            <button class="btn btn-danger btn-lg" style="float:left;margin-left:10px" v-on:click = "showExamination">Examination</button>
+           <button class="btn btn-danger btn-lg" style="float:left;margin-left:10px" v-on:click = "showRecipe">eRecipe</button>
+           <button class="btn btn-danger btn-lg" style="float:left;margin-left:10px" v-on:click = "showCreatedDerm">Schedule Examination</button>
+           
+
+              </div>
+ </div>
+
 <!-- all PHARMACIES!-->
   <div v-if="showTable"  style="float:left;margin-left:30px;">
      <h4 style="margin:30px">ALL PHARMACIES:</h4>    
@@ -698,6 +714,7 @@ export default {
         showSearchDrugs:false,
         showSearchDrug:false,
         showScheduleSearch:false,
+        showSortPharmacies:true,
 
         pharmacies : [],
         pharmacies1 : [],
@@ -857,6 +874,7 @@ methods:{
          this.showCreatedPharmExamination=false
          this.showScheduleSearch=false
          this.showFreeStaff=false
+         this.showSortPharmacies=true
        //this.showSearchPharmacy=true
       },
       showReservation:
@@ -875,6 +893,7 @@ methods:{
         this.showScheduleSearch=false
          this.showCreatedPharmExamination=false
            this.showFreeStaff=false
+            this.showSortPharmacies=false
       },
       showConsultation:
        function(){
@@ -892,6 +911,7 @@ methods:{
         this.showScheduleSearch=false
           this.showFreeStaff=false
          this.showCreatedPharmExamination=false
+         this.showSortPharmacies=false
       },
       showRecipe: function(){
         
@@ -909,6 +929,7 @@ methods:{
         this.showSearchDrugs=false
         this.showScheduleSearch=false
           this.showFreeStaff=false
+          this.showSortPharmacies=false
       },
       showExamination:
        function(){
@@ -926,6 +947,7 @@ methods:{
         this.showScheduleSearch=false
          this.showCreatedPharmExamination=false
            this.showFreeStaff=false
+           this.showSortPharmacies=false
       },
       showCreatedDerm:
        function(){
@@ -943,6 +965,7 @@ methods:{
         this.showScheduleSearch=false
          this.showCreatedPharmExamination=false
            this.showFreeStaff=false
+           this.showSortPharmacies=false
       },
       showCreatedPharmacist:
       function(){
@@ -960,6 +983,7 @@ methods:{
         this.showScheduleSearch=true
         this.showCreatedPharmExamination=true
           this.showFreeStaff=false
+          this.showSortPharmacies=false
       },
       showAllDrugs: function(){
         this.showTable=false
@@ -976,6 +1000,7 @@ methods:{
         this.showScheduleSearch=false
          this.showCreatedPharmExamination=false
            this.showFreeStaff=false
+           this.showSortPharmacies=false
       },
       canceling:
        function(res,idRes){
@@ -1144,6 +1169,97 @@ methods:{
               
           })
         },
+
+
+        sortByGradeR: function(){
+      this.axios.get('/pharmacy/sortByGradeGrowing')
+          .then(response => {
+               console.log(response.data);
+              this.pharmacies = response.data;
+              
+                })
+                .catch(res => {
+                     
+                        alert("Unable to apply filter right now.");
+                        console.log(res)
+                    })
+      },
+       sortByGradeO: function(){
+      this.axios.get('/pharmacy/sortByGradeDescending')
+          .then(response => {
+               console.log(response.data);
+              this.pharmacies = response.data;
+              
+                })
+                .catch(res => {
+                     
+                        alert("Unable to apply filter right now.");
+                        console.log(res)
+                    })
+      },
+      
+     
+           cityfromatoz: function(){
+   
+      this.axios.get('/pharmacy/cityfromatoz')
+          .then(response => {
+               console.log(response.data);
+                   this.dermatologistAppointments = response.data;
+              this.showTable = false;
+              this.showTable = true;
+               })
+                .catch(res => {
+                     
+                      alert("Unable to apply filter right now.");
+                        console.log(res)
+                    })
+      },
+  
+        cityfromztoa: function(){
+   
+      this.axios.get('/pharmacy/cityfromztoa')
+          .then(response => {
+               console.log(response.data);
+                   this.dermatologistAppointments = response.data;
+              this.showTable = false;
+              this.showTable = true;
+                })
+                .catch(res => {
+                     
+                       alert("Unable to apply filter right now.");
+                        console.log(res)
+                    })
+      },
+      namefromatoz: function(){
+   
+      this.axios.get('/pharmacy/namefromatoz')
+          .then(response => {
+               console.log(response.data);
+                  this.dermatologistAppointments = response.data;
+              this.showTable = false;
+              this.showTable = true;
+               })
+                .catch(res => {
+                     
+                        alert("Unable to apply filter right now.");
+                        console.log(res)
+                    })
+      },
+            namefromztoa: function(){
+   
+      this.axios.get('/pharmacy/namefromztoa')
+          .then(response => {
+               console.log(response.data);
+                  this.dermatologistAppointments = response.data;
+              this.showTable = false;
+              this.showTable = true;
+                })
+                .catch(res => {
+                     
+                        alert("Unable to apply filter right now.");
+                        console.log(res)
+                    })
+      },
 
 }
 }

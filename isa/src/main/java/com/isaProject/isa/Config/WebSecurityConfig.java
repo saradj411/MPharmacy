@@ -242,6 +242,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/pharmacy/findByCity/{city}").permitAll()
                 .antMatchers("/pharmacy/findByName/{name}").permitAll()
                 .antMatchers("/reservation/create").permitAll()
+                .antMatchers("/pharmacy/sortByGradeDescending").permitAll()
+                .antMatchers("/pharmacy/sortByGradeGrowing").permitAll()
+                .antMatchers("/pharmacy/sortByNameDescending").permitAll()
+                .antMatchers("/pharmacy/sortByNameGrowing").permitAll()
 
                 //Ovo je dostupno svim korisnicima! Sve ostalo treba da ima pravo pristupa!
                 .antMatchers("/user/savePatient").permitAll()
