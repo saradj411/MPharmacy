@@ -27,6 +27,16 @@ import CreatePurchaseOrder from '../components/CreatePurchaseOrder.vue'
 import SearchUser from '../components/SearchUser.vue'
 import WorkCalendar from '../components/WorkCalendar.vue'
 import StartExamination from '../components/StartExamination.vue'
+import AnnualReport from '../components/AnnualReport.vue'
+import QuarterReport from '../components/QuarterReport.vue'
+import QuarterReportDrug from '../components/QuarterReportDrug.vue'
+import AnnualReportDrug from '../components/AnnualReportDrug.vue'
+import MonthDrugReport from '../components/MonthDrugReport.vue'
+import MonthExaminationReport from '../components/MonthExaminationReport.vue'
+import IncomeReport from '../components/IncomeReport.vue'
+
+
+
 import SheduleExamination from '../components/SheduleExamination.vue'
 import WorkCalendarPharmacist from '../components/WorkCalendarPharmacist.vue'
 import StartCounseling from '../components/StartCounseling.vue'
@@ -304,12 +314,44 @@ const routes = [
         name: 'AcceptRejectVacation',
         component: AcceptRejectVacation
       }
+      ,
+      {
+        path: '/AnnualReport/:id',
+        name: 'AnnualReport',
+        component: AnnualReport
+      },
+      {
+        path: '/QuarterReport/:id',
+        name: 'QuarterReport',
+        component: QuarterReport
+      }
+      ,
+      {
+        path: '/QuarterReportDrug/:id',
+        name: 'QuarterReportDrug',
+        component: QuarterReportDrug
+      },
+      {
+        path: '/AnnualReportDrug/:id',
+        name: 'AnnualReportDrug',
+        component: AnnualReportDrug
+      },
+      {
+        path: '/MonthDrugReport/:id',
+        name: 'MonthDrugReport',
+        component: MonthDrugReport
+      },
+      {
+        path: '/MonthExaminationReport/:id',
+        name: 'MonthExaminationReport',
+        component: MonthExaminationReport
+      },
+      {
+        path: '/IncomeReport/:id',
+        name: 'IncomeReport',
+        component: IncomeReport
+      }
       
-      
-
-      
-      
-    ]
 
 
 
