@@ -40,9 +40,9 @@ public class GradeController {
 
         List<DermatolgoistGrade> grades=deratologistGradeService.findAll();
 
-        List<DermatolgoistGrade> gradesThisPatient=deratologistGradeService.findAll();
+        List<DermatolgoistGrade> gradesThisPatient=new ArrayList<>();
 
-        List<DermatolgoistGrade> existingGrades=deratologistGradeService.findAll();
+        List<DermatolgoistGrade> existingGrades=new ArrayList<>();
 
         List<DermatologistGradeDTO> returnGrades=new ArrayList<>();
 
@@ -78,7 +78,7 @@ public class GradeController {
 
         for(DermatolgoistGrade gr:existingGrades){
             Dermatologist dermatologist=dermatologistService.findById(gr.getIdDermatologist());
-            DermatologistGradeDTO dto=new DermatologistGradeDTO(gr.getIdPatient(),
+            DermatologistGradeDTO dto=new DermatologistGradeDTO(gr.getIdPatient(),gr.getIdDermatologist(),
                     dermatologist.getName(),dermatologist.getSurname(),gr.getGrade());
 
             returnGrades.add(dto);
@@ -88,6 +88,18 @@ public class GradeController {
                 ResponseEntity.ok(returnGrades);
     }
 
+    @PostMapping(value = "/grade/{idPatient}/{grade}/{idDerm}")
+    public ResponseEntity<DermatolgoistGrade> grade(@PathVariable Integer idPatient,
+             @PathVariable Integer grade,@PathVariable Integer idDerm) {
+
+        DermatolgoistGrade dd=deratologistGradeService.grade(idPatient,grade,idDerm);
+
+        List<DermatologistGradeDTO> returnGrades=new ArrayList<>();
+
+        return dd== null ?
+                new ResponseEntity<>(HttpStatus.NOT_FOUND) :
+                ResponseEntity.ok(dd);
+    }
 
 
 }

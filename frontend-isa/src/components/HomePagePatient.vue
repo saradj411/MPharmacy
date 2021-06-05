@@ -758,7 +758,7 @@
         <tr>
           <th></th>
           <td></td>
-          <td><button class="btn btn-danger btn-sm">Confirm</button></td>
+          <td><button class="btn btn-danger btn-sm"  v-on:click = "confrim(g1.grade,g1.idDermatologist,g1.idPatient)">Confrim</button></td>
           
 
         </tr>
@@ -842,6 +842,7 @@ export default {
         id : this.$route.params.id,
         jel:false,
         jel1:false,
+        jel2:false,
         poruka:""
 
     }
@@ -1546,7 +1547,24 @@ methods:{
                         console.log(res)
                     })
       },
-      
+      confrim:function(grade,idDerm,idPat){
+        console.log(grade)
+        console.log(idDerm)
+        console.log(idPat)
+        
+        this.axios.post('/grade/grade/'+idPat+"/"+grade+"/"+idDerm)
+          .then(response => {
+               console.log(response.data);
+              this.jel2 = response.data;
+              
+                })
+                .catch(res => {
+                     
+                        alert("Sorting is currently not possible");
+                        console.log(res)
+                    })
+      },
+
       unsubscribe: function(idPharmacy){
         console.log(idPharmacy)
       //OVDJE POZVATI FUNKCIJU ZA ODJAVU APOTEKA
