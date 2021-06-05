@@ -219,6 +219,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/adminstrator/findAll").permitAll()
                 .antMatchers("/offer/**").permitAll()
                 .antMatchers("/user/findByEmail/**").permitAll()
+                .antMatchers("/user/changePassword").permitAll()
 
                 //.antMatchers("/adminstrator/savePharmacyAdmin").permitAll()
                 /*.antMatchers("/user/saveSupplier")

@@ -173,6 +173,7 @@ insert into drug_order values(501,false,4,'2021-09-20',503);
 insert into drug_order values(502,false,8,'2021-11-20',503);
 insert into drug_order values(503,true,2,'2021-12-20',503);
 insert into drug_order values(504,true,4,'2021-10-20',503);
+insert into drug_order values(505,true,20,'2021-05-20',503);
 
 
 #drug_reservation
@@ -266,6 +267,8 @@ insert into order_item values (2, 10, 503, 500);
 insert into order_item values (3, 5, 506, 502);
 insert into order_item values (4, 20, 508, 501);
 insert into order_item values (5, 100, 504, 503);
+insert into order_item values  (6, 20, 504, 505);
+insert into order_item values  (7, 10, 501, 505);
 
 insert into supplier values (20);
 

@@ -149,6 +149,15 @@ public class UserService implements IUserService {
         return  u;
     }
 
+    @Override
+    public User changePassword(String newPassword, String username) {
+        User u = findByEmail(username);
+        u.setPassword(passwordEncoder.encode(newPassword));
+        u.setAccountEnabled(true);
+        update(u);
+        return u;
+    }
+
 
     private String PasswordGenerator()
     {

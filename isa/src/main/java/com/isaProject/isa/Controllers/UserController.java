@@ -164,4 +164,11 @@ public class UserController {
         return new ResponseEntity<>(HttpStatus.OK);
 
     }
+
+    @PostMapping(value = "/changePassword")
+    public ResponseEntity<User> changePassword(@NotNull @RequestBody JwtAuthenticationRequest authRequest) throws MessagingException {
+        userService.changePassword(authRequest.getPassword(), authRequest.getUsername());
+        return new ResponseEntity<>(HttpStatus.OK);
+
+    }
 }

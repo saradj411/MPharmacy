@@ -86,11 +86,13 @@
     <div class="allorder" >
             <br><br>
             <h1> All purchase orders from pharmacies:  </h1>
+            <p> {{ this.limitDate}}</p>
+           
             <br>
                 <div v-for="order in drug_order"
                     v-bind:key ="order.idOrder"
             >
-                    <div class="order" >
+                 <div class="order" v-if="sta(order.timeLimit)" >
                         <h2  style="font-size:22px;" class="form-control" > ID Order: {{order.idOrder }} </h2>
                         <h2  style="font-size:22px;" class="form-control">Pharmacy: {{order.pharmacyId}} - {{ order.pharmacyName }}  </h2>
                         <h3  style="font-size:22px;" class="form-control"> What we need: </h3>
@@ -107,10 +109,11 @@
                             </table >
 
                             <h2  class="form-control " style="margine-top:30px; font-size:22px;"> Litim day: {{order.timeLimit[2]}}. {{order.timeLimit[1]}}. {{order.timeLimit[0]}}. </h2>
-                    </div>
+                             
+                        </div>
 
-                    <button class="btn btn-primary btn-xs"  style="margin:auto; margin-left:700px; margin-top:-400px; background: #000; width: 400px; font-size:22px;" >See al offers </button>
-                    <button class="btn btn-primary btn-xs"  @click="showModal(order)" style="margin:auto; margin-left:700px;background: #000; margin-top:-350px; width: 400px; font-size:22px;" >Create new offer </button>
+                    <button  v-if="sta(order.timeLimit)" class="btn btn-primary btn-xs"  style="margin:auto; margin-left:700px; margin-top:-400px; background: #000; width: 400px; font-size:22px;" >See al offers </button>
+                    <button   v-if="sta(order.timeLimit)" class="btn btn-primary btn-xs"  @click="showModal(order)" style="margin:auto; margin-left:700px;background: #000; margin-top:-350px; width: 400px; font-size:22px;" >Create new offer </button>
     
                 </div>
   
@@ -197,7 +200,11 @@ data()
             isOpen: false,
             prosledjena: [],
             price: "",
-            date: ""
+            date: "",
+
+            limitDate: "",
+            today: "",
+            ogranicenje: "",
 
 
         };
@@ -231,8 +238,55 @@ data()
 
     },
 
-    methods:
-    {     showModal(order) {
+    methods:    
+    { 
+        
+         sta(timeLimit)
+            {
+               console.log("STAAAAAA");
+               //this.limitDate = timeLimit.getMonth() + "-" +timeLimit.getDay() +"-"+ timeLimit.getFullYear();
+               
+             
+               const datum = timeLimit.[2] + '/' + timeLimit[1]  + '/' + timeLimit[0];
+               
+               //var proba = new Date[timeLimit[0], timeLimit.[1] , timeLimit[2]];
+               var currentDate = new Date();
+
+               
+               if(currentDate.getFullYear() <= timeLimit[0] )
+               {
+                   console.log( currentDate.getFullYear() + "<=" + timeLimit[0])
+
+                   if(currentDate.getUTCDay() <= timeLimit[1])
+                   {
+                       console.log( currentDate.getUTCDay() + "<=" + timeLimit[1])
+                       if( currentDate.getUTCMonth() <= timeLimit[2])
+                       {
+                             console.log( currentDate.getUTCMonth() +  "<=" + timeLimit[2])
+                             console.log(currentDate);
+                             console.log(datum);
+                             return true;
+
+                       }
+                       else
+                       {
+                            return false;
+                       }
+                      
+                   }
+                   else
+                   {
+                       return false;
+                   }
+                                    
+               }
+               else
+               {
+                   return false;
+               }
+              
+            },
+        showModal(order) {
             this.prosledjena = order;
             console.log(order.idOrder);
             this.$refs['my-modal'].show()
@@ -310,6 +364,15 @@ data()
     },
     mounted()
     {
+             
+            var currentDate = new Date();
+            this.limitDate = currentDate;
+
+            console.log("Day " + currentDate.getUTCDay()) ;
+            console.log("Month " + currentDate.getMonth());
+            console.log("year " + currentDate.getFullYear());
+            console.log(currentDate);
+
         this.axios.get('user/findById/'+ this.id ,{ 
             headers: {
                     'Access-Control-Allow-Headers': 'Origin, Content-Type, X-Auth-Token',
