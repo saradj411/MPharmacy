@@ -769,6 +769,44 @@
 
 
       </div> 
+
+      <!-------GRADES PHARMACIST!-->
+
+      <div v-if="showGradePharmacist"  style="float:left;margin-left:30px;">
+     <h4 style="margin:30px">GRADES:</h4>
+ <div style="background: #a7c1c9;margin-left:30px;"  v-for="g1 in this.pharmacistGrades"  v-bind:key="g1.idPharmacist">
+      
+<table  style="" id="table2" class="table" >
+ 
+    <tbody>
+      <tr>
+        <th scope="row"></th>
+        <td>Pharmacist:</td>
+         <td>{{g1.name}} {{g1.surname}}</td>
+      </tr>
+
+        <tr>
+        <th scope="row"></th>
+        
+         <td>Grade:</td>
+          <td><input type="text"  class="form-control" v-model = "g1.grade"></td>
+      </tr>
+      <!-- v-model = "s"
+       v-on:click = "continue2(staff.idStaff,staff.idPharm)"!-->
+        <tr>
+          <th></th>
+          <td></td>
+          <td><button class="btn btn-danger btn-sm"  v-on:click = "confrimPharmacist(g1.grade,g1.idPharmacist,g1.idPatient)">Confrim</button></td>
+          
+
+        </tr>
+        
+  </tbody>
+</table>
+           </div>
+
+
+      </div> 
 </div>
 
   
@@ -815,7 +853,7 @@ export default {
         pharmacies1 : [],
 
         dermatologistGrades:[],
-        pharmaistGrades:[],
+        pharmacistGrades:[],
 
         drugName:null,
         date:null,
@@ -956,6 +994,14 @@ export default {
         this.axios.get('/grade/findDermatologistForGrade/'+this.id)
         .then(response => {
                 this.dermatologistGrades = response.data;
+                
+         }).catch(res => {
+                alert("Nesto ne valja");
+                console.log(res);
+        });
+         this.axios.get('/grade/findPharmacistForGrade/'+this.id)
+        .then(response => {
+                this.pharmacistGrades = response.data;
                 
          }).catch(res => {
                 alert("Nesto ne valja");
@@ -1553,6 +1599,23 @@ methods:{
         console.log(idPat)
         
         this.axios.post('/grade/grade/'+idPat+"/"+grade+"/"+idDerm)
+          .then(response => {
+               console.log(response.data);
+              this.jel2 = response.data;
+              
+                })
+                .catch(res => {
+                     
+                        alert("Sorting is currently not possible");
+                        console.log(res)
+                    })
+      },
+      confrimPharmacist:function(grade,idDerm,idPat){
+        console.log(grade)
+        console.log(idDerm)
+        console.log(idPat)
+        
+        this.axios.post('/grade/gradePharmacist/'+idPat+"/"+grade+"/"+idDerm)
           .then(response => {
                console.log(response.data);
               this.jel2 = response.data;
