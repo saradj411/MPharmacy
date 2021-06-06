@@ -13,6 +13,19 @@ Verica Mucibabic-Student 3
 Maja Milenkovic-Student 4
 
 
+Napomena: Student 4 nije radio, tako da trenutno nema odradjen funkcionalan login, samim tim ni autorizacija.
+Kada se pokrene aplikacija na vrhu postoje dugmici preko kojih se dolazi na pocetnu stranicu svakog od korisnika.
+
+Mejlovi:
+
+Patient id 508: patient0874@gmail.com (lozinka: patient98)
+
+Dermatolog:  dermatologistpharmacy@gmail.com (lozinka: dermatologist*1)
+
+Pharmacist: pharmacistpharmacy33@gmail.com  (lozinka:  pharmacist*1)
+
+Supplier: supplierpharmacy33@gmail.com (lozinka :supplier*1)
+
 
 
 Tehnologije:
@@ -48,10 +61,9 @@ Pokretanje frontenda:
 
 Instalacija za backend:
 
+Skinuti Intelij i instalirati ga: https://www.jetbrains.com/idea/download/#section=windows
 
 Pokretanje backenda:
-
-Skinuti Intelij i instalirati ga: https://www.jetbrains.com/idea/download/#section=windows
 
 File->Open-> izabrati folder isa (to nam je backend), desni klik na projekat->Open module settings->podesiti SDKs(mi smo koristili razlicite, jdk 1.8, jdk15..)
 
