@@ -53,6 +53,15 @@ public class GradeController {
     @Autowired
     PharmacyService pharmacyService;
 
+    @GetMapping(value = "/findDrugsForGrade/{id}")
+    public ResponseEntity<Set<Integer>> findDrugsForGrade(@PathVariable Integer id) {
+        Set<Integer> d= patientService.findDrugsForGrade(id);
+
+
+        return d== null ?
+                new ResponseEntity<>(HttpStatus.NOT_FOUND) :
+                ResponseEntity.ok(d);
+    }
     @GetMapping(value = "/findPharmaciesForGrade/{id}")
     public ResponseEntity<List<PharmacyGradeDTO>> findPharmaciesForGrade(@PathVariable Integer id) {
         Set<Integer> d= patientService.findPharmaciesForGrade(id);

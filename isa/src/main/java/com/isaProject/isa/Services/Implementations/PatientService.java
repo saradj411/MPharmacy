@@ -7,6 +7,7 @@ import com.isaProject.isa.Model.DTO.FrontCreatedExaminationDTO;
 import com.isaProject.isa.Model.Drugs.Drug;
 import com.isaProject.isa.Model.Drugs.DrugReservation;
 import com.isaProject.isa.Model.Drugs.ERecipe;
+import com.isaProject.isa.Model.Drugs.ERecipeDrug;
 import com.isaProject.isa.Model.Examination.Examination;
 import com.isaProject.isa.Model.Examination.ExaminationStatus;
 import com.isaProject.isa.Model.Examination.ExaminationType;
@@ -93,6 +94,33 @@ public class PatientService implements IPatientService {
 
                     list.add(e.getStaff().getId());
                 }
+            }
+        }
+        return list;
+    }
+    @Override
+    public Set<Integer> findDrugsForGrade(Integer id) {
+        Patient patient=patientRepository.findById(id).get();
+
+        List<ERecipe> eRecipes=eRecipeRepository.findAll();
+
+        Set<DrugReservation> reservations=patient.getDrugReservation();
+        Set<Integer> list=new HashSet<>();
+
+        for(DrugReservation dR:reservations){
+            if(dR.getPickedUp()){
+                list.add(dR.getDrug().getIdDrug());
+            }
+        }
+
+        for(ERecipe er:eRecipes){
+            if(er.getPatient().getId().equals(id)){
+                Set<ERecipeDrug> eRecipes1=er.geteRecipeDrug();
+                for(ERecipeDrug erd:eRecipes1){
+                    Drug drug=drugRepository.findOneByNameDrug(erd.getName());
+                    list.add(drug.getIdDrug());
+                }
+
             }
         }
         return list;
