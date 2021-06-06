@@ -22,4 +22,5 @@ public interface PharmacyDrugsRepository extends JpaRepository<PharmacyDrugs, In
 
 
 
+
 }
