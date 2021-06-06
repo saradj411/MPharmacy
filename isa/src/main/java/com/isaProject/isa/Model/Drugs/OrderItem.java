@@ -24,7 +24,7 @@ public class OrderItem {
 
     @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
     @JoinColumn(name = "drugId", referencedColumnName = "idDrug", nullable = true, unique = false)
-  //  @JsonManagedReference
+    @JsonBackReference
     private Drug drug;
 
     public OrderItem(Integer quantity, Drug drug) {

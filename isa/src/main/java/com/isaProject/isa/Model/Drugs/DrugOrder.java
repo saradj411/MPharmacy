@@ -38,12 +38,12 @@ public class DrugOrder {
     private Set<OrderItem> orderItems = new HashSet<OrderItem>();//************
 
     //PROMJENA MERGEEEEEE
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
-    @JoinColumn(name = "admin", referencedColumnName = "id", nullable = true, unique = false)
-    //@JsonManagedReference
-    private PharmacyAdmin pharmacyAdmin;//***********
-/*
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "admin", referencedColumnName = "id", nullable = true, unique = false)
+    @JsonManagedReference
+    private PharmacyAdmin pharmacyAdmin;//***********
+
+    /*@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "admin", referencedColumnName = "id")
     @JsonBackReference
     private PharmacyAdmin pharmacyAdmin;

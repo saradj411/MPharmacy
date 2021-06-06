@@ -64,44 +64,7 @@
                                         style=" width:220px; font-size:22px;" ></b-form-input></td> 
              </tr>
         </table>       
-             <!--
-
-           <h3>ID ORDER: {{prosledjena.idOrder}} | {{prosledjena. pharmacyId}} - {{prosledjena.pharmacyName}} </h3>
-            <div>
-                             <table> 
-                             <th  style="font-size:22px;" class="form-control">
-                                <td style="margine:20px; width:600px; font-size:22px;" > Drug name: </td>
-                                    <td style="margine:20px; width:600px; font-size:22px;"> Drug quantity: </td>
-                            </th >
-                                <tr v-for="o in prosledjena.drugList"
-                                    v-bind:key="o.idItemOrder"  class="form-control" style=" height:48px;"> 
-                                    <td style="margine:20px; width:200px;  font-size:22px;"  > {{o.nameDrug}} </td>
-                                    <td style="margine:20px; width:250px;  font-size:22px;" > {{o.quantity}} pcs. </td>
-                                </tr>
-                                <br>
-                                <tr class="form-control" style=" height:48px;">
-                                    <td style="margine:20px; width:600px; font-size:22px;"> Price in total: </td>
-                                    <td style="margine:20px; width:600px; font-size:22px; height:30px;"> 
-                                        <b-form-input type="text " size="sm" align-items="center" :class="{'input--error': !price}"
-                                        v-model="price"></b-form-input>
-                                    </td>                                   
-                                                
-                                </tr> 
-                                <tr class="form-control" style=" height:48px;">
-                                    <td style="margine:20px; width:600px; font-size:22px;"> Deliveri date: </td>
-                                    <td style="margine:20px; width:400px; font-size:22px; height:30px;"> 
-                                        <b-form-input type="date" size="sm" align-items="center"
-                                        v-model="date" ></b-form-input>
-                                    </td>                                   
-                                                
-                                </tr>
-
-
-                            </table>
-
-                            
-                    </div>
-    --> 
+             
         </div>
         <button class="btn btn-primary btn-xs" style="margin:auto; margin-left:40px; background: #000; margin-top:10px; width:400px;"  @click="changePassword(newPassword)" :disabled="!newPassword || !newPasswordRepeat || newPassword!=newPasswordRepeat"> Reset password </button>
         <button class="btn btn-primary btn-xs" style="margin:auto; margin-left:40px;background: #000;  width:400px;"   @click="cancelModal"> Close </button>
@@ -179,11 +142,11 @@ export default
         {
             this.axios.get('/user/findByEmail/'+ username)
                                 .then(response => {
-                                    console.log()
+                                    console.log("Nasao usera sa tim emailom");
+                                   
                                         this.user = response.data;   
                                                              
-                                }).catch(res => {
-                                       // alert("User doesnt exists!");
+                                }).catch(res => {                                     
                                         console.log(res);
                                 }); 
                                 
@@ -210,6 +173,7 @@ export default
                     username: this.username,
                     password: this.password
                 }
+                console.log("USER za login: " + loginInfo);
                 
 
                this.axios.post('/user/login', loginInfo, {
@@ -231,7 +195,7 @@ export default
                                     
                                 }}).then(response => 
                                 {    
-                                    console.log("ENABLE: " +response.data.accountEnabled);
+                                    console.log("ENABLE: " + response.data.accountEnabled);
 
                                     if(response.data.authorityRole === "ROLE_ADMIN")
                                     {
@@ -353,8 +317,8 @@ export default
                                     
                                 }}).then(response => 
                                 {    
-                                    console.log("ENABLE: " +response.data.accountEnabled);
-
+                                    console.log("ENABLE: " + response.data.accountEnabled);
+                                    console.log("ROLA: " + response.data.authorityRole);
                                     if(response.data.authorityRole === "ROLE_ADMIN")
                                     {
                                         console.log("USAO ADMIN");
