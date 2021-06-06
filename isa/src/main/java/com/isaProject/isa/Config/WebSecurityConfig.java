@@ -78,8 +78,18 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll().antMatchers("/reservation/findPickedById/{id}")
                 .permitAll().antMatchers("/patient/findSheduledDermatologistExamination/{id}")
                 .permitAll().antMatchers("/patient/findFinishedDermatologistExamination/{id}")
+                .permitAll().antMatchers("/patient/findDermatologistForGrade/{id}")
                 .permitAll().antMatchers("/reservation/findById/{id}")
                 .permitAll().antMatchers("/patient/findSheduledPharmacistExamination/{id}")
+
+                .permitAll().antMatchers("/grade/findDermatologistForGrade/{id}")
+                .permitAll().antMatchers("/grade/findPharmacistForGrade/{id}")
+                .permitAll().antMatchers("/grade/findPharmaciesForGrade/{id}")
+                .permitAll().antMatchers("/grade/findDrugsForGrade/{id}")
+                .permitAll().antMatchers("/grade/grade/{idPatient}/{grade}/{idDerm}")
+                .permitAll().antMatchers("/grade/gradePharmacist/{idPatient}/{grade}/{idDerm}")
+                .permitAll().antMatchers("/grade/gradePharmacy/{idPatient}/{grade}/{idDerm}")
+                .permitAll().antMatchers("/grade/gradeDrug/{idPatient}/{grade}/{idDerm}")
 
                 .permitAll().antMatchers("/patient/findFinishedPharmacistExamination/{id}")
                 .permitAll().antMatchers("/reservation/checkReservations")
@@ -247,6 +257,21 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/pharmacy/findByName/{name}").permitAll()
                 .antMatchers("/reservation/create").permitAll()
 
+                .antMatchers("/pharmacy/sortByGradeDescending").permitAll()
+                .antMatchers("/examination/sortByGradeDescending").permitAll()
+                .antMatchers("/examination/sortByPriceAscending").permitAll()
+                .antMatchers("/examination/sortByPriceDescending").permitAll()
+                .antMatchers("/pharmacy/sortByGradeAscending").permitAll()
+                .antMatchers("/examination/sortByGradeAscending").permitAll()
+                .antMatchers("/pharmacy/sortByNameDescending").permitAll()
+                .antMatchers("/pharmacy/sortByNameAscending").permitAll()
+                .antMatchers("/erecipe/sortByDateAscending/{id}").permitAll()
+                .antMatchers("/erecipe/sortByDateDescending/{id}").permitAll()
+                .antMatchers("/examination/sortFinishedDEByPriceDesc/{id}").permitAll()
+                .antMatchers("/examination/sortFinishedDEByDateDesc/{id}").permitAll()
+                .antMatchers("/examination/sortFinishedDEByPriceAsc/{id}").permitAll()
+                .antMatchers("/examination/sortFinishedDEByDateAsc/{id}").permitAll()
+
                 //Ovo je dostupno svim korisnicima! Sve ostalo treba da ima pravo pristupa!
                 .antMatchers("/user/savePatient").permitAll()
                 .antMatchers("/user/loggedUser").permitAll()
@@ -256,8 +281,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/workTime/findAllByDate/{date}/{time}").permitAll()
                 .antMatchers("/workTime/findFreeStaffByPharmacy").permitAll()
 
+                .antMatchers("/drugOrder/**").permitAll()
                 //ove zakomentarisati jer imau AUtorizaciju
                 .antMatchers("/adminstrator/findAll").permitAll()
+                .antMatchers("/offer/**").permitAll()
+                .antMatchers("/user/findByEmail/**").permitAll()
+                .antMatchers("/user/changePassword").permitAll()
+
                 //.antMatchers("/adminstrator/savePharmacyAdmin").permitAll()
                 /*.antMatchers("/user/saveSupplier")
                 .permitAll().antMatchers("/user/findAll")

@@ -1,7 +1,11 @@
 package com.isaProject.isa.Services.Implementations;
 
+import com.isaProject.isa.Model.DTO.OfferDTO;
 import com.isaProject.isa.Model.Drugs.*;
 
+import com.isaProject.isa.Model.Users.Dermatologist;
+import com.isaProject.isa.Model.Users.Supplier;
+import com.isaProject.isa.Model.Users.User;
 import com.isaProject.isa.Repositories.DrugOrderRepository;
 import com.isaProject.isa.Repositories.OfferRepository;
 import com.isaProject.isa.Repositories.SupplierRepository;
@@ -12,8 +16,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import javax.mail.MessagingException;
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import static com.isaProject.isa.Model.Drugs.OfferStatus.CONFIRMED;
 import static com.isaProject.isa.Model.Drugs.OfferStatus.REJECTED;
@@ -28,6 +34,8 @@ public class OfferService implements IOfferServise{
 
     @Autowired
     UserRepository userRepository;
+    @Autowired
+    UserService userService;
 
     @Autowired
     DrugPricelistService drugPricelistService;
@@ -40,6 +48,8 @@ public class OfferService implements IOfferServise{
 
     @Autowired
     ServiceForEmail serviceForEmail;
+    @Autowired
+    DrugOrderService drugOrderService;
 
     @Override
     public List<Offer>findOffersByIdOrder(Integer id){
@@ -117,6 +127,30 @@ odkomentarisiiii
 
         return offer;
     }
+
+    @Override
+    public Offer save(OfferDTO offerDTO) {
+        Offer offer = new Offer();
+        offer.setOfferStatus(OfferStatus.ON_HOLD);
+        offer.setDeliveryDate(convertLocalDateToDate(offerDTO.getDeliveryDate()));
+        offer.setDrugOrder(drugOrderService.findById(offerDTO.getIdOrder()));
+        offer.setPrice(offerDTO.getTotalPrice());
+        Supplier supplier = supplierRepository.getOne(offerDTO.getIdSupplier());
+        offer.setSupplier(supplier);
+
+
+
+        offerRepository.save(offer);
+        return offer;
+    }
+
+    // parsiranje LOCAL DATE to DATE
+    public Date convertLocalDateToDate(LocalDate localDate) {
+        return java.util.Date.from(localDate.atStartOfDay()
+                .atZone(ZoneId.systemDefault())
+                .toInstant());
+    }
+
 
     /*
 

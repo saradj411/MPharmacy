@@ -1,12 +1,11 @@
-#pharmacy
-insert into pharmacy values (500,'Novi Sad',3.5,'opis 1','Jankovic 1');
-insert into pharmacy values (501,'Nis',4.5,"opis 2","Jankovic 2");
-insert into pharmacy values (502,'Valjevo',7.5,"opis 3","Jankovic 3");
-insert into pharmacy values (503,'Kraljevo',8.3,"opis 4","Jankovic 4");
-insert into pharmacy values (504,'Beograd',4.8,"opis 5","Jankovic 5");
+#PHARMACY
+insert into pharmacy values (500,'Novi Sad',3.5,'Beograd','Srbija','opis 2','Zegin apoteka');
+insert into pharmacy values (501,'Nis',4.5,'Beograd','Srbija','opis 23','Ime 2');
+insert into pharmacy values (502,'Valjevo',7.5,'Novi Sad','Srbija','Nopis 23','Ime 3');
+insert into pharmacy values (503,'Kraljevo',8.3,'Beograd','Srbija','opis 1','Ime 24');
+insert into pharmacy values (504,'Beograd',4.8,'Beograd','Srbija','opis5 ','Ime 4');
 
-
-#drug
+#DRUG
 insert into drug values (501,'sifra 1','tableta','TABLET','proizvodjac 1','probiotik',true);
 insert into drug values (502,'sifra 2','kapsula','CAPSULE','proizvodjac 2','paracetamol',true);
 insert into drug values (503,'sifra 3','tableta','TABLET','proizvodjac 3','andol',false);
@@ -16,10 +15,8 @@ insert into drug values (506,'sifra 6','tableta','TABLET','proizvodjac 6','brufe
 insert into drug values (507,'sifra 7','sprej','GEL','proizvodjac 7','mometazonfuorat',true);
 insert into drug values (508,'sifra 8','sprej','GEL','proizvodjac 8','andol',true);
 
-
 #pharmacy_drugs
 #id,kolicina,drug_id,pharmacy_id
-insert into pharmacy_drugs values (509,5,508,501);
 insert into pharmacy_drugs values (501,5,503,503);
 insert into pharmacy_drugs values (502,8,504,501);
 insert into pharmacy_drugs values (503,6,505,503);
@@ -30,10 +27,19 @@ insert into pharmacy_drugs values (507,8,504,502);
 insert into pharmacy_drugs values (508,8,507,501);
 
 
+#altervnative_drugs
+insert into alternative_drug values (505,501)
+insert into alternative_drug values (503,501);
+insert into alternative_drug values (503,502);
+insert into alternative_drug values (503,507);
+insert into alternative_drug values (501,504);
+insert into alternative_drug values (501,507);
+insert into alternative_drug values (506,501);
+insert into alternative_drug values (506,504);
+insert into alternative_drug values (505,501)
 
 #drug_pricelist
 #id,end,price,start,drug_id,pharmacy_id
-
 insert into drug_pricelist values (501,'2021-08-12',100,'2021-02-27',503,503);
 insert into drug_pricelist values (502,'2021-10-12',250,'2021-01-01',504,501);
 insert into drug_pricelist values (503,'2021-06-11',300,'2020-06-11',505,503);
@@ -44,7 +50,19 @@ insert into drug_pricelist values (507,'2021-11-01',300,'2020-07-07',504,502);
 insert into drug_pricelist values (508,'2021-11-01',286,'2020-07-07',508,501);
 insert into drug_pricelist values (509,'2021-11-01',300,'2020-07-07',507,501);
 
+#specification
+insert into specification values (500,'iritacija sinusa','sastojak 1, sastojak 2',4,'sastav 1','sifra 1');
+insert into specification values (501,'iritacija oka','sastojak 1',6,'sastav 2','sifra 2');
+insert into specification values (502,'nema','sastojak 3, sastojak 2',7,'sastav 3','sifra 3');
+insert into specification values (503,'iritacija sinusa','sastojak 13',2,'sastav 4','sifra 4');
+insert into specification values (504,'nema','sastojak 4',9,'sastav 5','sifra 5');
 
+#ingredient
+insert into ingredient values(500,'sastojak 1',504);
+insert into ingredient values(501,'sastojak 1',500);
+insert into ingredient values(502,'sastojak 1',503);
+insert into ingredient values(503,'sastojak 1',502);
+insert into ingredient values(504,'sastojak 1',501);
 
 #user
 #id_user,address,city,country,email,name,password,phone_number,surname,avg,loyality,penali,points,id faarmacije u kojoj farmaceut radi,id apoteke za farmaceuta apoteke
@@ -63,15 +81,16 @@ insert into users values (333,1,'Bulevar kneza Milosa','Novi Sad','Srbija','veri
 insert into users values (559,1,'Bulevar kneza Milosa','Novi Sad','Srbija','veki@gmail.com','Veki','pasword','066589111','V');
 insert into users values (533,1,'Cara Milosa','Novi Sad','Srbija','ivanm@gmail.com','Ivan','lozinka9','066589335','Milenkovic');
 insert into users values (512,1,'Gagarinova 3','Novi Sad','Srbija','majamilenkovic98@gmail.com','Dejan','$2a$10$sqes3IpPL4mBgAAmimisyOWj5DlqPRndrJFNFw9zWiJjyNa5ozKS6','066589371','Dekic');
-
+insert into users values(20,1, 'Srbijanska', 'Novi Sad', 'Srbija', 'anja@gmail.com','Anja', '$2a$10$sqes3IpPL4mBgAAmimisyOWj5DlqPRndrJFNFw9zWiJjyNa5ozKS6', '065/85-32-321','Anjic');
 
 #Authority_table
-INSERT INTO authority values (1, 'ADMIN');
-INSERT INTO authority values (2, 'PHARMACY_ADMIN');
-INSERT INTO authority values (3, 'PHARMACIST');
-INSERT INTO authority values (4, 'DERMATOLOGIST');
-INSERT INTO authority values (5, 'PATIENT');
-INSERT INTO authority values (6, 'SUPPLIER');
+INSERT INTO authority values (1, 'ROLE_ADMIN');
+INSERT INTO authority values (2, 'ROLE_PHARMACY_ADMIN');
+INSERT INTO authority values (3, 'ROLE_PHARMACIST');
+INSERT INTO authority values (4, 'ROLE_DERMATOLOGIST');
+INSERT INTO authority values (5, 'ROLE_PATIENT');
+INSERT INTO authority values (6, 'ROLE_SUPPLIER');
+
 
 #user_authority
 insert into user_authority values(501, 4);
@@ -89,6 +108,7 @@ insert into user_authority values(512, 1);
 insert into user_authority values(333, 3);
 insert into user_authority values(559, 3);
 insert into user_authority values(533, 4);
+insert into user_authority values(20, 6);
 
 #staff
 insert into staff values (8, 501);
@@ -132,24 +152,13 @@ insert into dermatologists_in_pharmacies values(501,501);
 insert into dermatologists_in_pharmacies values(504,501);
 insert into dermatologists_in_pharmacies values(509,503);
 insert into dermatologists_in_pharmacies values(533,501);
+insert into dermatologists_in_pharmacies values(501,502);
 
 #pharmacy_admin
 insert into pharmacy_admin values(503,501);
 
-#alternative_drug
-#id drug,id alternativni drug
-
-#insert into alternative_drug values(501,507);
-#insert into alternative_drug values(502,507);
-#insert into alternative_drug values(503,506);
-#insert into alternative_drug values(504,506);
-#insert into alternative_drug values(505,506);
-#insert into alternative_drug values(506,502);
-
-
 #allergies
 #id patient,id drug
-
 insert into allergies values(507,502);
 insert into allergies values(507,501);
 insert into allergies values(510,503);
@@ -159,12 +168,13 @@ insert into allergies values(508,504);
 
 #drug_order
 #id order,processed,kolicina,timelimit,admin
-
 insert into drug_order values(500,true,5,'2021-08-12',503);
 insert into drug_order values(501,false,4,'2021-09-20',503);
 insert into drug_order values(502,false,8,'2021-11-20',503);
 insert into drug_order values(503,true,2,'2021-12-20',503);
 insert into drug_order values(504,true,4,'2021-10-20',503);
+insert into drug_order values(505,true,20,'2021-05-20',503);
+
 
 #drug_reservation
 #id,cancelled,datum rez,ispicked -da li je preuzet,pick_up_date -do kog,kolicina,id drug,id pattient,id pharmacy
@@ -187,6 +197,8 @@ insert into drug_reservation values(513,true,'2021-03-25',false,'2021-03-17',3,5
 insert into drug_reservation values(514,true,'2021-04-25',false,'2021-04-18',3,504,510,501);
 
 
+
+
 #therapy
 insert into therapy values(500,3,504);
 insert into therapy values(501,5,501);
@@ -198,6 +210,9 @@ insert into therapy values(505,7,506);
 #work_timelimit
 insert into work_time values(500,'2021-07-22','11:00:00','09:30:00',500,502);
 insert into work_time values(501,'2021-07-22','11:00:00','09:30:00',504,506);
+insert into work_time values(504,'2021-05-05','19:00:00','06:30:00',501,501);
+insert into work_time values(509,'2021-06-20','19:00:00','06:30:00',501,501);
+insert into work_time values(505,'2021-07-22','19:00:00','06:30:00',501,501);
 
 #examination
 
@@ -210,25 +225,26 @@ insert into examination values(504,false,'2021-07-22','11:00:00',true,880,'info2
 insert into examination values(505,false,'2021-07-22','11:00:00',true,880,'info2','09:30:00','CREATED','DERMATOLOGIST_EXAMINATION',508,501,501,null);
 insert into examination values(506,false,'2021-07-22','11:00:00',false,1000,'info2','09:30:00','CREATED','PHARMACIST_EXAMINATION',510,501,511,501);//--------------------
 
-insert into examination values(502,false,'2021-06-20','2021-06-20 09:00:00',true,600,'info1','2021-06-20 08:00:00','SCHEDULED','DERMATOLOGIST_EXAMINATION',508,501,501,null);
-insert into examination values(507,false,'2021-07-23','2021-07-23 11:00:00',true,880,'info2','2021-07-23 09:30:00','SCHEDULED','DERMATOLOGIST_EXAMINATION',508,501,504,null);//--------------------
-
+insert into examination values(502,false,'2021-06-20','09:00:00',true,600,'info1','08:00:00','SCHEDULED','DERMATOLOGIST_EXAMINATION',508,501,501,null);
+insert into examination values(507,false,'2021-07-23','11:00:00',true,880,'info2','09:30:00','SCHEDULED','DERMATOLOGIST_EXAMINATION',508,501,504,null);
 insert into examination values(509,false,'2021-08-27','12:00:00',false,1050,'info2','10:30:00','CREATED','PHARMACIST_EXAMINATION',null,501,511,null);
 
-
-
-
-insert into examination values(544,false,'2021-01-20','2021-01-20 09:00:00',true,600,'info1','2021-01-20 08:00:00','SCHEDULED','DERMATOLOGIST_EXAMINATION',508,501,501,null);
-insert into examination values(541,false,'2021-02-23','2021-02-23 11:00:00',true,880,'info2','2021-02-23 09:30:00','SCHEDULED','DERMATOLOGIST_EXAMINATION',508,501,504,null);//--------------------
+insert into examination values(544,false,'2021-01-20','09:00:00',true,600,'info1','08:00:00','SCHEDULED','DERMATOLOGIST_EXAMINATION',508,501,501,null);
+insert into examination values(541,false,'2021-02-23','11:00:00',true,880,'info2','09:30:00','SCHEDULED','DERMATOLOGIST_EXAMINATION',508,501,504,null);
 
 insert into examination values(542,false,'2021-03-27','12:00:00',false,1050,'info2','10:30:00','CREATED','PHARMACIST_EXAMINATION',null,501,511,null);
-
-
-
-
 insert into examination values(510,false,'2021-08-29','11:00:00',false,1030,'info2','09:30:00','CREATED','DERMATOLOGIST_EXAMINATION',null,500,501,null);
 insert into examination values(511,false,'2021-08-27','12:00:00',false,1050,'info2','10:30:00','CREATED','DERMATOLOGIST_EXAMINATION',null,501,504,null);
 
+insert into examination values(550,false,'2020-06-20','09:00:00',true,600,'info1','08:00:00','FINISHED','DERMATOLOGIST_EXAMINATION',508,501,501,null);
+insert into examination values(551,false,'2020-07-23','11:00:00',true,880,'info2','09:30:00','FINISHED','DERMATOLOGIST_EXAMINATION',508,501,504,null);
+insert into examination values(553,false,'2020-01-20','09:00:00',true,600,'info1','08:00:00','FINISHED','DERMATOLOGIST_EXAMINATION',507,501,501,null);
+insert into examination values(554,false,'2020-02-23','11:00:00',true,880,'info2','09:30:00','FINISHED','DERMATOLOGIST_EXAMINATION',507,501,504,null);
+
+insert into examination values(555,false,'2020-03-27','12:00:00',false,1050,'info2','10:30:00','FINISHED','PHARMACIST_EXAMINATION',508,501,511,null);
+insert into examination values(559,false,'2020-03-26','12:00:00',false,1050,'info2','10:30:00','FINISHED','PHARMACIST_EXAMINATION',507,501,511,null);
+insert into examination values(556,false,'2020-08-29','11:00:00',false,1030,'info2','09:30:00','FINISHED','DERMATOLOGIST_EXAMINATION',510,500,501,null);
+insert into examination values(557,false,'2020-08-27','12:00:00',false,1050,'info2','10:30:00','FINISHED','DERMATOLOGIST_EXAMINATION',510,501,504,null);
 
 insert into action_patient_pharmacy values(507,501);
 insert into action_patient_pharmacy values(507,503);
@@ -239,13 +255,13 @@ insert into action_patient_pharmacy values(510,502);
 insert into action_patient_pharmacy values(510,501);
 insert into action_patient_pharmacy values(510,500);
 
-insert into erecipe values(500,"12345",'2021-05-24','Ana',"NEW",'Mikic',508,500);//--------------------
-insert into erecipe values(501,"12346",'2021-05-22','Ana',"NEW",'Mikic',508,500);//--------------------
+insert into erecipe values(500,"12345",'2021-05-24','Ana',"NEW",'Mikic',508,500);
+insert into erecipe values(501,"12346",'2021-05-22','Ana',"NEW",'Mikic',508,500);
 
-insert into erecipe_drug values(500,"sifra 1",'probiotik',7,501);//--------------------
-insert into erecipe_drug values(501,"sifra 2",'paracetamol',8,501);//--------------------
-insert into erecipe_drug values(502,"sifra 1",'probiotik',9,501);//--------------------
-insert into erecipe_drug values(503,"sifra 2",'paracetamol',11,501);//--------------------
+insert into erecipe_drug values(500,"sifra 1",'probiotik',7,501);
+insert into erecipe_drug values(501,"sifra 2",'paracetamol',8,501);
+insert into erecipe_drug values(502,"sifra 1",'probiotik',9,501);
+insert into erecipe_drug values(503,"sifra 2",'paracetamol',11,501);
 
 
 insert into erecipe_e_recipe_drug values(500,501);
@@ -253,6 +269,15 @@ insert into erecipe_e_recipe_drug values(500,500);
 insert into erecipe_e_recipe_drug values(501,502);
 insert into erecipe_e_recipe_drug values(501,503);
 
+insert into order_item values (1, 10, 502, 500);
+insert into order_item values (2, 10, 503, 500);
+insert into order_item values (3, 5, 506, 502);
+insert into order_item values (4, 20, 508, 501);
+insert into order_item values (5, 100, 504, 503);
+insert into order_item values  (6, 20, 504, 505);
+insert into order_item values  (7, 10, 501, 505);
+
+insert into supplier values (20);
 
 #request_for_vacation
 insert into request_for_vacation values(600,false,'opiz','2021-06-20',true,'2020-06-20',500,502);
@@ -328,27 +353,4 @@ insert into request_for_vacation values(606,false,'opiz','2021-06-20',true,'2020
        insert into erecipe_e_recipe_drug values(501,503);
 
 
-#specification
-#id,contraindikacija,ingridiens, doza,struktura,code(idleka)
-
-insert into specification values (500,'iritacija sinusa','sastojak 1, sastojak 2',4,'sastav 1','sifra 1');
-insert into specification values (501,'iritacija oka','sastojak 1',6,'sastav 2','sifra 2');
-insert into specification values (502,'nema','sastojak 3, sastojak 2',7,'sastav 3','sifra 3');
-insert into specification values (503,'iritacija sinusa','sastojak 13',2,'sastav 4','sifra 4');
-insert into specification values (504,'nema','sastojak 4',9,'sastav 5','sifra 5');
-insert into specification values (505,'iritacija sinusa','sastojak 13',2,'sastav 4','sifra 6');
-insert into specification values (506,'nema','sastojak 4',9,'sastav 5','sifra 7');
-
-
-
-insert into drug_reservation values(500,false,'2021-04-20',false,false,'2021-06-20',3,503,510,503);
-insert into drug_reservation values(501,true,'2021-05-25',false,false,'2021-06-15',3,504,510,501);
-insert into drug_reservation values(502,false,'2021-04-20',false,false,'2021-07-20',3,505,508,503);
-insert into drug_reservation values(503,false,'2021-05-18',false,true,'2021-07-20',3,506,510,504);
-insert into drug_reservation values(504,true,'2021-04-20',false,false,'2021-09-20',3,507,507,502);
-insert into drug_reservation values(505,false,'2021-04-20',false,false,'2021-09-20',3,503,510,503);
-insert into drug_reservation values(506,true,'2021-05-25',false,false,'2021-06-15',3,504,508,501);
-insert into drug_reservation values(507,false,'2021-04-20',false,true,'2021-08-20',3,505,507,503);
-insert into drug_reservation values(508,false,'2021-05-18',false,true,'2021-07-20',3,506,508,504);
-insert into drug_reservation values(509,false,'2021-04-20',false,false,'2021-06-29',3,507,507,502);
 

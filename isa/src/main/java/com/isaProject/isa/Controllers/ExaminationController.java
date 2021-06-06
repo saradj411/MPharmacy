@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.mail.MessagingException;
 import java.time.LocalDate;
-import java.util.List;
+import java.util.*;
 
 
 @RestController
@@ -197,4 +197,149 @@ public class ExaminationController {
         return new ResponseEntity<>(res, HttpStatus.OK);
 
     }
+
+    @GetMapping("/sortByGradeDescending")
+    ResponseEntity<List<FrontCreatedExaminationDTO>> sortByGradedescending()
+    {
+        List<FrontCreatedExaminationDTO> pharmacies = examinationService.findCreatedDermatologistExamination();
+        Collections.sort(pharmacies, new Comparator<FrontCreatedExaminationDTO>() {
+            @Override
+            public int compare(FrontCreatedExaminationDTO p1, FrontCreatedExaminationDTO p2) {
+                return Double.compare(p1.getGradeStaff(), p2.getGradeStaff());
+
+            }
+        });
+
+        Collections.reverse(pharmacies);
+
+        return ResponseEntity.ok(pharmacies);
+    }
+
+    @GetMapping("/sortByGradeAscending")
+    ResponseEntity<List<FrontCreatedExaminationDTO>> sortByGradeAscending()
+    {
+        List<FrontCreatedExaminationDTO> pharmacies = examinationService.findCreatedDermatologistExamination();
+        Collections.sort(pharmacies, new Comparator<FrontCreatedExaminationDTO>() {
+            @Override
+            public int compare(FrontCreatedExaminationDTO p1, FrontCreatedExaminationDTO p2) {
+                return Double.compare(p1.getGradeStaff(), p2.getGradeStaff());
+
+            }
+        });
+
+        return ResponseEntity.ok(pharmacies);
+    }
+
+    @GetMapping("/sortByPriceDescending")
+    ResponseEntity<List<FrontCreatedExaminationDTO>> sortByPriceDescending()
+    {
+        List<FrontCreatedExaminationDTO> pharmacies = examinationService.findCreatedDermatologistExamination();
+        Collections.sort(pharmacies, new Comparator<FrontCreatedExaminationDTO>() {
+            @Override
+            public int compare(FrontCreatedExaminationDTO p1, FrontCreatedExaminationDTO p2) {
+                return Double.compare(p1.getPrice(), p2.getPrice());
+
+            }
+        });
+
+        Collections.reverse(pharmacies);
+
+        return ResponseEntity.ok(pharmacies);
+    }
+
+    @GetMapping("/sortByPriceAscending")
+    ResponseEntity<List<FrontCreatedExaminationDTO>> sortByPriceAscending()
+    {
+        List<FrontCreatedExaminationDTO> pharmacies = examinationService.findCreatedDermatologistExamination();
+        Collections.sort(pharmacies, new Comparator<FrontCreatedExaminationDTO>() {
+            @Override
+            public int compare(FrontCreatedExaminationDTO p1, FrontCreatedExaminationDTO p2) {
+                return Double.compare(p1.getPrice(), p2.getPrice());
+
+            }
+        });
+
+        return ResponseEntity.ok(pharmacies);
+    }
+
+    @GetMapping("/sortFinishedDEByPriceDesc/{id}")
+    ResponseEntity<List<FrontCreatedExaminationDTO>> sortFinishedDEByPriceDesc(@PathVariable Integer id)
+    {
+        Set<FrontCreatedExaminationDTO> pharmacies= patientService.findFinishedDermatologistExamination(id);
+        List<FrontCreatedExaminationDTO> list=new ArrayList<>();
+       for(FrontCreatedExaminationDTO dd:pharmacies){
+           list.add(dd);
+       }
+        Collections.sort(list, new Comparator<FrontCreatedExaminationDTO>() {
+            @Override
+            public int compare(FrontCreatedExaminationDTO p1, FrontCreatedExaminationDTO p2) {
+                return Double.compare(p1.getPrice(), p2.getPrice());
+
+            }
+        });
+
+        Collections.reverse(list);
+
+        return ResponseEntity.ok(list);
+    }
+
+    @GetMapping("/sortFinishedDEByPriceAsc/{id}")
+    ResponseEntity<List<FrontCreatedExaminationDTO>> sortFinishedDEByPriceAsc(@PathVariable Integer id)
+    {
+        Set<FrontCreatedExaminationDTO> pharmacies= patientService.findFinishedDermatologistExamination(id);
+        List<FrontCreatedExaminationDTO> list=new ArrayList<>();
+        for(FrontCreatedExaminationDTO dd:pharmacies){
+            list.add(dd);
+        }
+        Collections.sort(list, new Comparator<FrontCreatedExaminationDTO>() {
+            @Override
+            public int compare(FrontCreatedExaminationDTO p1, FrontCreatedExaminationDTO p2) {
+                return Double.compare(p1.getPrice(), p2.getPrice());
+
+            }
+        });
+
+        return ResponseEntity.ok(list);
+    }
+
+    @GetMapping("/sortFinishedDEByDateDesc/{id}")
+    ResponseEntity<List<FrontCreatedExaminationDTO>> sortFinishedDEByDateDesc(@PathVariable Integer id)
+    {
+        Set<FrontCreatedExaminationDTO> pharmacies= patientService.findFinishedDermatologistExamination(id);
+        List<FrontCreatedExaminationDTO> list=new ArrayList<>();
+        for(FrontCreatedExaminationDTO dd:pharmacies){
+            list.add(dd);
+        }
+        Collections.sort(list, new Comparator<FrontCreatedExaminationDTO>() {
+            @Override
+            public int compare(FrontCreatedExaminationDTO p1, FrontCreatedExaminationDTO p2) {
+                return p1.getDate().compareTo(p2.getDate());
+            }
+        });
+
+        Collections.reverse(list);
+
+        return ResponseEntity.ok(list);
+    }
+
+    @GetMapping("/sortFinishedDEByDateAsc/{id}")
+    ResponseEntity<List<FrontCreatedExaminationDTO>> sortFinishedDEByDateAsc(@PathVariable Integer id)
+    {
+        Set<FrontCreatedExaminationDTO> pharmacies= patientService.findFinishedDermatologistExamination(id);
+        List<FrontCreatedExaminationDTO> list=new ArrayList<>();
+        for(FrontCreatedExaminationDTO dd:pharmacies){
+            list.add(dd);
+        }
+        Collections.sort(list, new Comparator<FrontCreatedExaminationDTO>() {
+            @Override
+            public int compare(FrontCreatedExaminationDTO p1, FrontCreatedExaminationDTO p2) {
+                return p1.getDate().compareTo(p2.getDate());
+
+            }
+        });
+
+        return ResponseEntity.ok(list);
+    }
+
+
 }

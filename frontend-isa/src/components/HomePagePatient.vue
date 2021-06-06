@@ -4,7 +4,7 @@
      background-size: 200% 150%;  height: 2000px">
                      <label style="color:#474A8A;font-size:35px;" align = "center">Patient profile</label>
 
-        <div style="background: #B0B3D6; height: 80px;">
+        <div style="background: #B0B3D6; height: 140px;">
           <button class="btn btn-danger btn-lg" style="float:left;margin-left:20px;margin-top:15px" v-on:click = "showPharmacies">Home</button>
             <button class="btn btn-danger btn-lg" style="float:left;margin-top:15px;margin-left:10px" v-on:click = "myProfile">Profile</button>
            
@@ -17,7 +17,9 @@
            <button class="btn btn-danger btn-lg" style="float:left;margin-top:15px;margin-left:10px" v-on:click = "showCreatedPharmacist">Schedule Consultation</button>
            <button class="btn btn-danger btn-lg" style="float:left;margin-top:15px;margin-left:10px" v-on:click = "showAllDrugs">Reserve drug</button>
            
-            
+           <button class="btn btn-danger btn-lg" style="float:left;margin-top:15px;margin-left:10px" v-on:click = "showMarks">Grades</button>
+            <button class="btn btn-danger btn-lg" style="float:left;margin-top:15px;margin-left:10px" v-on:click = "writeComplaint">Complaint</button>
+           
                                   
         </div>
 
@@ -51,7 +53,64 @@
             
   </div>
 
- 
+ <div v-if="showSortPharmacies"  style="background:#B0B3D6; height: 90px; margin-top:15px;margin-left:15px;margin-right:15px;">
+
+              <div class="column">
+                 <h4 style="margin:5px">SORT PHARMACIES BY:</h4>  
+                  <button class="btn btn-dark" style="float:left;margin-left:30px;" v-on:click = "sortByGradeR">GradeR</button>
+            <button class="btn btn-dark" style="float:left;margin-left:10px" v-on:click = "sortByGradeO">GradeO</button>
+           
+           <button class="btn btn-dark" style="float:left;margin-left:10px" v-on:click = "sortByNameAscending">NameR</button>
+            <button class="btn btn-dark" style="float:left;margin-left:10px" v-on:click = "sortByNameDescending">nameO</button>
+            
+
+              </div>
+    </div>
+    <div v-if="showSortCreatedDermatologistExamination"  style="background:#B0B3D6; height: 90px; margin-top:15px;margin-left:15px;margin-right:15px;">
+
+              <div class="column">
+                 <h4 style="margin:5px">SORT EXAMINATIONS BY:</h4>  
+                  <button class="btn btn-dark" style="float:left;margin-left:20px;" v-on:click = "sortCDExamByGradeR">GradeR</button>
+            <button class="btn btn-dark" style="float:left;margin-left:10px" v-on:click = "sortCDExamByGradeO">GradeO</button>
+           
+           <button class="btn btn-dark" style="float:left;margin-left:10px" v-on:click = "sortCDExamByPriceAscending">PriceR</button>
+            <button class="btn btn-dark" style="float:left;margin-left:10px" v-on:click = "sortCDExamByPriceDescending">PriceO</button>
+            
+
+              </div>
+    </div>
+ <div v-if="showSortERecipes"  style="background:#B0B3D6; height: 90px; margin-top:15px;margin-left:15px;margin-right:15px;">
+
+              <div class="column">
+                 <h4 style="margin:5px">SORT eRECIPES BY:</h4>  
+                  <button class="btn btn-dark" style="float:left;margin-left:20px;" v-on:click = "sortERecipeByDateR">Date Of Issue R</button>
+           <button class="btn btn-dark" style="float:left;margin-left:20px;" v-on:click = "sortERecipeByDateO">Date Of Issue O</button>
+          
+              </div>
+    </div>
+    <div v-if="showSortFinishedDE"  style="background:#B0B3D6; height: 90px; margin-top:15px;margin-left:15px;margin-right:15px;">
+
+              <div class="column">
+                 <h4 style="margin:5px">SORT FINISHED EXAMINATIONS BY:</h4>  
+                  <button class="btn btn-dark" style="float:left;margin-left:20px;" v-on:click = "sortFDExamByPriceR">PriceR</button>
+                   <button class="btn btn-dark" style="float:left;margin-left:20px;" v-on:click = "sortFDExamByPriceO">PriceO</button>
+              <button class="btn btn-dark" style="float:left;margin-left:20px;" v-on:click = "sortFDExamByDateR">DateR</button>
+                   <button class="btn btn-dark" style="float:left;margin-left:20px;" v-on:click = "sortFDExamByDateO">DateO</button>
+          
+              </div>
+    </div>
+
+     <div v-if="showMarksBar"  style="background:#B0B3D6; height: 60px; margin-top:15px;margin-left:15px;margin-right:15px;">
+
+              <div class="column">
+                   <button class="btn btn-dark" style="float:left;margin-left:20px;margin-top:10px;" v-on:click = "showPharmacyGrade">Pharmacies</button> 
+                  <button class="btn btn-dark" style="float:left;margin-left:20px;margin-top:10px;" v-on:click = "showDermatologistGrade">Dermatologists</button>
+                   <button class="btn btn-dark" style="float:left;margin-left:20px;margin-top:10px;" v-on:click = "showPharmacistGrade">Pharmacists</button>
+             <button class="btn btn-dark" style="float:left;margin-left:20px;margin-top:10px;" v-on:click = "showDrugsGrade">Drugs</button>
+          
+              </div>
+    </div>
+
 <!-- all PHARMACIES!-->
   <div v-if="showTable"  style="float:left;margin-left:30px;">
      <h4 style="margin:30px">ALL PHARMACIES:</h4>    
@@ -104,7 +163,12 @@
        <td>{{pharmacy.address}}</td>
 
     </tr>
-   
+   <tr>
+      <th></th>
+      <td ></td>   
+        <td><button class="btn btn-danger btn-sm" v-on:click = "unsubscribe(pharmacy.idPharm)">Unsubscribe</button></td>
+
+    </tr>
   </tbody>
 </table>
            </div>
@@ -316,8 +380,8 @@
         </tr>
          <tr>
           <th></th>
-          <td >{{examination2.therapy.drug.name}}</td>
-          <td >Daily dose:</td>
+          <!--<td >{{examination2.therapy.drug.name}}</td>!-->
+          <!--<td >Daily dose:{{examination2.therapy.numberOfDay}}</td>!-->
           
         </tr>
   </tbody>
@@ -420,7 +484,7 @@
          <tr>
           <th></th>
           <td >{{examination3.therapy.drug.name}}</td>
-          <td >Daily dose:</td>
+          <td >Daily dose:{{examination3.therapy.numberOfDay}}</td>
           
         
 
@@ -667,6 +731,163 @@
 
 
       </div> 
+
+<!-------GRADES DERMATOLOGIST!-->
+
+      <div v-if="showGradeDermatologist"  style="float:left;margin-left:30px;">
+     <h4 style="margin:30px">GRADES:</h4>
+ <div style="background: #a7c1c9;margin-left:30px;"  v-for="g1 in this.dermatologistGrades"  v-bind:key="g1.idDermatologist">
+      
+<table  style="" id="table2" class="table" >
+ 
+    <tbody>
+      <tr>
+        <th scope="row"></th>
+        <td>Dermatologist:</td>
+         <td>{{g1.name}} {{g1.surname}}</td>
+      </tr>
+
+        <tr>
+        <th scope="row"></th>
+        
+         <td>Grade:</td>
+          <td><input type="text"  class="form-control" v-model = "g1.grade"></td>
+      </tr>
+      <!-- v-model = "s"
+       v-on:click = "continue2(staff.idStaff,staff.idPharm)"!-->
+        <tr>
+          <th></th>
+          <td></td>
+          <td><button class="btn btn-danger btn-sm"  v-on:click = "confrim(g1.grade,g1.idDermatologist,g1.idPatient)">Confrim</button></td>
+          
+
+        </tr>
+        
+  </tbody>
+</table>
+           </div>
+
+
+      </div> 
+
+      <!-------GRADES PHARMACIST!-->
+
+      <div v-if="showGradePharmacist"  style="float:left;margin-left:30px;">
+     <h4 style="margin:30px">GRADES:</h4>
+ <div style="background: #a7c1c9;margin-left:30px;"  v-for="g1 in this.pharmacistGrades"  v-bind:key="g1.idPharmacist">
+      
+<table  style="" id="table2" class="table" >
+ 
+    <tbody>
+      <tr>
+        <th scope="row"></th>
+        <td>Pharmacist:</td>
+         <td>{{g1.name}} {{g1.surname}}</td>
+      </tr>
+
+        <tr>
+        <th scope="row"></th>
+        
+         <td>Grade:</td>
+          <td><input type="text"  class="form-control" v-model = "g1.grade"></td>
+      </tr>
+      <!-- v-model = "s"
+       v-on:click = "continue2(staff.idStaff,staff.idPharm)"!-->
+        <tr>
+          <th></th>
+          <td></td>
+          <td><button class="btn btn-danger btn-sm"  v-on:click = "confrimPharmacist(g1.grade,g1.idPharmacist,g1.idPatient)">Confrim</button></td>
+          
+
+        </tr>
+        
+  </tbody>
+</table>
+           </div>
+
+
+      </div> 
+
+
+ 
+
+      <!-------GRADES pHARMACYYYYYYYYYY!-->
+
+      <div v-if="showGradePharmacy"  style="float:left;margin-left:30px;">
+     <h4 style="margin:30px">GRADES:</h4>
+ <div style="background: #a7c1c9;margin-left:30px;"  v-for="g2 in this.pharmacyGrade"  v-bind:key="g2.idPharmacy">
+      
+<table  style="" id="table2" class="table" >
+ 
+    <tbody>
+      <tr>
+        <th scope="row"></th>
+        <td>Pharmacy:</td>
+         <td>{{g2.name}}</td>
+      </tr>
+
+        <tr>
+        <th scope="row"></th>
+        
+         <td>Grade:</td>
+          <td><input type="text"  class="form-control" v-model = "g2.grade"></td>
+      </tr>
+      <!-- v-model = "s"
+       v-on:click = "continue2(staff.idStaff,staff.idPharm)"!-->
+        <tr>
+          <th></th>
+          <td></td>
+          <td><button class="btn btn-danger btn-sm"  v-on:click = "confrimPharmacy(g2.grade,g2.idPharmacy,g2.idPatient)">Confrim</button></td>
+          
+
+        </tr>
+        
+  </tbody>
+</table>
+           </div>
+
+
+      </div> 
+
+
+
+      <!-------GRADES DRUUUUUUUUUUG!-->
+
+      <div v-if="showGradeDrug"  style="float:left;margin-left:30px;">
+     <h4 style="margin:30px">GRADES:</h4>
+ <div style="background: #a7c1c9;margin-left:30px;"  v-for="g3 in this.drugGrades"  v-bind:key="g3.idDrug">
+      
+<table  style="" id="table2" class="table" >
+ 
+    <tbody>
+      <tr>
+        <th scope="row"></th>
+        <td>Drug:</td>
+         <td>{{g3.name}}</td>
+      </tr>
+
+        <tr>
+        <th scope="row"></th>
+        
+         <td>Grade:</td>
+          <td><input type="text"  class="form-control" v-model = "g3.grade"></td>
+      </tr>
+      <!-- v-model = "s"
+       v-on:click = "continue2(staff.idStaff,staff.idPharm)"!-->
+        <tr>
+          <th></th>
+          <td></td>
+          <td><button class="btn btn-danger btn-sm"  v-on:click = "confrimDrug(g3.grade,g3.idDrug,g3.idPatient)">Confrim</button></td>
+          
+
+        </tr>
+        
+  </tbody>
+</table>
+           </div>
+
+
+      </div> 
 </div>
 
   
@@ -698,9 +919,25 @@ export default {
         showSearchDrugs:false,
         showSearchDrug:false,
         showScheduleSearch:false,
+        showSortPharmacies:true,
+        showSortCreatedDermatologistExamination:false,
+        showSortERecipes:false,
+        showSortFinishedDE:false,
+
+        showMarksBar:false,
+        showGradeDermatologist:false,
+        showGradePharmacist:false,
+        showGradePharmacy:false,
+        showGradeDrug:false,
 
         pharmacies : [],
         pharmacies1 : [],
+
+        dermatologistGrades:[],
+        pharmacistGrades:[],
+        pharmacyGrade:[],
+        drugGrades:[],
+
         drugName:null,
         date:null,
         time:null,
@@ -726,6 +963,7 @@ export default {
         id : this.$route.params.id,
         jel:false,
         jel1:false,
+        jel2:false,
         poruka:""
 
     }
@@ -835,6 +1073,41 @@ export default {
                 alert("Nesto ne valja");
                 console.log(res);
         });
+
+        this.axios.get('/grade/findDermatologistForGrade/'+this.id)
+        .then(response => {
+                this.dermatologistGrades = response.data;
+                
+         }).catch(res => {
+                alert("Nesto ne valja");
+                console.log(res);
+        });
+         this.axios.get('/grade/findPharmacistForGrade/'+this.id)
+        .then(response => {
+                this.pharmacistGrades = response.data;
+                
+         }).catch(res => {
+                alert("Nesto ne valja");
+                console.log(res);
+        });
+
+         this.axios.get('/grade/findPharmaciesForGrade/'+this.id)
+        .then(response => {
+                this.pharmacyGrade = response.data;
+                
+         }).catch(res => {
+                alert("Nesto ne valja");
+                console.log(res);
+        });
+
+         this.axios.get('/grade/findDrugsForGrade/'+this.id)
+        .then(response => {
+                this.drugGrades = response.data;
+                
+         }).catch(res => {
+                alert("Nesto ne valja");
+                console.log(res);
+        });
                
                
 },
@@ -842,7 +1115,63 @@ methods:{
      myProfile : function(){
           window.location.href = "/ProfilePatient/"+this.id;
       },
+      writeComplaint:function(){
+          window.location.href = "/WriteComplaint/"+this.id;
+      },
+      showPharmacyGrade:function(){
+        
+        this.showGradeDermatologist=false
+        this.showGradePharmacist=false
+        this.showGradePharmacy=true
+        this.showGradeDrug=false
+
+      },
+      showDermatologistGrade:function(){
+        this.showGradeDermatologist=true
+        this.showGradePharmacist=false
+        this.showGradePharmacy=false
+        this.showGradeDrug=false
+      },
+      showPharmacistGrade:function(){
+        this.showGradeDermatologist=false
+        this.showGradePharmacist=true
+        this.showGradePharmacy=false
+        this.showGradeDrug=false
+      },
+      showDrugsGrade:function(){
+        this.showGradeDermatologist=false
+        this.showGradePharmacist=false
+        this.showGradePharmacy=false
+        this.showGradeDrug=true
+      },
+      showMarks: function(){
+        this.showMarksBar=true
+        this.showTable=false
+        this.showReserveTable=false
+        this.showDermExam=false
+        this.showPharmExam=false
+        this.showERecipe=false
+        this.showCreatedDermExamination=false
+        this.showFinishedDerm=false
+        this.showFinishedPharm=false
+        this.showDrugsInPharmacies=false
+        this.showSearchDrug=false
+        this.showSearchDrugs=false
+         this.showCreatedPharmExamination=false
+         this.showScheduleSearch=false
+         this.showFreeStaff=false
+         this.showSortPharmacies=false
+         this.showSortCreatedDermatologistExamination=false
+         this.showSortERecipes=false
+         this.showSortFinishedDE=false
+           this.showGradeDermatologist=false
+        this.showGradePharmacist=false
+        this.showGradePharmacy=false
+        this.showGradeDrug=false
+       //this.showSearchPharmacy=true
+      },
        showPharmacies: function(){
+         this.showMarksBar=false
         this.showTable=true
         this.showReserveTable=false
         this.showDermExam=false
@@ -857,10 +1186,21 @@ methods:{
          this.showCreatedPharmExamination=false
          this.showScheduleSearch=false
          this.showFreeStaff=false
+         this.showSortPharmacies=true
+         this.showSortCreatedDermatologistExamination=false
+         this.showSortERecipes=false
+         this.showSortFinishedDE=false
+         this.showGradeDermatologist=false
+        this.showGradePharmacist=false
+        this.showGradePharmacy=false
+        this.showGradeDrug=false
+        
+        
        //this.showSearchPharmacy=true
       },
       showReservation:
        function(){
+         this.showMarksBar=false
         this.showTable=false
         this.showReserveTable=true
         this.showDermExam=false
@@ -875,6 +1215,14 @@ methods:{
         this.showScheduleSearch=false
          this.showCreatedPharmExamination=false
            this.showFreeStaff=false
+            this.showSortPharmacies=false
+            this.showSortCreatedDermatologistExamination=false
+            this.showSortERecipes=false
+             this.showSortFinishedDE=false
+             this.showGradeDermatologist=false
+        this.showGradePharmacist=false
+        this.showGradePharmacy=false
+        this.showGradeDrug=false
       },
       showConsultation:
        function(){
@@ -892,6 +1240,15 @@ methods:{
         this.showScheduleSearch=false
           this.showFreeStaff=false
          this.showCreatedPharmExamination=false
+         this.showSortPharmacies=false
+         this.showSortCreatedDermatologistExamination=false
+         this.showSortERecipes=false
+          this.showSortFinishedDE=false
+          this.showMarksBar=false
+          this.showGradeDermatologist=false
+        this.showGradePharmacist=false
+        this.showGradePharmacy=false
+        this.showGradeDrug=false
       },
       showRecipe: function(){
         
@@ -909,6 +1266,15 @@ methods:{
         this.showSearchDrugs=false
         this.showScheduleSearch=false
           this.showFreeStaff=false
+          this.showSortPharmacies=false
+          this.showSortCreatedDermatologistExamination=false
+          this.showSortERecipes=true
+           this.showSortFinishedDE=false
+           this.showMarksBar=false
+           this.showGradeDermatologist=false
+        this.showGradePharmacist=false
+        this.showGradePharmacy=false
+        this.showGradeDrug=false
       },
       showExamination:
        function(){
@@ -926,6 +1292,15 @@ methods:{
         this.showScheduleSearch=false
          this.showCreatedPharmExamination=false
            this.showFreeStaff=false
+           this.showSortPharmacies=false
+           this.showSortCreatedDermatologistExamination=false
+           this.showSortERecipes=false
+            this.showSortFinishedDE=true
+            this.showMarksBar=false
+            this.showGradeDermatologist=false
+        this.showGradePharmacist=false
+        this.showGradePharmacy=false
+        this.showGradeDrug=false
       },
       showCreatedDerm:
        function(){
@@ -943,6 +1318,15 @@ methods:{
         this.showScheduleSearch=false
          this.showCreatedPharmExamination=false
            this.showFreeStaff=false
+           this.showSortPharmacies=false
+           this.showSortCreatedDermatologistExamination=true
+           this.showSortERecipes=false
+            this.showSortFinishedDE=false
+            this.showMarksBar=false
+            this.showGradeDermatologist=false
+        this.showGradePharmacist=false
+        this.showGradePharmacy=false
+        this.showGradeDrug=false
       },
       showCreatedPharmacist:
       function(){
@@ -960,6 +1344,15 @@ methods:{
         this.showScheduleSearch=true
         this.showCreatedPharmExamination=true
           this.showFreeStaff=false
+          this.showSortPharmacies=
+          this.showSortCreatedDermatologistExamination=false
+          this.showSortERecipes=false
+           this.showSortFinishedDE=false
+           this.showMarksBar=false
+           this.showGradeDermatologist=false
+        this.showGradePharmacist=false
+        this.showGradePharmacy=false
+        this.showGradeDrug=false
       },
       showAllDrugs: function(){
         this.showTable=false
@@ -976,6 +1369,15 @@ methods:{
         this.showScheduleSearch=false
          this.showCreatedPharmExamination=false
            this.showFreeStaff=false
+           this.showSortPharmacies=false
+           this.showSortCreatedDermatologistExamination=false
+           this.showSortERecipes=false
+            this.showSortFinishedDE=false
+            this.showMarksBar=false
+            this.showGradeDermatologist=false
+        this.showGradePharmacist=false
+        this.showGradePharmacy=false
+        this.showGradeDrug=false
       },
       canceling:
        function(res,idRes){
@@ -1145,8 +1547,263 @@ methods:{
           })
         },
 
+
+        sortByGradeR: function(){
+      this.axios.get('/pharmacy/sortByGradeAscending')
+          .then(response => {
+               console.log(response.data);
+              this.pharmacies = response.data;
+              
+                })
+                .catch(res => {
+                     
+                        alert("Sorting is currently not possible");
+                        console.log(res)
+                    })
+      },
+       sortByGradeO: function(){
+      this.axios.get('/pharmacy/sortByGradeDescending')
+          .then(response => {
+               console.log(response.data);
+              this.pharmacies = response.data;
+              
+                })
+                .catch(res => {
+                     
+                         alert("Sorting is currently not possible");
+                        console.log(res)
+                    })
+      },
+      
+     sortByNameDescending: function(){
+      this.axios.get('/pharmacy/sortByNameDescending')
+          .then(response => {
+               console.log(response.data);
+              this.pharmacies = response.data;
+              
+                })
+                .catch(res => {
+                     
+                        alert("Sorting is currently not possible");
+                        console.log(res)
+                    })
+      },
+       sortByNameAscending: function(){
+      this.axios.get('/pharmacy/sortByNameAscending')
+          .then(response => {
+               console.log(response.data);
+              this.pharmacies = response.data;
+              
+                })
+                .catch(res => {
+                     
+                         alert("Sorting is currently not possible");
+                        console.log(res)
+                    })
+      },
+      sortCDExamByGradeR: function(){
+      this.axios.get('/examination/sortByGradeAscending')
+          .then(response => {
+               console.log(response.data);
+              this.dermatologistCreatedExamination = response.data;
+              
+                })
+                .catch(res => {
+                     
+                        alert("Sorting is currently not possible");
+                        console.log(res)
+                    })
+      },
+       sortCDExamByGradeO: function(){
+      this.axios.get('/examination/sortByGradeDescending')
+          .then(response => {
+               console.log(response.data);
+              this.dermatologistCreatedExamination = response.data;
+              
+                })
+                .catch(res => {
+                     
+                         alert("Sorting is currently not possible");
+                        console.log(res)
+                    })
+      },
+      
+     sortCDExamByPriceAscending: function(){
+      this.axios.get('/examination/sortByPriceAscending')
+          .then(response => {
+               console.log(response.data);
+              this.dermatologistCreatedExamination = response.data;
+              
+                })
+                .catch(res => {
+                     
+                        alert("Sorting is currently not possible");
+                        console.log(res)
+                    })
+      },
+       sortCDExamByPriceDescending: function(){
+      this.axios.get('/examination/sortByPriceDescending')
+          .then(response => {
+               console.log(response.data);
+              this.dermatologistCreatedExamination = response.data;
+              
+                })
+                .catch(res => {
+                     
+                         alert("Sorting is currently not possible");
+                        console.log(res)
+                    })
+      },
+      sortERecipeByDateR: function(){
+      this.axios.get('/erecipe/sortByDateAscending/'+this.id)
+          .then(response => {
+               console.log(response.data);
+              this.recepies = response.data;
+              
+                })
+                .catch(res => {
+                     
+                        alert("Sorting is currently not possible");
+                        console.log(res)
+                    })
+      },
+       sortERecipeByDateO: function(){
+      this.axios.get('/erecipe/sortByDateDescending/'+this.id)
+          .then(response => {
+               console.log(response.data);
+              this.recepies = response.data;
+              
+                })
+                .catch(res => {
+                     
+                         alert("Sorting is currently not possible");
+                        console.log(res)
+                    })
+      },
+      sortFDExamByPriceR: function(){
+      this.axios.get('/examination/sortFinishedDEByPriceAsc/'+this.id)
+          .then(response => {
+               console.log(response.data);
+              this.dermatologistFinishedExamination = response.data;
+              
+                })
+                .catch(res => {
+                     
+                        alert("Sorting is currently not possible");
+                        console.log(res)
+                    })
+      },
+       sortFDExamByPriceO: function(){
+      this.axios.get('/examination/sortFinishedDEByPriceDesc/'+this.id)
+          .then(response => {
+               console.log(response.data);
+              this.dermatologistFinishedExamination = response.data;
+              
+                })
+                .catch(res => {
+                     
+                         alert("Sorting is currently not possible");
+                        console.log(res)
+                    })
+      },
+      sortFDExamByDateR: function(){
+      this.axios.get('/examination/sortFinishedDEByDateAsc/'+this.id)
+          .then(response => {
+               console.log(response.data);
+              this.dermatologistFinishedExamination = response.data;
+              
+                })
+                .catch(res => {
+                     
+                        alert("Sorting is currently not possible");
+                        console.log(res)
+                    })
+      },
+       sortFDExamByDateO: function(){
+      this.axios.get('/examination/sortFinishedDEByDateDesc/'+this.id)
+          .then(response => {
+               console.log(response.data);
+              this.dermatologistFinishedExamination = response.data;
+              
+                })
+                .catch(res => {
+                     
+                         alert("Sorting is currently not possible");
+                        console.log(res)
+                    })
+      },
+      confrim:function(grade,idDerm,idPat){
+        console.log(grade)
+        console.log(idDerm)
+        console.log(idPat)
+        
+        this.axios.post('/grade/grade/'+idPat+"/"+grade+"/"+idDerm)
+          .then(response => {
+               console.log(response.data);
+              this.jel2 = response.data;
+              
+                })
+                .catch(res => {
+                     
+                        alert("Sorting is currently not possible");
+                        console.log(res)
+                    })
+      },
+      confrimPharmacist:function(grade,idDerm,idPat){
+        
+        this.axios.post('/grade/gradePharmacist/'+idPat+"/"+grade+"/"+idDerm)
+          .then(response => {
+               console.log(response.data);
+              this.jel2 = response.data;
+              
+                })
+                .catch(res => {
+                     
+                        alert("Sorting is currently not possible");
+                        console.log(res)
+                    })
+      },
+    confrimPharmacy:function(grade,idDerm,idPat){
+        console.log(grade)
+        console.log(idDerm)
+        console.log(idPat)
+        
+        this.axios.post('/grade/gradePharmacy/'+idPat+"/"+grade+"/"+idDerm)
+          .then(response => {
+               console.log(response.data);
+              this.jel2 = response.data;
+              
+                })
+                .catch(res => {
+                     
+                        alert("Sorting is currently not possible");
+                        console.log(res)
+                    })
+      },
+      confrimDrug:function(grade,idDerm,idPat){
+        console.log(grade)
+        console.log(idDerm)
+        console.log(idPat)
+        
+        this.axios.post('/grade/gradeDrug/'+idPat+"/"+grade+"/"+idDerm)
+          .then(response => {
+               console.log(response.data);
+              this.jel2 = response.data;
+              
+                })
+                .catch(res => {
+                     
+                        alert("Sorting is currently not possible");
+                        console.log(res)
+                    })
+      },
+      unsubscribe: function(idPharmacy){
+        console.log(idPharmacy)
+      //OVDJE POZVATI FUNKCIJU ZA ODJAVU APOTEKA
+      }
+         
+          
+
 }
 }
 </script>
-
-  

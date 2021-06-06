@@ -20,4 +20,7 @@ public interface IPharmacyService {
     List<Pharmacy> findAll ();
     Pharmacy save(PharmacyDTO pharmacy);
     void update(Pharmacy pharmacy);
+
+    List<Pharmacy> findAllOrderByNameAsc();
+    List<Pharmacy> findAllOrderByNameDesc();
 }

@@ -54,6 +54,10 @@ import AcceptRejectVacation from '../components/AcceptRejectVacation'
 import AddPharmacist from '../components/AddPharmacist'
 import AddDermatologist from '../components/AddDermatologist'
 
+import WriteComplaint from '../components/WriteComplaint.vue'
+import RegisterNewSupplier from '../components/RegisterNewSupplier'
+import SupplierHomePage from '../components/SupplierHomePage'
+
 import moment from 'moment'
 
 
@@ -358,11 +362,28 @@ const routes = [
         path: '/AddDermatologist/:id',
         name: 'AddDermatologist',
         component: AddDermatologist
+      },{
+        path: '/WriteComplaint/:id',
+        name: 'WriteComplaint',
+        component: WriteComplaint
+      },
+      {
+        path: '/RegisterNewSupplier/:id',
+        name: 'RegisterNewSupplier',
+        component: RegisterNewSupplier
+      },
+      {
+        path: '/SupplierHomePage/:id',
+        name: 'SupplierHomePage',
+        component: SupplierHomePage
+
       }
+
+      
       
 
 
-]
+    ]
     
 const router = new VueRouter({
     mode: 'history',
