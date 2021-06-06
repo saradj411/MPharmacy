@@ -1,17 +1,17 @@
 package com.isaProject.isa.Services.Implementations;
 
 import com.isaProject.isa.Model.DTO.PharmaceutDTO;
+import com.isaProject.isa.Model.DTO.PharmacistForCreateDTO;
 import com.isaProject.isa.Model.DTO.ReviewedClientsDTO;
 import com.isaProject.isa.Model.DTO.ScheduleAnExaminationDTO;
 import com.isaProject.isa.Model.Examination.Examination;
 import com.isaProject.isa.Model.Examination.ExaminationStatus;
+import com.isaProject.isa.Model.Pharmacy.Pharmacy;
 import com.isaProject.isa.Model.Users.Patient;
 import com.isaProject.isa.Model.Users.Pharmacist;
+import com.isaProject.isa.Model.Users.Staff;
 import com.isaProject.isa.Model.Users.WorkTime;
-import com.isaProject.isa.Repositories.ExaminationRepository;
-import com.isaProject.isa.Repositories.PatientRepository;
-import com.isaProject.isa.Repositories.PharmacistRepository;
-import com.isaProject.isa.Repositories.WorkTimeRepository;
+import com.isaProject.isa.Repositories.*;
 import com.isaProject.isa.Services.IServices.IPharamacistService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +37,13 @@ public class PharmacistService implements IPharamacistService {
     ExaminationService examinationService;
     public @Autowired
     PatientRepository patientRepository;
+
+    public @Autowired
+    PharmacyRepository pharmacyRepository;
+
+    public @Autowired
+    StaffRepository staffRepository;
+
 
 
 
@@ -186,6 +193,34 @@ public class PharmacistService implements IPharamacistService {
         return  "Pharmacist is successfully deleted";
     }
 */
-    
+
+    @Override
+    public  Pharmacist create(PharmacistForCreateDTO  p){
+        Pharmacist pharmacist=new Pharmacist();
+        pharmacist.setAddress(p.getAddress());
+        pharmacist.setAvgGrade(0.0);
+        pharmacist.setCountry(p.getCountry());
+        pharmacist.setPhoneNumber(p.getCity());
+        pharmacist.setPassword(p.getPassword());
+        pharmacist.setCity(p.getCity());
+        pharmacist.setEmail(p.getEmail());
+        pharmacist.setName(p.getName());
+        pharmacist.setSurname(p.getSurname());
+        Pharmacy pharmacy=pharmacyRepository.getOne(p.getIdPharmacy());
+        pharmacist.setPharmacy(pharmacy);
+        Pharmacist created=pharmacistRepository.save(pharmacist);
+        Staff staff=staffRepository.getOne(created.getId());
+
+        WorkTime workTime=new WorkTime();
+        workTime.setStartTime(p.getStartTime());
+        workTime.setEndTime(p.getEndTime());
+        workTime.setPharmacy(pharmacy);
+        workTime.setStaff(staff);
+        WorkTime workcreated=workTimeRepository.save(workTime);
+      //  pharmacist.setWorkTime(workcreated);
+
+        return pharmacist;
+
+    }
 
 }

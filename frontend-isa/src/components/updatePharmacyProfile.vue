@@ -17,8 +17,6 @@
 
 
                                     <b-dropdown-item >Add dermatologist</b-dropdown-item>
-                                    <b-dropdown-item >Update dermatologist</b-dropdown-item>  
-                              <b-dropdown-item >Delete dermatologist</b-dropdown-item>      
     
                                 </b-dropdown>      
               <b-dropdown id="ddCommodity" name="ddCommodity" text="Pharmacists" style="margin-left:50px; color:white;" >
@@ -28,8 +26,6 @@
              </b-link></router-link>
            </b-dropdown-item>
                                     <b-dropdown-item>Add pharmacist</b-dropdown-item>
-                                    <b-dropdown-item >Update pharmacist</b-dropdown-item>   
-                                     <b-dropdown-item>Delete pharmacist</b-dropdown-item>      
    
                                 </b-dropdown> 
 
