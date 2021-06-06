@@ -316,12 +316,45 @@ public class PharmacistController {
     }
 */
 
+    @GetMapping("/getAvgGrade/{id}")
+    public ResponseEntity<Double> getAvgGrade(@PathVariable Integer id) {
+        Double avg= pharmacyService.getAvgGrade(id);
+
+        return new ResponseEntity<>(avg, HttpStatus.ACCEPTED);
+    }
+
+
+        @GetMapping("/view/{id}")
+    public ResponseEntity<List<StaffDTO>>view(@PathVariable Integer id) {
+
+        List<StaffDTO>p=pharmacyService.view(id);
+
+        return new ResponseEntity<>(p, HttpStatus.ACCEPTED);
+    }
+
+
+    @GetMapping("/viewDerm/{id}")
+    public ResponseEntity<List<StaffDTO>>viewDerm(@PathVariable Integer id) {
+
+        List<StaffDTO>p=pharmacyService.viewDerm(id);
+
+        return new ResponseEntity<>(p, HttpStatus.ACCEPTED);
+    }
+
+
+
+
+
+
     @GetMapping("/delete/{id}")
     public ResponseEntity<String> deletePharmacist(@PathVariable Integer id) {
         Pharmacist pharmacist = pharmacistService.findById(id);
         String answer = pharmacistService.delete(pharmacist);
         return new ResponseEntity<>(answer, HttpStatus.ACCEPTED);
     }
+
+
+
 
 
 
