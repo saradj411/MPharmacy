@@ -2,21 +2,22 @@ package com.isaProject.isa.Controllers;
 
 
 import com.isaProject.isa.Model.DTO.DermatologistGradeDTO;
+import com.isaProject.isa.Model.DTO.DrugGradeDTO;
 import com.isaProject.isa.Model.DTO.PharmacistGradeDTO;
 import com.isaProject.isa.Model.DTO.PharmacyGradeDTO;
+import com.isaProject.isa.Model.Drugs.Drug;
 import com.isaProject.isa.Model.Grades.DermatolgoistGrade;
+import com.isaProject.isa.Model.Grades.DrugGrade;
 import com.isaProject.isa.Model.Grades.PharmacistGrade;
 import com.isaProject.isa.Model.Grades.PharmacyGrade;
 import com.isaProject.isa.Model.Pharmacy.Pharmacy;
 import com.isaProject.isa.Model.Users.Dermatologist;
 import com.isaProject.isa.Model.Users.Pharmacist;
-import com.isaProject.isa.Services.Implementations.DermatologistService;
+import com.isaProject.isa.Services.Implementations.*;
 import com.isaProject.isa.Services.Implementations.Grade.DeratologistGradeService;
+import com.isaProject.isa.Services.Implementations.Grade.DrugGradeService;
 import com.isaProject.isa.Services.Implementations.Grade.PharmacistGradeService;
 import com.isaProject.isa.Services.Implementations.Grade.PharmacyGradeService;
-import com.isaProject.isa.Services.Implementations.PatientService;
-import com.isaProject.isa.Services.Implementations.PharmacistService;
-import com.isaProject.isa.Services.Implementations.PharmacyService;
 import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -53,14 +54,64 @@ public class GradeController {
     @Autowired
     PharmacyService pharmacyService;
 
+    @Autowired
+    DrugGradeService drugGradeService;
+
+    @Autowired
+    DrugService drugService;
+
     @GetMapping(value = "/findDrugsForGrade/{id}")
-    public ResponseEntity<Set<Integer>> findDrugsForGrade(@PathVariable Integer id) {
+    public ResponseEntity<List<DrugGradeDTO>> findDrugsForGrade(@PathVariable Integer id) {
         Set<Integer> d= patientService.findDrugsForGrade(id);
+        List<DrugGrade> grades=drugGradeService.findAll();
 
+        List<DrugGrade> gradesThisPatient=new ArrayList<>();
 
-        return d== null ?
+        List<DrugGrade> existingGrades=new ArrayList<>();
+
+        List<DrugGradeDTO> returnGrades=new ArrayList<>();
+
+        for(DrugGrade dG:grades){
+            if(id.equals(dG.getIdPatient())){
+                gradesThisPatient.add(dG);
+            }
+        }
+
+        for(DrugGrade dG:gradesThisPatient){
+            for(Integer i:d){
+                if(i.equals(dG.getIdDrug())){
+                    DrugGrade newGrade=new DrugGrade(id,i,dG.getGrade());
+                    existingGrades.add(newGrade);
+                }
+            }
+        }
+
+        for(Integer i:d){
+            Boolean postoji=false;
+
+            for(DrugGrade dd:existingGrades){
+                if(i.equals(dd.getIdDrug())){
+                    postoji=true;
+                }
+            }
+
+            if(!postoji){
+                DrugGrade newGrade=new DrugGrade(id,i,0);
+                existingGrades.add(newGrade);
+            }
+        }
+
+        for(DrugGrade gr:existingGrades){
+            Drug pharmacy=drugService.findById(gr.getIdDrug());
+            DrugGradeDTO dto=new DrugGradeDTO(gr.getIdPatient(),gr.getIdDrug(),
+                    pharmacy.getName(),gr.getGrade());
+
+            returnGrades.add(dto);
+        }
+
+        return returnGrades== null ?
                 new ResponseEntity<>(HttpStatus.NOT_FOUND) :
-                ResponseEntity.ok(d);
+                ResponseEntity.ok(returnGrades);
     }
     @GetMapping(value = "/findPharmaciesForGrade/{id}")
     public ResponseEntity<List<PharmacyGradeDTO>> findPharmaciesForGrade(@PathVariable Integer id) {

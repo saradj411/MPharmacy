@@ -1,6 +1,6 @@
 package com.isaProject.isa.Services.IServices.Grade;
 
-import com.isaProject.isa.Model.Grades.DermatolgoistGrade;
+
 import com.isaProject.isa.Model.Grades.PharmacistGrade;
 
 import java.util.List;
