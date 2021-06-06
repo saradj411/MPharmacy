@@ -100,6 +100,7 @@ public class DermatologistControler {
                         new ResponseEntity<>(HttpStatus.NOT_FOUND) :
                         ResponseEntity.ok(reviewedClientsDTOS);
             }
+
             @GetMapping(value = "/findPharmacyDermatologist/{id}")
             public ResponseEntity<Set<Pharmacy>> findpharmacy(@PathVariable Integer id) {
                 Set<Pharmacy> pharmacies=dermatologistService.pharmacies(id);
