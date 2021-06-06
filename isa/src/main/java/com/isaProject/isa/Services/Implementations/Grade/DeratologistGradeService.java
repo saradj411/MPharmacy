@@ -31,30 +31,36 @@ public class DeratologistGradeService implements IDeratologistGradeService {
         DermatolgoistGrade newGrade=new DermatolgoistGrade();
         Boolean ima=false;
         for(DermatolgoistGrade dG:list){
-                if(idPatient.equals(dG.getIdPatient()) && idDerm.equals(dG.getIdDermatologist())){
-                        ima=true;
+                if(idPatient.equals(dG.getIdPatient())){
+                    if(idDerm.equals(dG.getIdDermatologist())) {
+                        System.out.println("udje li ovdje?");
+                        ima = true;
                         dG.setGrade(grade);
-                        newGrade=dG;
-
+                        newGrade = dG;
+                    }
                     }
                 }
 
         if(ima){
-            dermatologistGradeRepository.save(newGrade);
+            DermatolgoistGrade dg=dermatologistGradeRepository.save(newGrade);
+            System.out.println("imaaaaaaaaaa"+dg.getIdMarkD());
             Double gradeD=(dermatologist.getAvgGrade()+newGrade.getGrade())/2;
             dermatologist.setAvgGrade(gradeD);
             dermatologistRepository.save(dermatologist);
-            return newGrade;
+            return dg;
         }else{
-            DermatolgoistGrade newGrade1 =new DermatolgoistGrade();
-            newGrade1.setGrade(grade);
-            newGrade1.setIdDermatologist(idDerm);
-            newGrade1.setIdPatient(idPatient);
-            dermatologistGradeRepository.save(newGrade1);
-            Double gradeD=(dermatologist.getAvgGrade()+newGrade.getGrade())/2;
+            DermatolgoistGrade ppp =new DermatolgoistGrade(idPatient,idDerm,grade);
+
+            DermatolgoistGrade dg=dermatologistGradeRepository.save(ppp);
+            System.out.println("adas|"+dg.getIdMarkD());
+            //newGrade1.setGrade(grade);
+            //newGrade1.setIdDermatologist(idDerm);
+            //newGrade1.setIdPatient(idPatient);
+            //dermatologistGradeRepository.save(newGrade1);
+            Double gradeD=(dermatologist.getAvgGrade()+dg.getGrade())/2;
             dermatologist.setAvgGrade(gradeD);
             dermatologistRepository.save(dermatologist);
-            return newGrade1;
+            return dg;
 
         }
 

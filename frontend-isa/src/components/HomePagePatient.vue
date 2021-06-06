@@ -1741,11 +1741,11 @@ methods:{
           .then(response => {
                console.log(response.data);
               this.jel2 = response.data;
-              
+                  alert("Successfully graded!");
                 })
                 .catch(res => {
                      
-                        alert("Sorting is currently not possible");
+                        alert("Grading is currently not possible");
                         console.log(res)
                     })
       },
@@ -1755,11 +1755,12 @@ methods:{
           .then(response => {
                console.log(response.data);
               this.jel2 = response.data;
+              alert("Successfully graded!");
               
                 })
                 .catch(res => {
                      
-                        alert("Sorting is currently not possible");
+                        alert("Grading is currently not possible");
                         console.log(res)
                     })
       },
@@ -1772,11 +1773,12 @@ methods:{
           .then(response => {
                console.log(response.data);
               this.jel2 = response.data;
+              alert("Successfully graded!");
               
                 })
                 .catch(res => {
                      
-                        alert("Sorting is currently not possible");
+                        alert("Grading is currently not possible");
                         console.log(res)
                     })
       },
@@ -1789,11 +1791,12 @@ methods:{
           .then(response => {
                console.log(response.data);
               this.jel2 = response.data;
+              alert("Successfully graded!");
               
                 })
                 .catch(res => {
                      
-                        alert("Sorting is currently not possible");
+                        alert("Grading is currently not possible");
                         console.log(res)
                     })
       },
