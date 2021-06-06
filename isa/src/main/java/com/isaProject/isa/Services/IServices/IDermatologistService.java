@@ -20,7 +20,10 @@ public interface IDermatologistService {
     Dermatologist save(DermatologistDTO dermatologist);
     String delete(Dermatologist dermatologist);
     Set<PatientDTO> findAllPatients(Integer id) ;
-     void update(Dermatologist dermatologist);
+
+    Dermatologist create(DermatologistForCreateDTO dermatologistForCreateDTO);
+
+    void update(Dermatologist dermatologist);
 
   //  void update(ScheduleAnExaminationDTO scheduleAnExaminationDTO);
 
