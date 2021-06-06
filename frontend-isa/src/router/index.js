@@ -34,9 +34,6 @@ import AnnualReportDrug from '../components/AnnualReportDrug.vue'
 import MonthDrugReport from '../components/MonthDrugReport.vue'
 import MonthExaminationReport from '../components/MonthExaminationReport.vue'
 import IncomeReport from '../components/IncomeReport.vue'
-
-
-
 import SheduleExamination from '../components/SheduleExamination.vue'
 import WorkCalendarPharmacist from '../components/WorkCalendarPharmacist.vue'
 import StartCounseling from '../components/StartCounseling.vue'
@@ -49,19 +46,20 @@ import InssuingDrug from '../components/InssuingDrug.vue'
 import SystemAdminProfile from '../components/SystemAdminProfile.vue'
 import AddShifarnikPage from '../components/AddShifarnikPage'
 import RegisterNewSystemAdmin from '../components/RegisterNewSystemAdmin'
-
 import ReserveDrug from '../components/ReserveDrug'
-
 import RegisterDermatologist from '../components/RegisterDermatologist'
 import RegisterNewPharmacy from '../components/RegisterNewPharmacy'
 import RegisterAdminPharamcyPage from '../components/RegisterAdminPharamcyPage'
 import AcceptRejectVacation from '../components/AcceptRejectVacation'
+import AddPharmacist from '../components/AddPharmacist'
+import AddDermatologist from '../components/AddDermatologist'
 
 import WriteComplaint from '../components/WriteComplaint.vue'
 import RegisterNewSupplier from '../components/RegisterNewSupplier'
 import SupplierHomePage from '../components/SupplierHomePage'
 
 import moment from 'moment'
+
 
 
 
@@ -356,6 +354,15 @@ const routes = [
         component: IncomeReport
       },
       {
+        path: '/AddPharmacist/:id',
+        name: 'AddPharmacist',
+        component: AddPharmacist
+      },
+      {
+        path: '/AddDermatologist/:id',
+        name: 'AddDermatologist',
+        component: AddDermatologist
+      },{
         path: '/WriteComplaint/:id',
         name: 'WriteComplaint',
         component: WriteComplaint
@@ -369,6 +376,7 @@ const routes = [
         path: '/SupplierHomePage/:id',
         name: 'SupplierHomePage',
         component: SupplierHomePage
+
       }
 
       

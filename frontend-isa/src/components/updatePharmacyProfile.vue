@@ -16,10 +16,10 @@
            </b-link></router-link></b-dropdown-item>
 
 
-                                    <b-dropdown-item >Add dermatologist</b-dropdown-item>
-                                    <b-dropdown-item >Update dermatologist</b-dropdown-item>  
-                              <b-dropdown-item >Delete dermatologist</b-dropdown-item>      
-    
+
+                                    <b-dropdown-item><router-link :to="{ path: '/AddDermatologist/'+pharmacy.idPharm}" v-slot="{href, navigate}" custom>
+           <b-link style="font-size:20px;color:black;" :href="href" @click="navigate"  elevation="1">Add new dermatologist
+             </b-link></router-link></b-dropdown-item>    
                                 </b-dropdown>      
               <b-dropdown id="ddCommodity" name="ddCommodity" text="Pharmacists" style="margin-left:50px; color:white;" >
                                     <b-dropdown-item>
@@ -27,9 +27,9 @@
            <b-link style="font-size:20px;color:black;" :href="href" @click="navigate"  elevation="1">List of pharmacists
              </b-link></router-link>
            </b-dropdown-item>
-                                    <b-dropdown-item>Add pharmacist</b-dropdown-item>
-                                    <b-dropdown-item >Update pharmacist</b-dropdown-item>   
-                                     <b-dropdown-item>Delete pharmacist</b-dropdown-item>      
+                                    <b-dropdown-item><router-link :to="{ path: '/AddPharmacist/'+pharmacy.idPharm}" v-slot="{href, navigate}" custom>
+           <b-link style="font-size:20px;color:black;" :href="href" @click="navigate"  elevation="1">Add new pharmacist
+             </b-link></router-link></b-dropdown-item>
    
                                 </b-dropdown> 
 

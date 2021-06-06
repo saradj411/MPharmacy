@@ -10,15 +10,8 @@ import com.isaProject.isa.Model.Examination.ExaminationStatus;
 import com.isaProject.isa.Model.Examination.ExaminationType;
 import com.isaProject.isa.Model.Examination.Therapy;
 import com.isaProject.isa.Model.Pharmacy.Pharmacy;
-import com.isaProject.isa.Model.Users.Authority;
-import com.isaProject.isa.Model.Users.Dermatologist;
+import com.isaProject.isa.Model.Users.*;
 
-import com.isaProject.isa.Model.Users.Patient;
-import com.isaProject.isa.Model.Users.Staff;
-
-import com.isaProject.isa.Model.Users.User;
-
-import com.isaProject.isa.Model.Users.WorkTime;
 import com.isaProject.isa.Repositories.*;
 import com.isaProject.isa.Services.IServices.IDermatologistService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -80,6 +73,41 @@ public class DermatologistService implements IDermatologistService, Serializable
 
     public @Autowired
     SpecificationService specificationService;
+    public @Autowired
+    PharmacyRepository pharmacyRepository;
+    @Override
+    public Dermatologist create(DermatologistForCreateDTO dermatologistForCreateDTO){
+        Dermatologist dermatologist=new Dermatologist();
+        dermatologist.setAddress(dermatologistForCreateDTO.getAddress());
+        dermatologist.setAvgGrade(0.0);
+        dermatologist.setCountry(dermatologistForCreateDTO.getCountry());
+        dermatologist.setPhoneNumber(dermatologistForCreateDTO.getCity());
+        dermatologist.setPassword(dermatologistForCreateDTO.getPassword());
+        dermatologist.setCity(dermatologistForCreateDTO.getCity());
+        dermatologist.setEmail(dermatologistForCreateDTO.getEmail());
+        dermatologist.setName(dermatologistForCreateDTO.getName());
+        dermatologist.setSurname(dermatologistForCreateDTO.getSurname());
+        dermatologist.setAccountEnabled(true);
+
+        Pharmacy pharmacy=pharmacyRepository.getOne(dermatologistForCreateDTO.getIdPharmacy());
+        Set<Pharmacy> p=new HashSet<>();
+        p.add(pharmacy);
+        dermatologist.setPharmacies(p);
+        Dermatologist created=dermatologistRepository.save(dermatologist);
+        Staff staff=staffRepository.getOne(created.getId());
+
+        WorkTime workTime=new WorkTime();
+        workTime.setStartTime(dermatologistForCreateDTO.getStartTime());
+        workTime.setEndTime(dermatologistForCreateDTO.getEndTime());
+        workTime.setDate(dermatologistForCreateDTO.getDate());
+        workTime.setPharmacy(pharmacy);
+
+        workTime.setStaff(staff);
+        WorkTime workcreated=workTimeRepository.save(workTime);
+
+        return dermatologist;
+
+    }
 
     @Override
     public void update(Dermatologist dermatologist) {

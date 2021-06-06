@@ -1,17 +1,14 @@
 package com.isaProject.isa.Services.Implementations;
 
 import com.isaProject.isa.Model.DTO.PharmaceutDTO;
+import com.isaProject.isa.Model.DTO.PharmacistForCreateDTO;
 import com.isaProject.isa.Model.DTO.ReviewedClientsDTO;
 import com.isaProject.isa.Model.DTO.ScheduleAnExaminationDTO;
 import com.isaProject.isa.Model.Examination.Examination;
 import com.isaProject.isa.Model.Examination.ExaminationStatus;
-import com.isaProject.isa.Model.Users.Patient;
-import com.isaProject.isa.Model.Users.Pharmacist;
-import com.isaProject.isa.Model.Users.WorkTime;
-import com.isaProject.isa.Repositories.ExaminationRepository;
-import com.isaProject.isa.Repositories.PatientRepository;
-import com.isaProject.isa.Repositories.PharmacistRepository;
-import com.isaProject.isa.Repositories.WorkTimeRepository;
+import com.isaProject.isa.Model.Pharmacy.Pharmacy;
+import com.isaProject.isa.Model.Users.*;
+import com.isaProject.isa.Repositories.*;
 import com.isaProject.isa.Services.IServices.IPharamacistService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 
 @Service
@@ -37,6 +35,15 @@ public class PharmacistService implements IPharamacistService {
     ExaminationService examinationService;
     public @Autowired
     PatientRepository patientRepository;
+
+    public @Autowired
+    PharmacyRepository pharmacyRepository;
+
+    public @Autowired
+    StaffRepository staffRepository;
+    public @Autowired
+    DermatologistRepository dermatologistRepository;
+
 
 
 
@@ -70,6 +77,7 @@ public class PharmacistService implements IPharamacistService {
         pa.setPhoneNumber(pharmacist.getPhoneNumber());
         pa.setPassword(pharmacist.getPassword());
         pa.setEmail(pharmacist.getEmail());
+
         pharmacistRepository.save(pa);
     }
 
@@ -130,8 +138,10 @@ public class PharmacistService implements IPharamacistService {
 
     @Override
     public Pharmacist findById(Integer id) {
-        //veki skontalaaa
-        Pharmacist pharmacist=pharmacistRepository.findById(id).get();
+        System.out.println("farmaceut id :"+id);
+        //User user=userRepository.getOne(id);
+        //System.out.println("ovdje uslo sada aaaaa:"+user.getName());
+        Pharmacist pharmacist=pharmacistRepository.getOne(id);
         return pharmacist;
     }
 
@@ -186,6 +196,38 @@ public class PharmacistService implements IPharamacistService {
         return  "Pharmacist is successfully deleted";
     }
 */
-    
+
+    @Override
+    public  Pharmacist create(PharmacistForCreateDTO p){
+        Pharmacist pharmacist=new Pharmacist();
+        pharmacist.setAddress(p.getAddress());
+        pharmacist.setAvgGrade(0.0);
+        pharmacist.setCountry(p.getCountry());
+        pharmacist.setPhoneNumber(p.getCity());
+        pharmacist.setPassword(p.getPassword());
+        pharmacist.setCity(p.getCity());
+
+        pharmacist.setEmail(p.getEmail());
+        pharmacist.setName(p.getName());
+        pharmacist.setSurname(p.getSurname());
+        pharmacist.setAccountEnabled(true);
+
+        Pharmacy pharmacy=pharmacyRepository.getOne(p.getIdPharmacy());
+        pharmacist.setPharmacy(pharmacy);
+        Pharmacist created=pharmacistRepository.save(pharmacist);
+        Staff staff=staffRepository.getOne(created.getId());
+
+        WorkTime workTime=new WorkTime();
+        workTime.setStartTime(p.getStartTime());
+        workTime.setEndTime(p.getEndTime());
+        workTime.setDate(p.getDate());
+        workTime.setPharmacy(pharmacy);
+        workTime.setStaff(staff);
+        WorkTime workcreated=workTimeRepository.save(workTime);
+      //  pharmacist.setWorkTime(workcreated);
+
+        return pharmacist;
+
+    }
 
 }

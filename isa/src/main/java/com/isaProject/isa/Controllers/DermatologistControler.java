@@ -313,6 +313,15 @@ Ukoliko se korisnik ne pojavi na pregledu, dobija 1 penal.
     }
 
 
+    @PostMapping(value = "/createDermatologist")
+    ResponseEntity<String> update(@RequestBody DermatologistForCreateDTO dermatologistForCreateDTO)
+    {
+
+        Dermatologist dermatologist=dermatologistService.create(dermatologistForCreateDTO);
+        return new ResponseEntity<>("ajdeee", HttpStatus.CREATED);
+
+    }
+
 
 
 
