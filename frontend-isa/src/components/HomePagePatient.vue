@@ -1464,6 +1464,7 @@ methods:{
       },
       schedule:
        function(idExamination){
+          alert("Wait a second!")
        this.axios.post('/examination/patientScheduledDermatologistExamination/'+this.id+'/'+idExamination)
         .then(response => {
                 this.jel = response.data;
@@ -1497,6 +1498,22 @@ methods:{
       },
       
       searchFreePharmacy: function(date,time){
+        if(this.date===null){
+          console.log("ssaa",this.date)
+          alert("Please check date!")
+          return;
+        }
+        if(this.time===null){
+          console.log("ssaa",this.date)
+          alert("Please check time!")
+          return;
+        }
+        var currentDate = new Date();
+          var odabrani=new Date(this.date)
+
+           if(odabrani<currentDate){
+             alert("Choose a date from the future!")
+           }else{
            this.showCreatedPharmExamination=true
            this.showFreeStaff=false
              this.date = date
@@ -1518,18 +1535,24 @@ methods:{
                
               
           })
+           }
       },
       continue1:
         function(idPharm33){
+          
           this.idPharm2=idPharm33
            console.log(this.date)
              console.log(this.time)
           console.log(this.idPharm2)
+
             const parametar={
              idPharmacy:this.idPharm2,
              date:this.date,
              time:this.time
             }
+        
+         
+            alert("Wait a second!")
              this.axios.post('/workTime/findFreeStaffByPharmacy',parametar)
           .then(response => {
             //this.showCreatedPharmExamination
@@ -1540,6 +1563,7 @@ methods:{
                
               
           })
+          
         },
         continue2:
         function(idStaff44,idPharm44){
@@ -1553,6 +1577,8 @@ methods:{
              staff:idStaff44
 
             }
+            
+             alert("Wait a second!")
              this.axios.post('/examination/patientScheduledPharmacistExamination',parametar)
           .then(response => {
             //this.showCreatedPharmExamination
