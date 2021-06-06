@@ -47,7 +47,6 @@ import CreatePricelist from '../components/CreatePricelist'
 import UpdatePricelist from '../components/UpdatePricelist'
 import ActionAndPromotion from '../components/ActionAndPromotion'
 import DrugOrders from '../components/DrugOrders'
-
 import moment from 'moment'
 
 

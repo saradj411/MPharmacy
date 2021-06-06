@@ -88,14 +88,51 @@
 
 
 
+<!--novi predleddd-->
+
+ <div v-if="showNew" style=" width:650px;margin-left:38px;margin-top:60px;">
+                                      <label style="font-size:30px;color:#0D184F;margine-left:20px;">Define free term</label >
+                 <div style="background:#B0B3D6;">
+                    <div >
+                        <div>
+                        <label style="font-size:22px;color:#0D184F;">Date:</label>
+                        <input type="date" class="form-control" v-model="date" placeholder="Enter description">
+                        </div>
+                    </div>
+                    <div >
+                        <div >
+                        <label style="font-size:22px;color:#0D184F;">Start time:</label>
+                        <input type="time" class="form-control" v-model = "start" placeholder="Enter start date">
+                        </div>
+                    </div>
+                    <div >
+                        <div>
+                            <label style="font-size:22px;color:#0D184F;">End time:</label>
+                            <input type="time" class="form-control"  v-model="end" placeholder="Enter end date">
+                        </div>
+                    </div>
+                    <div >
+                        <div>
+                            <label style="font-size:22px;color:#0D184F;">Price:</label>
+                            <input type="number" class="form-control"  v-model="price" placeholder="Enter price">
+                        </div>
+                    </div>
+                    </div>
+            <button class="btn btn-primary btn-lg" v-on:click ="shedule" style="margin-left:10px; margin-top:50px;background:#474A8A">Save</button>
+
+            </div>
+
+
+
+
 
 
 <!--prikaz dermatologa-->
 <div v-if="showDermatologists">
 
-    <div style="background:#B0B3D6; width:650px;margin-left:38px;margin-top:60px;"  v-for="d in this.dermatolog"  v-bind:key="d.id">
+    <div style=" width:650px;margin-left:38px;margin-top:60px;"  v-for="d in this.dermatolog"  v-bind:key="d.id">
          <form>
-           <table style="" id="table2" class="table" >
+           <table style="background:#B0B3D6;" id="table2" class="table" >
 
               <tbody>
       
@@ -147,7 +184,11 @@
   </tbody>
                         </table>
 
-                        <button class="btn btn-primary btn-lg" v-on:click = "canceling(d.id)" style="margin-left:30px; margin-top:42px;background:#474A8A">Delete dermatolog</button>
+                        <button class="btn btn-primary btn-lg" v-on:click = "canceling(d.id)" style="margin-left:30px; margin-top:42px;background:#474A8A">Delete dermatologist</button>
+                        
+                        
+                                                <button class="btn btn-primary btn-lg" v-on:click = "createTerms(d.id)" style="margin-left:30px; margin-top:42px;background:#474A8A">Define free terms</button>
+
 
                 </form>
       
@@ -173,13 +214,19 @@ export default {
      showDermatologists : true,
      showDermatologistsTable : false,
      pharmacies:{},
-      choosen:""
+      choosen:"",
+      jedanDermtolog:{},
+      showNew:false,
+      date:null,
+       end:null,
+       start:null,
+       price:null
 
        
     }
   },
   mounted() {
-        this.axios.get('/dermatologist/findPharmacyDermatologist/'+this.id)
+        this.axios.get('/dermatologist/findPharmacyDermatologist/'+this.id)//ovdje proslijediti id dermatologa
         .then(response => {
                 this.pharmacies = response.data;  
 
@@ -191,7 +238,7 @@ export default {
 
      
 
-        this.axios.get('/dermatologist/getDermatologists/'+this.id)
+        this.axios.get('/dermatologist/getDermatologists/'+this.id)//vrati dermatologe apoteke ,saljem id apoteke 
         .then(response => {
                 this.dermatolog = response.data;
                  
@@ -208,6 +255,36 @@ export default {
    typeIsSelected1 : function(event, type) { 
            this.choosen = type;
       },
+
+     shedule : function(){
+          const infoExamination = {
+                    idStaff: this.jedanDermtolog.id,
+                    idPharm : this.id,
+                    date : this.date,
+                    start : this.start,
+                    end : this.end,
+                    price:this.price   
+                }
+             this.axios.post('/examination/defineFreeTerms',infoExamination,{ 
+             headers: {
+             }}).then(response => {
+                      alert("Successfully defined free term!");
+                        console.log(response.data);
+                        this.showNew = false;
+                        this.showExamination = true;
+             
+                })
+                .catch(response => {
+                    alert(response.response.data.message);
+                        console.log(response);
+                 });    
+      },
+
+
+
+
+
+      
 
       searchByName: function(){
         
@@ -229,7 +306,23 @@ export default {
                        console.log(res);
                  });
       },
+     createTerms : function(data){
+            this.showDermatologists = false;
+            this.showDermatologistsTable = false;
+            this.showNew=true;
+            console.log(data);
+            this.axios.get('/dermatologist/findById/'+data)
+            .then(response => {
+                    this.jedanDermtolog = response.data;
+                  
+            }).catch(res => {
+                    alert("Nesto ne valja");
+                    console.log(res);
+            });
 
+
+
+     },
 
       canceling:
        function(date){
