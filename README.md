@@ -24,6 +24,19 @@ Tehnologije:
 
 
 Instalacija za front:
+
 -NodeJS 
+
 -VueJS
+
 Pratile smo sljedeci snimak za instalaciju https://www.youtube.com/watch?v=Wy9q22isx3U (od 7:20 minuta)
+
+Pokretanje frontenda:
+
+-pozicioniratti na frontend-isa folder u CommandWindow konzoli
+
+-npm install
+
+-npm run serve
+
+-port 3000
