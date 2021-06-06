@@ -859,7 +859,7 @@
     <tbody>
       <tr>
         <th scope="row"></th>
-        <td>Pharmacist:</td>
+        <td>Pharmacy:</td>
          <td>{{g2.name}}</td>
       </tr>
 
@@ -875,6 +875,46 @@
           <th></th>
           <td></td>
           <td><button class="btn btn-danger btn-sm"  v-on:click = "confrimPharmacy(g2.grade,g2.idPharmacy,g2.idPatient)">Confrim</button></td>
+          
+
+        </tr>
+        
+  </tbody>
+</table>
+           </div>
+
+
+      </div> 
+
+
+
+      <!-------GRADES DRUUUUUUUUUUG!-->
+
+      <div v-if="showGradeDrug"  style="float:left;margin-left:30px;">
+     <h4 style="margin:30px">GRADES:</h4>
+ <div style="background: #a7c1c9;margin-left:30px;"  v-for="g3 in this.drugGrades"  v-bind:key="g3.idDrug">
+      
+<table  style="" id="table2" class="table" >
+ 
+    <tbody>
+      <tr>
+        <th scope="row"></th>
+        <td>Drug:</td>
+         <td>{{g3.name}}</td>
+      </tr>
+
+        <tr>
+        <th scope="row"></th>
+        
+         <td>Grade:</td>
+          <td><input type="text"  class="form-control" v-model = "g3.grade"></td>
+      </tr>
+      <!-- v-model = "s"
+       v-on:click = "continue2(staff.idStaff,staff.idPharm)"!-->
+        <tr>
+          <th></th>
+          <td></td>
+          <td><button class="btn btn-danger btn-sm"  v-on:click = "confrimDrug(g3.grade,g3.idDrug,g3.idPatient)">Confrim</button></td>
           
 
         </tr>
@@ -933,6 +973,7 @@ export default {
         dermatologistGrades:[],
         pharmacistGrades:[],
         pharmacyGrade:[],
+        drugGrades:[],
 
         drugName:null,
         date:null,
@@ -1090,6 +1131,15 @@ export default {
          this.axios.get('/grade/findPharmaciesForGrade/'+this.id)
         .then(response => {
                 this.pharmacyGrade = response.data;
+                
+         }).catch(res => {
+                alert("Nesto ne valja");
+                console.log(res);
+        });
+
+         this.axios.get('/grade/findDrugsForGrade/'+this.id)
+        .then(response => {
+                this.drugGrades = response.data;
                 
          }).catch(res => {
                 alert("Nesto ne valja");
@@ -1756,6 +1806,23 @@ methods:{
         console.log(idPat)
         
         this.axios.post('/grade/gradePharmacy/'+idPat+"/"+grade+"/"+idDerm)
+          .then(response => {
+               console.log(response.data);
+              this.jel2 = response.data;
+              
+                })
+                .catch(res => {
+                     
+                        alert("Sorting is currently not possible");
+                        console.log(res)
+                    })
+      },
+      confrimDrug:function(grade,idDerm,idPat){
+        console.log(grade)
+        console.log(idDerm)
+        console.log(idPat)
+        
+        this.axios.post('/grade/gradeDrug/'+idPat+"/"+grade+"/"+idDerm)
           .then(response => {
                console.log(response.data);
               this.jel2 = response.data;

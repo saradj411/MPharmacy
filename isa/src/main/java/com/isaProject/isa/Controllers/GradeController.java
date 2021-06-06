@@ -309,5 +309,16 @@ public class GradeController {
                 ResponseEntity.ok(dd);
     }
 
+    @PostMapping(value = "/gradeDrug/{idPatient}/{grade}/{idDerm}")
+    public ResponseEntity<DrugGrade> gradeDrug(@PathVariable Integer idPatient,
+                                                       @PathVariable Integer grade,@PathVariable Integer idDerm) {
+
+        DrugGrade dd=drugGradeService.grade(idPatient,grade,idDerm);
+
+        return dd== null ?
+                new ResponseEntity<>(HttpStatus.NOT_FOUND) :
+                ResponseEntity.ok(dd);
+    }
+
 
 }
