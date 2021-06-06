@@ -1,8 +1,13 @@
 package com.isaProject.isa.Services.Implementations;
 
 import com.isaProject.isa.Model.DTO.PharmacyDTO;
+import com.isaProject.isa.Model.DTO.StaffDTO;
 import com.isaProject.isa.Model.Pharmacy.Pharmacy;
+import com.isaProject.isa.Model.Users.Dermatologist;
+import com.isaProject.isa.Model.Users.Pharmacist;
 import com.isaProject.isa.Model.Users.PharmacyAdmin;
+import com.isaProject.isa.Repositories.DermatologistRepository;
+import com.isaProject.isa.Repositories.PharmacistRepository;
 import com.isaProject.isa.Repositories.PharmacyRepository;
 import com.isaProject.isa.Services.IServices.IPharmacyService;
 import lombok.extern.slf4j.Slf4j;
@@ -11,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
@@ -25,6 +31,11 @@ public class PharmacyService implements IPharmacyService {
     @Autowired
     PharmacyAdminService pharmacyAdminService;
 
+    @Autowired
+    PharmacistRepository pharmacistRepository;
+
+    @Autowired
+    DermatologistRepository dermatologistRepository;
     @Override
     public List<Pharmacy> findAllOrderByNameAsc() {
 
@@ -117,5 +128,45 @@ public class PharmacyService implements IPharmacyService {
         pharmacyRepository.save(pharm);
 
         }
+
+        @Override
+    public double getAvgGrade(Integer idPharm){
+        Pharmacy pharmacy=pharmacyRepository.getOne(idPharm);
+        return pharmacy.getAvgGrade();
+        }
+
+        @Override
+        public List<StaffDTO>view(Integer idPharm){
+        List<Pharmacist>p=pharmacistRepository.findWorkTimeByIdDermAndIdPharm(idPharm);
+        List<StaffDTO>staffDTOS=new ArrayList<>();
+        for (Pharmacist pharmacist:p){
+            StaffDTO s=new StaffDTO(pharmacist.getName(),pharmacist.getSurname(),pharmacist.getAvgGrade());
+            staffDTOS.add(s);
+        }
+        return  staffDTOS;
+        }
+
+        @Override
+       public List<StaffDTO>viewDerm(Integer idPharm){
+        List<Dermatologist>lista=dermatologistRepository.findAll();
+        List<StaffDTO>staffDTOS=new ArrayList<>();
+
+        for (Dermatologist dermatologist:lista){
+            for (Pharmacy p:dermatologist.getPharmacies()){
+                if (p.getIdPharm().equals(idPharm)){
+                    StaffDTO s=new StaffDTO(dermatologist.getName(),dermatologist.getSurname(),dermatologist.getAvgGrade());
+                    staffDTOS.add(s);
+                }
+            }
+        }
+        return staffDTOS;
+
+        }
+
+
+
+
+
+
 }
 

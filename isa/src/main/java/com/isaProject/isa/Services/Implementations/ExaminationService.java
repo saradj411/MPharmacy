@@ -81,10 +81,93 @@ public class ExaminationService implements IExaminationService {
     @Autowired
     TherapyRepository therapyRepository;
 
+    @Autowired
+    RequestForVacationRepository requestForVacationRepository;
+
     @Override
     public List<Examination> findAll() {
         return examinationRepository.findAll();
     }
+
+
+
+    /*
+
+
+    prilikom definisanja pregleda treba voditi računa da se
+pregled ne preklapa sa već zakazanim. Pregled se ne može zakazati u
+periodu kada je dermatolog na godišnjem odmoru ili odsustvu)
+
+     */
+
+
+    @Override
+    public Examination defineTerms(ExaminationDTO examinationDTO) throws MessagingException {
+        Examination d = new Examination();
+        List<WorkTime> workTimes = workTimeRepository.findWorkTimeByIdDermAndIdPharm(examinationDTO.getIdStaff(), examinationDTO.getIdPharm());
+        if (!dermatologistService.checkingThatTheScheduleMatches(workTimes, examinationDTO.getDate(), examinationDTO.getStart(), examinationDTO.getEnd())) {
+            throw new IllegalArgumentException("TheScheduleNotMatches");
+
+        }
+
+        List<Examination> finaList = new ArrayList<Examination>();
+
+        List<Examination> finaList2 = new ArrayList<Examination>();
+        List<Examination> exx = examinationRepository.getExaminationsByTime(examinationDTO.getDate(), examinationDTO.getStart(), examinationDTO.getEnd());
+
+        for (Examination e:exx){
+            if (e.getStaff().getId().equals(examinationDTO.getIdStaff())){
+                finaList.add(e);
+            }
+        }
+
+        if (finaList.size()==0) {
+
+        } else {
+            throw new IllegalArgumentException("Doctor have an appointment scheduled at that time ");
+
+        }
+
+        List<RequestForVacation>requestForVacations=requestForVacationRepository.findAll();
+        for (RequestForVacation r:requestForVacations){
+            if(r.getStaff().getId().equals(examinationDTO.getIdStaff())){
+                if (examinationDTO.getDate().isAfter(r.getStart())){
+                    if (examinationDTO.getDate().isBefore(r.getEnd())){
+                        throw new IllegalArgumentException("The doctor is on vacation ");
+
+                    }
+
+                }
+            }
+        }
+
+
+        for (Examination e:exx){
+            if (e.getPatient().getId().equals(examinationDTO.getIdPatient())){
+                finaList2.add(e);
+            }
+        }
+
+        if (finaList2.size()==0){
+
+        }else{
+            throw new IllegalArgumentException("Patient have an appointment scheduled at that time ");
+        }
+
+
+
+
+        d.setDate(examinationDTO.getDate());
+        d.setEndTime(examinationDTO.getEnd());
+        d.setStartTime(examinationDTO.getStart());
+        d.setStaff(staffService.findById(examinationDTO.getIdStaff()));
+        d.setPharmacy(pharmacyService.findById(examinationDTO.getIdPharm()));
+        d.setPrice(examinationDTO.getPrice());
+        d.setStatus(ExaminationStatus.CREATED);
+        d.setType(ExaminationType.DERMATOLOGIST_EXAMINATION);
+        return examinationRepository.save(d);
+    }
+
 
     @Override
     public Examination createExD(ExaminationDTO examinationDTO) throws MessagingException {
@@ -637,4 +720,6 @@ ili savetovanjem koje pacijent ima zakazano (u bilo kojoj apoteci),
     }
 
 
+
+}
     }

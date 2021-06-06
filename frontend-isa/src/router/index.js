@@ -51,6 +51,12 @@ import RegisterDermatologist from '../components/RegisterDermatologist'
 import RegisterNewPharmacy from '../components/RegisterNewPharmacy'
 import RegisterAdminPharamcyPage from '../components/RegisterAdminPharamcyPage'
 import AcceptRejectVacation from '../components/AcceptRejectVacation'
+import CreatePricelist from '../components/CreatePricelist'
+import UpdatePricelist from '../components/UpdatePricelist'
+import ActionAndPromotion from '../components/ActionAndPromotion'
+import DrugOrders from '../components/DrugOrders'
+import Report from '../components/Report'
+
 import AddPharmacist from '../components/AddPharmacist'
 import AddDermatologist from '../components/AddDermatologist'
 
@@ -318,6 +324,34 @@ const routes = [
       }
       ,
       {
+        path: '/CreatePricelist/:id',
+        name: 'CreatePricelist',
+        component: CreatePricelist
+      },
+      {
+        path: '/UpdatePricelist/:id',
+        name: 'UpdatePricelist',
+        component: UpdatePricelist
+      }
+      ,
+      {
+        path: '/ActionAndPromotion/:id',
+        name: 'ActionAndPromotion',
+        component: ActionAndPromotion
+      }
+      ,
+      {
+        path: '/DrugOrders/:id',
+        name: 'DrugOrders',
+        component: DrugOrders
+      },
+      {
+        path: '/Report/:id',
+        name: 'Report',
+        component: Report
+      }
+      
+,{      
         path: '/AnnualReport/:id',
         name: 'AnnualReport',
         component: AnnualReport

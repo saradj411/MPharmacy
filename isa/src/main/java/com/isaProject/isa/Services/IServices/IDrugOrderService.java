@@ -10,6 +10,9 @@ import java.util.Optional;
 public interface IDrugOrderService {
      //DrugOrder createDrugOrder(DrugOrderDTO drugOrder);
      DrugOrder save(DrugOrderDTO drugOrderDTO) ;
+
+    List<DrugOrder> findAll();
+    //    DrugOrder createDrugOrder(DrugOrderDTO drugOrder);
  //    DrugOrder createDrugOrder(DrugOrderDTO drugOrder);
      List<DrugOrder> getAllOrder();
      List<DrugOrderAndItemDTO> getDrugOrderAndItemDTO();

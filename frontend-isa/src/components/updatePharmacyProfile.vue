@@ -16,6 +16,8 @@
            </b-link></router-link></b-dropdown-item>
 
 
+                                    <b-dropdown-item >Add dermatologist</b-dropdown-item>
+    
 
                                     <b-dropdown-item><router-link :to="{ path: '/AddDermatologist/'+pharmacy.idPharm}" v-slot="{href, navigate}" custom>
            <b-link style="font-size:20px;color:black;" :href="href" @click="navigate"  elevation="1">Add new dermatologist
@@ -27,10 +29,11 @@
            <b-link style="font-size:20px;color:black;" :href="href" @click="navigate"  elevation="1">List of pharmacists
              </b-link></router-link>
            </b-dropdown-item>
+                                    <b-dropdown-item>Add pharmacist</b-dropdown-item>
                                     <b-dropdown-item><router-link :to="{ path: '/AddPharmacist/'+pharmacy.idPharm}" v-slot="{href, navigate}" custom>
            <b-link style="font-size:20px;color:black;" :href="href" @click="navigate"  elevation="1">Add new pharmacist
              </b-link></router-link></b-dropdown-item>
-   
+
                                 </b-dropdown> 
 
                                 <b-dropdown id="ddCommodity" name="ddCommodity" text="Drugs" style="margin-left:50px; color:white;"  >
@@ -40,12 +43,6 @@
            <b-link style="font-size:20px;color:black;" :href="href" @click="navigate"  elevation="1">List of drugs
              </b-link></router-link>
            </b-dropdown-item>
-                                    <b-dropdown-item>
-
-                                      <router-link :to="{ path: '/DrugPricelist/'+pharmacy.idPharm}" v-slot="{href, navigate}" custom>
-           <b-link style="font-size:20px;color:black;" :href="href" @click="navigate"  elevation="1">Drug price list
-             </b-link></router-link>
-           </b-dropdown-item>
 
            <b-dropdown-item>
 
@@ -53,8 +50,32 @@
            <b-link style="font-size:20px;color:black;" :href="href" @click="navigate"  elevation="1">Add drug
              </b-link></router-link>
            </b-dropdown-item>
+                                    <b-dropdown-item>
+
+                                      <router-link :to="{ path: '/DrugPricelist/'+pharmacy.idPharm}" v-slot="{href, navigate}" custom>
+           <b-link style="font-size:20px;color:black;" :href="href" @click="navigate"  elevation="1">Drug price list
+             </b-link></router-link>
+           </b-dropdown-item>
+
+           
+
+           <b-dropdown-item>
+
+                                      <router-link :to="{ path: '/CreatePricelist/'+pharmacy.idPharm}" v-slot="{href, navigate}" custom>
+           <b-link style="font-size:20px;color:black;" :href="href" @click="navigate"  elevation="1">Create price list
+             </b-link></router-link>
+           </b-dropdown-item>
        
                                 </b-dropdown>
+ <router-link :to="{ path: '/Report/'+pharmacy.idPharm}" v-slot="{href, navigate}" custom>
+
+                  <button class = "btn btn-primary btn-xs" style="margin:auto; margin-left:38px;background:#474A8A " :href="href" @click="navigate" elevation="1">Display of business reports</button>
+               </router-link>
+
+                                 
+
+
+                                 
             </span>
                                   
         </div>
@@ -62,37 +83,7 @@
         <div style=" margin: auto; width: 50%;margin-top:45px;">
 
           
-            
-  <form>
-     <table style="" id="table2" class="table" >
-           <tbody>
-             <div style=" margin: auto; width: 50%;"> </div>
-    <tr style="font-size:22px;color:#0D184F;">
-      <th ></th>
-      <td></td>
-      <td></td>
-      <td>Update</td>
-    
-    </tr>
-    <tr style="font-size:22px;color:#0D184F;">
-      <th ></th>
-      <td>Pharmacy name:</td>
-      <td>{{pharmacy.name}} </td>
-      <td><input type="text" class="form-control" v-model="pharmacy.name"></td>
-    
-    </tr>
-    <tr style="font-size:22px;color:#0D184F;">
-      <th ></th>
-      <td>Description:</td>
-      <td>{{pharmacy.description}}</td>
-            <td><input type="text" class="form-control" v-model="pharmacy.description"></td>
 
-
-    </tr>
-    
-  </tbody>
-                        </table>
-                </form>
         </div>
        
 

@@ -15,7 +15,7 @@ import java.util.Set;
 public class Dermatologist extends Staff implements  Serializable{
 
     //apoteke u kojima je zaposlen
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(cascade = {CascadeType.MERGE})
     @JoinTable(name = "dermatologists_in_pharmacies",
             joinColumns = @JoinColumn(name = "dermatologistId", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "pharmacyId", referencedColumnName = "idPharm"))

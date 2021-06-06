@@ -98,10 +98,46 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
                 .permitAll().antMatchers("/requestVacation/getRequestById/{id}")
 
+                .permitAll().antMatchers("/actionAndPromotion/create")
+
+                .permitAll().antMatchers("/drugOrder/findOrderItem/{idOrder}")
+
+                .permitAll().antMatchers("/offer/getOfferByIdOrder/{id}")
+                .permitAll().antMatchers("/offer/findOfferByIdOrder/{idOrder}")
+
+                .permitAll().antMatchers("/drugOrder/findAllByAdmin/{id}")
+
+                .permitAll().antMatchers("/offer/chooseOffer/{idOffer}/{idAdmin}")
+
+                .permitAll().antMatchers("/examination/defineFreeTerms")
+                .permitAll().antMatchers("/drugPricelist/searchDrugName/{id}/{name}")
+
+
+                 .permitAll().antMatchers("/pharmacyDrugs/delete/{idDrug}/{idPharm}")
+
+                .permitAll().antMatchers("/dermatologist/delete/{idDerm}/{idPharm}")
+
+
+
+
+
+                .permitAll().antMatchers("/pharmacist/view/{id}")
+
+                .permitAll().antMatchers("/pharmacist/getAvgGrade/{id}")
+                .permitAll().antMatchers("/pharmacist/viewDerm/{id}")
+
+
 
                 .permitAll().antMatchers("/requestVacation/acceptRequest/{id}")
 
+                .permitAll().antMatchers("/drugPricelist/create/{id}")
+                .permitAll().antMatchers("/drugPricelist/findByName/{name}")
+                .permitAll().antMatchers("/drugPricelist/update/{name}")
 
+                .permitAll().antMatchers("/drugPricelist/getDrugsPricelistByIdPharm/{id}")
+                .permitAll().antMatchers("/drugPricelist/findById/{id}")
+
+                .permitAll().antMatchers("/drugOrder/findAll")
 
 
 

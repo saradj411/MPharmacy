@@ -36,10 +36,10 @@ public class PharmacyDrugsController {
     private PatientService patientService;
 
     @GetMapping("/delete/{idDrug}/{idPharm}")
-    public ResponseEntity<Boolean> deleteDermatologist(@PathVariable Integer idDrug, @PathVariable Integer idPharm ) {
+    public ResponseEntity<String> deleteDermatologist(@PathVariable Integer idDrug, @PathVariable Integer idPharm ) {
 
        // Drug drug = pharmacyDrugsService.findById(idPharm,idDrug);
-        Boolean answer = pharmacyDrugsService.remove(idPharm,idDrug);
+        String answer = pharmacyDrugsService.remove(idPharm,idDrug);
 
         return new ResponseEntity<>(answer, HttpStatus.ACCEPTED);
     }

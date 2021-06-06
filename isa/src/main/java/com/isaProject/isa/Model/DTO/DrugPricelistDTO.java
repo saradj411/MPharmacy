@@ -1,6 +1,7 @@
 package com.isaProject.isa.Model.DTO;
 
 import javax.persistence.Column;
+import java.time.LocalDate;
 import java.util.Date;
 
 public class DrugPricelistDTO {
@@ -8,9 +9,9 @@ public class DrugPricelistDTO {
 
     private double price;
 
-    private Date start;
+    private LocalDate start;
 
-    private Date end;
+    private LocalDate end;
 
     public String getName() {
         return name;
@@ -28,19 +29,29 @@ public class DrugPricelistDTO {
         this.price = price;
     }
 
-    public Date getStart() {
+    public LocalDate getStart() {
         return start;
     }
 
-    public void setStart(Date start) {
+    public void setStart(LocalDate start) {
         this.start = start;
     }
 
-    public Date getEnd() {
+    public LocalDate getEnd() {
         return end;
     }
 
-    public void setEnd(Date end) {
+    public void setEnd(LocalDate end) {
+        this.end = end;
+    }
+
+    public DrugPricelistDTO() {
+    }
+
+    public DrugPricelistDTO(String name, double price, LocalDate start, LocalDate end) {
+        this.name = name;
+        this.price = price;
+        this.start = start;
         this.end = end;
     }
 }

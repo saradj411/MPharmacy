@@ -9,6 +9,8 @@ import javax.persistence.*;
 
 @Entity
 @Table
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+
 public class OrderItem {
 
     @Id
@@ -35,7 +37,7 @@ public class OrderItem {
 
     @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
     @JoinColumn(name = "orderId", referencedColumnName = "idOrder", nullable = true, unique = false)
-//    @JsonManagedReference
+    @JsonBackReference
     private DrugOrder drugOrder;
 
     public Integer getIdItem() {

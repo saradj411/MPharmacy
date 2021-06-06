@@ -122,12 +122,7 @@
     
     </tr>   
     
-    <tr style="font-size:22px;color:#0D184F;">
-      <th></th>
-      <td >Recipe need:</td>   
-       <td>{{d.drug.recipeNeed}}</td>
     
-    </tr>
     <tr style="font-size:22px;color:#0D184F;">
       <th></th>
       <td >Type drug:</td>   
@@ -145,6 +140,12 @@
       <th></th>
       <td >Manufacturer:</td>   
        <td>{{d.drug.manufacturer}}</td>
+    
+    </tr>
+ <tr style="font-size:22px;color:#0D184F;">
+      <th></th>
+      <td >Quantity:</td>   
+       <td>{{d.quantity}}</td>
     
     </tr>
 

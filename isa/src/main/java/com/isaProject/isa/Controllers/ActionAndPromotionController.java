@@ -27,6 +27,10 @@ public class ActionAndPromotionController {
 
     @PostMapping("/create")
     public ResponseEntity<String> addDrug(@RequestBody ActionAndPromotionDTO actionAndPromotionDTO) throws MessagingException {
+        System.out.println("apoteka" +actionAndPromotionDTO.getIdPham());
+        System.out.println("opis" +actionAndPromotionDTO.getText());
+        System.out.println("start" +actionAndPromotionDTO.getStartDate());
+        System.out.println("end" +actionAndPromotionDTO.getEndDate());
 
         ActionAndPromotion actionAndPromotion = actionAndPromotionService.save(actionAndPromotionDTO);
         actionAndPromotionService.sendMail(actionAndPromotion);

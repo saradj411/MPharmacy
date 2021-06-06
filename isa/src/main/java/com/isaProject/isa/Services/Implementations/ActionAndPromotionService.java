@@ -8,6 +8,7 @@ import com.isaProject.isa.Model.Pharmacy.Pharmacy;
 import com.isaProject.isa.Model.Users.ActionAndPromotion;
 import com.isaProject.isa.Model.Users.Patient;
 import com.isaProject.isa.Repositories.ActionAndPromotionRepository;
+import com.isaProject.isa.Repositories.PharmacyRepository;
 import com.isaProject.isa.Services.IServices.IActionAndPromotionService;
 import org.apache.catalina.LifecycleState;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,12 +43,14 @@ dobijaju obaveštenja od apoteke putem mail-a.
     @Autowired
     ServiceForEmail serviceForEmail;
 
+    @Autowired
+    PharmacyRepository pharmacyRepository;
+
 
     @Override
     public ActionAndPromotion save(ActionAndPromotionDTO dto) {
         ActionAndPromotion actionAndPromotion=new ActionAndPromotion();
-        Pharmacy pharmacy=pharmacyService.findByNamee(dto.getPharmacyName());
-
+        Pharmacy pharmacy=pharmacyRepository.getOne(dto.getIdPham());
         actionAndPromotion.setEndDate(dto.getEndDate());
         actionAndPromotion.setStartDate(dto.getStartDate());
         actionAndPromotion.setText(dto.getText());
