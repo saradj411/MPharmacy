@@ -197,7 +197,7 @@ export default{
                 city : this.city,
                 country : this.country,
                 avgGrade: this.avgGrade,
-                date: this.date,                
+                date: this.date,
                 startTime: this.startTime,
                 endTime: this.endTime,
                 pharmacyID: this.pharmacyID.idPharm 
@@ -205,11 +205,13 @@ export default{
                 }
             console.log( dermInfo );
 
-            this.axios.get('/dermatologist/saveDermatologist', dermInfo,
+            this.axios.post('/dermatologist/saveDermatologist', dermInfo,
             {
                 headers: 
                 {
-                    'Authorization': `Bearer ` + localStorage.getItem('accessToken')
+                    'Authorization': `Bearer ` + localStorage.getItem('accessToken'),
+                    'Expires' : localStorage.getItem('expiresIn'),
+                    //'Content-Type' : 'application/json; charset=utf-8'
                 }}).then(response => 
                 {
                     alert("Successfully registered new dermatologist.");
