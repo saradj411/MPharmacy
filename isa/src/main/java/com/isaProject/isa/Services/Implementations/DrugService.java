@@ -1,21 +1,23 @@
 package com.isaProject.isa.Services.Implementations;
 
 
+import com.isaProject.isa.Model.DTO.DermatologistForCreateDTO;
 import com.isaProject.isa.Model.DTO.DrugDTO;
+import com.isaProject.isa.Model.DTO.DrugNewDTO;
 import com.isaProject.isa.Model.Drugs.Drug;
 import com.isaProject.isa.Model.Drugs.DrugPricelist;
 import com.isaProject.isa.Model.Drugs.PharmacyDrugs;
 import com.isaProject.isa.Model.Pharmacy.Pharmacy;
+import com.isaProject.isa.Model.Users.Dermatologist;
+import com.isaProject.isa.Model.Users.Staff;
+import com.isaProject.isa.Model.Users.WorkTime;
 import com.isaProject.isa.Repositories.*;
 import com.isaProject.isa.Services.IServices.IDrugService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-import java.util.ListIterator;
+import java.util.*;
 
 
 @Service
@@ -23,138 +25,56 @@ import java.util.ListIterator;
 public class DrugService implements IDrugService {
 
     @Autowired
-    DrugRepository drugRepository;
+    private DrugRepository drugRepository;
     @Autowired
-    PharmacyAdminRepository pharmacyAdminRepository;
-
-    @Autowired
-    PharmacyRepository pharmacyRepository;
+    private PharmacyAdminRepository pharmacyAdminRepository;
 
     @Autowired
-    DrugPricelistRepository drugPricelistRepository;
-    @Autowired
-    DrugPricelistService drugPricelistService;
+    private PharmacyRepository pharmacyRepository;
 
     @Autowired
-    PharmacyDrugsRepository pharmacyDrugsRepository;
+    private DrugPricelistRepository drugPricelistRepository;
+    @Autowired
+    private DrugPricelistService drugPricelistService;
 
+    @Autowired
+    private PharmacyDrugsRepository pharmacyDrugsRepository;
 
-    List<Drug> d=new List<Drug>() {
-        @Override
-        public int size() {
-            return 0;
-        }
+    @Override
+    public Drug save(DrugDTO drug) {
+        Drug d = new Drug();
+        PharmacyDrugs pd = new PharmacyDrugs();
+        d.setName(drug.getName());
+        d.setCode(drug.Code());
+        d.setDrugType(drug.getDrugType());
+        d.setFormat(drug.Format());
+        d.setManufacturer(drug.getManufacturer());
+//        d.setRecipeNeed(true);
+        pd.setQuantity(drug.getQuantity());
+        pd.setPharmacy(drug.getPharmacy());
+        Drug novi = drugRepository.save(d);
+        pd.setDrug(novi);
+        pharmacyDrugsRepository.save(pd);
+        return novi;
+    }
+    @Override
+    public Drug create(DrugNewDTO drugNewDTO){
+        Drug drug=new Drug();
+        PharmacyDrugs pd = new PharmacyDrugs();
+        drug.setDrugType(drugNewDTO.getDrugType());
+        drug.setManufacturer(drugNewDTO.getManufacturer());
+        drug.setFormat(drugNewDTO.getFormat());
+        drug.setCode(drugNewDTO.getPassword());
+        drug.setName(drugNewDTO.getName());
+        pd.setQuantity(drugNewDTO.getQuantity());
+        pd.setPharmacy(pharmacyRepository.getOne(drugNewDTO.getIdPharm()));
+        Drug novi = drugRepository.save(drug);
+        pd.setDrug(novi);
+        pharmacyDrugsRepository.save(pd);
 
-        @Override
-        public boolean isEmpty() {
-            return false;
-        }
+        return novi;
 
-        @Override
-        public boolean contains(Object o) {
-            return false;
-        }
-
-        @Override
-        public Iterator<Drug> iterator() {
-            return null;
-        }
-
-        @Override
-        public Object[] toArray() {
-            return new Object[0];
-        }
-
-        @Override
-        public <T> T[] toArray(T[] a) {
-            return null;
-        }
-
-        @Override
-        public boolean add(Drug drug) {
-            return false;
-        }
-
-        @Override
-        public boolean remove(Object o) {
-            return false;
-        }
-
-        @Override
-        public boolean containsAll(Collection<?> c) {
-            return false;
-        }
-
-        @Override
-        public boolean addAll(Collection<? extends Drug> c) {
-            return false;
-        }
-
-        @Override
-        public boolean addAll(int index, Collection<? extends Drug> c) {
-            return false;
-        }
-
-        @Override
-        public boolean removeAll(Collection<?> c) {
-            return false;
-        }
-
-        @Override
-        public boolean retainAll(Collection<?> c) {
-            return false;
-        }
-
-        @Override
-        public void clear() {
-
-        }
-
-        @Override
-        public Drug get(int index) {
-            return null;
-        }
-
-        @Override
-        public Drug set(int index, Drug element) {
-            return null;
-        }
-
-        @Override
-        public void add(int index, Drug element) {
-
-        }
-
-        @Override
-        public Drug remove(int index) {
-            return null;
-        }
-
-        @Override
-        public int indexOf(Object o) {
-            return 0;
-        }
-
-        @Override
-        public int lastIndexOf(Object o) {
-            return 0;
-        }
-
-        @Override
-        public ListIterator<Drug> listIterator() {
-            return null;
-        }
-
-        @Override
-        public ListIterator<Drug> listIterator(int index) {
-            return null;
-        }
-
-        @Override
-        public List<Drug> subList(int fromIndex, int toIndex) {
-            return null;
-        }
-    };
+    }
     @Override
     public Boolean remove(Drug medication, Integer idPharm) {//izbrisi lijek iz te i te apoteke ako lijek nije rezervisan
 
@@ -202,23 +122,6 @@ public class DrugService implements IDrugService {
     }
 
     @Override
-    public Drug save(DrugDTO drug) {
-        Drug d = new Drug();
-        PharmacyDrugs pd = new PharmacyDrugs();
-        d.setName(drug.getName());
-        d.setCode(drug.getCode());
-        d.setDrugType(drug.getDrugType());
-        d.setFormat(drug.getFormat());
-        d.setManufacturer(drug.getManufacturer());
-//        d.setRecipeNeed(true);
-        pd.setQuantity(drug.getQuantity());
-        pd.setPharmacy(drug.getPharmacy());
-        Drug novi = drugRepository.save(d);
-        pd.setDrug(novi);
-        pharmacyDrugsRepository.save(pd);
-        return novi;
-    }
-    @Override
     public void update(Drug drug) {
         Drug d = drugRepository.getOne(drug.getIdDrug());
         d.setName(drug.getName());
@@ -236,9 +139,9 @@ public class DrugService implements IDrugService {
     public Drug saveForShifarnik(DrugDTO drugDTO) {
         Drug d = new Drug();
         d.setName(drugDTO.getName());
-        d.setCode(drugDTO.getCode());
+        d.setCode(drugDTO.Code());
         d.setDrugType(drugDTO.getDrugType());
-        d.setFormat(drugDTO.getFormat());
+        d.setFormat(drugDTO.Format());
         d.setManufacturer(drugDTO.getManufacturer());
         d.setRecipeNeed(drugDTO.isRecipeNeed());
         return drugRepository.save(d);

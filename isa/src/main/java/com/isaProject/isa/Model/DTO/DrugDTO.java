@@ -87,7 +87,7 @@ public class DrugDTO implements Serializable {
         return name;
     }
 
-    public String getCode() {
+    public String Code() {
         return code;
     }
 
@@ -99,7 +99,7 @@ public class DrugDTO implements Serializable {
         return drugType;
     }
 
-    public DrugFormat getFormat() {
+    public DrugFormat Format() {
         return format;
     }
 
@@ -112,7 +112,7 @@ public class DrugDTO implements Serializable {
         this.name = name;
     }
 
-    public void setCode(String code) {
+    public void Code(String code) {
         this.code = code;
     }
 
@@ -124,7 +124,7 @@ public class DrugDTO implements Serializable {
         this.drugType = drugType;
     }
 
-    public void setFormat(DrugFormat format) {
+    public void Format(DrugFormat format) {
         this.format = format;
     }
 

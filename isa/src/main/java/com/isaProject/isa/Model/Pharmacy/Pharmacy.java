@@ -32,11 +32,33 @@ public class  Pharmacy implements Serializable {
     @Column
     private double avgGrade;
 
+    // dodato za mapuuuu
+
+    @Column
+    private String town;
+
+    @Column
+    private String street;
+
+    @Column
+    private int number;
+
+    @Column
+    private int postalCode;
+
+    @Column
+    private String country;
+
+
+
+
+
+
+
     //DODATO
     @Column
     private String city;
-    @Column
-    private  String country;
+
 
     @OneToMany(mappedBy = "pharmacy", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     //@JsonBackReference
@@ -166,5 +188,35 @@ public class  Pharmacy implements Serializable {
         this.examinations = examinations;
     }
 
+    public String getTown() {
+        return town;
+    }
 
+    public void setTown(String town) {
+        this.town = town;
+    }
+
+    public String getStreet() {
+        return street;
+    }
+
+    public void setStreet(String street) {
+        this.street = street;
+    }
+
+    public int getNumber() {
+        return number;
+    }
+
+    public void setNumber(int number) {
+        this.number = number;
+    }
+
+    public int getPostalCode() {
+        return postalCode;
+    }
+
+    public void setPostalCode(int postalCode) {
+        this.postalCode = postalCode;
+    }
 }
