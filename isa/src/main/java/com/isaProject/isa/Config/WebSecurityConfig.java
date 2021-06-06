@@ -81,6 +81,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll().antMatchers("/patient/findDermatologistForGrade/{id}")
                 .permitAll().antMatchers("/reservation/findById/{id}")
                 .permitAll().antMatchers("/patient/findSheduledPharmacistExamination/{id}")
+                .permitAll().antMatchers("/patient/moreThan3/{id}")
 
                 .permitAll().antMatchers("/grade/findDermatologistForGrade/{id}")
                 .permitAll().antMatchers("/grade/findPharmacistForGrade/{id}")
