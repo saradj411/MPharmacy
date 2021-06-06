@@ -13,9 +13,7 @@ import com.isaProject.isa.Repositories.ExaminationRepository;
 import com.isaProject.isa.Repositories.PharmacyAdminRepository;
 import com.isaProject.isa.Repositories.WorkTimeRepository;
 import com.isaProject.isa.Model.Users.Authority;
-import com.isaProject.isa.Model.Users.PharmacyAdmin;
 import com.isaProject.isa.Model.Users.User;
-import com.isaProject.isa.Repositories.PharmacyAdminRepository;
 import com.isaProject.isa.Repositories.UserRepository;
 import com.isaProject.isa.Services.IServices.IPharmacyAdminService;
 import lombok.extern.slf4j.Slf4j;
@@ -30,23 +28,25 @@ import java.util.List;
 public class PharmacyAdminService implements IPharmacyAdminService {
 
     @Autowired
-    PharmacyAdminRepository pharmacyAdminRepository;
+     PharmacyAdminRepository pharmacyAdminRepository;
     @Autowired
-    private PasswordEncoder passwordEncoder;
+     PasswordEncoder passwordEncoder;
     @Autowired
-    private PharmacyService pharmacyService;
+     PharmacyService pharmacyService;
 
     @Autowired
-    private DermatologistService dermatologistService;
+     DermatologistService dermatologistService;
 
     @Autowired
-    private WorkTimeService workTimeService;
+     WorkTimeService workTimeService;
 
     @Autowired
-    private WorkTimeRepository workTimeRepository;
+     WorkTimeRepository workTimeRepository;
 
     @Autowired
     ExaminationRepository examinationRepository;
+
+    @Autowired
     AuthorityService authorityService;
     @Autowired
     UserRepository userRepository;
@@ -100,6 +100,25 @@ public class PharmacyAdminService implements IPharmacyAdminService {
         pharmacyAdminRepository.save(pa);
         return pa;
     }
+
+
+    @Override
+    public void update1(PharmacyAdmin pharmacyAdmin) {
+        PharmacyAdmin pa = pharmacyAdminRepository.getOne(pharmacyAdmin.getId());
+        pa.setName(pharmacyAdmin.getName());
+        pa.setSurname(pharmacyAdmin.getSurname());
+        pa.setAddress(pharmacyAdmin.getAddress());
+        pa.setCity(pharmacyAdmin.getCity());
+        pa.setCountry(pharmacyAdmin.getCountry());
+        pa.setPhoneNumber(pharmacyAdmin.getPhoneNumber());
+        pa.setPassword(pharmacyAdmin.getPassword());
+        pa.setEmail(pharmacyAdmin.getEmail());
+        //pa.setPharmacy(pd.getPharmacy());
+        pharmacyAdminRepository.save(pa);
+
+    }
+
+
 
     @Override
     public void update(PharmacyAdmin pharmacyAdmin) {

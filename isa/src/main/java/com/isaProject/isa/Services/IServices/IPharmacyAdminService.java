@@ -10,5 +10,8 @@ public interface IPharmacyAdminService {
     PharmacyAdmin findByName(String name);
     List<PharmacyAdmin> findAll ();
     PharmacyAdmin save(PharmacyAdminDTO drug);
+
+    void update1(PharmacyAdmin pharmacyAdmin);
+
     void update(PharmacyAdmin drug);
 }

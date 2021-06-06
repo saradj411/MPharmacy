@@ -69,6 +69,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests().antMatchers("/h2-console/**")
                 .permitAll().antMatchers("/api/foo")
                 .permitAll().antMatchers("/pharmacy/findAll")
+                .permitAll().antMatchers("/adminstrator/updateAdminPharmacy")
+
+
 
                 .permitAll().antMatchers("/drugPricelist/findAll")
                 .permitAll().antMatchers("/pharmacy/findByCity/{city}")
