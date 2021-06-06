@@ -1,6 +1,7 @@
 package com.isaProject.isa.Model.Drugs;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.isaProject.isa.Model.Users.PharmacyAdmin;
 
@@ -12,6 +13,8 @@ import java.util.Set;
 
 @Entity
 @Table
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+
 public class DrugOrder {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -31,7 +34,7 @@ public class DrugOrder {
     private Boolean processed;//ceka ponude=faalse//*********************
 
     @OneToMany(mappedBy = "drugOrder", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    //@JsonBackReference
+    @JsonBackReference
     private Set<OrderItem> orderItems = new HashSet<OrderItem>();//************
 
     //PROMJENA MERGEEEEEE
@@ -47,7 +50,7 @@ public class DrugOrder {
 */
 
     @OneToMany(mappedBy = "drugOrder", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    //@JsonBackReference
+    @JsonBackReference
     private Set<Offer> offers = new HashSet<Offer>();//*****************
 
 

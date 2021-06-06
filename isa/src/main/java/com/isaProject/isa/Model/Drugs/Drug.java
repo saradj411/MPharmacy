@@ -12,7 +12,7 @@ import java.util.Set;
 
 @Entity
 @Table
-//@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Drug implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

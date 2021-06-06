@@ -1,14 +1,18 @@
 package com.isaProject.isa.Model.Drugs;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.isaProject.isa.Model.Users.Supplier;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
 @Table
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+
 public class Offer {
 
     @Id
@@ -24,11 +28,11 @@ public class Offer {
 
     //rok isporuke
     @Column
-    private Date deliveryDate;
+    private LocalDate deliveryDate;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "orderId", referencedColumnName = "idOrder")
-    //@JsonManagedReference
+    @JsonManagedReference
     private DrugOrder drugOrder;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
@@ -61,11 +65,11 @@ public class Offer {
         this.price = price;
     }
 
-    public Date getDeliveryDate() {
+    public LocalDate getDeliveryDate() {
         return deliveryDate;
     }
 
-    public void setDeliveryDate(Date deliveryDate) {
+    public void setDeliveryDate(LocalDate deliveryDate) {
         this.deliveryDate = deliveryDate;
     }
 
@@ -86,7 +90,7 @@ public class Offer {
     }
 
 
-    public Offer(Integer idOffer, OfferStatus offerStatus, double price, Date deliveryDate, DrugOrder drugOrder, Supplier supplier) {
+    public Offer(Integer idOffer, OfferStatus offerStatus, double price, LocalDate deliveryDate, DrugOrder drugOrder, Supplier supplier) {
         this.idOffer = idOffer;
         this.offerStatus = offerStatus;
         this.price = price;

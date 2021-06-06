@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import javax.mail.MessagingException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -41,6 +42,20 @@ public class OfferService implements IOfferServise{
     @Autowired
     ServiceForEmail serviceForEmail;
 
+    public List<Offer> getOfferByIdOrder(Integer idOrder){
+        List<Offer> lista=offerRepository.findAll();
+        List<Offer>itms=new ArrayList<>();
+        for (Offer o:lista){
+            if (o.getDrugOrder().getIdOrder().equals(idOrder)){
+                if(o.getOfferStatus().compareTo(OfferStatus.ON_HOLD)==0){
+                    itms.add(o);
+                }
+
+            }
+        }
+        return itms;
+    }
+
     @Override
     public List<Offer>findOffersByIdOrder(Integer id){
         List<Offer> lista=offerRepository.findOffersByIdOrder(id);
@@ -62,13 +77,16 @@ public class OfferService implements IOfferServise{
         System.out.println("Usao u serviss");
         LocalDate today = LocalDate.now();
         List<Offer>forRejection =offerRepository.findOffersByIdOrder(offer.getDrugOrder().getIdOrder());
-        if(offer.getDrugOrder().getTimeLimit().isAfter(today)){
+     /*   if(offer.getDrugOrder().getTimeLimit().isAfter(today)){
             System.out.println("ne valja datum");
 
             throw new IllegalArgumentException("The time for making an offer does not expire.You can not choose offer");
 
+ ODKOMENTARISI POSLE
 
         }
+        */
+
 
 /*
 
@@ -79,7 +97,7 @@ odkomentarisiiii
 
 */
 
-
+/*
 
         if(offer.getDrugOrder().getPharmacyAdmin().getId().equals(idAdmin)) {
             System.out.println("dobaaee");
@@ -90,6 +108,8 @@ odkomentarisiiii
 
 
         }
+        ODKOMENTARISI POSLE
+ */
         offer.setOfferStatus(CONFIRMED);
         offerRepository.save(offer);
 

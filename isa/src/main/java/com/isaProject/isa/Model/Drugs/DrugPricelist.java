@@ -6,6 +6,7 @@ import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
@@ -29,10 +30,10 @@ public class DrugPricelist implements Serializable {
     private double price;
 
     @Column
-    private Date start;
+    private LocalDate start;
 
     @Column
-    private Date end;
+    private LocalDate end;
 
     //@JsonIgnore
     @ManyToOne//(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
@@ -44,7 +45,7 @@ public class DrugPricelist implements Serializable {
 
     private Pharmacy pharmacy;
 
-    public DrugPricelist(Integer idPricelist, Drug drug, double price, Date start, Date end, Pharmacy pharmacy) {
+    public DrugPricelist(Integer idPricelist, Drug drug, double price, LocalDate start, LocalDate end, Pharmacy pharmacy) {
         this.idPricelist = idPricelist;
         this.drug = drug;
         this.price = price;
@@ -80,19 +81,19 @@ public class DrugPricelist implements Serializable {
         this.price = price;
     }
 
-    public Date getStart() {
+    public LocalDate getStart() {
         return start;
     }
 
-    public void setStart(Date start) {
+    public void setStart(LocalDate start) {
         this.start = start;
     }
 
-    public Date getEnd() {
+    public LocalDate getEnd() {
         return end;
     }
 
-    public void setEnd(Date end) {
+    public void setEnd(LocalDate end) {
         this.end = end;
     }
 

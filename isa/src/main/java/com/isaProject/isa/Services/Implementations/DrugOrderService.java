@@ -17,6 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -47,9 +48,10 @@ public class DrugOrderService implements IDrugOrderService {
     public DrugOrder save(DrugOrderDTO drugOrderDTO) {
         DrugOrder d = new DrugOrder();
         d.setTimeLimit(drugOrderDTO.getTimeLimit());
+        d.setProcessed(false);
+        //ceka narudjbenicu
         d.setPharmacyAdmin(pharmacyAdminService.findById(drugOrderDTO.getId()));
-        //d.setProcessed(false);
-        //d.setOffers(null);
+
 
 
         DrugOrder drugOrder = drugOrderRepository.save(d);
@@ -61,6 +63,12 @@ public class DrugOrderService implements IDrugOrderService {
         return drugOrder;
 
     }
+    @Override
+    public List<DrugOrder> findAll() {
+        return drugOrderRepository.findAll();
+    }
+
+
 
 /*    @Override
     public DrugOrder createDrugOrder(DrugOrderDTO drugOrder) {
@@ -96,6 +104,17 @@ public class DrugOrderService implements IDrugOrderService {
         return order;
     }*/
 
+
+    public List<OrderItem>getOrderByIdOffer(Integer idOrder){
+        List<OrderItem>lista=orderItemRepository.findAll();
+        List<OrderItem>itms=new ArrayList<>();
+        for (OrderItem o:lista){
+            if (o.getDrugOrder().getIdOrder().equals(idOrder)){
+                itms.add(o);
+            }
+        }
+        return itms;
+    }
 
 
 }
