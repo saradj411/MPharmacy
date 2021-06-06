@@ -78,8 +78,18 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll().antMatchers("/reservation/findPickedById/{id}")
                 .permitAll().antMatchers("/patient/findSheduledDermatologistExamination/{id}")
                 .permitAll().antMatchers("/patient/findFinishedDermatologistExamination/{id}")
+                .permitAll().antMatchers("/patient/findDermatologistForGrade/{id}")
                 .permitAll().antMatchers("/reservation/findById/{id}")
                 .permitAll().antMatchers("/patient/findSheduledPharmacistExamination/{id}")
+
+                .permitAll().antMatchers("/grade/findDermatologistForGrade/{id}")
+                .permitAll().antMatchers("/grade/findPharmacistForGrade/{id}")
+                .permitAll().antMatchers("/grade/findPharmaciesForGrade/{id}")
+                .permitAll().antMatchers("/grade/findDrugsForGrade/{id}")
+                .permitAll().antMatchers("/grade/grade/{idPatient}/{grade}/{idDerm}")
+                .permitAll().antMatchers("/grade/gradePharmacist/{idPatient}/{grade}/{idDerm}")
+                .permitAll().antMatchers("/grade/gradePharmacy/{idPatient}/{grade}/{idDerm}")
+                .permitAll().antMatchers("/grade/gradeDrug/{idPatient}/{grade}/{idDerm}")
 
                 .permitAll().antMatchers("/patient/findFinishedPharmacistExamination/{id}")
                 .permitAll().antMatchers("/reservation/checkReservations")
