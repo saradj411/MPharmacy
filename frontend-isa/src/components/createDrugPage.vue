@@ -16,7 +16,7 @@
                     <div >
                         <div >
                         <label style="font-size:22px;color:#0D184F;">Code:</label>
-                        <input type="text" class="form-control" v-model = "code" placeholder="Enter code">
+                        <input type="text" class="form-control" v-model = "password" placeholder="Enter code">
                         </div>
                     </div>
                     
@@ -94,15 +94,15 @@ export default {
 
       ],
       name : "",
-      code : "",
-      recipeNeed : true,
+      password : "",
       manufacturer :"",
       nesto:"",
       choosenType : ""  ,
       choosenFormat : ""  ,
       quantity:"",
       id : this.$route.params.id,
-      pharmacy:{}
+      pharmacy:{},
+      idPharm:""
 
     }
   },
@@ -112,16 +112,15 @@ export default {
       addDrug : function() {
           const medicationInfo = {
                name : this.name,
-               code : this.code,
-               recipeNeed : this.true,
+               password : this.password,
                drugType : this.choosenType,
                format : this.choosenFormat,  
                manufacturer : this.manufacturer,
                quantity : this.quantity,
-               pharmacy:this.pharmacy
+               idPharm:this.id
 
           }
-          this.axios.post('/drug/create',medicationInfo,{ 
+          this.axios.post('/drug/createDrug',medicationInfo,{ 
              headers: {
              }}).then(response => {
                        alert("Drug is added!");
@@ -143,6 +142,7 @@ export default {
      this.axios.get('/pharmacy/findById/'+this.id)
         .then(response => {
                 this.pharmacy = response.data;
+
                  
        
          }).catch(res => {

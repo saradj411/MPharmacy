@@ -63,6 +63,7 @@ import AddDermatologist from '../components/AddDermatologist'
 import WriteComplaint from '../components/WriteComplaint.vue'
 import RegisterNewSupplier from '../components/RegisterNewSupplier'
 import SupplierHomePage from '../components/SupplierHomePage'
+import Map from '../components/Map'
 
 import moment from 'moment'
 
@@ -411,7 +412,17 @@ const routes = [
         name: 'SupplierHomePage',
         component: SupplierHomePage
 
-      }
+      },
+      {
+        path: '/Map/:id',
+        name: 'Map',
+        component: Map
+
+      },
+
+
+
+      
 
       
       
