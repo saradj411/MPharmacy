@@ -256,12 +256,24 @@ public class PatientService implements IPatientService {
             if((e.getStatus().compareTo(ExaminationStatus.FINISHED))==0){
 
                 if((e.getType().compareTo(ExaminationType.DERMATOLOGIST_EXAMINATION))==0){
-                    FrontCreatedExaminationDTO exDTO=new FrontCreatedExaminationDTO(e.getIdExamination(),e.getDate(),
-                            e.getStartTime(),e.getEndTime(),e.getPrice(),
-                            e.getStaff().getName(),e.getStaff().getSurname(),e.getPharmacy().getName(),
-                    e.getReport(),e.getTherapy());
+                    if(e.getTherapy()==null){
+                        Therapy therapy=new Therapy(new Drug(),0);
+                        FrontCreatedExaminationDTO exDTO=new FrontCreatedExaminationDTO(e.getIdExamination(),e.getDate(),
+                                e.getStartTime(),e.getEndTime(),e.getPrice(),
+                                e.getStaff().getName(),e.getStaff().getSurname(),e.getPharmacy().getName(),
+                                e.getReport(),therapy);
+                        dermExaminations.add(exDTO);
+                    }else{
+                        Therapy therapy=e.getTherapy();
+                        FrontCreatedExaminationDTO exDTO=new FrontCreatedExaminationDTO(e.getIdExamination(),e.getDate(),
+                                e.getStartTime(),e.getEndTime(),e.getPrice(),
+                                e.getStaff().getName(),e.getStaff().getSurname(),e.getPharmacy().getName(),
+                                e.getReport(),therapy);
+                        dermExaminations.add(exDTO);
+                    }
 
-                    dermExaminations.add(exDTO);
+
+
                 }
             }
         }
@@ -279,15 +291,22 @@ public class PatientService implements IPatientService {
             if((e.getStatus().compareTo(ExaminationStatus.FINISHED))==0){
 
                 if((e.getType().compareTo(ExaminationType.PHARMACIST_EXAMINATION))==0){
-                   /* Therapy therapy=new Therapy();
-                    if(!e.getTherapy().equals(null)){
-                        therapy=e.getTherapy();
-                    }*/
-                    FrontCreatedExaminationDTO exDTO=new FrontCreatedExaminationDTO(e.getIdExamination(),e.getDate(),
-                            e.getStartTime(),e.getEndTime(),e.getPrice(),
-                            e.getStaff().getName(),e.getStaff().getSurname(),e.getPharmacy().getName(),
-                            e.getReport(),e.getTherapy());
-                    dermExaminations.add(exDTO);
+                    if(e.getTherapy()==null){
+                        Therapy therapy=new Therapy(new Drug(),0);
+                        FrontCreatedExaminationDTO exDTO=new FrontCreatedExaminationDTO(e.getIdExamination(),e.getDate(),
+                                e.getStartTime(),e.getEndTime(),e.getPrice(),
+                                e.getStaff().getName(),e.getStaff().getSurname(),e.getPharmacy().getName(),
+                                e.getReport(),therapy);
+                        dermExaminations.add(exDTO);
+                    }else{
+                        Therapy therapy=e.getTherapy();
+                        FrontCreatedExaminationDTO exDTO=new FrontCreatedExaminationDTO(e.getIdExamination(),e.getDate(),
+                                e.getStartTime(),e.getEndTime(),e.getPrice(),
+                                e.getStaff().getName(),e.getStaff().getSurname(),e.getPharmacy().getName(),
+                                e.getReport(),therapy);
+                        dermExaminations.add(exDTO);
+                    }
+
                 }
             }
         }

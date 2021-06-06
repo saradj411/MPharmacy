@@ -380,8 +380,8 @@
         </tr>
          <tr>
           <th></th>
-          <!--<td >{{examination2.therapy.drug.name}}</td>!-->
-          <!--<td >Daily dose:{{examination2.therapy.numberOfDay}}</td>!-->
+          <td >{{examination2.therapy.drug.name}}</td>
+          <td v-if="examination2.therapy.numberOfDay!=0">Daily dose:{{examination2.therapy.numberOfDay}}</td>
           
         </tr>
   </tbody>
@@ -483,8 +483,8 @@
         </tr>
          <tr>
           <th></th>
-          <td >{{examination3.therapy.drug.name}}</td>
-          <td >Daily dose:{{examination3.therapy.numberOfDay}}</td>
+         <td >{{examination3.therapy.drug.name}}</td>
+          <td v-if="examination3.therapy.numberOfDay!=0">Daily dose:{{examination3.therapy.numberOfDay}}</td>
           
         
 
