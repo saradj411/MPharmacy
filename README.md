@@ -16,15 +16,15 @@ Maja Milenkovic-Student 4
 Napomena: Student 4 nije radio, tako da trenutno nema odradjen funkcionalan login, samim tim ni autorizacija.
 Kada se pokrene aplikacija na vrhu postoje dugmici preko kojih se dolazi na pocetnu stranicu svakog od korisnika.
 
-Mejlovi:
+Mejlovi korisnika:
 
 Patient id 508: patient0874@gmail.com (lozinka: patient98)
 
-Dermatolog:  dermatologistpharmacy@gmail.com (lozinka: dermatologist*1)
+Dermatolog id 501:  dermatologistpharmacy@gmail.com (lozinka: dermatologist*1)
 
-Pharmacist: pharmacistpharmacy33@gmail.com  (lozinka:  pharmacist*1)
+Pharmacist id 333: pharmacistpharmacy33@gmail.com  (lozinka:  pharmacist*1)
 
-Supplier: supplierpharmacy33@gmail.com (lozinka :supplier*1)
+Supplier id 123: supplierpharmacy33@gmail.com (lozinka :supplier*1)
 
 
 
