@@ -2,7 +2,9 @@ package com.isaProject.isa.Services.Implementations.Grade;
 
 import com.isaProject.isa.Model.Grades.DermatolgoistGrade;
 import com.isaProject.isa.Model.Grades.PharmacistGrade;
+import com.isaProject.isa.Model.Users.Pharmacist;
 import com.isaProject.isa.Repositories.PharmacistGradeRepository;
+import com.isaProject.isa.Repositories.PharmacistRepository;
 import com.isaProject.isa.Services.IServices.Grade.IPharmacistGradeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,6 +14,8 @@ import java.util.List;
 public class PharmacistGradeService implements IPharmacistGradeService {
     @Autowired
     PharmacistGradeRepository pharmacistGradeRepository;
+    @Autowired
+    PharmacistRepository pharmacistRepository;
 
     @Override
     public List<PharmacistGrade> findAll() {
@@ -21,6 +25,8 @@ public class PharmacistGradeService implements IPharmacistGradeService {
     @Override
     public PharmacistGrade grade(Integer idPatient, Integer grade, Integer idPharm) {
         List<PharmacistGrade> list=pharmacistGradeRepository.findAll();
+        Pharmacist pharmacist=pharmacistRepository.getOne(idPharm);
+        System.out.println(pharmacist.getAvgGrade());
         //setuj dermatologu ocjenuuu
         PharmacistGrade newGrade=new PharmacistGrade();
         Boolean ima=false;
@@ -35,6 +41,9 @@ public class PharmacistGradeService implements IPharmacistGradeService {
 
         if(ima){
             pharmacistGradeRepository.save(newGrade);
+            Double gradeD=(pharmacist.getAvgGrade()+newGrade.getGrade())/2;
+            pharmacist.setAvgGrade(gradeD);
+            pharmacistRepository.save(pharmacist);
             return newGrade;
         }else{
             PharmacistGrade newGrade1 =new PharmacistGrade();
@@ -42,6 +51,10 @@ public class PharmacistGradeService implements IPharmacistGradeService {
             newGrade1.setIdPharmacist(idPharm);
             newGrade1.setIdPatient(idPatient);
             pharmacistGradeRepository.save(newGrade1);
+
+            Double gradeD=(pharmacist.getAvgGrade()+newGrade.getGrade())/2;
+            pharmacist.setAvgGrade(gradeD);
+            pharmacistRepository.save(pharmacist);
             return newGrade1;
 
         }
