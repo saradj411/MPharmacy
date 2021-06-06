@@ -1,17 +1,53 @@
 package com.isaProject.isa.Model.DTO;
 
+import com.isaProject.isa.Model.Drugs.OfferStatus;
+
 import java.time.LocalDate;
 
 public class OfferDTO {
 
+    public Integer getIdOffer() {
+        return idOffer;
+    }
+
+    public void setIdOffer(Integer idOffer) {
+        this.idOffer = idOffer;
+    }
+
+    private Integer idOffer;
     private Integer idOrder;
     private double totalPrice;
     private LocalDate deliveryDate;
     private Integer idSupplier;
+    private OfferStatus offerStatus;
 
-    OfferDTO(){}
+    public OfferStatus getOfferStatus() {
+        return offerStatus;
+    }
+
+    public void setOfferStatus(OfferStatus offerStatus) {
+        this.offerStatus = offerStatus;
+    }
+
+    public OfferDTO(Integer idOffer, Integer idOrder, double totalPrice, LocalDate deliveryDate, Integer idSupplier, OfferStatus offerStatus) {
+        this.idOffer = idOffer;
+        this.idOrder = idOrder;
+        this.totalPrice = totalPrice;
+        this.deliveryDate = deliveryDate;
+        this.idSupplier = idSupplier;
+        this.offerStatus = offerStatus;
+    }
+
+    public OfferDTO(){}
 
     public OfferDTO(Integer idOrder, double totalPrice, LocalDate deliveryDate, Integer idSupplier) {
+        this.idOrder = idOrder;
+        this.totalPrice = totalPrice;
+        this.deliveryDate = deliveryDate;
+        this.idSupplier = idSupplier;
+    }
+    public OfferDTO(Integer idOffer, Integer idOrder, double totalPrice, LocalDate deliveryDate, Integer idSupplier) {
+        this.idOffer = idOffer;
         this.idOrder = idOrder;
         this.totalPrice = totalPrice;
         this.deliveryDate = deliveryDate;

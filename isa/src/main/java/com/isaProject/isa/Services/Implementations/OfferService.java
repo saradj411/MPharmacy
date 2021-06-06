@@ -15,9 +15,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import javax.mail.MessagingException;
+import java.time.Instant;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -77,6 +79,11 @@ public class OfferService implements IOfferServise{
             o.getSupplier();
         }
         return  lista;
+    }
+
+    @Override
+    public Offer findById(Integer id) {
+        return offerRepository.findByIdOffer(id);
     }
 
     @Override
@@ -147,6 +154,8 @@ odkomentarisiiii
 
         return offer;
     }
+    @Autowired
+    SupplierService supplierService;
 
     @Override
     public Offer save(OfferDTO offerDTO) {
@@ -157,13 +166,53 @@ odkomentarisiiii
         offer.setDeliveryDate(offerDTO.getDeliveryDate());
         offer.setDrugOrder(drugOrderService.findById(offerDTO.getIdOrder()));
         offer.setPrice(offerDTO.getTotalPrice());
-        Supplier supplier = supplierRepository.getOne(offerDTO.getIdSupplier());
+        Supplier supplier = (Supplier) userService.findById(offerDTO.getIdSupplier());
         offer.setSupplier(supplier);
 
 
 
         offerRepository.save(offer);
         return offer;
+    }
+
+    @Override
+    public List<OfferDTO> findAllByIdSupplier(Integer idSupplier) {
+        List<Offer> offers = offerRepository.findAll();
+
+        List<OfferDTO> supplierOffer = new ArrayList<>();
+        for(Offer offer : offerRepository.findAll())
+        {
+            if(offer.getSupplier().getId() == idSupplier)
+            {
+                OfferDTO offerDTO = new OfferDTO();
+                offerDTO.setIdSupplier(idSupplier);
+                offerDTO.setDeliveryDate(new java.sql.Date(offer.getDeliveryDate().getTime()).toLocalDate());
+                offerDTO.setIdOrder(offer.getDrugOrder().getIdOrder());
+                offerDTO.setIdOffer(offer.getIdOffer());
+                offerDTO.setTotalPrice(offer.getPrice());
+                offerDTO.setOfferStatus(offer.getOfferStatus());
+                supplierOffer.add(offerDTO);
+            }
+
+        }
+
+        return supplierOffer;
+
+    }
+
+    @Override
+    public void deleteById(Integer idOffer) {
+        Offer offer = findById(idOffer);
+        offerRepository.delete(idOffer);
+    }
+
+    @Override
+    public Offer update(OfferDTO offer) {
+       Offer o = offerRepository.findByIdOffer(offer.getIdOffer());
+       o.setPrice(offer.getTotalPrice());
+       o.setDeliveryDate(convertLocalDateToDate(offer.getDeliveryDate()));
+       offerRepository.save(o);
+       return o;
     }
 
     // parsiranje LOCAL DATE to DATE

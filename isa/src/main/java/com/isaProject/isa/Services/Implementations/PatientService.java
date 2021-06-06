@@ -240,7 +240,7 @@ public class PatientService implements IPatientService {
         return dermExaminations;
     }
 
-    @Override
+
     public List<ERecipe> findERecipe(Integer id) {
         return null;
     }

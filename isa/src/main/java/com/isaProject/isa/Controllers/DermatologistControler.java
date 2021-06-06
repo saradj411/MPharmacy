@@ -26,7 +26,7 @@ import java.util.Set;
 
 @RestController
 @CrossOrigin
-@RequestMapping(value="/dermatologist")
+@RequestMapping(value="/dermatologist", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
 @Slf4j
 public class DermatologistControler {
 
@@ -303,7 +303,7 @@ Ukoliko se korisnik ne pojavi na pregledu, dobija 1 penal.
 
     }
 
-    @PostMapping(value = "/saveDermatologist",  produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/saveDermatologist")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Dermatologist> saveDermatologist(@RequestBody DermatologistDTO dermDTO)
     {
