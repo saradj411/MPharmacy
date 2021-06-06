@@ -98,7 +98,9 @@ public class DermatologistService implements IDermatologistService, Serializable
         WorkTime workTime=new WorkTime();
         workTime.setStartTime(dermatologistForCreateDTO.getStartTime());
         workTime.setEndTime(dermatologistForCreateDTO.getEndTime());
+        workTime.setDate(dermatologistForCreateDTO.getDate());
         workTime.setPharmacy(pharmacy);
+
         workTime.setStaff(staff);
         WorkTime workcreated=workTimeRepository.save(workTime);
 

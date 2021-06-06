@@ -104,7 +104,7 @@ export default {
 
   
   mounted() {
-        this.axios.get('pharmacist/findById/'+this.id,{ 
+        this.axios.get('pharmacist/findOneById/'+this.id,{ 
              
          }).then(response => {
                this.pharmacist=response.data;
@@ -117,7 +117,7 @@ export default {
 },
   methods:{
      update: function(){
-
+        console.log("aaaaa"+this.pharmacist.id)
         if(this.currentPassword ==""){
           
           this.sifra=this.pharmacist.password
@@ -151,7 +151,6 @@ export default {
       }).then(response => {
                this.nesto=response.data;
                 alert("Changes have been saved!");
-                window.location.href = "/profilePharmacist";
           }).catch(res => {
                       alert("neceeee!");
 

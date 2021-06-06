@@ -2,7 +2,7 @@
   <div style="background-image: url(https://image.freepik.com/free-photo/pharmacists-showing-medicine-bottle-discussing-prescription-drug-pharmacy_8087-2630.jpg);background-repeat: no-repeat;
   
      background-size: 150% 111%;  height: 1100px">
-                     <label style="color:#474A8A;font-size:35px;" align = "center">Add new pharmacist</label>
+                     <label style="color:#474A8A;font-size:35px;" align = "center">Add new dermatologist</label>
 
         <div style="background: #B0B3D6; height: 80px;">
 
