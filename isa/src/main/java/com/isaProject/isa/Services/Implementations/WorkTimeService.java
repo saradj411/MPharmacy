@@ -105,6 +105,13 @@ public class WorkTimeService implements IWorkTimeService {
                                 mozeLi = false;
                             }
                         }
+                        if (e.getStartTime().equals(time)) {
+
+                                System.out.println("ima pregled tad ovdheeee");
+                                mozeLi = false;
+
+                        }
+
                     }
                 }
             }
