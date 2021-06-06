@@ -103,6 +103,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll().antMatchers("/drugPricelist/searchDrugName/{id}/{name}")
 
 
+                 .permitAll().antMatchers("/pharmacyDrugs/delete/{idDrug}/{idPharm}")
+
+
+
 
 
 

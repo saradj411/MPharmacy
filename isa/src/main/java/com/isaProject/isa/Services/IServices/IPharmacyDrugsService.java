@@ -8,7 +8,7 @@ import java.util.List;
 public interface IPharmacyDrugsService {
 
     List<PharmacyDrugs> findAll();
-    Boolean remove(Integer idPharm,Integer idDrug);
+    String remove(Integer idPharm,Integer idDrug);
     String check(Integer id,String name);
 
 

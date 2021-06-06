@@ -55,16 +55,11 @@ public class DrugOrderController {
     public ResponseEntity<List<DrugOrderFrontDTO>> findAll() {
         List<DrugOrder> drugOrders=drugOrderService.findAll();
         ArrayList<DrugOrderFrontDTO> lista=new ArrayList<>();
-
         for (DrugOrder p:drugOrders){
-            if(p.getProcessed().equals(false)){
-
-
-
-
+           // if(p.getProcessed().equals(false)){
                 DrugOrderFrontDTO pDTO = new DrugOrderFrontDTO(p.getIdOrder(), p.getTimeLimit());
                 lista.add(pDTO);
-            }
+           // }
         }
 
         return lista == null ?

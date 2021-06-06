@@ -2,17 +2,16 @@ package com.isaProject.isa.Services.Implementations;
 
 import com.isaProject.isa.Model.Drugs.Drug;
 import com.isaProject.isa.Model.Drugs.DrugPricelist;
+import com.isaProject.isa.Model.Drugs.DrugReservation;
 import com.isaProject.isa.Model.Drugs.PharmacyDrugs;
 import com.isaProject.isa.Model.Pharmacy.Pharmacy;
-import com.isaProject.isa.Repositories.DrugPricelistRepository;
-import com.isaProject.isa.Repositories.DrugRepository;
-import com.isaProject.isa.Repositories.PharmacyDrugsRepository;
-import com.isaProject.isa.Repositories.PharmacyRepository;
+import com.isaProject.isa.Repositories.*;
 import com.isaProject.isa.Services.IServices.IPharmacyDrugsService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -31,6 +30,9 @@ public class PharmacyDrugsService implements IPharmacyDrugsService {
 
     @Autowired
     DrugPricelistRepository drugPricelistRepository;
+
+    @Autowired
+    DrugReservationRepository drugReservationRepository;
 
     public List<PharmacyDrugs> findAll() {
         return pharmacyDrugsRepository.findAll();
@@ -55,47 +57,39 @@ public class PharmacyDrugsService implements IPharmacyDrugsService {
 
 
     @Override
-    public Boolean remove(Integer idPharm,Integer idDrug) {//izbrisi lijek iz te i te apoteke ako lijek nije rezervisan
+    public String remove(Integer idPharm,Integer idDrug) {//izbrisi lijek iz te i te apoteke ako lijek nije rezervisan
 
-               String message = "Pharmacist is not  deleted";
-    //    for (Drug drug : drugRepository.findAll()) {
-            //if (drug.getIdDrug().equals(idDrug)){
-                PharmacyDrugs drugPricelist=pharmacyDrugsRepository.findByIdDrugAndIfPharm(idPharm,idDrug);
-                System.out.println("naslo    "+ drugPricelist.getDrug().getName());
+        String message = "Drug is deleted";
+        PharmacyDrugs pharmacyDrugs=pharmacyDrugsRepository.findByIdDrugAndIfPharm(idPharm,idDrug);
 
 
-                List<DrugPricelist> drugPricelist1=drugPricelistRepository.findAll();
-                DrugPricelist found=drugPricelistRepository.findAllDrugsByIdDrugAndIdPharmacy(idPharm,idDrug);
-               // System.out.println("Pronaslo iz cjenovnika "+found.getDrug().getIdDrug());
+        Drug drug=drugRepository.findOneByIdDrug(idDrug);
 
-                if(found==null){
-                    System.out.println("Ne postoji cijena za ovaj lijek u bazi");
-                }else {
-                    drugPricelistRepository.delete(found);
-                }
+        /*
 
-                pharmacyDrugsRepository.delete(drugPricelist);
+        (ukoliko je lek rezervisan, a korisnik ga još nije preuzeo, lek se ne može
+obrisati)
+         */
+        List<DrugReservation> drugReservation=drugReservationRepository.findAllByIdDrugAndIdPharm(idPharm,idDrug);
 
-               // System.out.println("proslo find all  ");
-                /*
-                for (DrugPricelist d:drugPricelist1){
-                    if (d.getDrug().getIdDrug().equals(idDrug) && d.getPharmacy().getIdPharm().equals(idPharm)){
-                        System.out.println("Naslo 2  "+ d.getDrug().getName());
-                        drugPricelistRepository.delete(d);
-
-                    }else {
-                        System.out.println("Ne postoji cijena za ovaj lijek u bazi");
-                    }
-                }
-                */
+        List<DrugReservation>list2=new ArrayList<>();
+        for (DrugReservation d:drugReservation){
+            if (d.getPickedUp().equals(false)){
+                list2.add(d);
+            }
+        }
+        if (list2.size()==0){
+             message = "Drug is deleted";
+            pharmacyDrugsRepository.delete(pharmacyDrugs);
 
 
+        }else {
+             message = "Drug was not deleted because someone had reserved it  ";
 
-                return true;
+        }
 
-           // }
-       // }
-       // return false;
+        return message;
+
     }
 
 }
