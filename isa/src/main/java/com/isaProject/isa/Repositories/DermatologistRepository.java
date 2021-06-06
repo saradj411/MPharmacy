@@ -11,4 +11,6 @@ import java.util.List;
 @EnableJpaRepositories
 public interface DermatologistRepository  extends JpaRepository<Dermatologist, Integer> {
 
+
+
 }

@@ -14,11 +14,13 @@ import java.util.Set;
 
 public interface IDermatologistService {
 
+    String delete(Dermatologist dermatologist, Integer idPharm);
+
     Dermatologist findById(Integer id);
     List<Dermatologist> findAll ();
 
     Dermatologist save(DermatologistDTO dermatologist);
-    String delete(Dermatologist dermatologist);
+    //String delete(Dermatologist dermatologist);
     Set<PatientDTO> findAllPatients(Integer id) ;
      void update(Dermatologist dermatologist);
 
@@ -43,5 +45,7 @@ public interface IDermatologistService {
     List<ReviewedClientsDTO> reviewedClientsDermatologist(Integer id);
     Set<Pharmacy> pharmacies(Integer id);
 
+   // String delete(Dermatologist dermatologist, Integer idPharm);
 
-    }
+
+}

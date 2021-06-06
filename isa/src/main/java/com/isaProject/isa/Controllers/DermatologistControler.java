@@ -153,10 +153,10 @@ public class DermatologistControler {
                 new ResponseEntity<>(HttpStatus.NOT_FOUND) :
                 ResponseEntity.ok(d);
     }
-    @GetMapping("/delete/{id}")
-    public ResponseEntity<String> deleteDermatologist(@PathVariable Integer id) {
-        Dermatologist dermatologist = dermatologistService.findById(id);
-        String answer = dermatologistService.delete(dermatologist);
+    @GetMapping("/delete/{idDerm}/{idPharm}")
+    public ResponseEntity<String> deleteDermatologist(@PathVariable Integer idDerm,@PathVariable Integer idPharm) {
+        Dermatologist dermatologist = dermatologistService.findById(idDerm);
+        String answer = dermatologistService.delete(dermatologist,idPharm);
         return new ResponseEntity<>(answer, HttpStatus.ACCEPTED);
     }
 
