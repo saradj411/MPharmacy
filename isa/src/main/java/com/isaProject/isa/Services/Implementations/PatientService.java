@@ -5,6 +5,7 @@ import com.isaProject.isa.Model.DTO.DrugDTO;
 import com.isaProject.isa.Model.DTO.FrontCreatedExaminationDTO;
 
 import com.isaProject.isa.Model.Drugs.Drug;
+import com.isaProject.isa.Model.Drugs.DrugReservation;
 import com.isaProject.isa.Model.Drugs.ERecipe;
 import com.isaProject.isa.Model.Examination.Examination;
 import com.isaProject.isa.Model.Examination.ExaminationStatus;
@@ -14,9 +15,7 @@ import com.isaProject.isa.Model.Users.Dermatologist;
 import com.isaProject.isa.Model.Users.Patient;
 import com.isaProject.isa.Model.Users.Pharmacist;
 import com.isaProject.isa.Model.Users.User;
-import com.isaProject.isa.Repositories.DrugRepository;
-import com.isaProject.isa.Repositories.PatientRepository;
-import com.isaProject.isa.Repositories.UserRepository;
+import com.isaProject.isa.Repositories.*;
 import com.isaProject.isa.Services.IServices.IPatientService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,11 +37,14 @@ public class PatientService implements IPatientService {
     @Autowired
     DrugRepository drugRepository;
 
+    @Autowired
+    ERecipeRepository eRecipeRepository;
+
     @Override
     public Patient findById(Integer id){
-        System.out.println("ovdje uslo sada aaaaa:"+id);
+        //System.out.println("ovdje uslo sada aaaaa:"+id);
         User user=userRepository.getOne(id);
-        System.out.println("ovdje uslo sada aaaaa:"+user.getName());
+        //System.out.println("ovdje uslo sada aaaaa:"+user.getName());
         Patient patient=patientRepository.getOne(id);
         return patient;
 
@@ -94,7 +96,36 @@ public class PatientService implements IPatientService {
         }
         return list;
     }
+    @Override
+    public Set<Integer> findPharmaciesForGrade(Integer id) {
+        Patient patient=patientRepository.findById(id).get();
 
+        Set<Examination> examinations=new HashSet<>();
+        List<ERecipe> eRecipes=eRecipeRepository.findAll();
+        Set<DrugReservation> reservations=patient.getDrugReservation();
+        Set<Integer> list=new HashSet<>();
+        examinations=patient.getExaminations();
+
+        for (Examination e:examinations){
+
+            if((e.getStatus().compareTo(ExaminationStatus.FINISHED))==0){
+                     list.add(e.getPharmacy().getIdPharm());
+
+            }
+        }
+        for(DrugReservation dR:reservations){
+            if(dR.getPickedUp()){
+                list.add(dR.getPharmacy().getIdPharm());
+            }
+        }
+
+        for(ERecipe er:eRecipes){
+            if(er.getPatient().getId().equals(id)){
+                list.add(er.getPharmacy().getIdPharm());
+            }
+        }
+        return list;
+    }
     @Override
     public Set<Integer> findPharmacistForGrade(Integer id) {
         Patient patient=patientRepository.findById(id).get();

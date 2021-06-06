@@ -25,5 +25,6 @@ public interface IPatientService {
 
     Set<Integer> findDermatologistForGrade(Integer id);
     Set<Integer> findPharmacistForGrade(Integer id);
+    Set<Integer> findPharmaciesForGrade(Integer id);
 
 }
