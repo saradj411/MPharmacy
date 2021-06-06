@@ -2,6 +2,7 @@ package com.isaProject.isa.Controllers;
 
 import com.isaProject.isa.Model.DTO.DrugDTO;
 import com.isaProject.isa.Model.DTO.DrugReservationDTO;
+import com.isaProject.isa.Model.DTO.DrugReservationForViewDTO;
 import com.isaProject.isa.Model.DTO.FrontDrugReservationDTO;
 import com.isaProject.isa.Model.Drugs.Drug;
 import com.isaProject.isa.Model.Drugs.DrugPricelist;
@@ -121,4 +122,26 @@ public class DrugReservationController {
         serviceForEmail.sendingMailToPatientForReservattion(drug.getIdReservation(),drug.getPatient());
         return new ResponseEntity<>(drug, HttpStatus.CREATED);
     }
+
+    @GetMapping(value = "/res/{id}")
+    public ResponseEntity<String> res(@PathVariable Integer id) throws MessagingException {
+
+        String reserv=drugReservationService.reservation(id);
+
+        return reserv == null ?
+                new ResponseEntity<>(HttpStatus.NOT_FOUND) :
+                ResponseEntity.ok(reserv);
+    }
+
+
+    @GetMapping(value = "/res2/{id}")
+    public ResponseEntity<List<DrugReservationForViewDTO>> res2(@PathVariable Integer id) throws MessagingException {
+
+        List<DrugReservationForViewDTO> reserv=drugReservationService.listDr(id);
+
+        return reserv == null ?
+                new ResponseEntity<>(HttpStatus.NOT_FOUND) :
+                ResponseEntity.ok(reserv);
+    }
+
 }

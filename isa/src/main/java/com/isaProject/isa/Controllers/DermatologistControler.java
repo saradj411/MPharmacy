@@ -23,10 +23,10 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-
+//produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE
 @RestController
 @CrossOrigin
-@RequestMapping(value="/dermatologist", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value="/dermatologist")
 @Slf4j
 public class DermatologistControler {
 
@@ -149,6 +149,7 @@ public class DermatologistControler {
     public ResponseEntity<Dermatologist> findById(@PathVariable Integer id) {
 
         Dermatologist d= dermatologistService.findById(id);
+        System.out.println("gfgg"+d.getName());
         return d == null ?
                 new ResponseEntity<>(HttpStatus.NOT_FOUND) :
                 ResponseEntity.ok(d);

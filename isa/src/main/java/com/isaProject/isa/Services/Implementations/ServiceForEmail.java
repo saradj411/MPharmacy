@@ -198,6 +198,24 @@ public class ServiceForEmail{
     }
 
 
+    public void sendingEmailToInformPatient (Patient patient) throws MessagingException {
+        // TODO Auto-generated method stub
+
+
+        MimeMessage mimeMessage = javaMailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, "utf-8");
+        String htmlMsg =
+                "<p>Hello ,  Patient successfully took the drug</p>";
+
+        helper.setText(htmlMsg, true);
+        helper.setTo(patient.getEmail());
+        helper.setSubject("Rejected absence");///////////////////////ovo promijeni
+        helper.setFrom(environment.getProperty("spring.mail.username"));
+        javaMailSender.send(mimeMessage);
+        System.out.println("kraj funkc!");
+    }
+
+
 
 
 
