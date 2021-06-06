@@ -1,5 +1,6 @@
 package com.isaProject.isa.Controllers;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.isaProject.isa.Model.DTO.OfferDTO;
 import com.isaProject.isa.Model.Drugs.DrugPricelist;
 import com.isaProject.isa.Model.Drugs.Offer;
@@ -11,9 +12,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.mail.MessagingException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -21,6 +24,7 @@ import java.util.List;
 @CrossOrigin
 @RequestMapping(value="/offer", produces = MediaType.APPLICATION_JSON_VALUE)
 @Slf4j
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class OfferController {
 
     @Autowired
@@ -47,6 +51,16 @@ dobavljači dali.Uzmi ponude po id-ju narudzbenice
                 ResponseEntity.ok(offers);
     }
 
+    @GetMapping(value = "/getOfferBySupplier/{id}")
+    public ResponseEntity<List<OfferDTO>> getOfferBySupplier(@PathVariable Integer id) {
+        List<OfferDTO> offers = offerService.findAllByIdSupplier(id);
+
+        return  offers == null ? new ResponseEntity<>(HttpStatus.NOT_FOUND) :
+                new ResponseEntity<List<OfferDTO>>(offers, HttpStatus.OK);
+    }
+
+
+
 
 
 
@@ -66,10 +80,27 @@ dobavljači dali.Uzmi ponude po id-ju narudzbenice
     public ResponseEntity<Offer> newOffer(@RequestBody OfferDTO offerDTO)
     {
         Offer offer = offerService.save(offerDTO);
-
         return offer == null ? new ResponseEntity<>(HttpStatus.BAD_REQUEST)
                 : new ResponseEntity<>(offer, HttpStatus.CREATED);
     }
+
+    @GetMapping(value = "/deleteOffer/{idOffer}")
+    @PreAuthorize("hasRole('SUPPLIER')")
+    public ResponseEntity<String> deleteOffer(@PathVariable Integer idOffer)
+    {
+        offerService.deleteById(idOffer);
+        return new ResponseEntity("Offer is deleted!", HttpStatus.OK);
+    }
+
+    @PostMapping(value = "/updateOffer")
+    @PreAuthorize("hasRole('SUPPLIER')")
+    public ResponseEntity<Offer> updateOffer(@RequestBody OfferDTO offerDTO)
+    {
+        Offer o = offerService.update(offerDTO);
+        return o == null ? new ResponseEntity<>(o, HttpStatus.BAD_REQUEST)
+                : new ResponseEntity(o, HttpStatus.OK);
+    }
+
 
     /*
     Nakon isteka roka za davanje ponude, bira jednu ponudu koju

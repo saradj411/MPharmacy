@@ -224,12 +224,8 @@ public class DermatologistService implements IDermatologistService, Serializable
             pharmacies.add(pharmacy);
 
             WorkTimeDTO workTimeDTO = new WorkTimeDTO();
-            LocalDate date = (dermDTO.getDate()).toInstant()
-                    .atZone(ZoneId.systemDefault())
-                    .toLocalDate();
 
-
-            workTimeDTO.setDate(date);
+            workTimeDTO.setDate(dermDTO.getDate());
             workTimeDTO.setStartTime(dermDTO.getStartTime());
             workTimeDTO.setEndTime(dermDTO.getEndTime());
             workTimeDTO.setStaff(staff);

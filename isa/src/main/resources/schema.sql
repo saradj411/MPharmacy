@@ -84,12 +84,12 @@ insert into users values (512,1,'Gagarinova 3','Novi Sad','Srbija','majamilenkov
 insert into users values(20,1, 'Srbijanska', 'Novi Sad', 'Srbija', 'anja@gmail.com','Anja', '$2a$10$sqes3IpPL4mBgAAmimisyOWj5DlqPRndrJFNFw9zWiJjyNa5ozKS6', '065/85-32-321','Anjic');
 
 #Authority_table
-INSERT INTO authority values (1, 'ADMIN');
-INSERT INTO authority values (2, 'PHARMACY_ADMIN');
-INSERT INTO authority values (3, 'PHARMACIST');
-INSERT INTO authority values (4, 'DERMATOLOGIST');
-INSERT INTO authority values (5, 'PATIENT');
-INSERT INTO authority values (6, 'SUPPLIER');
+INSERT INTO authority values (1, 'ROLE_ADMIN');
+INSERT INTO authority values (2, 'ROLE_PHARMACY_ADMIN');
+INSERT INTO authority values (3, 'ROLE_PHARMACIST');
+INSERT INTO authority values (4, 'ROLE_DERMATOLOGIST');
+INSERT INTO authority values (5, 'ROLE_PATIENT');
+INSERT INTO authority values (6, 'ROLE_SUPPLIER');
 
 
 #user_authority
@@ -110,6 +110,7 @@ insert into user_authority values(559, 3);
 insert into user_authority values(533, 4);
 insert into user_authority values(20, 6);
 
+insert into supplier values (20);
 #staff
 insert into staff values (8, 501);
 insert into staff values (6.3, 504);
@@ -177,24 +178,23 @@ insert into drug_order values(505,true,20,'2021-05-20',503);
 
 
 #drug_reservation
-#id,cancelled,datum rez,ispicked -da li je preuzet,pick_up_date -do kog,kolicina,id drug,id pattient,id pharmacy
 
-insert into drug_reservation values(500,false,'2021-04-20',false,'2021-06-20',3,503,510,503);
-insert into drug_reservation values(501,true,'2021-05-25',false,'2021-06-15',3,504,510,501);
-insert into drug_reservation values(502,false,'2021-04-20',false,'2021-07-20',3,505,508,503);
-insert into drug_reservation values(503,false,'2021-05-18',true,'2021-07-20',3,506,510,504);
-insert into drug_reservation values(504,true,'2021-04-20',false,'2021-09-20',3,507,507,502);
-insert into drug_reservation values(505,false,'2021-04-20',false,'2021-09-20',3,503,510,503);
-insert into drug_reservation values(506,true,'2021-05-25',false,'2021-06-15',3,504,508,501);
-insert into drug_reservation values(507,false,'2021-04-20',true,'2021-08-20',3,505,507,503);
-insert into drug_reservation values(508,false,'2021-05-18',true,'2021-07-20',3,506,508,504);
-insert into drug_reservation values(509,false,'2021-04-20',false,'2021-05-24',3,507,507,502);
-insert into drug_reservation values(510,false,'2021-04-20',false,'2021-05-24',3,507,508,502);
-insert into drug_reservation values(511,true,'2021-01-25',false,'2021-01-15',3,504,510,501);
-insert into drug_reservation values(512,true,'2021-02-25',false,'2021-02-16',3,504,510,501);
+insert into drug_reservation values(500,false,'2021-04-20',false,false,'2021-06-20',3,503,510,503);
+insert into drug_reservation values(501,true,'2021-05-25',false,false,'2021-06-15',3,504,510,501);
+insert into drug_reservation values(502,false,'2021-04-20',false,true,'2021-07-20',3,505,508,503);
+insert into drug_reservation values(503,false,'2021-05-18',true,false,'2021-07-20',3,506,510,504);
+insert into drug_reservation values(504,true,'2021-04-20',false,true,'2021-09-20',3,507,507,502);
+insert into drug_reservation values(505,false,'2021-04-20',false,false,'2021-09-20',3,503,510,503);
+insert into drug_reservation values(506,true,'2021-05-25',false,true,'2021-06-15',3,504,508,501);
+insert into drug_reservation values(507,false,'2021-04-20',true,false,'2021-08-20',3,505,507,503);
+insert into drug_reservation values(508,false,'2021-05-18',true,true,'2021-07-20',3,506,508,504);
+insert into drug_reservation values(509,false,'2021-04-20',false,false,'2021-05-24',3,507,507,502);
+insert into drug_reservation values(510,false,'2021-04-20',false,true,'2021-05-24',3,507,508,502);
+insert into drug_reservation values(511,true,'2021-01-25',false,false,'2021-01-15',3,504,510,501);
+insert into drug_reservation values(512,true,'2021-02-25',false,true,'2021-02-16',3,504,510,501);
 
-insert into drug_reservation values(513,true,'2021-03-25',false,'2021-03-17',3,504,510,501);
-insert into drug_reservation values(514,true,'2021-04-25',false,'2021-04-18',3,504,510,501);
+insert into drug_reservation values(513,true,'2021-03-25',false,true,'2021-03-17',3,504,510,501);
+insert into drug_reservation values(514,true,'2021-04-25',false,false,'2021-04-18',3,504,510,501);
 
 
 
@@ -243,7 +243,6 @@ insert into examination values(542,false,'2021-03-27','12:00:00',false,1050,'inf
 
 insert into examination values(510,false,'2021-08-29','11:00:00',false,1030,'info2','09:30:00','CREATED','DERMATOLOGIST_EXAMINATION',null,500,501,null);
 insert into examination values(511,false,'2021-08-27','12:00:00',false,1050,'info2','10:30:00','CREATED','DERMATOLOGIST_EXAMINATION',null,501,504,null);
-
 
 insert into action_patient_pharmacy values(507,501);
 insert into action_patient_pharmacy values(507,503);
@@ -351,5 +350,10 @@ insert into request_for_vacation values(606,false,'opiz','2021-06-20',true,'2020
        insert into erecipe_e_recipe_drug values(501,502);
        insert into erecipe_e_recipe_drug values(501,503);
 
-
+insert into offer values (1,'2021-06-14', 'ON_HOLD', 12000, 500, 4);
+insert into offer values (2,'2021-06-16', 'ON_HOLD', 800, 500, 4);
+insert into offer values (3,'2021-06-20', 'REJECTED', 100, 501, 20);
+insert into offer values (4,'2021-06-10', 'ON_HOLD', 9000, 500, 20);
+insert into offer values (5,'2021-06-14', 'COMPLETED', 6000, 500, 20);
+insert into offer values (6,'2021-06-10', 'REJECTED', 8000, 501, 20);
 

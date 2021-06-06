@@ -205,7 +205,7 @@ export default{
                 }
             console.log( dermInfo );
 
-            this.axios.post('dermatologist/saveDermatologist', dermInfo,
+            this.axios.get('/dermatologist/saveDermatologist', dermInfo,
             {
                 headers: 
                 {
