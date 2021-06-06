@@ -101,6 +101,12 @@ public class ExaminationController {
                 ResponseEntity.ok(pharmacy);
     }
 
+    @PostMapping("/defineFreeTerms")
+    public ResponseEntity<String> freeTerms(@RequestBody ExaminationDTO examinationDTO) throws MessagingException {
+        Examination examination = examinationService.defineTerms(examinationDTO);
+
+        return new ResponseEntity<>("kreirano", HttpStatus.CREATED);
+    }
 
     @PostMapping("/createDermatologistEx")
     public ResponseEntity<String> addDrug(@RequestBody ExaminationDTO examinationDTO) throws MessagingException {

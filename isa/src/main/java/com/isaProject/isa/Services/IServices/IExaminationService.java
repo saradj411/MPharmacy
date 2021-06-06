@@ -15,6 +15,9 @@ public interface IExaminationService {
     Examination createExP(ExaminationDTO examinationDTO) throws MessagingException;
     Examination finishExP(ExaminationFrontDTO examinationDTO,Integer id);
     Examination finishExD(ExaminationFrontDTO examinationDTO,Integer id);
+
+    Examination defineTerms(ExaminationDTO examinationDTO) throws MessagingException;
+
     Examination createExD(ExaminationDTO examinationDTO) throws MessagingException;
     Boolean getExaminationByIdStaff(Integer idPharmacist);
     Examination saveP(ExaminationDTO examinationDTO) throws MessagingException;
