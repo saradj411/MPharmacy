@@ -44,10 +44,10 @@ public class  Pharmacy implements Serializable {
     private String street;
 
     @Column
-    private int number;
+    private Integer number;
 
     @Column
-    private int postalCode;
+    private Integer postalCode;
 
     @Column
     private String country;
@@ -216,17 +216,6 @@ public class  Pharmacy implements Serializable {
         this.street = street;
     }
 
-    public int getNumber() {
-        return number;
-    }
-
-    public void setNumber(int number) {
-        this.number = number;
-    }
-
-    public int getPostalCode() {
-        return postalCode;
-    }
 
     public Double getConsultationPrice() {
         return consultationPrice;
@@ -235,8 +224,20 @@ public class  Pharmacy implements Serializable {
     public void setConsultationPrice(Double consultationPrice) {
         this.consultationPrice = consultationPrice;
     }
-        public void setPostalCode ( int postalCode){
-            this.postalCode = postalCode;
 
-        }
+    public Integer getNumber() {
+        return number;
     }
+
+    public void setNumber(Integer number) {
+        this.number = number;
+    }
+
+    public Integer getPostalCode() {
+        return postalCode;
+    }
+
+    public void setPostalCode(Integer postalCode) {
+        this.postalCode = postalCode;
+    }
+}
