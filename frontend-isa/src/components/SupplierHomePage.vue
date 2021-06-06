@@ -247,7 +247,7 @@ data()
                //this.limitDate = timeLimit.getMonth() + "-" +timeLimit.getDay() +"-"+ timeLimit.getFullYear();
                
              
-               const datum = timeLimit.[2] + '/' + timeLimit[1]  + '/' + timeLimit[0];
+               const datum = timeLimit[2] + '/' + timeLimit[1]  + '/' + timeLimit[0];
                
                //var proba = new Date[timeLimit[0], timeLimit.[1] , timeLimit[2]];
                var currentDate = new Date();
