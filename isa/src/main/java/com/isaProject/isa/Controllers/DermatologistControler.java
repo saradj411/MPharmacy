@@ -4,6 +4,7 @@ import com.isaProject.isa.Model.DTO.*;
 import com.isaProject.isa.Model.Examination.Examination;
 import com.isaProject.isa.Model.Pharmacy.Pharmacy;
 import com.isaProject.isa.Model.Users.*;
+import com.isaProject.isa.Repositories.DermatologistRepository;
 import com.isaProject.isa.Repositories.ExaminationRepository;
 import com.isaProject.isa.Repositories.StaffRepository;
 import com.isaProject.isa.Repositories.UserRepository;
@@ -57,6 +58,9 @@ public class DermatologistControler {
 
     @Autowired
     ExaminationService examinationService;
+
+    @Autowired
+    DermatologistRepository dermatologistRepository;
 
 
 
@@ -324,10 +328,21 @@ Ukoliko se korisnik ne pojavi na pregledu, dobija 1 penal.
 
     }
 
+    @Autowired
+    StaffRepository staffRepository;
+
+    @Autowired
+    UserRepository userRepository;
 
 
+    /*@PostMapping("/del/{id}")
+    ResponseEntity<String> del(@PathVariable Integer id  )
+    {
+        userRepository.delete(id);
+        return new ResponseEntity<>("ajdeee", HttpStatus.CREATED);
 
-
+    }
+*/
 
 
 

@@ -134,12 +134,18 @@ public class DrugReservationController {
     }
 
 
-    @GetMapping(value = "/res2/{id}")
-    public ResponseEntity<List<DrugReservationForViewDTO>> res2(@PathVariable Integer id) throws MessagingException {
+    @GetMapping(value = "/res2/{id}/{name}")
+    public ResponseEntity<List<DrugReservationForViewDTO>> res2(@PathVariable Integer id,@PathVariable String name) throws MessagingException {
 
         List<DrugReservationForViewDTO> reserv=drugReservationService.listDr(id);
+        List<DrugReservationForViewDTO>drugs=new ArrayList<>();
+        for (DrugReservationForViewDTO d:reserv){
+            if(d.getDrugName().equals(name)){
+                drugs.add(d);
+            }
+        }
 
-        return reserv == null ?
+        return drugs == null ?
                 new ResponseEntity<>(HttpStatus.NOT_FOUND) :
                 ResponseEntity.ok(reserv);
     }
