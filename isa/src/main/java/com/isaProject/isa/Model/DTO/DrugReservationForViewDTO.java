@@ -11,7 +11,6 @@ public class DrugReservationForViewDTO {
 
     private String drugName;
 
-
     private Integer quantity;
 
     private LocalDate dateOfReservation;
