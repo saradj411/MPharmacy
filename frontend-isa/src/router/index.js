@@ -47,6 +47,9 @@ import CreatePricelist from '../components/CreatePricelist'
 import UpdatePricelist from '../components/UpdatePricelist'
 import ActionAndPromotion from '../components/ActionAndPromotion'
 import DrugOrders from '../components/DrugOrders'
+import Report from '../components/Report'
+
+
 import moment from 'moment'
 
 
@@ -321,6 +324,11 @@ const routes = [
         path: '/DrugOrders/:id',
         name: 'DrugOrders',
         component: DrugOrders
+      },
+      {
+        path: '/Report/:id',
+        name: 'Report',
+        component: Report
       }
       
       
