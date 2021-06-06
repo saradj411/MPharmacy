@@ -87,9 +87,10 @@ public class DrugReservationService implements IDrugReservationService {
     public void canceling(Integer id) {
         DrugReservation pat = drugRepository.getOne(id);
 
-
+        PharmacyDrugs pp=pharmacyDrugsRepository.findByIdDrugAndIfPharm(pat.getPharmacy().getIdPharm(),pat.getDrug().getIdDrug());
         pat.setCancelled(true);
-
+        pp.setQuantity(pp.getQuantity()+pat.getQuantity());
+        pharmacyDrugsRepository.save(pp);
 
         drugRepository.save(pat);
     }

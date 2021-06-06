@@ -380,8 +380,8 @@
         </tr>
          <tr>
           <th></th>
-          <!--<td >{{examination2.therapy.drug.name}}</td>!-->
-          <!--<td >Daily dose:{{examination2.therapy.numberOfDay}}</td>!-->
+          <td >{{examination2.therapy.drug.name}}</td>
+          <td v-if="examination2.therapy.numberOfDay!=0">Daily dose:{{examination2.therapy.numberOfDay}}</td>
           
         </tr>
   </tbody>
@@ -483,8 +483,8 @@
         </tr>
          <tr>
           <th></th>
-          <td >{{examination3.therapy.drug.name}}</td>
-          <td >Daily dose:{{examination3.therapy.numberOfDay}}</td>
+         <td >{{examination3.therapy.drug.name}}</td>
+          <td v-if="examination3.therapy.numberOfDay!=0">Daily dose:{{examination3.therapy.numberOfDay}}</td>
           
         
 
@@ -685,7 +685,7 @@
         <th scope="row"></th>
         
          <td>Consultation price:</td>
-          <td></td>
+          <td>{{dr.priceConsultation}}</td>
       </tr>
         <tr>
           <th></th>
@@ -751,7 +751,7 @@
         <th scope="row"></th>
         
          <td>Grade:</td>
-          <td><input type="text"  class="form-control" v-model = "g1.grade"></td>
+          <td><input type="number"  class="form-control" v-model = "g1.grade"></td>
       </tr>
       <!-- v-model = "s"
        v-on:click = "continue2(staff.idStaff,staff.idPharm)"!-->
@@ -789,7 +789,7 @@
         <th scope="row"></th>
         
          <td>Grade:</td>
-          <td><input type="text"  class="form-control" v-model = "g1.grade"></td>
+          <td><input type="number"  class="form-control" v-model = "g1.grade"></td>
       </tr>
       <!-- v-model = "s"
        v-on:click = "continue2(staff.idStaff,staff.idPharm)"!-->
@@ -830,7 +830,7 @@
         <th scope="row"></th>
         
          <td>Grade:</td>
-          <td><input type="text"  class="form-control" v-model = "g2.grade"></td>
+          <td><input type="number"  class="form-control" v-model = "g2.grade"></td>
       </tr>
       <!-- v-model = "s"
        v-on:click = "continue2(staff.idStaff,staff.idPharm)"!-->
@@ -870,7 +870,7 @@
         <th scope="row"></th>
         
          <td>Grade:</td>
-          <td><input type="text"  class="form-control" v-model = "g3.grade"></td>
+          <td><input type="number"  class="form-control" v-model = "g3.grade"></td>
       </tr>
       <!-- v-model = "s"
        v-on:click = "continue2(staff.idStaff,staff.idPharm)"!-->
@@ -1464,6 +1464,7 @@ methods:{
       },
       schedule:
        function(idExamination){
+          alert("Wait a second!")
        this.axios.post('/examination/patientScheduledDermatologistExamination/'+this.id+'/'+idExamination)
         .then(response => {
                 this.jel = response.data;
@@ -1497,6 +1498,22 @@ methods:{
       },
       
       searchFreePharmacy: function(date,time){
+        if(this.date===null){
+          console.log("ssaa",this.date)
+          alert("Please check date!")
+          return;
+        }
+        if(this.time===null){
+          console.log("ssaa",this.date)
+          alert("Please check time!")
+          return;
+        }
+        var currentDate = new Date();
+          var odabrani=new Date(this.date)
+
+           if(odabrani<currentDate){
+             alert("Choose a date from the future!")
+           }else{
            this.showCreatedPharmExamination=true
            this.showFreeStaff=false
              this.date = date
@@ -1518,18 +1535,24 @@ methods:{
                
               
           })
+           }
       },
       continue1:
         function(idPharm33){
+          
           this.idPharm2=idPharm33
            console.log(this.date)
              console.log(this.time)
           console.log(this.idPharm2)
+
             const parametar={
              idPharmacy:this.idPharm2,
              date:this.date,
              time:this.time
             }
+        
+         
+            alert("Wait a second!")
              this.axios.post('/workTime/findFreeStaffByPharmacy',parametar)
           .then(response => {
             //this.showCreatedPharmExamination
@@ -1540,6 +1563,7 @@ methods:{
                
               
           })
+          
         },
         continue2:
         function(idStaff44,idPharm44){
@@ -1553,6 +1577,8 @@ methods:{
              staff:idStaff44
 
             }
+            
+             alert("Wait a second!")
              this.axios.post('/examination/patientScheduledPharmacistExamination',parametar)
           .then(response => {
             //this.showCreatedPharmExamination

@@ -32,6 +32,9 @@ public class  Pharmacy implements Serializable {
     @Column
     private double avgGrade;
 
+    @Column
+    private Double consultationPrice;
+
     // dodato za mapuuuu
 
     @Column
@@ -48,11 +51,6 @@ public class  Pharmacy implements Serializable {
 
     @Column
     private String country;
-
-
-
-
-
 
 
     //DODATO
@@ -75,6 +73,20 @@ public class  Pharmacy implements Serializable {
     private Set<Examination> examinations = new HashSet<Examination>();
 
     public Pharmacy(){}
+
+    public Pharmacy(Integer idPharm, String name, String address, String description, double avgGrade, Double consultationPrice, String city, String country, Set<PharmacyAdmin> pharmacyAdmins, Set<DrugPricelist> drugPricelist, Set<Examination> examinations) {
+        this.idPharm = idPharm;
+        this.name = name;
+        this.address = address;
+        this.description = description;
+        this.avgGrade = avgGrade;
+        this.consultationPrice = consultationPrice;
+        this.city = city;
+        this.country = country;
+        this.pharmacyAdmins = pharmacyAdmins;
+        this.drugPricelist = drugPricelist;
+        this.examinations = examinations;
+    }
 
     public Integer getIdPharm() {
         return idPharm;
@@ -216,7 +228,15 @@ public class  Pharmacy implements Serializable {
         return postalCode;
     }
 
-    public void setPostalCode(int postalCode) {
-        this.postalCode = postalCode;
+    public Double getConsultationPrice() {
+        return consultationPrice;
     }
-}
+
+    public void setConsultationPrice(Double consultationPrice) {
+        this.consultationPrice = consultationPrice;
+    }
+        public void setPostalCode ( int postalCode){
+            this.postalCode = postalCode;
+
+        }
+    }

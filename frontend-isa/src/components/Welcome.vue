@@ -75,7 +75,7 @@
     <tr>
       <th></th>
       <td >Address  </td>   
-       <td>{{pharmacy.address}}</td>
+       <td>{{pharmacy.address}},{{pharmacy.city}}</td>
 
     </tr>
    
@@ -86,7 +86,7 @@
       </div>   
 <!-- PRETRAGA APOTEKA!-->
 <div v-if="showSearchPharmacyTable"  style="margin-left:0px;">
-     <h4 style="margin:30px">PHARMACIES1:</h4>    
+     <h4 style="margin:30px">PHARMACIES:</h4>    
  <div style="background: #a7c1c9; width: 700px;margin-left:300px;"  v-for="pharmacy1 in this.pharmacies1"  v-bind:key="pharmacy1.idPharm">
       
 <table  style="" id="table2" class="table" >
@@ -104,7 +104,7 @@
     <tr>
       <th></th>
       <td >Address  </td>   
-       <td>{{pharmacy1.address}}</td>
+       <td>{{pharmacy1.address}},{{pharmacy1.city}}</td>
 
     </tr>
    

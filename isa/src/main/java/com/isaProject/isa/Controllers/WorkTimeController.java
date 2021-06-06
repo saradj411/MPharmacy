@@ -47,15 +47,12 @@ public class WorkTimeController {
             @PathVariable String time
             //@RequestBody WorkTimeDTO workTimeDTO
             ) {
-     //System.out.println("dsa:"+workTimeDTO.toString());
-        //LocalDate dd= date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         LocalDate dd= LocalDate.parse(date);
         LocalTime pp=LocalTime.parse(time);
         List<Pharmacy> pharmacies=new ArrayList<>();
         List<Pharmacy> pharmacies1=new ArrayList<>();
         //List<Staff> staff=new ArrayList<>();
         List<ParDTO> listPar=new ArrayList<>();
-        //System.out.println("eee:"+workTimeDTO.getDate()+"--iii:"+workTimeDTO.getStartTime());
 
         //List<WorkTime> workTimes=workTimeService.listForPatient(workTimeDTO.getDate(),workTimeDTO.getStartTime());
         //List<Staff> staffs=workTimeService.listForPatient(workTimeDTO.getDate(),workTimeDTO.getStartTime());
@@ -97,7 +94,7 @@ public class WorkTimeController {
             }
             for(Pharmacy p1:pharmacies1){
                 FrontPharmacyForExamination front=new FrontPharmacyForExamination(p1.getIdPharm(),p1.getName()
-                        , p1.getAddress(),p1.getAvgGrade(),555.5);
+                        , p1.getAddress(),p1.getAvgGrade(),p1.getConsultationPrice());
                 newList.add(front);
             }
             return newList == null ?
