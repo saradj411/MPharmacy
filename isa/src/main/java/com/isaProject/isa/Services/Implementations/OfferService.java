@@ -186,7 +186,7 @@ odkomentarisiiii
             {
                 OfferDTO offerDTO = new OfferDTO();
                 offerDTO.setIdSupplier(idSupplier);
-                offerDTO.setDeliveryDate(new java.sql.Date(offer.getDeliveryDate().getTime()).toLocalDate());
+                offerDTO.setDeliveryDate(offer.getDeliveryDate());
                 offerDTO.setIdOrder(offer.getDrugOrder().getIdOrder());
                 offerDTO.setIdOffer(offer.getIdOffer());
                 offerDTO.setTotalPrice(offer.getPrice());
@@ -210,7 +210,7 @@ odkomentarisiiii
     public Offer update(OfferDTO offer) {
        Offer o = offerRepository.findByIdOffer(offer.getIdOffer());
        o.setPrice(offer.getTotalPrice());
-       o.setDeliveryDate(convertLocalDateToDate(offer.getDeliveryDate()));
+       o.setDeliveryDate(offer.getDeliveryDate());
        offerRepository.save(o);
        return o;
     }
