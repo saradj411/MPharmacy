@@ -46,22 +46,11 @@ Pokretanje frontenda:
 
 -ako je u frontend aplikaciji potrebno promijeniti port bekend apliakcije, moze u frontend-isa/src/main.js
 
-Instalacija za bek:
-
--NodeJS 
-
--VueJS
-
-Pratile smo sljedeci snimak za instalaciju https://www.youtube.com/watch?v=Wy9q22isx3U (od 7:20 minuta)
+Instalacija za backend:
 
 
-Pokretanje frontenda:
+Pokretanje backenda:
 
--pozicioniratti na frontend-isa folder u CommandWindow konzoli
-
--npm install
-
--npm run serve
 
 -port 8083
 
