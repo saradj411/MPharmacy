@@ -751,7 +751,7 @@
         <th scope="row"></th>
         
          <td>Grade:</td>
-          <td><input type="text"  class="form-control" v-model = "g1.grade"></td>
+          <td><input type="number"  class="form-control" v-model = "g1.grade"></td>
       </tr>
       <!-- v-model = "s"
        v-on:click = "continue2(staff.idStaff,staff.idPharm)"!-->
@@ -789,7 +789,7 @@
         <th scope="row"></th>
         
          <td>Grade:</td>
-          <td><input type="text"  class="form-control" v-model = "g1.grade"></td>
+          <td><input type="number"  class="form-control" v-model = "g1.grade"></td>
       </tr>
       <!-- v-model = "s"
        v-on:click = "continue2(staff.idStaff,staff.idPharm)"!-->
@@ -830,7 +830,7 @@
         <th scope="row"></th>
         
          <td>Grade:</td>
-          <td><input type="text"  class="form-control" v-model = "g2.grade"></td>
+          <td><input type="number"  class="form-control" v-model = "g2.grade"></td>
       </tr>
       <!-- v-model = "s"
        v-on:click = "continue2(staff.idStaff,staff.idPharm)"!-->
@@ -870,7 +870,7 @@
         <th scope="row"></th>
         
          <td>Grade:</td>
-          <td><input type="text"  class="form-control" v-model = "g3.grade"></td>
+          <td><input type="number"  class="form-control" v-model = "g3.grade"></td>
       </tr>
       <!-- v-model = "s"
        v-on:click = "continue2(staff.idStaff,staff.idPharm)"!-->

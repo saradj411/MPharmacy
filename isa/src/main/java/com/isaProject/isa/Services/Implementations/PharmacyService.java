@@ -81,7 +81,7 @@ public class PharmacyService implements IPharmacyService {
 
     @Override
     public List<Pharmacy> findByAddress(String city) {
-        return pharmacyRepository.findOneByAddress(city);
+        return pharmacyRepository.findOneByCity(city);
     }
 
     @Override
