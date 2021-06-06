@@ -77,7 +77,7 @@
 <!--Lista -->
 <div v-if="showUsers">
 
-        <div  style="width:650px;margin-left:38px;margin-top:60px;"  v-for="d in this.pacijent"  v-bind:key="d.idUser">
+        <div  style="width:650px;margin-left:38px;margin-top:60px;"  v-for="d in this.pacijent"  v-bind:key="d.id">
                    <form>
                       <table style="background:#B0B3D6; " id="table2" class="table" > 
 
@@ -185,7 +185,7 @@ export default {
     }
   },
   mounted() {
-                                   console.log("id pacijenta "+this.jedanPacijent.id);
+//      console.log("id pacijenta "+this.jedanPacijent.id);
 
         this.axios.get('/patient/findAll/')
         .then(response => {
@@ -203,9 +203,11 @@ export default {
                console.log(data);
                      this.showNew = true;
                      this.showUsers = false;
+                     console.log("ajdeee"+data);
                      this.axios.get('/patient/findOneById/'+data)
                            .then(response => {
                               this.jedanPacijent = response.data;
+                              
 
                                     
                                     
@@ -227,6 +229,8 @@ export default {
                                     console.log(res);
                            });   
                            console.log("datum je "+this.date)
+                            console.log("pac je je "+this.jedanPacijent.id)
+
                      const infoExamination = {
                               idPatient: this.jedanPacijent.id,
                               idStaff: this.id,

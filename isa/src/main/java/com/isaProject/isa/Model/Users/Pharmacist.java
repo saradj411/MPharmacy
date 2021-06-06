@@ -14,15 +14,15 @@ import java.io.Serializable;
 import java.util.Set;
 
 @Entity
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+//@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 
 public class Pharmacist extends Staff implements Serializable {
 
     //apoteka u kojoj je zaposlen
     @ManyToOne
     @JoinColumn(name = "pharmacistPharmacy", referencedColumnName = "idPharm", nullable = true)
-    @JsonBackReference
-    //@JsonManagedReference(value="pharmacist-person")
+    @JsonBackReference(value="user-movement")
+        //@JsonManagedReference(value="pharmacist-person")
     private Pharmacy pharmacy;
 
     /*

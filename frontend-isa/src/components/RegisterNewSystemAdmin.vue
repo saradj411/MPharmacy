@@ -92,8 +92,8 @@ export default{
             phoneNumber : "",
             city : "",
             country : "",          
-            errorMessage : ""
-
+            errorMessage : "",
+            id : this.$route.params.id,
         }
     },
     validations:
@@ -152,7 +152,7 @@ export default{
                 {
                     alert("Successfully registered new admin. Email verification is send to " + this.email);
                     console.log(response.data);
-                    this.$router.push('/SystemAdminProfile');                    
+                    this.$router.push('/SystemAdminProfile/'+ this.id);                    
                 }).catch(res => {
                     alert(res.response.data.message);
                 });     

@@ -35,7 +35,7 @@
     <tr style="font-size:22px;color:#0D184F;">
       <th></th>
       <td >Date:</td>   
-       <td>{{d.date}}</td>
+       <td>{{d.date | formatDate}}</td>
 
     </tr>
     <tr style="font-size:22px;color:#0D184F;">

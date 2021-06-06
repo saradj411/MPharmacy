@@ -37,4 +37,5 @@ public interface ExaminationRepository extends JpaRepository<Examination, Intege
 
 
 
+
 }

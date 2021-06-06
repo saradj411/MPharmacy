@@ -33,8 +33,12 @@ public class DrugPricelistService implements IDrugPricelistService {
 
     @Autowired
     PharmacyService pharmacyService;
+    @Autowired
+    PharmacyDrugsService pharmacyDrugsService;
 
 
+    @Autowired
+    DrugPricelistRepository drugPricelistRepository;
 
 
 
@@ -103,6 +107,10 @@ public class DrugPricelistService implements IDrugPricelistService {
 
         //PharmacyAdmin pharmacyAdmin=pharmacyAdminService.findById(idAdmina);
         Pharmacy pharmacy=pharmacyService.findById(idPharmacy);
+        String checking=pharmacyDrugsService.check(idPharmacy,drugPricelistDTO.getName());
+        if (checking.equals("The drug is not available at the pharmacy")){
+            throw new IllegalArgumentException("The drug is not available at the pharmacy!");
+        }
         Drug drug=drugRepository1.findOneByNameDrug(drugPricelistDTO.getName());
         d.setDrug(drug);
         d.setPharmacy(pharmacy);
@@ -115,21 +123,13 @@ public class DrugPricelistService implements IDrugPricelistService {
     }
 
     @Override
-    public void update(DrugPricelistUpdateDTO drugPricelistUpdateDTOs) {
-
-    }
-
-
-    @Override
-    public void update(DrugPricelist drugPricelist) {
-        DrugPricelist pat =findById(drugPricelist.getIdPricelist());
-
-        pat.setEnd(drugPricelist.getEnd());
-        pat.setStart(drugPricelist.getStart());
-        pat.setPrice(drugPricelist.getPrice());
-        pat.setDrug(drugPricelist.getDrug());
-
-        pat.setPharmacy(drugPricelist.getPharmacy());
+    public void update(DrugPricelistDTO drugPricelistDTO,Integer id) {
+        DrugPricelist pat =drugPricelistRepository.getOne(id);
+        Drug d=drugRepository1.findOneByNameDrug(drugPricelistDTO.getName());
+        pat.setEnd(drugPricelistDTO.getEnd());
+        pat.setStart(drugPricelistDTO.getStart());
+        pat.setPrice(drugPricelistDTO.getPrice());
+        pat.setDrug(d);
         drugRepository.save(pat);
     }
 

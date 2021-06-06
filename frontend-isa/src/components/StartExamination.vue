@@ -19,7 +19,15 @@
 
                     </div>
 
-
+<div class="form-row">
+                        <div class="form-group col-md-6">
+                        <label style="font-size:22px;color:#0D184F;">Checking for drug allergy:</label>
+                        </div>
+                        <div class="form-group col-md-6">
+                        <button class="btn btn-info" style="font-size:22px;height:45px;margin-top:5px;width:200px;background:#474A8A;color:white;" type="button" v-on:click = "checkAlergy" >Check</button>
+                      </div>
+                        
+                    </div>
                     <div class="form-row">
                         <div class="form-group col-md-6">
                         <label style="font-size:22px;color:#0D184F;">Checking drug availability:</label>
@@ -51,15 +59,7 @@
                         
                         
                     </div>
-                    <div class="form-row">
-                        <div class="form-group col-md-6">
-                        <label style="font-size:22px;color:#0D184F;">Checking for drug allergy:</label>
-                        </div>
-                        <div class="form-group col-md-6">
-                        <button class="btn btn-info" style="font-size:22px;height:45px;margin-top:5px;width:200px;background:#474A8A;color:white;" type="button" v-on:click = "checkAlergy" >Check</button>
-                      </div>
-                        
-                    </div>
+                    
 
 
                    <div class="form-row">

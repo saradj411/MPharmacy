@@ -5,16 +5,19 @@ import com.isaProject.isa.Model.DTO.DrugDTO;
 import com.isaProject.isa.Model.DTO.FrontCreatedExaminationDTO;
 
 import com.isaProject.isa.Model.Drugs.Drug;
+import com.isaProject.isa.Model.Drugs.DrugReservation;
 import com.isaProject.isa.Model.Drugs.ERecipe;
+import com.isaProject.isa.Model.Drugs.ERecipeDrug;
 import com.isaProject.isa.Model.Examination.Examination;
 import com.isaProject.isa.Model.Examination.ExaminationStatus;
 import com.isaProject.isa.Model.Examination.ExaminationType;
+import com.isaProject.isa.Model.Examination.Therapy;
 import com.isaProject.isa.Model.Pharmacy.Pharmacy;
+import com.isaProject.isa.Model.Users.Dermatologist;
 import com.isaProject.isa.Model.Users.Patient;
+import com.isaProject.isa.Model.Users.Pharmacist;
 import com.isaProject.isa.Model.Users.User;
-import com.isaProject.isa.Repositories.DrugRepository;
-import com.isaProject.isa.Repositories.PatientRepository;
-import com.isaProject.isa.Repositories.UserRepository;
+import com.isaProject.isa.Repositories.*;
 import com.isaProject.isa.Services.IServices.IPatientService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,13 +39,15 @@ public class PatientService implements IPatientService {
     @Autowired
     DrugRepository drugRepository;
 
+    @Autowired
+    ERecipeRepository eRecipeRepository;
+
     @Override
     public Patient findById(Integer id){
-        System.out.println("ovdje uslo sada aaaaa:"+id);
+        //System.out.println("ovdje uslo sada aaaaa:"+id);
         User user=userRepository.getOne(id);
-        System.out.println("ovdje uslo sada aaaaa:"+user.getName());
-        Patient patient=patientRepository.getOne(id);
-        return patient;
+        //System.out.println("ovdje uslo sada aaaaa:"+user.getName());
+        return patientRepository.getOne(id);
 
     }
 
@@ -72,6 +77,100 @@ public class PatientService implements IPatientService {
             }
         }
         return answer;
+    }
+
+    @Override
+    public Set<Integer> findDermatologistForGrade(Integer id) {
+        Patient patient=patientRepository.findById(id).get();
+        Set<Examination> examinations=new HashSet<>();
+        Set<Integer> list=new HashSet<>();
+        examinations=patient.getExaminations();
+        for (Examination e:examinations){
+
+            if((e.getStatus().compareTo(ExaminationStatus.FINISHED))==0){
+
+                if((e.getType().compareTo(ExaminationType.DERMATOLOGIST_EXAMINATION))==0){
+
+                    list.add(e.getStaff().getId());
+                }
+            }
+        }
+        return list;
+    }
+    @Override
+    public Set<Integer> findDrugsForGrade(Integer id) {
+        Patient patient=patientRepository.findById(id).get();
+
+        List<ERecipe> eRecipes=eRecipeRepository.findAll();
+
+        Set<DrugReservation> reservations=patient.getDrugReservation();
+        Set<Integer> list=new HashSet<>();
+
+        for(DrugReservation dR:reservations){
+            if(dR.getPickedUp()){
+                list.add(dR.getDrug().getIdDrug());
+            }
+        }
+
+        for(ERecipe er:eRecipes){
+            if(er.getPatient().getId().equals(id)){
+                Set<ERecipeDrug> eRecipes1=er.geteRecipeDrug();
+                for(ERecipeDrug erd:eRecipes1){
+                    Drug drug=drugRepository.findOneByNameDrug(erd.getName());
+                    list.add(drug.getIdDrug());
+                }
+
+            }
+        }
+        return list;
+    }
+    @Override
+    public Set<Integer> findPharmaciesForGrade(Integer id) {
+        Patient patient=patientRepository.findById(id).get();
+
+        Set<Examination> examinations=new HashSet<>();
+        List<ERecipe> eRecipes=eRecipeRepository.findAll();
+        Set<DrugReservation> reservations=patient.getDrugReservation();
+        Set<Integer> list=new HashSet<>();
+        examinations=patient.getExaminations();
+
+        for (Examination e:examinations){
+
+            if((e.getStatus().compareTo(ExaminationStatus.FINISHED))==0){
+                     list.add(e.getPharmacy().getIdPharm());
+
+            }
+        }
+        for(DrugReservation dR:reservations){
+            if(dR.getPickedUp()){
+                list.add(dR.getPharmacy().getIdPharm());
+            }
+        }
+
+        for(ERecipe er:eRecipes){
+            if(er.getPatient().getId().equals(id)){
+                list.add(er.getPharmacy().getIdPharm());
+            }
+        }
+        return list;
+    }
+    @Override
+    public Set<Integer> findPharmacistForGrade(Integer id) {
+        Patient patient=patientRepository.findById(id).get();
+        Set<Examination> examinations=new HashSet<>();
+        Set<Integer> list=new HashSet<>();
+        examinations=patient.getExaminations();
+        for (Examination e:examinations){
+
+            if((e.getStatus().compareTo(ExaminationStatus.FINISHED))==0){
+
+                if((e.getType().compareTo(ExaminationType.PHARMACIST_EXAMINATION))==0){
+
+                    list.add(e.getStaff().getId());
+                }
+            }
+        }
+        return list;
     }
 
     @Override
@@ -142,6 +241,11 @@ public class PatientService implements IPatientService {
     }
 
     @Override
+    public List<ERecipe> findERecipe(Integer id) {
+        return null;
+    }
+
+    @Override
     public Set<FrontCreatedExaminationDTO> findFinishedDermatologistExamination(Integer id) {
         Patient patient=patientRepository.findById(id).get();
         Set<Examination> examinations=new HashSet<>();
@@ -175,6 +279,10 @@ public class PatientService implements IPatientService {
             if((e.getStatus().compareTo(ExaminationStatus.FINISHED))==0){
 
                 if((e.getType().compareTo(ExaminationType.PHARMACIST_EXAMINATION))==0){
+                   /* Therapy therapy=new Therapy();
+                    if(!e.getTherapy().equals(null)){
+                        therapy=e.getTherapy();
+                    }*/
                     FrontCreatedExaminationDTO exDTO=new FrontCreatedExaminationDTO(e.getIdExamination(),e.getDate(),
                             e.getStartTime(),e.getEndTime(),e.getPrice(),
                             e.getStaff().getName(),e.getStaff().getSurname(),e.getPharmacy().getName(),

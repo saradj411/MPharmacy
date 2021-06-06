@@ -9,18 +9,13 @@ import com.isaProject.isa.Model.Examination.Examination;
 import com.isaProject.isa.Model.Examination.ExaminationStatus;
 import com.isaProject.isa.Model.Examination.ExaminationType;
 import com.isaProject.isa.Model.Examination.Therapy;
+import com.isaProject.isa.Model.Pharmacy.Complaint;
 import com.isaProject.isa.Model.Pharmacy.Pharmacy;
-import com.isaProject.isa.Model.Users.Authority;
-import com.isaProject.isa.Model.Users.Dermatologist;
+import com.isaProject.isa.Model.Users.*;
 
-import com.isaProject.isa.Model.Users.Patient;
-import com.isaProject.isa.Model.Users.Staff;
-
-import com.isaProject.isa.Model.Users.User;
-
-import com.isaProject.isa.Model.Users.WorkTime;
 import com.isaProject.isa.Repositories.*;
 import com.isaProject.isa.Services.IServices.IDermatologistService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -28,57 +23,100 @@ import org.springframework.stereotype.Service;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.ZoneId;
 import java.util.*;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 @Service
-public class DermatologistService implements IDermatologistService, Serializable {
+@Slf4j
+public class DermatologistService implements IDermatologistService {
 
    //s private static final Logger log = org.slf4j.LoggerFactory.getLogger(DermatologistService.class);
-    public @Autowired
+     @Autowired
     DermatologistRepository dermatologistRepository;
     @Autowired
-    private PasswordEncoder passwordEncoder;
+     PasswordEncoder passwordEncoder;
 
     @Autowired
-    private AuthorityService authService;
-    public @Autowired
+     AuthorityService authService;
+     @Autowired
     WorkTimeRepository workTimeRepository;
 
-    public @Autowired
+     @Autowired
     PatientRepository patientRepository;
 
-    public @Autowired
+     @Autowired
     ExaminationRepository examinationRepository;
 
-    public @Autowired
+     @Autowired
     ExaminationService examinationService;
 
-    public  @Autowired
+      @Autowired
     WorkTimeService workTimeService;
 
-    public @Autowired
+     @Autowired
     PharmacyService pharmacyService;
+
 
     Set<WorkTime> tajm = new HashSet<WorkTime>();
 
     Set<Pharmacy> pharmOfDerm = new HashSet<Pharmacy>();
 
-    public @Autowired
+     @Autowired
     StaffRepository staffRepository;
+
+
 
     @Autowired
     UserRepository userRepository;
 
-    public @Autowired
+     @Autowired
     SpecificationRepository specificationRepository;
 
-    public @Autowired
+     @Autowired
     DrugRepository drugRepository;
 
-    public @Autowired
+     @Autowired
     SpecificationService specificationService;
+     @Autowired
+    PharmacyRepository pharmacyRepository;
+    @Override
+    public Dermatologist create(DermatologistForCreateDTO dermatologistForCreateDTO){
+        Dermatologist dermatologist=new Dermatologist();
+        dermatologist.setAddress(dermatologistForCreateDTO.getAddress());
+        dermatologist.setAvgGrade(0.0);
+        dermatologist.setCountry(dermatologistForCreateDTO.getCountry());
+        dermatologist.setPhoneNumber(dermatologistForCreateDTO.getCity());
+        dermatologist.setPassword(dermatologistForCreateDTO.getPassword());
+        dermatologist.setCity(dermatologistForCreateDTO.getCity());
+        dermatologist.setEmail(dermatologistForCreateDTO.getEmail());
+        dermatologist.setName(dermatologistForCreateDTO.getName());
+        dermatologist.setSurname(dermatologistForCreateDTO.getSurname());
+        dermatologist.setAccountEnabled(true);
+
+        Pharmacy pharmacy=pharmacyRepository.getOne(dermatologistForCreateDTO.getIdPharmacy());
+        Set<Pharmacy> p=new HashSet<>();
+        p.add(pharmacy);
+        dermatologist.setPharmacies(p);
+        Dermatologist created=dermatologistRepository.save(dermatologist);
+        Staff staff=staffRepository.getOne(created.getId());
+
+        WorkTime workTime=new WorkTime();
+        workTime.setStartTime(dermatologistForCreateDTO.getStartTime());
+        workTime.setEndTime(dermatologistForCreateDTO.getEndTime());
+        workTime.setDate(dermatologistForCreateDTO.getDate());
+        workTime.setPharmacy(pharmacy);
+
+        workTime.setStaff(staff);
+        WorkTime workcreated=workTimeRepository.save(workTime);
+
+        return dermatologist;
+
+    }
+
+     @Autowired
+    RequestForVacationRepository requestForVacationRepository;
 
     @Override
     public void update(Dermatologist dermatologist) {
@@ -94,23 +132,36 @@ public class DermatologistService implements IDermatologistService, Serializable
         dermatologistRepository.save(pa);
     }
 
+/*
+
+
+(ukoliko
+dermatolog ima zakazane preglede koje treba da održi, dermatolog se ne
+može obrisati)
+
+ */
+
+
+
 
 
     @Override
-    public String delete(Dermatologist dermatologist) {
-        String message = "Dermatoloist is not deleted!";
+    public String delete(Dermatologist dermatologist, Integer idPharm) {
+        String message = "";
 
-
-        if(examinationService.getExaminationByIdStaff(dermatologist.getId()).equals(false)){
+/*
+        if(examinationService.getExaminationByIdStaff(dermatologist.getId())){
             dermatologistRepository.delete(dermatologist);
             return  "Dermatoloist is  deleted!";
 
         }
+
+
         for (Examination examination : examinationRepository.findAll()) {
             if (examination.getScheduled()){
 
             }else {
-                if(examination.getStaff().getId()==dermatologist.getId()){
+                if(examination.getStaff().getId().equals(dermatologist.getId())){
                     if(examination.getType().equals(ExaminationType.DERMATOLOGIST_EXAMINATION)){
                         dermatologistRepository.delete(dermatologist);
 
@@ -130,6 +181,49 @@ public class DermatologistService implements IDermatologistService, Serializable
 
 
         }
+        */
+
+        Staff staff=staffRepository.getOne(dermatologist.getId());
+        Pharmacy p=pharmacyService.findById(idPharm);
+        List<Examination>lista=examinationRepository.findAll();
+        List<Examination>newList=new ArrayList<>();
+        for (Examination e:lista){
+            if (e.getScheduled().equals(true) &&e.getPharmacy().getIdPharm().equals(idPharm) && e.getStaff().getId().equals(dermatologist.getId())){
+                newList.add(e);
+            }
+        }
+        if (newList.size()==0){
+            message="The dermatologist was not deleted because he has an appointment ";
+        }else {
+
+
+            //obrisi sve examinationse.
+            for (Examination e:examinationRepository.findAll()) {
+                if (e.getStaff().getId().equals(dermatologist.getId())) {
+                    if (e.getDate().isAfter(LocalDate.now())) {
+                        e.setPharmacy(null);
+                        e.setPatient(null);
+                        e.setStaff(null);
+
+                        e.setPrice(0.0);
+                        dermatologist.getExaminations().remove(e);
+                        examinationRepository.delete(e);
+
+
+                    }
+                }
+
+
+            }}
+        dermatologist.getPharmacies().remove(p);
+
+        dermatologistRepository.save(dermatologist);
+        message="The dermatologist was deleted ";
+
+
+
+
+
 
 
         return message;
@@ -223,7 +317,13 @@ public class DermatologistService implements IDermatologistService, Serializable
             pharmacies.add(pharmacy);
 
             WorkTimeDTO workTimeDTO = new WorkTimeDTO();
-            workTimeDTO.setDate(dermDTO.getDate());
+            LocalDate date = (dermDTO.getDate());
+                    /*.toInstant()
+                    .atZone(ZoneId.systemDefault())
+                    .toLocalDate();
+*/
+
+            workTimeDTO.setDate(date);
             workTimeDTO.setStartTime(dermDTO.getStartTime());
             workTimeDTO.setEndTime(dermDTO.getEndTime());
             workTimeDTO.setStaff(staff);
@@ -372,6 +472,8 @@ ili savetovanjem koje pacijent ima zakazano (u bilo kojoj apoteci),
                 listExaminationOfMyPatient.add(e);
             }
         }
+
+
 
         if(listExaminationOfMyPatient.size()!=0){
             throw new IllegalArgumentException("Patient have an appointment scheduled at that time ");

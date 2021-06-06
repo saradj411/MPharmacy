@@ -1,7 +1,10 @@
 package com.isaProject.isa.Controllers;
 
+import com.isaProject.isa.Model.DTO.OrderItemDTO;
+import com.isaProject.isa.Model.DTO.OfferDTO;
 import com.isaProject.isa.Model.Drugs.DrugPricelist;
 import com.isaProject.isa.Model.Drugs.Offer;
+import com.isaProject.isa.Model.Drugs.OrderItem;
 import com.isaProject.isa.Model.Users.Patient;
 import com.isaProject.isa.Repositories.OfferRepository;
 import com.isaProject.isa.Services.Implementations.OfferService;
@@ -13,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.mail.MessagingException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -25,15 +29,29 @@ public class OfferController {
     @Autowired
     OfferService offerService;
 
-    @Autowired
-    OfferRepository offerRepository;
-
 
    /*
     Za svaku narudžbenicu administrator apoteke može da vidi sve ponude koje su
 dobavljači dali.Uzmi ponude po id-ju narudzbenice
      */
 
+    @GetMapping(value = "/findOfferByIdOrder/{idOrder}")
+    public ResponseEntity<List<Offer>> findAllItem(@PathVariable Integer idOrder) {
+        List<Offer> offers=offerService.getOfferByIdOrder(idOrder);//nadje
+
+        return offers == null ?
+                new ResponseEntity<>(HttpStatus.NOT_FOUND) :
+                ResponseEntity.ok(offers);
+    }
+
+    @GetMapping(value = "/findOfferMyPharm/{idOrder}/{idAdmin}")//ponude za narudzbenice koje je krisrao admin
+    public ResponseEntity<List<Offer>> findAllOffer(@PathVariable Integer idOrder,@PathVariable Integer idAdmin) {
+        List<Offer> offers=offerService.getOfferByIdOrder(idOrder);//nadje ponude odredjene narudzbenice
+
+        return offers == null ?
+                new ResponseEntity<>(HttpStatus.NOT_FOUND) :
+                ResponseEntity.ok(offers);
+    }
 
 
     @GetMapping(value = "/getOfferByIdOrder/{id}")
@@ -64,6 +82,15 @@ dobavljači dali.Uzmi ponude po id-ju narudzbenice
         return offer == null ?
                 new ResponseEntity<>(HttpStatus.NOT_FOUND) :
                 ResponseEntity.ok(offer);
+    }
+
+    @PostMapping(value = "/newOffer")
+    public ResponseEntity<Offer> newOffer(@RequestBody OfferDTO offerDTO)
+    {
+        Offer offer = offerService.save(offerDTO);
+
+        return offer == null ? new ResponseEntity<>(HttpStatus.BAD_REQUEST)
+                : new ResponseEntity<>(offer, HttpStatus.CREATED);
     }
 
     /*

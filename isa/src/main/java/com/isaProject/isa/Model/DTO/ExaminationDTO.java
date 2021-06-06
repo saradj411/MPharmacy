@@ -3,10 +3,11 @@ package com.isaProject.isa.Model.DTO;
 import com.isaProject.isa.Model.Pharmacy.Pharmacy;
 import com.isaProject.isa.Model.Users.Patient;
 import com.isaProject.isa.Model.Users.Staff;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-
+@NoArgsConstructor
 public class ExaminationDTO {
      private Integer idPatient;
      private Integer idStaff;
@@ -51,8 +52,7 @@ public class ExaminationDTO {
           this.price = price;
      }
 
-     public ExaminationDTO() {
-     }
+
 
      public Integer getIdPatient() {
           return idPatient;

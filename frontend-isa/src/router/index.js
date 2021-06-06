@@ -34,9 +34,6 @@ import AnnualReportDrug from '../components/AnnualReportDrug.vue'
 import MonthDrugReport from '../components/MonthDrugReport.vue'
 import MonthExaminationReport from '../components/MonthExaminationReport.vue'
 import IncomeReport from '../components/IncomeReport.vue'
-
-
-
 import SheduleExamination from '../components/SheduleExamination.vue'
 import WorkCalendarPharmacist from '../components/WorkCalendarPharmacist.vue'
 import StartCounseling from '../components/StartCounseling.vue'
@@ -49,15 +46,26 @@ import InssuingDrug from '../components/InssuingDrug.vue'
 import SystemAdminProfile from '../components/SystemAdminProfile.vue'
 import AddShifarnikPage from '../components/AddShifarnikPage'
 import RegisterNewSystemAdmin from '../components/RegisterNewSystemAdmin'
-
 import ReserveDrug from '../components/ReserveDrug'
-
 import RegisterDermatologist from '../components/RegisterDermatologist'
 import RegisterNewPharmacy from '../components/RegisterNewPharmacy'
 import RegisterAdminPharamcyPage from '../components/RegisterAdminPharamcyPage'
 import AcceptRejectVacation from '../components/AcceptRejectVacation'
+import CreatePricelist from '../components/CreatePricelist'
+import UpdatePricelist from '../components/UpdatePricelist'
+import ActionAndPromotion from '../components/ActionAndPromotion'
+import DrugOrders from '../components/DrugOrders'
+import Report from '../components/Report'
+
+import AddPharmacist from '../components/AddPharmacist'
+import AddDermatologist from '../components/AddDermatologist'
+
+import WriteComplaint from '../components/WriteComplaint.vue'
+import RegisterNewSupplier from '../components/RegisterNewSupplier'
+import SupplierHomePage from '../components/SupplierHomePage'
 
 import moment from 'moment'
+
 
 
 
@@ -316,6 +324,34 @@ const routes = [
       }
       ,
       {
+        path: '/CreatePricelist/:id',
+        name: 'CreatePricelist',
+        component: CreatePricelist
+      },
+      {
+        path: '/UpdatePricelist/:id',
+        name: 'UpdatePricelist',
+        component: UpdatePricelist
+      }
+      ,
+      {
+        path: '/ActionAndPromotion/:id',
+        name: 'ActionAndPromotion',
+        component: ActionAndPromotion
+      }
+      ,
+      {
+        path: '/DrugOrders/:id',
+        name: 'DrugOrders',
+        component: DrugOrders
+      },
+      {
+        path: '/Report/:id',
+        name: 'Report',
+        component: Report
+      }
+      
+,{      
         path: '/AnnualReport/:id',
         name: 'AnnualReport',
         component: AnnualReport
@@ -350,11 +386,38 @@ const routes = [
         path: '/IncomeReport/:id',
         name: 'IncomeReport',
         component: IncomeReport
+      },
+      {
+        path: '/AddPharmacist/:id',
+        name: 'AddPharmacist',
+        component: AddPharmacist
+      },
+      {
+        path: '/AddDermatologist/:id',
+        name: 'AddDermatologist',
+        component: AddDermatologist
+      },{
+        path: '/WriteComplaint/:id',
+        name: 'WriteComplaint',
+        component: WriteComplaint
+      },
+      {
+        path: '/RegisterNewSupplier/:id',
+        name: 'RegisterNewSupplier',
+        component: RegisterNewSupplier
+      },
+      {
+        path: '/SupplierHomePage/:id',
+        name: 'SupplierHomePage',
+        component: SupplierHomePage
+
       }
+
+      
       
 
 
-]
+    ]
     
 const router = new VueRouter({
     mode: 'history',

@@ -6,37 +6,38 @@ import com.isaProject.isa.Model.Pharmacy.Pharmacy;
 import javax.persistence.Column;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import java.time.LocalDate;
 import java.util.Date;
 
 public class ActionAndPromotionDTO {
 
 
-    private Date startDate;
+    private LocalDate startDate;
 
 
-    private Date endDate;
+    private LocalDate endDate;
 
     //Administrator apoteke u slobodnoj formi definiše akciju, odnosno promociju.
 
     private String text;
 
 
-    private String pharmacyName;
+    private Integer idPham;
 
 
-    public Date getStartDate() {
+    public LocalDate getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(Date startDate) {
+    public void setStartDate(LocalDate startDate) {
         this.startDate = startDate;
     }
 
-    public Date getEndDate() {
+    public LocalDate getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(Date endDate) {
+    public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
     }
 
@@ -48,19 +49,19 @@ public class ActionAndPromotionDTO {
         this.text = text;
     }
 
-    public String getPharmacyName() {
-        return pharmacyName;
+    public Integer getIdPham() {
+        return idPham;
     }
 
-    public void setPharmacyName(String pharmacyName) {
-        this.pharmacyName = pharmacyName;
+    public void setIdPham(Integer idPham) {
+        this.idPham = idPham;
     }
 
-    public ActionAndPromotionDTO(Date startDate, Date endDate, String text, String pharmacyName) {
+    public ActionAndPromotionDTO(LocalDate startDate, LocalDate endDate, String text, Integer idPham) {
         this.startDate = startDate;
         this.endDate = endDate;
         this.text = text;
-        this.pharmacyName = pharmacyName;
+        this.idPham = idPham;
     }
 
     public ActionAndPromotionDTO() {

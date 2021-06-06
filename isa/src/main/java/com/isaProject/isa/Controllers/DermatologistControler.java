@@ -100,6 +100,7 @@ public class DermatologistControler {
                         new ResponseEntity<>(HttpStatus.NOT_FOUND) :
                         ResponseEntity.ok(reviewedClientsDTOS);
             }
+
             @GetMapping(value = "/findPharmacyDermatologist/{id}")
             public ResponseEntity<Set<Pharmacy>> findpharmacy(@PathVariable Integer id) {
                 Set<Pharmacy> pharmacies=dermatologistService.pharmacies(id);
@@ -152,10 +153,10 @@ public class DermatologistControler {
                 new ResponseEntity<>(HttpStatus.NOT_FOUND) :
                 ResponseEntity.ok(d);
     }
-    @GetMapping("/delete/{id}")
-    public ResponseEntity<String> deleteDermatologist(@PathVariable Integer id) {
-        Dermatologist dermatologist = dermatologistService.findById(id);
-        String answer = dermatologistService.delete(dermatologist);
+    @GetMapping("/delete/{idDerm}/{idPharm}")
+    public ResponseEntity<String> deleteDermatologist(@PathVariable Integer idDerm,@PathVariable Integer idPharm) {
+        Dermatologist dermatologist = dermatologistService.findById(idDerm);
+        String answer = dermatologistService.delete(dermatologist,idPharm);
         return new ResponseEntity<>(answer, HttpStatus.ACCEPTED);
     }
 
@@ -312,6 +313,15 @@ Ukoliko se korisnik ne pojavi na pregledu, dobija 1 penal.
                 : new ResponseEntity<>(d, HttpStatus.CREATED);
     }
 
+
+    @PostMapping(value = "/createDermatologist")
+    ResponseEntity<String> update(@RequestBody DermatologistForCreateDTO dermatologistForCreateDTO)
+    {
+
+        Dermatologist dermatologist=dermatologistService.create(dermatologistForCreateDTO);
+        return new ResponseEntity<>("ajdeee", HttpStatus.CREATED);
+
+    }
 
 
 

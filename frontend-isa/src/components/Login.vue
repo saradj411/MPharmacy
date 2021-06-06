@@ -13,7 +13,8 @@
                         <input type="text" v-model="username" 
                         class="form-control" :class="{'input--error':!username}" 
                         placeholder="Enter email" aria-label="Enter name" 
-                        aria-describedby="addon-wrapping">
+                        aria-describedby="addon-wrapping"
+                        v-on:change="emailChecked(username)">
                         
                     </td> 
                         
@@ -43,6 +44,74 @@
             
         </div>
     </div>
+    <!-- MODALNI DIALOG ZA RESETOVANJE LOZINJE --> 
+
+    <b-modal ref="my-modal" hide-footer title="First time login, please change your password!" style="width:800px;">
+        <div class="d-block text-center ">     
+        <h1> {{ this.user.email }}</h1>
+        <table>
+            <tr class="form-control" style="height:60px;  width:460px;">
+                <td style="font-size:20px; width:260px;" > New password: </td>
+                <td> <b-form-input type="password" size="sm" align-items="center"
+                                        v-model="newPassword"
+                                        style=" width:220px; font-size:22px;" ></b-form-input></td> 
+             </tr>
+
+             <tr class="form-control" style="height:60px;">
+                <td style="font-size:20px; width:220px;" > New password repeat: </td>
+                <td> <b-form-input type="password" size="sm" align-items="center"
+                                        v-model="newPasswordRepeat"
+                                        style=" width:220px; font-size:22px;" ></b-form-input></td> 
+             </tr>
+        </table>       
+             <!--
+
+           <h3>ID ORDER: {{prosledjena.idOrder}} | {{prosledjena. pharmacyId}} - {{prosledjena.pharmacyName}} </h3>
+            <div>
+                             <table> 
+                             <th  style="font-size:22px;" class="form-control">
+                                <td style="margine:20px; width:600px; font-size:22px;" > Drug name: </td>
+                                    <td style="margine:20px; width:600px; font-size:22px;"> Drug quantity: </td>
+                            </th >
+                                <tr v-for="o in prosledjena.drugList"
+                                    v-bind:key="o.idItemOrder"  class="form-control" style=" height:48px;"> 
+                                    <td style="margine:20px; width:200px;  font-size:22px;"  > {{o.nameDrug}} </td>
+                                    <td style="margine:20px; width:250px;  font-size:22px;" > {{o.quantity}} pcs. </td>
+                                </tr>
+                                <br>
+                                <tr class="form-control" style=" height:48px;">
+                                    <td style="margine:20px; width:600px; font-size:22px;"> Price in total: </td>
+                                    <td style="margine:20px; width:600px; font-size:22px; height:30px;"> 
+                                        <b-form-input type="text " size="sm" align-items="center" :class="{'input--error': !price}"
+                                        v-model="price"></b-form-input>
+                                    </td>                                   
+                                                
+                                </tr> 
+                                <tr class="form-control" style=" height:48px;">
+                                    <td style="margine:20px; width:600px; font-size:22px;"> Deliveri date: </td>
+                                    <td style="margine:20px; width:400px; font-size:22px; height:30px;"> 
+                                        <b-form-input type="date" size="sm" align-items="center"
+                                        v-model="date" ></b-form-input>
+                                    </td>                                   
+                                                
+                                </tr>
+
+
+                            </table>
+
+                            
+                    </div>
+    --> 
+        </div>
+        <button class="btn btn-primary btn-xs" style="margin:auto; margin-left:40px; background: #000; margin-top:10px; width:400px;"  @click="changePassword(newPassword)" :disabled="!newPassword || !newPasswordRepeat || newPassword!=newPasswordRepeat"> Reset password </button>
+        <button class="btn btn-primary btn-xs" style="margin:auto; margin-left:40px;background: #000;  width:400px;"   @click="cancelModal"> Close </button>
+        </b-modal>
+
+
+
+
+
+
 </div>
     
 </template>
@@ -84,9 +153,14 @@ export default
 {
     data()
     {
+
         return{
             username: "",
-            password: ""
+            password: "",
+            user: [],
+
+            newPassword: "",
+            newPasswordRepeat: ""
         }
     },
     validations:
@@ -101,21 +175,42 @@ export default
         }
     },
     methods:
-    {
+    {   emailChecked: function(username)
+        {
+            this.axios.get('/user/findByEmail/'+ username)
+                                .then(response => {
+                                    console.log()
+                                        this.user = response.data;   
+                                                             
+                                }).catch(res => {
+                                       // alert("User doesnt exists!");
+                                        console.log(res);
+                                }); 
+                                
+                                
+                        console.log("STA:" + this.user.email);
+        },
+
         userForLogin: function()
         {
-            if(this.username == '' || this.password == '')
+            console.log("USER");  
+            console.log(this.user.email);           
+  
+
+            if(this.user.accountEnabled == false)
             {
-                console.log("PRAZNA POLJA");
+                this.showModal(this.user);
+                
             }
             else
             {
-                console.log("UDJE?");
+                
                 const loginInfo = 
                 {
                     username: this.username,
                     password: this.password
                 }
+                
 
                this.axios.post('/user/login', loginInfo, {
                     headers: 
@@ -124,7 +219,7 @@ export default
                         
                     }}).then(response => 
                     {                        
-                        localStorage.setItem( 'accessToken', response.data.accessToken);
+                        localStorage.setItem('accessToken', response.data.accessToken);
                         localStorage.setItem('expiresIn', new Date(new Date().getTime() + response.data.expiresIn).getTime());
                         this.axios.defaults.headers.common['Authorization'] = 'Bearer ' + response.data.accessToken;
                         //console.log(response.data);
@@ -135,7 +230,9 @@ export default
                                     //'Authorization': `Bearer ` + localStorage.getItem('accessToken')
                                     
                                 }}).then(response => 
-                                {                        
+                                {    
+                                    console.log("ENABLE: " +response.data.accountEnabled);
+
                                     if(response.data.authorityRole === "ROLE_ADMIN")
                                     {
                                         console.log("USAO ADMIN");
@@ -167,19 +264,20 @@ export default
                                     else if(response.data.authorityRole === "ROLE_SUPPLIER")
                                     {
                                         console.log('Supplier');
-                                            //this.$router.push('HomePagePatient/'+ response.data.id);
+                                        console.log(response.data);
+                                        this.$router.push('SupplierHomePage/'+ response.data.id);
                                     }
                                     else
                                     {
                                         console.log(response.data);
-                                        alert("User has no account!");
+                                        alert("User has no authority!");
                                     }
                                    
                                     
                                     
                                     //Odkomentarisati ovo kad se obavi verifikacija mejla
                                 }).catch(res => {                 
-                                
+                                    
                                     console.log("GRESKA");
                                     console.log(res.response);
                                     this.errorMessage = res.response.data.message;
@@ -192,23 +290,170 @@ export default
                         
                         
                         //Odkomentarisati ovo kad se obavi verifikacija mejla
-                    }).catch(res => {      
-                       
+                    }).catch(res => { 
                         if(res.response.status === 401)
-                            alert("Wrong password or email.");
+                           alert("Wrong password or email.");
                         
                         console.log(res.response);
                         this.errorMessage = res.response.data.message;
+                       
                     });    
                 /*this.$store.dispatch('login', loginInfo)
                     .then(() => this.$router.push('SystemAdminProfile'))
                     .catch(err => console.log(err))*/
                 }
-        }
+        },
+        showModal() {           
+            this.$refs['my-modal'].show()
+            },
+
+        changePassword(newPassword) {
+
+        console.log("POZVALO CHABGE PASS");
+          console.log(newPassword);
+          console.log(this.user.email);
+
+          const newPassInfo = 
+          {
+              username: this.user.email,
+              password: newPassword
+          }
+
+        console.log("PATIENT INFO:");
+          console.log(newPassInfo);
+          this.axios.post('/user/changePassword', newPassInfo,
+            {
+                headers: 
+                {
+                    'Authorization': `Bearer ` + localStorage.getItem('accessToken')
+                }}).then(response => 
+                {
+                    this.$refs['my-modal'].hide()
+                    alert("Successfully changed password!");
+
+                    //PREVISE ALI DA RADI
+
+
+                        this.axios.post('/user/login', newPassInfo, {
+                    headers: 
+                    {          
+                         
+                        
+                    }}).then(response => 
+                    {                        
+                        localStorage.setItem('accessToken', response.data.accessToken);
+                        localStorage.setItem('expiresIn', new Date(new Date().getTime() + response.data.expiresIn).getTime());
+                        this.axios.defaults.headers.common['Authorization'] = 'Bearer ' + response.data.accessToken;
+                        //console.log(response.data);
+                                
+                                this.axios.get('/user/loggedUser', {
+                                headers: 
+                                {          
+                                    //'Authorization': `Bearer ` + localStorage.getItem('accessToken')
+                                    
+                                }}).then(response => 
+                                {    
+                                    console.log("ENABLE: " +response.data.accountEnabled);
+
+                                    if(response.data.authorityRole === "ROLE_ADMIN")
+                                    {
+                                        console.log("USAO ADMIN");
+                                        console.log(response.data);
+                                        this.$router.push('SystemAdminProfile/' + response.data.id);
+                                        //DODATI ZA ID ADMINA
+                                    }
+                                    else if(response.data.authorityRole === "ROLE_PATIENT")
+                                    {
+                                            this.$router.push('HomePagePatient/'+ response.data.id);
+                                    }
+                                    else if(response.data.authorityRole === "ROLE_PHARMACY_ADMIN")
+                                    {
+                                        
+                                            this.$router.push('ProfileAdmin' /*+ response.data.id*/);
+                                    }
+                                    else if(response.data.authorityRole === "ROLE_PHARMACIST")
+                                    {
+                                        console.log("USAO U ROLE_PHARMACIST");
+                                            //this.$router.push('HomePagePatient/'+ response.data.id);
+                                            this.$router.push('profilePharmacist' /*+ response.data.id*/);
+                                    }
+                                    else if(response.data.authorityRole === "ROLE_DERMATOLOGIST")
+                                    {
+                                        console.log("USAO U DERMATOLOGA")
+                                            //this.$router.push('HomePagePatient/'+ response.data.id);
+                                            this.$router.push('profileDermatologist' /*+ response.data.id*/);
+                                    }
+                                    else if(response.data.authorityRole === "ROLE_SUPPLIER")
+                                    {
+                                        console.log('Supplier');
+                                        console.log(response.data);
+                                        this.$router.push('SupplierHomePage/'+ response.data.id);
+                                    }
+                                    else
+                                    {
+                                        console.log(response.data);
+                                        alert("User has no authority!");
+                                    }
+                                   
+                                    
+                                    
+                                    //Odkomentarisati ovo kad se obavi verifikacija mejla
+                                }).catch(res => {                 
+                                    
+                                    console.log("GRESKA");
+                                    console.log(res.response);
+                                    this.errorMessage = res.response.data.message;
+                                });                        
+                        
+                        
+                        
+
+                       //this.$router.push('SystemAdminProfile');
+                        
+                        
+                        //Odkomentarisati ovo kad se obavi verifikacija mejla
+                    }).catch(res => { 
+                        if(res.response.status === 401)
+                           alert("Wrong password or email.");
+                        
+                        console.log(res.response);
+                        this.errorMessage = res.response.data.message;
+                       
+                    }); 
+
+
+
+
+
+
+
+
+
+                    console.log(response.data);
+
+                }).catch(res => {
+                    alert(res.response.data.message);
+                }); 
+
+       
+      },
+      cancelModal() {
+        // We pass the ID of the button that we want to return focus to
+        // when the modal has hidden
+        this.newPassword = "";
+        this.newPasswordRepeat = "";
+
+        this.$refs['my-modal'].toggle('#toggle-btn')
+      },
+
     },
     mounted()
     {
-        
+
+        if(localStorage.getItem('accessToken') != null)
+        {
+            localStorage.clear();
+        }
     }
     
 }
