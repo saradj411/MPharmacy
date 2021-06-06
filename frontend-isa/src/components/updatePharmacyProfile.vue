@@ -16,8 +16,10 @@
            </b-link></router-link></b-dropdown-item>
 
 
-                                    <b-dropdown-item >Add dermatologist</b-dropdown-item>
-    
+
+                                    <b-dropdown-item><router-link :to="{ path: '/AddDermatologist/'+pharmacy.idPharm}" v-slot="{href, navigate}" custom>
+           <b-link style="font-size:20px;color:black;" :href="href" @click="navigate"  elevation="1">Add new dermatologist
+             </b-link></router-link></b-dropdown-item>    
                                 </b-dropdown>      
               <b-dropdown id="ddCommodity" name="ddCommodity" text="Pharmacists" style="margin-left:50px; color:white;" >
                                     <b-dropdown-item>

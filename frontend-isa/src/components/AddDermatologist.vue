@@ -134,10 +134,10 @@ id : this.$route.params.id,
                endTime:this.end
 
           }
-          this.axios.post('/pharmacist/createPharmacist',info,{ 
+          this.axios.post('/dermatologist/createDermatologist',info,{ 
              headers: {
              }}).then(response => {
-                       alert("Pharmacist is added!");
+                       alert("Dermatologist is added!");
                         this.nesto=response.data;
           //window.location.href = "/ProfileAdmin";
 

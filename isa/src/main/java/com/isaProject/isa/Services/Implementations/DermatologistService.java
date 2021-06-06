@@ -75,7 +75,7 @@ public class DermatologistService implements IDermatologistService, Serializable
     public @Autowired
     PharmacyRepository pharmacyRepository;
     @Override
-    public Dermatologist create(DermatologistForCreateDTO  dermatologistForCreateDTO){
+    public Dermatologist create(DermatologistForCreateDTO dermatologistForCreateDTO){
         Dermatologist dermatologist=new Dermatologist();
         dermatologist.setAddress(dermatologistForCreateDTO.getAddress());
         dermatologist.setAvgGrade(0.0);
@@ -89,7 +89,9 @@ public class DermatologistService implements IDermatologistService, Serializable
         dermatologist.setAccountEnabled(true);
 
         Pharmacy pharmacy=pharmacyRepository.getOne(dermatologistForCreateDTO.getIdPharmacy());
-        //dermatologist.setPharmacy(pharmacy);
+        Set<Pharmacy> p=new HashSet<>();
+        p.add(pharmacy);
+        dermatologist.setPharmacies(p);
         Dermatologist created=dermatologistRepository.save(dermatologist);
         Staff staff=staffRepository.getOne(created.getId());
 
