@@ -318,6 +318,7 @@ public class PharmacistController {
     @PostMapping(value = "/createPharmacist")
     ResponseEntity<String> update(@RequestBody PharmacistForCreateDTO pharmacist)
     {
+
         Pharmacist pharmacist1=pharmacistService.create(pharmacist);
         return new ResponseEntity<>("ajdeee", HttpStatus.CREATED);
 

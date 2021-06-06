@@ -1,9 +1,11 @@
 package com.isaProject.isa.Model.DTO;
 
+import lombok.NoArgsConstructor;
+
 import javax.persistence.Column;
 import java.time.LocalDate;
 import java.time.LocalTime;
-
+@NoArgsConstructor
 public class PharmacistForCreateDTO {
     private String name;
 
@@ -14,7 +16,7 @@ public class PharmacistForCreateDTO {
     private String email;
 
 
-    private String password;
+        private String password;
 
 
     private String address;
@@ -28,7 +30,7 @@ public class PharmacistForCreateDTO {
 
     private String country;
 
-    private Integer idPharmacy;
+        private Integer idPharmacy;
 
 
 //za radno vrijeme

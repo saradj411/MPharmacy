@@ -56,6 +56,8 @@ import RegisterDermatologist from '../components/RegisterDermatologist'
 import RegisterNewPharmacy from '../components/RegisterNewPharmacy'
 import RegisterAdminPharamcyPage from '../components/RegisterAdminPharamcyPage'
 import AcceptRejectVacation from '../components/AcceptRejectVacation'
+import AddPharmacist from '../components/AddPharmacist'
+
 
 import moment from 'moment'
 
@@ -350,6 +352,11 @@ const routes = [
         path: '/IncomeReport/:id',
         name: 'IncomeReport',
         component: IncomeReport
+      },
+      {
+        path: '/AddPharmacist/:id',
+        name: 'AddPharmacist',
+        component: AddPharmacist
       }
       
 

@@ -206,6 +206,8 @@ public class PharmacistService implements IPharamacistService {
         pharmacist.setEmail(p.getEmail());
         pharmacist.setName(p.getName());
         pharmacist.setSurname(p.getSurname());
+        pharmacist.setAccountEnabled(true);
+
         Pharmacy pharmacy=pharmacyRepository.getOne(p.getIdPharmacy());
         pharmacist.setPharmacy(pharmacy);
         Pharmacist created=pharmacistRepository.save(pharmacist);

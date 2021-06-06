@@ -25,7 +25,9 @@
            <b-link style="font-size:20px;color:black;" :href="href" @click="navigate"  elevation="1">List of pharmacists
              </b-link></router-link>
            </b-dropdown-item>
-                                    <b-dropdown-item>Add pharmacist</b-dropdown-item>
+                                    <b-dropdown-item><router-link :to="{ path: '/AddPharmacist/'+pharmacy.idPharm}" v-slot="{href, navigate}" custom>
+           <b-link style="font-size:20px;color:black;" :href="href" @click="navigate"  elevation="1">Add new pharmacist
+             </b-link></router-link></b-dropdown-item>
    
                                 </b-dropdown> 
 
