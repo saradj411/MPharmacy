@@ -81,6 +81,10 @@ public class PharmacyAdminController {
     @PostMapping(value = "/updateAdmin")
     ResponseEntity<String> update(@RequestBody PharmacyAdmin pharmacyAdmin)
     {
+        System.out.println("id admina je "+pharmacyAdmin.getId());
+        System.out.println("id admina je "+pharmacyAdmin.getName());
+        System.out.println("id admina je "+pharmacyAdmin.getAddress());
+
         pharmacyAdminService.update(pharmacyAdmin);
         return new ResponseEntity<>("ajdeee", HttpStatus.CREATED);
 

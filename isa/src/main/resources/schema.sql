@@ -1,9 +1,10 @@
   #pharmacy
-    insert into pharmacy values (500,'Detelinara',3.5,'Novi Sad','Srbija','opis1','Jankovic 1');
-    insert into pharmacy values (501,'Detelinara',3.5,'Novi Sad','Srbija','opis2','Jankovic 2');
-    insert into pharmacy values (502,'Detelinara',3.5,'Novi Sad','Srbija','opis3','Jankovic 3');
-    insert into pharmacy values (503,'Detelinara',3.5,'Novi Sad','Srbija','opis4','Jankovic 4');
-    insert into pharmacy values (504,'Detelinara',3.5,'Novi Sad','Srbija','opis5','Jankovic 5');
+
+insert into pharmacy values (501,'Detelinara',3.5,'Novi Sad','Srbija','opis5','Jankovic 5',2, 21000, 'Street 2', 'Novi Sad');
+insert into pharmacy values (502,'Detelinara',3.5,'Novi Sad','Srbija','opis5','Jankovic 5',2, 21000, 'Street 2', 'Novi Sad');
+insert into pharmacy values (503,'Detelinara',3.5,'Novi Sad','Srbija','opis5','Jankovic 5',2, 21000, 'Street 2', 'Novi Sad');
+insert into pharmacy values (504,'Detelinara',3.5,'Novi Sad','Srbija','opis5','Jankovic 5',2, 21000, 'Street 2', 'Novi Sad');
+insert into pharmacy values (505,'Detelinara',3.5,'Novi Sad','Srbija','opis5','Jankovic 5',2, 21000, 'Street 2', 'Novi Sad');
 
 
     #drug

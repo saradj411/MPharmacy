@@ -70,6 +70,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll().antMatchers("/api/foo")
                 .permitAll().antMatchers("/pharmacy/findAll")
                 .permitAll().antMatchers("/adminstrator/updateAdminPharmacy")
+                .permitAll().antMatchers("/pharmacy/mapp/{idPharm}")
+
+
 
 
 

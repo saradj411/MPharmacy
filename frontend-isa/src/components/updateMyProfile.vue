@@ -96,14 +96,16 @@ export default {
     newPassword : "",
     newPasswordRepeat : "",
     sifra:"",
-    email:""
+    email:"",
+    id : this.$route.params.id,
+
     
     }
   },
 
   
   mounted() {
-        this.axios.get('adminstrator/findById/'+503,{ 
+        this.axios.get('adminstrator/findById/'+this.id,{ 
              
          }).then(response => {
                this.admin=response.data;
@@ -116,6 +118,8 @@ export default {
                
 },
   methods:{
+
+
      update: function(){
 
         if(this.currentPassword ==""){
