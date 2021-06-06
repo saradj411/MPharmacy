@@ -1,11 +1,10 @@
 package com.isaProject.isa.Controllers;
 
 
-import com.isaProject.isa.Model.DTO.DrugAndSpecDTO;
-import com.isaProject.isa.Model.DTO.DrugDTO;
-import com.isaProject.isa.Model.DTO.SpecificaitonDTO;
+import com.isaProject.isa.Model.DTO.*;
 import com.isaProject.isa.Model.Drugs.Drug;
 import com.isaProject.isa.Model.Drugs.Specification;
+import com.isaProject.isa.Model.Users.Dermatologist;
 import com.isaProject.isa.Model.Users.PharmacyAdmin;
 import com.isaProject.isa.Services.Implementations.DrugService;
 import com.isaProject.isa.Services.Implementations.SpecificationService;
@@ -71,6 +70,19 @@ public class DrugContorller {
     ResponseEntity<String> update(@RequestBody Drug drug)
     {
         drugService.update(drug);
+        return new ResponseEntity<>("ajdeee", HttpStatus.CREATED);
+
+    }
+
+    @PostMapping(value = "/createDrug")
+    ResponseEntity<String> update(@RequestBody DrugNewDTO drugNewDTO)
+    {
+        System.out.println("id apoteke je "+drugNewDTO.getIdPharm());
+        System.out.println("Ime je "+drugNewDTO.getName());
+        System.out.println("Kod  je "+drugNewDTO.getPassword());
+
+
+        Drug dermatologist=drugService.create(drugNewDTO);
         return new ResponseEntity<>("ajdeee", HttpStatus.CREATED);
 
     }
