@@ -701,7 +701,7 @@ ili savetovanjem koje pacijent ima zakazano (u bilo kojoj apoteci),
             examination.setEndTime(schedulePharmacistExaminationDTO.getStartTime().plusHours(1));
             examination.setStartTime(schedulePharmacistExaminationDTO.getStartTime());
             examination.setScheduled(true);
-            examination.setPrice(schedulePharmacistExaminationDTO.getPrice());
+            examination.setPrice(pharmacy.getConsultationPrice());
             examination.setReport(null);
             examination.setStatus(ExaminationStatus.SCHEDULED);
             examination.setType(ExaminationType.PHARMACIST_EXAMINATION);

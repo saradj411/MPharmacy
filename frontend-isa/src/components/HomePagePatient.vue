@@ -685,7 +685,7 @@
         <th scope="row"></th>
         
          <td>Consultation price:</td>
-          <td></td>
+          <td>{{dr.priceConsultation}}</td>
       </tr>
         <tr>
           <th></th>
