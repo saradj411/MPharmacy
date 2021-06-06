@@ -1,5 +1,6 @@
 package com.isaProject.isa.Model.Users;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.isaProject.isa.Model.Examination.Examination;
 import com.isaProject.isa.Model.Pharmacy.Pharmacy;
@@ -16,9 +17,11 @@ public class Dermatologist extends Staff implements  Serializable{
 
     //apoteke u kojima je zaposlen
     @ManyToMany(cascade = {CascadeType.MERGE})
+
     @JoinTable(name = "dermatologists_in_pharmacies",
             joinColumns = @JoinColumn(name = "dermatologistId", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "pharmacyId", referencedColumnName = "idPharm"))
+    //@JsonBackReference
     private Set<Pharmacy> pharmacies = new HashSet<>();
 
     /*

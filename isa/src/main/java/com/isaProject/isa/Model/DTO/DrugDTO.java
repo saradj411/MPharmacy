@@ -2,19 +2,19 @@ package com.isaProject.isa.Model.DTO;
 
 import com.isaProject.isa.Model.Drugs.DrugFormat;
 import com.isaProject.isa.Model.Pharmacy.Pharmacy;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import java.io.Serializable;
 
-
+@NoArgsConstructor
 public class DrugDTO implements Serializable {
     private String name;
 
     private String code;
 
     private boolean recipeNeed;
-
     private String drugType;
 
     @Enumerated(EnumType.STRING)
@@ -25,6 +25,25 @@ public class DrugDTO implements Serializable {
     private Integer quantity;
 
     private Pharmacy pharmacy;
+    private Integer idPharm;
+
+    public Integer getIdPharm() {
+        return idPharm;
+    }
+
+    public void setIdPharm(Integer idPharm) {
+        this.idPharm = idPharm;
+    }
+
+    public DrugDTO(String name, String code, String drugType, DrugFormat format, String manufacturer, Integer quantity, Integer idPharm) {
+        this.name = name;
+        this.code = code;
+        this.drugType = drugType;
+        this.format = format;
+        this.manufacturer = manufacturer;
+        this.quantity = quantity;
+        this.idPharm = idPharm;
+    }
 
     public DrugDTO(String name, String code, boolean recipeNeed, String drugType, DrugFormat format, String manufacturer) {
         this.name = name;
@@ -34,11 +53,6 @@ public class DrugDTO implements Serializable {
         this.format = format;
         this.manufacturer = manufacturer;
     }
-
-    public DrugDTO(){}
-
-
-
 
     public DrugDTO(String name, String code, boolean recipeNeed, String drugType, DrugFormat format, String manufacturer, Integer quantity, Pharmacy pharmacy) {
         this.name = name;

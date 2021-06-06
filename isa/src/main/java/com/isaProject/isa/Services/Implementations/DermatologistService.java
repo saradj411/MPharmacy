@@ -15,6 +15,7 @@ import com.isaProject.isa.Model.Users.*;
 
 import com.isaProject.isa.Repositories.*;
 import com.isaProject.isa.Services.IServices.IDermatologistService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -28,32 +29,33 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 @Service
-public class DermatologistService implements IDermatologistService, Serializable {
+@Slf4j
+public class DermatologistService implements IDermatologistService {
 
    //s private static final Logger log = org.slf4j.LoggerFactory.getLogger(DermatologistService.class);
-    public @Autowired
+     @Autowired
     DermatologistRepository dermatologistRepository;
     @Autowired
-    private PasswordEncoder passwordEncoder;
+     PasswordEncoder passwordEncoder;
 
     @Autowired
-    private AuthorityService authService;
-    public @Autowired
+     AuthorityService authService;
+     @Autowired
     WorkTimeRepository workTimeRepository;
 
-    public @Autowired
+     @Autowired
     PatientRepository patientRepository;
 
-    public @Autowired
+     @Autowired
     ExaminationRepository examinationRepository;
 
-    public @Autowired
+     @Autowired
     ExaminationService examinationService;
 
-    public  @Autowired
+      @Autowired
     WorkTimeService workTimeService;
 
-    public @Autowired
+     @Autowired
     PharmacyService pharmacyService;
 
 
@@ -61,7 +63,7 @@ public class DermatologistService implements IDermatologistService, Serializable
 
     Set<Pharmacy> pharmOfDerm = new HashSet<Pharmacy>();
 
-    public @Autowired
+     @Autowired
     StaffRepository staffRepository;
 
 
@@ -69,15 +71,15 @@ public class DermatologistService implements IDermatologistService, Serializable
     @Autowired
     UserRepository userRepository;
 
-    public @Autowired
+     @Autowired
     SpecificationRepository specificationRepository;
 
-    public @Autowired
+     @Autowired
     DrugRepository drugRepository;
 
-    public @Autowired
+     @Autowired
     SpecificationService specificationService;
-    public @Autowired
+     @Autowired
     PharmacyRepository pharmacyRepository;
     @Override
     public Dermatologist create(DermatologistForCreateDTO dermatologistForCreateDTO){
@@ -113,7 +115,7 @@ public class DermatologistService implements IDermatologistService, Serializable
 
     }
 
-    public @Autowired
+     @Autowired
     RequestForVacationRepository requestForVacationRepository;
 
     @Override
@@ -315,10 +317,11 @@ može obrisati)
             pharmacies.add(pharmacy);
 
             WorkTimeDTO workTimeDTO = new WorkTimeDTO();
-            LocalDate date = (dermDTO.getDate()).toInstant()
+            LocalDate date = (dermDTO.getDate());
+                    /*.toInstant()
                     .atZone(ZoneId.systemDefault())
                     .toLocalDate();
-
+*/
 
             workTimeDTO.setDate(date);
             workTimeDTO.setStartTime(dermDTO.getStartTime());

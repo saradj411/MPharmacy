@@ -45,7 +45,7 @@ public class Drug implements Serializable {
     //@JsonIgnore
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinTable( name = "alternativeDrug", joinColumns = @JoinColumn(name="idDrug", nullable = true,referencedColumnName="idDrug"), inverseJoinColumns = @JoinColumn(name = "idAlternativeDrug", referencedColumnName = "idDrug"))
-    @JsonBackReference
+    //@JsonBackReference
     private Set<Drug> alternativeDrugs = new HashSet<Drug>();
 
     public Drug() {

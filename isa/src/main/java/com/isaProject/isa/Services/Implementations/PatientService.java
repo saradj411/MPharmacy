@@ -47,8 +47,7 @@ public class PatientService implements IPatientService {
         //System.out.println("ovdje uslo sada aaaaa:"+id);
         User user=userRepository.getOne(id);
         //System.out.println("ovdje uslo sada aaaaa:"+user.getName());
-        Patient patient=patientRepository.getOne(id);
-        return patient;
+        return patientRepository.getOne(id);
 
     }
 

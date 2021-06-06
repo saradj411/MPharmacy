@@ -60,7 +60,7 @@ public class ExaminationService implements IExaminationService {
     PatientRepository patientRepository;
     @Autowired
     PharmacyRepository pharmacyRepository;
-
+    @Autowired
     DermatologistService dermatologistService;
     @Autowired
     DrugRepository drugRepository;
@@ -722,4 +722,4 @@ ili savetovanjem koje pacijent ima zakazano (u bilo kojoj apoteci),
 
 
 }
-    }
+

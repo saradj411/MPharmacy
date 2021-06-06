@@ -152,7 +152,9 @@ odkomentarisiiii
     public Offer save(OfferDTO offerDTO) {
         Offer offer = new Offer();
         offer.setOfferStatus(OfferStatus.ON_HOLD);
-        offer.setDeliveryDate(convertLocalDateToDate(offerDTO.getDeliveryDate()));
+        //offer.setDeliveryDate(convertLocalDateToDate(offerDTO.getDeliveryDate()));
+
+        offer.setDeliveryDate(offerDTO.getDeliveryDate());
         offer.setDrugOrder(drugOrderService.findById(offerDTO.getIdOrder()));
         offer.setPrice(offerDTO.getTotalPrice());
         Supplier supplier = supplierRepository.getOne(offerDTO.getIdSupplier());

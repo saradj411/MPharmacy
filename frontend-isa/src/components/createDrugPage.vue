@@ -126,12 +126,10 @@ export default {
              }}).then(response => {
                        alert("Drug is added!");
                         this.nesto=response.data;
-          window.location.href = "/ProfileAdmin";
-
                         console.log(response.data);
                 })
                 .catch(res => {
-                    alert(res.response.data.message);
+                    console.log(res.response.data.message);
                  });    
       },
       typeIsSelected : function(event, type) { 

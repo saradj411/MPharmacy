@@ -18,7 +18,6 @@ import com.isaProject.isa.Services.Implementations.Grade.DeratologistGradeServic
 import com.isaProject.isa.Services.Implementations.Grade.DrugGradeService;
 import com.isaProject.isa.Services.Implementations.Grade.PharmacistGradeService;
 import com.isaProject.isa.Services.Implementations.Grade.PharmacyGradeService;
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

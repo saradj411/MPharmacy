@@ -4,7 +4,7 @@
      background-size: 150% 111%;  height: 1100px">
                      <label style="color:#474A8A;font-size:35px;" align = "center">Pharmacy administrator profile</label>
 
-        <div style="background: #B0B3D6; height: 80px;">
+        <div style="background: #B0B3D6; height: 120px;">
 
             <span style="float: left; margin-top: 20px;">
                <router-link :to="{ path: '/updatePharmacyProfile/'+pharmacy.idPharm}" v-slot="{href, navigate}" custom>
@@ -24,7 +24,7 @@
 
                 <router-link :to="{ path: '/AnnualReport/'+user.id}" v-slot="{href, navigate}" custom>
 
-                  <button class = "btn btn-primary btn-xs" style="margin:auto; margin-left:38px;background:#474A8A " :href="href" @click="navigate" elevation="1">Annual report examination</button>
+                  <button class = "btn btn-primary btn-xs" style="margin:auto; margin-left:38px;margin-top:15px;background:#474A8A " :href="href" @click="navigate" elevation="1">Annual report examination</button>
                </router-link>
 
 <router-link :to="{ path: '/QuarterReport/'+user.id}" v-slot="{href, navigate}" custom>

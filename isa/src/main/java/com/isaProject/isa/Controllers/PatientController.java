@@ -25,7 +25,7 @@ import java.util.Set;
 @CrossOrigin("*")
 @RequestMapping(value="/patient")
 @Slf4j
-//@JsonIgnoreProperties(ignoreUnknown = true)
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class PatientController {
 
     @Autowired

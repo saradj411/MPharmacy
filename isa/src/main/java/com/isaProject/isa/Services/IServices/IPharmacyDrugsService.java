@@ -9,7 +9,7 @@ public interface IPharmacyDrugsService {
 
     List<PharmacyDrugs> findAll();
     String remove(Integer idPharm,Integer idDrug);
-    Boolean remove(Integer idPharm,Integer idDrug);
+    //Boolean remove(Integer idPharm,Integer idDrug);
 
     List<PharmacyDrugs> findByName(String name);
     PharmacyDrugs findById(Integer id);
