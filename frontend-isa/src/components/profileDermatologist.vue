@@ -127,6 +127,7 @@ export default {
              
          }).then(response => {
                this.user=response.data;
+               console.log("sdhbh" +this.user.name);
          }).catch(res => {
                        alert("ne valja.");
                        console.log(res);
@@ -143,11 +144,6 @@ export default {
         clients : function(){
           window.location.href = '/ReviewedClientsDermatologist/'+501;
         },
-
-        
-
-        
-
 
 }
 }
