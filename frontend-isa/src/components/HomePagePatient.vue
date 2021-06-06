@@ -941,6 +941,8 @@ export default {
         drugName:null,
         date:null,
         time:null,
+        moze:true,
+
 
         reservations:[],
         dermatologistScheduledExamination:[],
@@ -1108,7 +1110,15 @@ export default {
                 alert("Nesto ne valja");
                 console.log(res);
         });
-               
+      this.axios.get('/patient/moreThan3/'+this.id)
+        .then(response => {
+                this.moze = response.data;
+                console.log(this.moze)
+         }).catch(res => {
+                alert("Nesto ne valja");
+                console.log(res);
+        });
+              
                
 },
 methods:{
@@ -1304,6 +1314,9 @@ methods:{
       },
       showCreatedDerm:
        function(){
+         if(!this.moze){
+           alert("Scheduling is not possible!You have more than 3 penalties!")
+         }else{
         this.showTable=false
         this.showReserveTable=false
        this.showDermExam=false
@@ -1327,9 +1340,13 @@ methods:{
         this.showGradePharmacist=false
         this.showGradePharmacy=false
         this.showGradeDrug=false
+         }
       },
       showCreatedPharmacist:
       function(){
+         if(!this.moze){
+           alert("Scheduling is not possible! You have more than 3 penalties!")
+         }else{
         this.showTable=false
         this.showReserveTable=false
        this.showDermExam=false
@@ -1353,8 +1370,12 @@ methods:{
         this.showGradePharmacist=false
         this.showGradePharmacy=false
         this.showGradeDrug=false
+         }
       },
       showAllDrugs: function(){
+          if(!this.moze){
+           alert("Scheduling is not possible! You have more than 3 penalties!")
+         }else{
         this.showTable=false
         this.showReserveTable=false
        this.showDermExam=false
@@ -1378,6 +1399,7 @@ methods:{
         this.showGradePharmacist=false
         this.showGradePharmacy=false
         this.showGradeDrug=false
+         }
       },
       canceling:
        function(res,idRes){
@@ -1741,11 +1763,11 @@ methods:{
           .then(response => {
                console.log(response.data);
               this.jel2 = response.data;
-              
+                  alert("Successfully graded!");
                 })
                 .catch(res => {
                      
-                        alert("Sorting is currently not possible");
+                        alert("Grading is currently not possible");
                         console.log(res)
                     })
       },
@@ -1755,11 +1777,12 @@ methods:{
           .then(response => {
                console.log(response.data);
               this.jel2 = response.data;
+              alert("Successfully graded!");
               
                 })
                 .catch(res => {
                      
-                        alert("Sorting is currently not possible");
+                        alert("Grading is currently not possible");
                         console.log(res)
                     })
       },
@@ -1772,11 +1795,12 @@ methods:{
           .then(response => {
                console.log(response.data);
               this.jel2 = response.data;
+              alert("Successfully graded!");
               
                 })
                 .catch(res => {
                      
-                        alert("Sorting is currently not possible");
+                        alert("Grading is currently not possible");
                         console.log(res)
                     })
       },
@@ -1789,11 +1813,12 @@ methods:{
           .then(response => {
                console.log(response.data);
               this.jel2 = response.data;
+              alert("Successfully graded!");
               
                 })
                 .catch(res => {
                      
-                        alert("Sorting is currently not possible");
+                        alert("Grading is currently not possible");
                         console.log(res)
                     })
       },

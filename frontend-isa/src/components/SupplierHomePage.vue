@@ -300,8 +300,6 @@
 </template>
 <script>
 import { required } from 'vuelidate/lib/validators'
-
-
 export default{
 data()
     {
@@ -321,41 +319,29 @@ data()
             supplier: {},
             drug_order: {},
             
-
             isOpen: false,
             prosledjena: [],
             price: "",
             date: "",
-
             limitDate: "",
             today: "",
             ogranicenje: "",
-
             supplierID: "",
-
             offerList:{},
             offerListCopy: {},
-
             offerId: "",
             orderID: "",
             totalPrice: "",
             deliveryDate:"",
-
             dateToConvert:"",
-
             offerToChange: 0 ,
-
             key: "",
             offer:""
             
             
-
-
-
         };
     }
     ,
-
     validations:
     {
         name : {
@@ -379,10 +365,7 @@ data()
         country : {
             required            
         }
-
-
     },
-
     methods:    
     {   
         filtering: function(event)
@@ -406,7 +389,6 @@ data()
                         deliveryDate:this.offerListCopy[offer].deliveryDate,
                         idSupplier: this.offerListCopy[offer].idSupplier,
                         offerStatus: this.offerListCopy[offer].offerStatus
-
                     }
                     //console.log(pomocna);
                     newList.push(pomocna);
@@ -431,7 +413,6 @@ data()
                 if(currentDate.getFullYear() <= timeLimit[0] )
                 {
                     console.log( currentDate.getFullYear() + "<=" + timeLimit[0])
-
                     if(currentDate.getDate() <= timeLimit[1])
                     {
                         console.log( currentDate.getDate() + "<=" + timeLimit[1])
@@ -441,7 +422,6 @@ data()
                                 console.log(currentDate);
                                 //console.log(datum);
                                 return true;
-
                         }
                         else
                         {
@@ -471,7 +451,6 @@ data()
                 this.prosledjena = order;
                 console.log("LISTA OFFERSA: ");
                 console.log(this.prosledjena);
-
                 this.axios.get('offer/getOfferBySupplier/'+ this.id,
                 {
                     headers: 
@@ -487,13 +466,10 @@ data()
                         console.log("Greska kod dobavljanja");
                         alert(res.response.data.message);
                     });  
-
                 this.$refs['offers-modal'].show()
                 
             },
-
         addOffer() {
-
             const offerInfo = 
             {
                 idOrder : this.prosledjena.idOrder,
@@ -501,8 +477,6 @@ data()
                 deliveryDate : this.date,
                 idSupplier : this.id
             }
-
-
             console.log(offerInfo);
             this.axios.post('offer/newOffer', offerInfo,
                 {
@@ -518,7 +492,6 @@ data()
                     }).catch(res => {
                         alert(res.response.data.message);
                     });  
-
         
         },
         cancelModal() {       
@@ -527,7 +500,6 @@ data()
             this.$refs['my-modal'].toggle('#toggle-btn')
         },
         cancelModalOffer() {  this.$refs['offers-modal'].toggle('#toggle-btn') },
-
         updateSupplier : function()
         {
             console.log(this.supplier.name);
@@ -544,7 +516,6 @@ data()
                 country : this.supplier.country
             }          
             console.log(supplierUpdate);  
-
             this.axios.post('user/updateUser', supplierUpdate,
             {
                 headers: 
@@ -559,7 +530,6 @@ data()
                     alert(res.response.data.message);
                 });     
         },
-
         editOffer: function(offer)
         {   
                  this.offerToChange = offer; 
@@ -584,7 +554,6 @@ data()
                 document.getElementById('save'+ this.offerToChange.idOffer).disabled = true;
                 document.getElementById('cancel_'+ this.offerToChange.idOffer).disabled = true;
             }  ,  
-
             saveOffer(offer)
             {
                 this.offerToChange = offer;  
@@ -592,7 +561,6 @@ data()
                 this.deliverDate = document.getElementById('deliverDate_'+this.offerToChange.idOffer).value; 
                 console.log(new Date(this.deliverDate));
                 console.log(this.deliverDate[0] + "-" +this.deliverDate[1] + "-" + this.deliverDate[2]);
-
                 const offerUpdate = 
                 {
                     idOffer: this.offerToChange.idOffer,
@@ -601,10 +569,8 @@ data()
                     deliveryDate: new Date(this.deliverDate),
                     idSupplier: this.offerToChange.idSupplier
                 }
-
                 console.log(" AZURIRANJE PONUDE: ");
                 console.log(offerUpdate);
-
                 this.axios.post('/offer/updateOffer', offerUpdate,
                 {
                     headers: 
@@ -619,20 +585,16 @@ data()
                         alert("Successfully updated offer!");
                         window.location.reload(true);
                         console.log(response.data); 
-
                     }).catch(res => {
                         console.log("ne valjda");
                         alert(res.response.data.message);
                     }); 
-
             
             }   ,      
-
         deleteOffer(offer)
             {  
                 console.log("ZA BRISANJE");
                 console.log(offer.idOffer);
-
                     this.axios.get('/offer/deleteOffer/'+ offer.idOffer, 
                 {
                     headers: 
@@ -647,12 +609,10 @@ data()
                         alert("Successfully delete your offer!");
                         window.location.reload(true);
                         console.log(response.data); 
-
                     }).catch(res => {
                         console.log("ne valjda");
                         alert(res.response.data.message);
                     }); 
-
             }, 
         
     },
@@ -663,12 +623,10 @@ data()
              
             var currentDate = new Date();
             this.limitDate = currentDate;
-
             console.log("Day " + currentDate.getUTCDay()) ;
             console.log("Month " + currentDate.getMonth());
             console.log("year " + currentDate.getFullYear());
             console.log(currentDate);
-
         this.axios.get('user/findById/'+ this.id ,{ 
             headers: {
                     'Access-Control-Allow-Headers': 'Origin, Content-Type, X-Auth-Token',
@@ -677,17 +635,13 @@ data()
                     'Expires' : localStorage.getItem('expiresIn')
                 }
             }).then(response => {
-
                   this.supplier = response.data;
                   console.log(this.supplier);
-
             }).catch(res => {
                           alert("Token expired!");
                           window.location.href = '/login';
                           console.log(res.response.data.message);
                     });
-
-
         this.axios.get('drugOrder/getAllDrugOrder',{ 
             headers: {
                     'Access-Control-Allow-Headers': 'Origin, Content-Type, X-Auth-Token',
@@ -697,7 +651,6 @@ data()
                 }
             }).then(response => {
                   this.drug_order = response.data;                 
-
             }).catch(res => {
                         console.log(localStorage.getItem('expiresIn'));                        
                         window.location.href = '/login';
@@ -718,7 +671,6 @@ data()
         width: 1000px;
         height: 500px;
     }
-
     .order
     {
         
@@ -729,14 +681,11 @@ data()
         font-size:22px;
         padding: 10px;
     }
-
     .input--error{
     border-color:red;
     }
-
     .modal-dialog
     {
         width:1000px;
     }
-
 </style>
