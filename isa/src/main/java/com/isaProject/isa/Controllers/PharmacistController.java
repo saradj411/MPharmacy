@@ -6,6 +6,7 @@ import com.isaProject.isa.Model.Drugs.Drug;
 import com.isaProject.isa.Model.Drugs.DrugPricelist;
 import com.isaProject.isa.Model.Users.Dermatologist;
 import com.isaProject.isa.Model.Users.Pharmacist;
+import com.isaProject.isa.Repositories.PharmacistRepository;
 import com.isaProject.isa.Services.Implementations.DermatologistService;
 import com.isaProject.isa.Services.Implementations.DrugPricelistService;
 import com.isaProject.isa.Services.Implementations.DrugService;
@@ -19,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
@@ -47,6 +49,8 @@ public class PharmacistController {
 
     @Autowired
     private ExaminationService examinationService;
+    @Autowired
+    private PharmacistRepository pharmacistRepository;
 
     @Autowired
     private  StaffService staffService;
@@ -137,14 +141,27 @@ public class PharmacistController {
         return new ResponseEntity<>(freeEx, HttpStatus.ACCEPTED);
     }
 
-    @GetMapping(value = "/findById/{id}")
-    public ResponseEntity<Pharmacist> findById(@PathVariable Integer id) {
-
+    @GetMapping(value = "/findOneById/{id}")
+    @Async
+    public ResponseEntity<Pharmacist> findByIdk(@PathVariable Integer id) {
+        System.out.println("PatientController"+id);
         Pharmacist d= pharmacistService.findById(id);
         return d == null ?
                 new ResponseEntity<>(HttpStatus.NOT_FOUND) :
                 ResponseEntity.ok(d);
     }
+
+    @GetMapping(value = "/findById/{id}")
+    @Async
+    public ResponseEntity<Pharmacist> findById(@PathVariable Integer id) {
+        
+        Pharmacist d=pharmacistService.findById(id);
+        return d == null ?
+                new ResponseEntity<>(HttpStatus.NOT_FOUND) :
+                ResponseEntity.ok(d);
+    }
+
+
 /*
     @GetMapping(value = "/create/{name}/{surname}/{email}/{password}/{address}/{phoneNumber}/{city}/{country}/{pharmacy}/{avgGrade}/{workTime}/{examination}/{vacation})
     public ResponseEntity<String> addDrug(@PathVariable(value="name") String name,String surname,String email, String password, String address, String phoneNumber, String city, String country,Pharmacy pharmacy,double avgGrade,Set<WorkTime> workTime,Set<Examination> examinations,Set<Vacation> vacation) {
@@ -185,10 +202,9 @@ public class PharmacistController {
         String proba="2011/11/11";
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 
-        */
-/*
-        localhost:8083/dermatologist/create/dsdfdd/sdsadd/asdsdd/aSDdd/ASDFdd/ASDddd/asdefrdddd/503/2017-11-11/11:15:45/12:15:45
-         *//*
+
+
+      // localhost:8083/dermatologist/create/dsdfdd/sdsadd/asdsdd/aSDdd/ASDFdd/ASDddd/asdefrdddd/503/2017-11-11/11:15:45/12:15:45
 
 
 
@@ -238,11 +254,11 @@ public class PharmacistController {
 
 
 
-        return new ResponseEntity<>("kreirano", HttpStatus.CREATED);
+       return new ResponseEntity<>("kreirano", HttpStatus.CREATED);
     }
+
+
 */
-
-
 
 
 
@@ -301,16 +317,9 @@ public class PharmacistController {
 
 
         //idUser, name, surname, email, password, address, phoneNumber, city, country
-        WorkTimeDTO workTimeDTO=new WorkTimeDTO(jDate,startt,endd,staff,pharmacy);
+
+        /*WorkTimeDTO workTimeDTO=new WorkTimeDTO(jDate,startt,endd,staff,pharmacy);
         WorkTime ww=workTimeService.save(workTimeDTO);
-
-
-
-
-
-
-
-
 
         return new ResponseEntity<>("kreirano", HttpStatus.CREATED);
     }
@@ -351,6 +360,15 @@ public class PharmacistController {
         Pharmacist pharmacist = pharmacistService.findById(id);
         String answer = pharmacistService.delete(pharmacist);
         return new ResponseEntity<>(answer, HttpStatus.ACCEPTED);
+    }
+
+    @PostMapping(value = "/createPharmacist")
+    ResponseEntity<String> update(@RequestBody PharmacistForCreateDTO pharmacist)
+    {
+
+        Pharmacist pharmacist1=pharmacistService.create(pharmacist);
+        return new ResponseEntity<>("ajdeee", HttpStatus.CREATED);
+
     }
 
 

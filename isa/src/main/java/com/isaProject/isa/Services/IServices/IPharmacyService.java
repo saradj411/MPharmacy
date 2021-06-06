@@ -27,4 +27,6 @@ public interface IPharmacyService {
     List<StaffDTO>view(Integer idPharm);
 
     List<StaffDTO>viewDerm(Integer idPharm);
+    List<Pharmacy> findAllOrderByNameAsc();
+    List<Pharmacy> findAllOrderByNameDesc();
 }

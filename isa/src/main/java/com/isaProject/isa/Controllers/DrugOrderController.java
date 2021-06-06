@@ -1,5 +1,6 @@
 package com.isaProject.isa.Controllers;
 
+import com.isaProject.isa.Model.DTO.DrugOrderAndItemDTO;
 import com.isaProject.isa.Model.DTO.DrugOrderDTO;
 import com.isaProject.isa.Model.DTO.DrugOrderFrontDTO;
 import com.isaProject.isa.Model.DTO.OrderItemDTO;
@@ -13,7 +14,9 @@ import com.isaProject.isa.Services.Implementations.DrugOrderService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
 
@@ -100,5 +103,13 @@ public class DrugOrderController {
     }
 
 
+    
+
+    @GetMapping(value = "/getAllDrugOrder", produces = MediaType.APPLICATION_JSON_VALUE)
+    //@PreAuthorize("hasRole('SUPPLIER'")
+    ResponseEntity<DrugOrderAndItemDTO> getNarudzbenice()
+    {
+        return new ResponseEntity(drugOrderService.getDrugOrderAndItemDTO(), HttpStatus.OK);
+    }
 
 }

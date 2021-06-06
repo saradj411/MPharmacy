@@ -13,13 +13,13 @@ public class PharmacyDrugs {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
-
-    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+    //EAGER NEK OSTANE
+    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @JoinColumn(name = "drugId", referencedColumnName = "idDrug")
    // @JsonManagedReference
     private Drug drug;
-
-    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+//EAGER NEK OSTANE
+    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @JoinColumn(name = "pharmacyId", referencedColumnName = "idPharm")
     //@JsonManagedReference
     private Pharmacy pharmacy;

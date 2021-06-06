@@ -1,14 +1,8 @@
 package com.isaProject.isa.Services.Implementations;
 
-import com.isaProject.isa.Model.DTO.DrugItemDTO;
-import com.isaProject.isa.Model.DTO.DrugOrderDTO;
-import com.isaProject.isa.Model.DTO.OrderItemDTO;
-import com.isaProject.isa.Model.Drugs.Drug;
+import com.isaProject.isa.Model.DTO.*;
 import com.isaProject.isa.Model.Drugs.DrugOrder;
-import com.isaProject.isa.Model.Drugs.DrugPricelist;
 import com.isaProject.isa.Model.Drugs.OrderItem;
-import com.isaProject.isa.Model.Pharmacy.Pharmacy;
-import com.isaProject.isa.Model.Users.PharmacyAdmin;
 import com.isaProject.isa.Repositories.DrugOrderRepository;
 import com.isaProject.isa.Repositories.DrugRepository;
 import com.isaProject.isa.Repositories.OrderItemRepository;
@@ -20,6 +14,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.*;
 
 @Service
 @Slf4j
@@ -40,6 +35,8 @@ public class DrugOrderService implements IDrugOrderService {
     @Autowired
     DrugRepository drugRepository;
 
+    @Autowired
+    PharmacyService pharmacyService;
     @Autowired
     OrderItemRepository orderItemRepository;
 
@@ -66,6 +63,56 @@ public class DrugOrderService implements IDrugOrderService {
     @Override
     public List<DrugOrder> findAll() {
         return drugOrderRepository.findAll();
+    }
+
+
+
+    @Override
+    public List<DrugOrder> getAllOrder() {
+        return  drugOrderRepository.findAll();
+    }
+
+    @Override
+    public List<DrugOrderAndItemDTO> getDrugOrderAndItemDTO() {
+
+        ArrayList<DrugOrderAndItemDTO> retVal = new ArrayList<DrugOrderAndItemDTO>();
+
+
+
+        for(DrugOrder drug : getAllOrder())
+        {
+            DrugOrderAndItemDTO dto = new DrugOrderAndItemDTO();
+            dto.setIdOrder(drug.getIdOrder());
+            dto.setPharmacyId(drug.getPharmacyAdmin().getId());
+            dto.setTimeLimit(drug.getTimeLimit());
+            dto.setPharmacyName(pharmacyService.findById(dto.getPharmacyId()).getName());
+
+            ArrayList<DrugOrderItemDTO> drugItemListDTO = new ArrayList<>();
+
+            Set<OrderItem> drugItems = drug.getOrderItems();
+
+            for(OrderItem oi : drugItems)
+            {
+                DrugOrderItemDTO drugOrderItemDTO = new DrugOrderItemDTO();
+                drugOrderItemDTO.setIdItemOrder(oi.getIdItem());
+                drugOrderItemDTO.setIdDrug(oi.getDrug().getIdDrug());
+                drugOrderItemDTO.setNameDrug(oi.getDrug().getName());
+                drugOrderItemDTO.setQuantity(oi.getQuantity());
+                drugOrderItemDTO.setManufacturuer(oi.getDrug().getManufacturer());
+
+                drugItemListDTO.add(drugOrderItemDTO);
+            }
+
+            dto.setDrugList(drugItemListDTO);
+            retVal.add(dto);
+        }
+
+        return retVal;
+    }
+
+    @Override
+    public DrugOrder findById(Integer id) {
+        return drugOrderRepository.findOnByidOrder(id);
     }
 
 

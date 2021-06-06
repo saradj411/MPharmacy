@@ -24,4 +24,7 @@ public interface WorkTimeRepository  extends JpaRepository<WorkTime, Integer> {
     @Query("select s from WorkTime s where s.date= ?1 and s.startTime= ?2 and s.endTime= ?3")
     WorkTime listaWorkTime(LocalDate date, LocalTime start, LocalTime end);
 
+    @Query("select s from WorkTime s where s.date= ?1")
+    List<WorkTime> listForPatient(LocalDate date);
+
 }

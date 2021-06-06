@@ -82,7 +82,16 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public void update(User drug) {
+    public void update(User user) {
+        User u = findById(user.getId());
+        u.setName(user.getName());
+        u.setSurname(user.getSurname());
+        u.setEmail(user.getEmail());
+        u.setAddress(user.getAddress());
+        u.setCity(user.getCity());
+        u.setCountry(user.getCountry());
+        u.setPhoneNumber(user.getPhoneNumber());
+        userRepository.save(u);
     }
 
     @Override
@@ -112,7 +121,7 @@ public class UserService implements IUserService {
         u.setCountry(userDTO.getCountry());
         u.setAccountEnabled(false);
         u.setAuthorities(auth);
-        serviceForEmail.sendEmailForPasswordChange(userDTO.getEmail(),newPassword);
+        //serviceForEmail.sendEmailForPasswordChange(userDTO.getEmail(),newPassword);
 
         return userRepository.save(u);
     }
@@ -138,6 +147,15 @@ public class UserService implements IUserService {
         String email = loggedUser.getName();
         User u = userRepository.findByEmail(email);
         return  u;
+    }
+
+    @Override
+    public User changePassword(String newPassword, String username) {
+        User u = findByEmail(username);
+        u.setPassword(passwordEncoder.encode(newPassword));
+        u.setAccountEnabled(true);
+        update(u);
+        return u;
     }
 
 

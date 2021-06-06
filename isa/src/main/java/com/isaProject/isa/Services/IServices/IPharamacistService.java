@@ -1,6 +1,7 @@
 package com.isaProject.isa.Services.IServices;
 
 import com.isaProject.isa.Model.DTO.PharmaceutDTO;
+import com.isaProject.isa.Model.DTO.PharmacistForCreateDTO;
 import com.isaProject.isa.Model.DTO.ReviewedClientsDTO;
 import com.isaProject.isa.Model.DTO.ScheduleAnExaminationDTO;
 import com.isaProject.isa.Model.Drugs.DrugPricelist;
@@ -19,4 +20,6 @@ public interface IPharamacistService {
      List<ReviewedClientsDTO> reviewedClientsDermatologist(Integer id);
 
         Pharmacist save(PharmaceutDTO dto);
+
+    Pharmacist create(PharmacistForCreateDTO p);
 }

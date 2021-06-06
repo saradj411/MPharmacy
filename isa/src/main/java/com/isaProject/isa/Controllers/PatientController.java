@@ -64,12 +64,7 @@ public class PatientController {
         }
         return new ResponseEntity<>(check, HttpStatus.ACCEPTED);
     }
-/*
-
-    @GetMapping(value = "/findById/{id}")
-    public ResponseEntity<Patient> findById(@PathVariable Integer id) {}
-*/
-
+    
     @GetMapping(value = "/findOneById/{id}")
     @Async
     public ResponseEntity<Patient> findById(@PathVariable Integer id) {
@@ -134,6 +129,17 @@ public class PatientController {
                 new ResponseEntity<>(HttpStatus.NOT_FOUND) :
                 ResponseEntity.ok(d);
     }
+
+    @GetMapping(value = "/findDermatologistForGrade/{id}")
+    public ResponseEntity<Set<Integer>> findDermatologistForGrade(@PathVariable Integer id) {
+
+        Set<Integer> d= patientService.findDermatologistForGrade(id);
+
+        return d == null ?
+                new ResponseEntity<>(HttpStatus.NOT_FOUND) :
+                ResponseEntity.ok(d);
+    }
+
     @GetMapping(value = "/findFinishedPharmacistExamination/{id}")
     public ResponseEntity<Set<FrontCreatedExaminationDTO>> findFinishedPharmacistExamination(@PathVariable Integer id) {
 
@@ -143,15 +149,6 @@ public class PatientController {
                 new ResponseEntity<>(HttpStatus.NOT_FOUND) :
                 ResponseEntity.ok(d);
     }
-    /*@GetMapping(value = "/findERecipe/{id}")
-    public ResponseEntity<List<ERecipe>> findERecipe(@PathVariable Integer id) {
-
-        List<ERecipe> d= patientService.findERecipe(id);
-
-        return d == null ?
-                new ResponseEntity<>(HttpStatus.NOT_FOUND) :
-                ResponseEntity.ok(d);
-    }*/
 
 
     @GetMapping(value = "/findAll")

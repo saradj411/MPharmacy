@@ -22,6 +22,7 @@ import org.springframework.stereotype.Service;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.ZoneId;
 import java.util.*;
 import java.util.HashSet;
 import java.util.List;
@@ -76,6 +77,41 @@ public class DermatologistService implements IDermatologistService, Serializable
 
     public @Autowired
     SpecificationService specificationService;
+    public @Autowired
+    PharmacyRepository pharmacyRepository;
+    @Override
+    public Dermatologist create(DermatologistForCreateDTO dermatologistForCreateDTO){
+        Dermatologist dermatologist=new Dermatologist();
+        dermatologist.setAddress(dermatologistForCreateDTO.getAddress());
+        dermatologist.setAvgGrade(0.0);
+        dermatologist.setCountry(dermatologistForCreateDTO.getCountry());
+        dermatologist.setPhoneNumber(dermatologistForCreateDTO.getCity());
+        dermatologist.setPassword(dermatologistForCreateDTO.getPassword());
+        dermatologist.setCity(dermatologistForCreateDTO.getCity());
+        dermatologist.setEmail(dermatologistForCreateDTO.getEmail());
+        dermatologist.setName(dermatologistForCreateDTO.getName());
+        dermatologist.setSurname(dermatologistForCreateDTO.getSurname());
+        dermatologist.setAccountEnabled(true);
+
+        Pharmacy pharmacy=pharmacyRepository.getOne(dermatologistForCreateDTO.getIdPharmacy());
+        Set<Pharmacy> p=new HashSet<>();
+        p.add(pharmacy);
+        dermatologist.setPharmacies(p);
+        Dermatologist created=dermatologistRepository.save(dermatologist);
+        Staff staff=staffRepository.getOne(created.getId());
+
+        WorkTime workTime=new WorkTime();
+        workTime.setStartTime(dermatologistForCreateDTO.getStartTime());
+        workTime.setEndTime(dermatologistForCreateDTO.getEndTime());
+        workTime.setDate(dermatologistForCreateDTO.getDate());
+        workTime.setPharmacy(pharmacy);
+
+        workTime.setStaff(staff);
+        WorkTime workcreated=workTimeRepository.save(workTime);
+
+        return dermatologist;
+
+    }
 
     public @Autowired
     RequestForVacationRepository requestForVacationRepository;
@@ -279,7 +315,12 @@ može obrisati)
             pharmacies.add(pharmacy);
 
             WorkTimeDTO workTimeDTO = new WorkTimeDTO();
-            workTimeDTO.setDate(dermDTO.getDate());
+            LocalDate date = (dermDTO.getDate()).toInstant()
+                    .atZone(ZoneId.systemDefault())
+                    .toLocalDate();
+
+
+            workTimeDTO.setDate(date);
             workTimeDTO.setStartTime(dermDTO.getStartTime());
             workTimeDTO.setEndTime(dermDTO.getEndTime());
             workTimeDTO.setStaff(staff);

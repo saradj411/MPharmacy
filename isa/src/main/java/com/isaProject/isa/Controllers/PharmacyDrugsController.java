@@ -13,9 +13,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
 
 @RestController
 @CrossOrigin
@@ -40,6 +44,39 @@ public class PharmacyDrugsController {
         return new ResponseEntity<>(answer, HttpStatus.ACCEPTED);
     }
 
+    @GetMapping("/getAll")
+    public ResponseEntity<List<PharmacyDrugs>> getAll() {
+        List<PharmacyDrugs> drugs=pharmacyDrugsService.findAll();
+        List<PharmacyDrugs> newList=new ArrayList<>();
+        for(PharmacyDrugs pD:drugs){
+            if(pD.getQuantity()>0){
+                newList.add(pD);
+            }
+        }
+        return newList == null ?
+                new ResponseEntity<>(HttpStatus.NOT_FOUND) :
+                ResponseEntity.ok(newList);
+    }
+
+    @GetMapping("/getAllByName/{name}")
+    public ResponseEntity<List<PharmacyDrugs>> getAll(@PathVariable String name) {
+        List<PharmacyDrugs> drugs=pharmacyDrugsService.findByName(name);
+        List<PharmacyDrugs> newList=new ArrayList<>();
+        for(PharmacyDrugs pD:drugs){
+            if(pD.getQuantity()>0){
+                newList.add(pD);
+            }
+        }
+        return newList == null ?
+                new ResponseEntity<>(HttpStatus.NOT_FOUND) :
+                ResponseEntity.ok(newList);
+    }
+
+    @GetMapping("/getById/{id}")
+    public ResponseEntity<PharmacyDrugs> getById(@PathVariable Integer id) {
+        PharmacyDrugs drug = pharmacyDrugsService.findById(id);
+        return new ResponseEntity<>(drug, HttpStatus.OK);
+    }
 
     //vrati sve lijekove neke apooteke
     @GetMapping(value = "/findDrugsByIdPharm/{id}/{name}")
@@ -88,8 +125,6 @@ public class PharmacyDrugsController {
                 new ResponseEntity<>(HttpStatus.NOT_FOUND) :
                 ResponseEntity.ok(finall);
     }
-
-
 
 
 }

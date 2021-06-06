@@ -133,4 +133,10 @@ export default {
 }
 </script>
 
+<style>
+.input--error{
+    border-color:red;
+    }
+</style>
+
   

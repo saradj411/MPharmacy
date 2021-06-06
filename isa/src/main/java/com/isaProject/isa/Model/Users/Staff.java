@@ -18,15 +18,15 @@ public class Staff extends User{
     private double avgGrade;
 
     //radno vrijemeidUser
-    @OneToMany(mappedBy = "staff", fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "staff", fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     private Set<WorkTime> workTime = new HashSet<WorkTime>();
 
     //savetovanja farmacut,pregledi dermatolog
-    @OneToMany(mappedBy = "staff",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "staff",fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     private Set<Examination> examinations = new HashSet<Examination>();
 
     //odmor
-    @OneToMany(mappedBy = "staff", fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "staff", fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     //@JsonManagedReference
     private Set<Vacation> vacation = new HashSet<Vacation>();
 
