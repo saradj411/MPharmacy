@@ -10,6 +10,7 @@ import com.isaProject.isa.Model.Drugs.ERecipe;
 import com.isaProject.isa.Model.Examination.Examination;
 import com.isaProject.isa.Model.Examination.ExaminationStatus;
 import com.isaProject.isa.Model.Examination.ExaminationType;
+import com.isaProject.isa.Model.Examination.Therapy;
 import com.isaProject.isa.Model.Pharmacy.Pharmacy;
 import com.isaProject.isa.Model.Users.Dermatologist;
 import com.isaProject.isa.Model.Users.Patient;
@@ -246,6 +247,10 @@ public class PatientService implements IPatientService {
             if((e.getStatus().compareTo(ExaminationStatus.FINISHED))==0){
 
                 if((e.getType().compareTo(ExaminationType.PHARMACIST_EXAMINATION))==0){
+                   /* Therapy therapy=new Therapy();
+                    if(!e.getTherapy().equals(null)){
+                        therapy=e.getTherapy();
+                    }*/
                     FrontCreatedExaminationDTO exDTO=new FrontCreatedExaminationDTO(e.getIdExamination(),e.getDate(),
                             e.getStartTime(),e.getEndTime(),e.getPrice(),
                             e.getStaff().getName(),e.getStaff().getSurname(),e.getPharmacy().getName(),
