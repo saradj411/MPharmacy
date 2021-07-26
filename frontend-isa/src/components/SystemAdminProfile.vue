@@ -66,7 +66,7 @@
         },
         ComplainsPage: function()
         {
-
+                window.location.href = '/Complains/' + this.id;
         }
 
         

@@ -266,7 +266,6 @@ body
 .complain
 {
   margin: 0 auto;
-  background-color: red;
 }
 table
 {

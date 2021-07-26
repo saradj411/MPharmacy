@@ -12,7 +12,7 @@ public class StaffComplaint extends Complaint{
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "staffId", referencedColumnName = "id",nullable = true)
-    @JsonBackReference
+    @JsonManagedReference
     private Staff staff;
 
     public Staff getStaff() {

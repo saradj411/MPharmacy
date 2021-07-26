@@ -5,9 +5,12 @@ import com.isaProject.isa.Model.Pharmacy.Complaint;
 import com.isaProject.isa.Model.Pharmacy.PharmacyComplaint;
 import com.isaProject.isa.Model.Pharmacy.StaffComplaint;
 import com.isaProject.isa.Repositories.ComplainRepository;
+import com.isaProject.isa.Repositories.StaffComplaintRepository;
 import com.isaProject.isa.Services.IServices.IComplainService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class ComplainService implements IComplainService {
@@ -20,6 +23,8 @@ public class ComplainService implements IComplainService {
     PharmacyService pharmacyService;
     @Autowired
     StaffService staffService;
+    @Autowired
+    StaffComplaintRepository staffComplaintRepository;
     @Override
     public Complaint findById(Integer id) {
        return  complainRepository.findByIdComplaint(id);
@@ -48,6 +53,16 @@ public class ComplainService implements IComplainService {
             return  staffComplaint;
 
         }
+    }
+
+    @Override
+    public List<Complaint> findAll() {
+        return  complainRepository.findAll();
+    }
+
+    @Override
+    public List<StaffComplaint> findAllStaff() {
+        return staffComplaintRepository.findAll();
     }
 
 
