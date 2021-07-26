@@ -14,7 +14,7 @@ public interface PharmacyRepository extends JpaRepository<Pharmacy, Integer>{
 
     Pharmacy findOneByIdPharm(Integer idPharm);
     List<Pharmacy> findOneByName(String name);
-    List<Pharmacy> findOneByAddress(String address);
+    List<Pharmacy> findOneByCity(String address);
 
     @Query("select s from Pharmacy s where s.idPharm= ?1")
     Pharmacy findOneByNamee(String name);

@@ -69,10 +69,18 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests().antMatchers("/h2-console/**")
                 .permitAll().antMatchers("/api/foo")
                 .permitAll().antMatchers("/pharmacy/findAll")
+                .permitAll().antMatchers("/adminstrator/updateAdminPharmacy")
+                .permitAll().antMatchers("/pharmacy/mapp/{idPharm}")
+
+
+
+
 
                 .permitAll().antMatchers("/drugPricelist/findAll")
                 .permitAll().antMatchers("/pharmacy/findByCity/{city}")
                 .permitAll().antMatchers("/pharmacy/findByName/{name}")
+                .permitAll().antMatchers("/drug/createDrug")
+
 
                 .permitAll().antMatchers("/reservation/findCanceledById/{id}")
                 .permitAll().antMatchers("/reservation/findPickedById/{id}")
@@ -81,6 +89,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll().antMatchers("/patient/findDermatologistForGrade/{id}")
                 .permitAll().antMatchers("/reservation/findById/{id}")
                 .permitAll().antMatchers("/patient/findSheduledPharmacistExamination/{id}")
+                .permitAll().antMatchers("/patient/moreThan3/{id}")
 
                 .permitAll().antMatchers("/grade/findDermatologistForGrade/{id}")
                 .permitAll().antMatchers("/grade/findPharmacistForGrade/{id}")
@@ -139,6 +148,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
                 .permitAll().antMatchers("/drugOrder/findAll")
 
+                .permitAll().antMatchers("/reservation/res2/{id}/{name}")
+
+                .permitAll().antMatchers("/reservation/res/{id}")
+
+
+
+                .permitAll().antMatchers("/dermatologist/del/{id}")
 
 
 

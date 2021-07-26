@@ -2,12 +2,15 @@ package com.isaProject.isa.Services.Implementations;
 
 import com.isaProject.isa.Model.DTO.DrugDTO;
 import com.isaProject.isa.Model.DTO.DrugReservationDTO;
+import com.isaProject.isa.Model.DTO.DrugReservationForViewDTO;
 import com.isaProject.isa.Model.DTO.FrontDrugReservationDTO;
 import com.isaProject.isa.Model.Drugs.Drug;
 import com.isaProject.isa.Model.Drugs.DrugPricelist;
 import com.isaProject.isa.Model.Drugs.DrugReservation;
 import com.isaProject.isa.Model.Drugs.PharmacyDrugs;
+import com.isaProject.isa.Model.Pharmacy.Pharmacy;
 import com.isaProject.isa.Model.Users.Patient;
+import com.isaProject.isa.Model.Users.Pharmacist;
 import com.isaProject.isa.Repositories.*;
 import com.isaProject.isa.Services.IServices.IDrugReservationService;
 import lombok.extern.slf4j.Slf4j;
@@ -16,6 +19,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import javax.mail.MessagingException;
 import java.text.DateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -23,6 +27,7 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 
 @Service
@@ -38,6 +43,12 @@ public class DrugReservationService implements IDrugReservationService {
     DrugRepository drugRepository2;
     @Autowired
     PharmacyDrugsRepository pharmacyDrugsRepository;
+
+    @Autowired
+    ServiceForEmail serviceForEmail;
+
+    @Autowired
+    PharmacistRepository pharmacistRepository;
 
 
 
@@ -87,9 +98,10 @@ public class DrugReservationService implements IDrugReservationService {
     public void canceling(Integer id) {
         DrugReservation pat = drugRepository.getOne(id);
 
-
+        PharmacyDrugs pp=pharmacyDrugsRepository.findByIdDrugAndIfPharm(pat.getPharmacy().getIdPharm(),pat.getDrug().getIdDrug());
         pat.setCancelled(true);
-
+        pp.setQuantity(pp.getQuantity()+pat.getQuantity());
+        pharmacyDrugsRepository.save(pp);
 
         drugRepository.save(pat);
     }
@@ -198,5 +210,51 @@ public class DrugReservationService implements IDrugReservationService {
             return novi;
 
     }
+
+
+    @Override
+    public String reservation(Integer idRes) throws MessagingException {
+        String message="";
+        DrugReservation drugReservation=drugRepository.getOne(idRes);
+        System.out.println(" Rezervacija "+drugReservation.getDrug().getName());
+        if (drugReservation.getIdReservation().equals(idRes)){
+
+            message="Patient successfully took the drug.";
+            drugReservation.setPickedUp(true);
+            drugReservation.setPickUpDate(LocalDate.now());
+            drugRepository.save(drugReservation);
+            serviceForEmail.sendingEmailToInformPatient(drugReservation.getPatient());
+
+        }
+        if ( possibleCancel(drugReservation.getDateOfReservation()).equals(true) || drugReservation==null){
+            message="The booking number is incorrect ";
+
+        }
+        return message;
+    }
+
+    /*
+    Farmaceut ne može da vidi listu
+svih rezervisanih lekova, samo one koje je pronašao pretragom. Prilikom
+pretrage rezervacija, prikazuju se samo one koje su napravljene u istoj apoteci u
+kojoj je farmaceut zaposlen
+
+     */
+    @Override
+    public List<DrugReservationForViewDTO>listDr(Integer idPharm){
+        Optional<Pharmacist> pharmacist=pharmacistRepository.findById(idPharm);
+        Pharmacist p=pharmacist.get();
+        List<DrugReservation>drugReservations=drugRepository.findAll();
+        List<DrugReservationForViewDTO>drugReservationForViewDTOS=new ArrayList<>();
+        for (DrugReservation d:drugReservations){
+            if (d.getPharmacy().equals(p.getPharmacy())){
+                DrugReservationForViewDTO drugReservationForViewDTO=new DrugReservationForViewDTO(d.getPatient().getName(),d.getPatient().getSurname(),d.getDrug().getName(),d.getQuantity(),d.getDateOfReservation());
+                drugReservationForViewDTOS.add(drugReservationForViewDTO);
+            }
+
+        }
+        return drugReservationForViewDTOS;
+    }
+
 
 }

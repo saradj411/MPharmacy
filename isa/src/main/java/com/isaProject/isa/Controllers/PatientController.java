@@ -181,4 +181,16 @@ public class PatientController {
                 new ResponseEntity<>(HttpStatus.NOT_FOUND) :
                 ResponseEntity.ok(newP);
     }
+
+    @GetMapping(value = "/moreThan3/{id}")
+    public ResponseEntity<Boolean> moreThan3(@PathVariable Integer id) {
+        Patient patient=patientService.findById(id);
+        Boolean res=true;
+        int penalty=patient.getPenalty();
+        if(penalty>=3){
+            res=false;
+        }
+        System.out.println(penalty);
+        return new ResponseEntity<>(res, HttpStatus.OK);
+    }
 }

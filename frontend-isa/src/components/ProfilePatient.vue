@@ -69,6 +69,13 @@
                 
 
                 </tr>
+                 <tr style="font-size:22px;color:#0D184F;">
+                <th></th>
+                <td>Penalty:</td>
+                <td>{{user.penalty}} </td>
+                
+
+                </tr>
            </tbody>
         </table>
     </form>

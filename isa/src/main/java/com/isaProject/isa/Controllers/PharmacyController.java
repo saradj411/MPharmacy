@@ -1,5 +1,6 @@
 package com.isaProject.isa.Controllers;
 
+import com.isaProject.isa.Model.DTO.AddressForMap;
 import com.isaProject.isa.Model.DTO.PharmacyDTO;
 import com.isaProject.isa.Model.Drugs.Drug;
 import com.isaProject.isa.Model.Drugs.DrugPricelist;
@@ -206,4 +207,21 @@ public class PharmacyController {
 
         return ResponseEntity.ok(pharmacies);
     }
+
+    @GetMapping("mapp/{idPharm}")
+    ResponseEntity<AddressForMap> getPharmacyAddress(@PathVariable Integer idPharm) {
+        Pharmacy pharmacy = pharmacyService.findById(idPharm);
+        AddressForMap addressDTO = new AddressForMap();
+        addressDTO.setCountry(pharmacy.getCountry());
+        addressDTO.setTown(pharmacy.getTown());
+        addressDTO.setStreet(pharmacy.getStreet());
+        addressDTO.setNumber(pharmacy.getNumber());
+        addressDTO.setPostalCode(pharmacy.getPostalCode());
+        return pharmacy == null ?
+                new ResponseEntity<>(HttpStatus.NOT_FOUND) :
+                ResponseEntity.ok(addressDTO);
+    }
+
+
+
 }

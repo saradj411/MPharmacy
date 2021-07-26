@@ -32,11 +32,31 @@ public class  Pharmacy implements Serializable {
     @Column
     private double avgGrade;
 
+    @Column
+    private Double consultationPrice;
+
+    // dodato za mapuuuu
+
+    @Column
+    private String town;
+
+    @Column
+    private String street;
+
+    @Column
+    private Integer number;
+
+    @Column
+    private Integer postalCode;
+
+    @Column
+    private String country;
+
+
     //DODATO
     @Column
     private String city;
-    @Column
-    private  String country;
+
 
     @OneToMany(mappedBy = "pharmacy", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     //@JsonBackReference
@@ -53,6 +73,20 @@ public class  Pharmacy implements Serializable {
     private Set<Examination> examinations = new HashSet<Examination>();
 
     public Pharmacy(){}
+
+    public Pharmacy(Integer idPharm, String name, String address, String description, double avgGrade, Double consultationPrice, String city, String country, Set<PharmacyAdmin> pharmacyAdmins, Set<DrugPricelist> drugPricelist, Set<Examination> examinations) {
+        this.idPharm = idPharm;
+        this.name = name;
+        this.address = address;
+        this.description = description;
+        this.avgGrade = avgGrade;
+        this.consultationPrice = consultationPrice;
+        this.city = city;
+        this.country = country;
+        this.pharmacyAdmins = pharmacyAdmins;
+        this.drugPricelist = drugPricelist;
+        this.examinations = examinations;
+    }
 
     public Integer getIdPharm() {
         return idPharm;
@@ -166,5 +200,44 @@ public class  Pharmacy implements Serializable {
         this.examinations = examinations;
     }
 
+    public String getTown() {
+        return town;
+    }
 
+    public void setTown(String town) {
+        this.town = town;
+    }
+
+    public String getStreet() {
+        return street;
+    }
+
+    public void setStreet(String street) {
+        this.street = street;
+    }
+
+
+    public Double getConsultationPrice() {
+        return consultationPrice;
+    }
+
+    public void setConsultationPrice(Double consultationPrice) {
+        this.consultationPrice = consultationPrice;
+    }
+
+    public Integer getNumber() {
+        return number;
+    }
+
+    public void setNumber(Integer number) {
+        this.number = number;
+    }
+
+    public Integer getPostalCode() {
+        return postalCode;
+    }
+
+    public void setPostalCode(Integer postalCode) {
+        this.postalCode = postalCode;
+    }
 }

@@ -69,7 +69,9 @@ export default {
        
     }
   },
+  
   methods:{
+  
     createReservation : function(){
             const reservation = {
             drug:this.pharmacyDrug.drug.idDrug,
@@ -78,7 +80,20 @@ export default {
             pickUpDate  :this.reserveDate,
             idPharmacyDrug:this.id
         }
-        console.log(this.start);
+        console.log("sasa",this.reserveDate);
+       
+        if(this.reserveDate===null){
+          alert("Please check date!")
+        }else{
+          var currentDate = new Date();
+          var odabrani=new Date(this.reserveDate)
+
+           if(odabrani<currentDate){
+             alert("Choose a date from the future!")
+           }else{
+           
+         
+            alert("Wait a second!")
            this.axios.post('/reservation/create',reservation,{ 
                         })
                 .then(response => {
@@ -90,7 +105,8 @@ export default {
                        alert("It is not possible reserve");
                         console.log(response);
                  }); 
-         
+        }
+        }
       },
       
     

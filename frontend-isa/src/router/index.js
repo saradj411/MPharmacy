@@ -64,6 +64,9 @@ import WriteComplaint from '../components/WriteComplaint.vue'
 import RegisterNewSupplier from '../components/RegisterNewSupplier'
 import SupplierHomePage from '../components/SupplierHomePage'
 import Complains from '../components/Complains'
+import Map from '../components/Map'
+
+
 
 import moment from 'moment'
 
@@ -418,7 +421,14 @@ const routes = [
         name: 'Complains',
         component: Complains
 
-      }
+      },
+      {
+        
+        path: '/Map/:id',
+        name: 'Map',
+        component: Map
+
+      } 
 
       
       

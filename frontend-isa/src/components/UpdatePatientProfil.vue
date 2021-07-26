@@ -118,7 +118,7 @@ export default {
         if(this.newPassword != this.newPasswordRepeat) {
             alert("New passwords must be equal.")
             return;
-        }
+        }else{
         
         if(this.currentPassword ==""){
           
@@ -126,7 +126,9 @@ export default {
         }else if (this.currentPassword !=this.patient.password) {
            alert("Invalid old password")
             return;
-        } else{
+        } else if (this.newPassword!=="") {
+           this.sifra=this.newPassword
+            }else{
           this.sifra=this.patient.password
         }
            const patientInfo = {
@@ -150,7 +152,7 @@ export default {
                        console.log(res);
                  });
       }
-
+     }
 }
 }
 </script>

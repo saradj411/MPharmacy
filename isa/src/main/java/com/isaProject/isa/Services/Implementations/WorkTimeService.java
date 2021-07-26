@@ -63,13 +63,15 @@ public class WorkTimeService implements IWorkTimeService {
         LocalTime newTime=time.plusHours(1);
 
         List<WorkTime> workTimes=workTimeRepository.listForPatient(date);
-
+        System.out.println("uslo u listForPatient");
         List<WorkTime> wT=new ArrayList<>();
         List<WorkTime> result=new ArrayList<>();
 
         List<Staff> zaposleni=new ArrayList<>();
         for(WorkTime workT:workTimes){
-            if(workT.getStaff().getAuthorityRole().equals("PHARMACIST")){
+            System.out.println("uslo u wt");
+            if(workT.getStaff().getAuthorityRole().equals("ROLE_PHARMACIST")){
+                System.out.println("uslo u P");
                   if(workT.getStartTime().isBefore(time)){
                     if(workT.getEndTime().isAfter(time)) {
                         System.out.println("radno vrijeme ima tad");
@@ -103,6 +105,13 @@ public class WorkTimeService implements IWorkTimeService {
                                 mozeLi = false;
                             }
                         }
+                        if (e.getStartTime().equals(time)) {
+
+                                System.out.println("ima pregled tad ovdheeee");
+                                mozeLi = false;
+
+                        }
+
                     }
                 }
             }

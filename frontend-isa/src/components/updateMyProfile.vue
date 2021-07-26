@@ -97,16 +97,19 @@ export default {
     newPasswordRepeat : "",
     sifra:"",
     email:"",
+    id : this.$route.params.id,
+
     
     }
   },
 
   
   mounted() {
-        this.axios.get('adminstrator/findById/'+503,{ 
+        this.axios.get('adminstrator/findById/'+this.id,{ 
              
          }).then(response => {
                this.admin=response.data;
+               
 
          }).catch(res => {
                        alert("ne valja.");
@@ -115,6 +118,8 @@ export default {
                
 },
   methods:{
+
+
      update: function(){
 
         if(this.currentPassword ==""){
@@ -133,8 +138,16 @@ export default {
         }
        
         
+        console.log("admin"+this.admin.id);
+        console.log("admin"+this.admin.name);
+        console.log("admin"+this.admin.surname);
+        
+        console.log("admin"+this.admin.phoneNumber);
+        console.log("admin"+this.admin.address);
+        console.log("admin"+this.admin.address);
         
           const adminInfo = {
+                   
                     id : this.admin.id,
                     name: this.admin.name,
                     surname : this.admin.surname,
@@ -146,14 +159,13 @@ export default {
                     email: this.admin.email
 
         } 
-        this.axios.post('/adminstrator/updateAdmin',adminInfo,{
+        
+        this.axios.post('/adminstrator/updateAdminPharmacy',adminInfo,{
       }).then(response => {
                this.nesto=response.data;
                 alert("Changes have been saved!");
-                window.location.href = "/ProfileAdmin";
           }).catch(res => {
                       alert("neceeee!");
-
                        console.log(res);
                  });
       }

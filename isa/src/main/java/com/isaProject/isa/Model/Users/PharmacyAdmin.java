@@ -22,9 +22,10 @@ public class PharmacyAdmin extends User {
     //@JsonIgnore
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "adminPharmacy", referencedColumnName = "idPharm", nullable = true, unique = false)
-    @JsonManagedReference
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "idPharm")
+    @JsonBackReference
+    /*@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "idPharm")
     @JsonIdentityReference(alwaysAsId = true)
+    */
     private Pharmacy pharmacy;
 
 

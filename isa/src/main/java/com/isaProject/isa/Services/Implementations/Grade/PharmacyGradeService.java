@@ -41,9 +41,9 @@ public class PharmacyGradeService implements IPharmacyGradeService {
         }
 
         if(ima){
-            pharmacyGradeRepository.save(newGrade);
+            PharmacyGrade dg=pharmacyGradeRepository.save(newGrade);
 
-            Double gradeD=(pharmacy.getAvgGrade()+newGrade.getGrade())/2;
+            Double gradeD=(pharmacy.getAvgGrade()+dg.getGrade())/2;
             pharmacy.setAvgGrade(gradeD);
             pharmacyRepository.save(pharmacy);
             return newGrade;
@@ -52,9 +52,9 @@ public class PharmacyGradeService implements IPharmacyGradeService {
             newGrade1.setGrade(grade);
             newGrade1.setIdPharmacy(idPharm);
             newGrade1.setIdPatient(idPatient);
-            pharmacyGradeRepository.save(newGrade1);
+            PharmacyGrade dg=pharmacyGradeRepository.save(newGrade1);
 
-            Double gradeD=(pharmacy.getAvgGrade()+newGrade.getGrade())/2;
+            Double gradeD=(pharmacy.getAvgGrade()+dg.getGrade())/2;
             pharmacy.setAvgGrade(gradeD);
             pharmacyRepository.save(pharmacy);
 
