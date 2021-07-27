@@ -231,6 +231,16 @@ public class DermatologistDTO {
 
     }
 
+    public DermatologistDTO(String name, String surname, String email, String address, String phoneNumber, String city, String country, double avgGrade) {
+        this.name = name;
+        this.surname = surname;
+        this.email = email;
+        this.address = address;
+        this.phoneNumber = phoneNumber;
+        this.city = city;
+        this.country = country;
+        this.avgGrade = avgGrade;
+    }
 
     public Pharmacy getPharmacy() {
         return pharmacy;

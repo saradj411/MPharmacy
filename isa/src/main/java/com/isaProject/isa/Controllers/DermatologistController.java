@@ -27,9 +27,9 @@ import java.util.Set;
 //produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE
 @RestController
 @CrossOrigin
-@RequestMapping(value="/dermatologist")
+@RequestMapping(value="/dermatologist", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
 @Slf4j
-public class DermatologistControler {
+public class DermatologistController {
 
 
 
@@ -308,9 +308,9 @@ Ukoliko se korisnik ne pojavi na pregledu, dobija 1 penal.
 
     }
 
-    @PostMapping(value = "/saveDermatologist")
+    @PostMapping(value = "/saveDermatologist", consumes={"application/json"})
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<Dermatologist> saveDermatologist(@RequestBody DermatologistDTO dermDTO)
+    public ResponseEntity<Dermatologist> saveDermatologist(@RequestBody DermDTO dermDTO)
     {
         System.out.println("Usao " + dermDTO.getName());
         Dermatologist d = dermatologistService.save(dermDTO);
@@ -323,7 +323,7 @@ Ukoliko se korisnik ne pojavi na pregledu, dobija 1 penal.
     ResponseEntity<String> update(@RequestBody DermatologistForCreateDTO dermatologistForCreateDTO)
     {
 
-        Dermatologist dermatologist=dermatologistService.create(dermatologistForCreateDTO);
+        Dermatologist dermatologist= dermatologistService.create(dermatologistForCreateDTO);
         return new ResponseEntity<>("ajdeee", HttpStatus.CREATED);
 
     }
