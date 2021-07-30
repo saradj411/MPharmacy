@@ -82,6 +82,21 @@ public class Patient extends User implements Serializable {
         this.actionPharmacies = actionPharmacies;
     }
 
+    public  Patient(Integer id, String name, String surname, String email, String password, String address, String phoneNumber, String city, String country)
+    {
+        super(id, name, surname, email, password, address, phoneNumber, city, country);
+        this.penalty = 0;
+        this.points = 0;
+        this.loyaltyCategory = "NONE";
+        this.allergies = null;
+        this.drugReservation = null;
+        this.examinations = null;
+        this.actionPharmacies = null;
+
+
+
+    }
+
     public Integer getPenalty() {
         return penalty;
     }

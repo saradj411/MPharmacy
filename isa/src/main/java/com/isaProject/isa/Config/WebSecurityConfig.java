@@ -339,7 +339,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/offer/**").permitAll()
                 .antMatchers("/user/findByEmail/**").permitAll()
                 .antMatchers("/user/changePassword").permitAll()
-
+                .antMatchers("/patient/savePatient").permitAll()
 
                 //.antMatchers("/adminstrator/savePharmacyAdmin").permitAll()
                 /*.antMatchers("/user/saveSupplier")

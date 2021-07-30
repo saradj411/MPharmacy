@@ -1,6 +1,8 @@
 package com.isaProject.isa.Services.IServices;
 
 import com.isaProject.isa.Model.DTO.FrontCreatedExaminationDTO;
+import com.isaProject.isa.Model.DTO.SubscribeDTO;
+import com.isaProject.isa.Model.DTO.UserDTO;
 import com.isaProject.isa.Model.Drugs.Drug;
 import com.isaProject.isa.Model.Drugs.ERecipe;
 import com.isaProject.isa.Model.Users.Dermatologist;
@@ -13,6 +15,7 @@ import java.util.Set;
 public interface IPatientService {
     Patient findById(Integer id);
     List<Patient> findAll ();
+    Patient save(UserDTO user);
     void saveAllergy(Integer idDrug,Integer idPatient);
     void update(Patient patient);
     Set<FrontCreatedExaminationDTO> findSheduledDermatologistExamination(Integer id);
@@ -32,4 +35,6 @@ public interface IPatientService {
     Set<Integer> findPharmaciesForGrade(Integer id);
     Set<Integer> findDrugsForGrade(Integer id);
 
+    Patient subscribe(SubscribeDTO subscribeDTO);
+    Patient unsubscribe(SubscribeDTO subscribeDTO);
 }

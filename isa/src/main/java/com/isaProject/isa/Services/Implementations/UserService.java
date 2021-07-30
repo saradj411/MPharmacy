@@ -3,8 +3,10 @@ package com.isaProject.isa.Services.Implementations;
 import com.isaProject.isa.Config.Utils.TokenUtils;
 import com.isaProject.isa.Model.DTO.UserDTO;
 import com.isaProject.isa.Model.Users.Authority;
+import com.isaProject.isa.Model.Users.Patient;
 import com.isaProject.isa.Model.Users.User;
 import com.isaProject.isa.Model.Users.UserTokenState;
+import com.isaProject.isa.Repositories.PatientRepository;
 import com.isaProject.isa.Repositories.UserRepository;
 import com.isaProject.isa.Services.IServices.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +39,8 @@ public class UserService implements IUserService {
 
     @Autowired
     private ServiceForEmail serviceForEmail;
+    @Autowired
+    private PatientRepository patientRepository;
 
     @Override
     public User findById(Integer id) {
@@ -65,20 +69,29 @@ public class UserService implements IUserService {
                 return null;
         }
 
-        User u = new User();
-        u.setName(user.getName());
-        u.setSurname(user.getSurname());
-        u.setEmail(user.getEmail());
-        u.setPassword(passwordEncoder.encode(user.getPassword()));
-        u.setAddress(user.getAddress());
-        u.setPhoneNumber(user.getPhoneNumber());
-        u.setCity(user.getCity());
-        u.setCountry(user.getCountry());
-        u.setAccountEnabled(false);
-        u.setAuthorities(auth);
+        //User u = new User();
+        Patient patient = new Patient();
+        patient.setName(user.getName());
+        patient.setSurname(user.getSurname());
+        patient.setEmail(user.getEmail());
+        patient.setPassword(passwordEncoder.encode(user.getPassword()));
+        patient.setAddress(user.getAddress());
+        patient.setPhoneNumber(user.getPhoneNumber());
+        patient.setCity(user.getCity());
+        patient.setCountry(user.getCountry());
+        patient.setAccountEnabled(false);
+        patient.setAuthorities(auth);
+        patient.setPenalty(0);
+        patient.setLoyaltyCategory("NONE");
+        patient.setPoints(0);
+
+        //User newUser = userRepository.save(patient);
 
 
-        return userRepository.save(u);
+
+        patientRepository.save(patient);
+        return patient;
+
     }
 
     @Override

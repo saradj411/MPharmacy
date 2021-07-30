@@ -172,7 +172,7 @@ export default{
                 country : this.country
             }            
 
-            this.axios.post('user/savePatient', patientInfo,
+            this.axios.post('patient/savePatient', patientInfo,
             {
                 headers: 
                 {
@@ -181,7 +181,7 @@ export default{
                 {
                     alert("Successfully registered new patient. Please check your email for verification!");
                     console.log(response.data);
-                    //this.$router.push('ProfilePatient/'+ response.data.id);
+                    this.$router.push('/');
                     //Odkomentarisati ovo kad se obavi verifikacija mejla
                 }).catch(res => {
                     alert(res.response.data.message);

@@ -1,8 +1,6 @@
 package com.isaProject.isa.Services.Implementations;
 
-import com.isaProject.isa.Model.DTO.ChangePasswordDTO;
-import com.isaProject.isa.Model.DTO.DrugDTO;
-import com.isaProject.isa.Model.DTO.FrontCreatedExaminationDTO;
+import com.isaProject.isa.Model.DTO.*;
 
 import com.isaProject.isa.Model.Drugs.Drug;
 import com.isaProject.isa.Model.Drugs.DrugReservation;
@@ -13,14 +11,12 @@ import com.isaProject.isa.Model.Examination.ExaminationStatus;
 import com.isaProject.isa.Model.Examination.ExaminationType;
 import com.isaProject.isa.Model.Examination.Therapy;
 import com.isaProject.isa.Model.Pharmacy.Pharmacy;
-import com.isaProject.isa.Model.Users.Dermatologist;
-import com.isaProject.isa.Model.Users.Patient;
-import com.isaProject.isa.Model.Users.Pharmacist;
-import com.isaProject.isa.Model.Users.User;
+import com.isaProject.isa.Model.Users.*;
 import com.isaProject.isa.Repositories.*;
 import com.isaProject.isa.Services.IServices.IPatientService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -31,7 +27,8 @@ import java.util.Set;
 @Service
 @Slf4j
 public class PatientService implements IPatientService {
-
+    @Autowired
+    private PasswordEncoder passwordEncoder;
     @Autowired
     PatientRepository patientRepository;
     @Autowired
@@ -40,8 +37,12 @@ public class PatientService implements IPatientService {
     DrugRepository drugRepository;
 
     @Autowired
-    ERecipeRepository eRecipeRepository;
+    PharmacyService pharmacyService;
 
+    @Autowired
+    ERecipeRepository eRecipeRepository;
+    @Autowired
+    private AuthorityService authService;
     @Override
     public Patient findById(Integer id){
         //System.out.println("ovdje uslo sada aaaaa:"+id);
@@ -54,6 +55,39 @@ public class PatientService implements IPatientService {
     @Override
     public List<Patient> findAll() {
         return patientRepository.findAll();
+    }
+
+    @Override
+    public Patient save(UserDTO user) {
+        List<Authority> auth = authService.findByname("ROLE_PATIENT");
+
+        for(User u : userRepository.findAll()) {
+            if(u.getEmail().equals(user.getEmail()))
+                return null;
+        }
+
+        //User u = new User();
+        Patient patient = new Patient();
+        patient.setName(user.getName());
+        patient.setSurname(user.getSurname());
+        patient.setEmail(user.getEmail());
+        patient.setPassword(passwordEncoder.encode(user.getPassword()));
+        patient.setAddress(user.getAddress());
+        patient.setPhoneNumber(user.getPhoneNumber());
+        patient.setCity(user.getCity());
+        patient.setCountry(user.getCountry());
+        patient.setAccountEnabled(false);
+        patient.setAuthorities(auth);
+        patient.setPenalty(0);
+        patient.setLoyaltyCategory("NONE");
+        patient.setPoints(0);
+
+        //User newUser = userRepository.save(patient);
+
+
+
+        patientRepository.save(patient);
+        return patient;
     }
 
     @Override
@@ -124,6 +158,36 @@ public class PatientService implements IPatientService {
         }
         return list;
     }
+
+    @Override
+    public Patient subscribe(SubscribeDTO subscribeDTO) {
+
+        Patient patient = findById(subscribeDTO.getIdPatient());
+        Set<Pharmacy> pharmacies = patient.getActionPharmacies();
+        for(Pharmacy p : pharmacies)
+        {
+            if(p.getIdPharm() == subscribeDTO.getIdPharmacy())
+                return null;
+        }
+        Pharmacy pharmacy = pharmacyService.findById(subscribeDTO.getIdPharmacy());
+        pharmacies.add(pharmacy);
+        patient.setActionPharmacies(pharmacies);
+        patientRepository.save(patient);
+        return  patient;
+
+    }
+    @Override
+    public Patient unsubscribe(SubscribeDTO subscribeDTO)
+    {
+        Patient patient = findById(subscribeDTO.getIdPatient());
+        Set<Pharmacy> pharmacies = patient.getActionPharmacies();
+        Pharmacy pharmacy = pharmacyService.findById(subscribeDTO.getIdPharmacy());
+        pharmacies.remove(pharmacy);
+        patient.setActionPharmacies(pharmacies);
+        patientRepository.save(patient);
+        return  patient;
+    }
+
     @Override
     public Set<Integer> findPharmaciesForGrade(Integer id) {
         Patient patient=patientRepository.findById(id).get();

@@ -75,6 +75,11 @@ public class User  implements UserDetails {
         this.accountEnabled = true;
     }
 
+    public User(Integer id)
+    {
+        this.id = id;
+    }
+
 
     public void setAuthorities(List<Authority> authorities) {
         this.authorities = authorities;

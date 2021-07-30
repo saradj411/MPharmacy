@@ -98,23 +98,7 @@ public class UserController {
         return ResponseEntity.ok(true);
     }
 
-    @PostMapping(value="/savePatient", consumes = "application/json")
-    public ResponseEntity<User> savePatient(@RequestBody UserDTO userDTO)
-    {
-        try
-        {
-            System.out.println(userDTO.getEmail());
-            User u = userService.save(userDTO);
-            return  u == null ? new ResponseEntity<>(HttpStatus.IM_USED) :
-                    ResponseEntity.ok(u);
-        }catch (Exception e)
-        {
-            e.printStackTrace();
-        }
 
-        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-
-    }
 
     @PostMapping(value = "/login", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<UserTokenState> login(@NotNull @RequestBody JwtAuthenticationRequest authRequest,

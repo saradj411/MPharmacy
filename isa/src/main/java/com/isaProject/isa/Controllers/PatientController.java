@@ -6,6 +6,7 @@ import com.isaProject.isa.Model.DTO.FrontCreatedExaminationDTO;
 import com.isaProject.isa.Model.Pharmacy.Pharmacy;
 import com.isaProject.isa.Model.Users.Patient;
 import com.isaProject.isa.Model.Users.Pharmacist;
+import com.isaProject.isa.Model.Users.User;
 import com.isaProject.isa.Services.Implementations.DrugService;
 import com.isaProject.isa.Services.Implementations.PatientService;
 import com.isaProject.isa.Services.Implementations.PharmacyService;
@@ -49,6 +50,24 @@ public class PatientController {
     public ResponseEntity<String> findAllergy(@PathVariable (value = "id") Integer id,@PathVariable (value = "name") String name) {
         String answer=patientService.findAllergy(id,name);
         return new ResponseEntity<>(answer, HttpStatus.ACCEPTED);
+
+    }
+
+    @PostMapping(value="/savePatient", consumes = "application/json")
+    public ResponseEntity<Patient> savePatient(@RequestBody UserDTO userDTO)
+    {
+        try
+        {
+            System.out.println(userDTO.getEmail());
+            Patient u = patientService.save(userDTO);
+            return  u == null ? new ResponseEntity<>(HttpStatus.IM_USED) :
+                    ResponseEntity.ok(u);
+        }catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+
+        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 
     }
 
@@ -192,5 +211,20 @@ public class PatientController {
         }
         System.out.println(penalty);
         return new ResponseEntity<>(res, HttpStatus.OK);
+    }
+
+
+    @PostMapping(value = "/subscribe")
+    public ResponseEntity subscribeToPharmacy(@RequestBody SubscribeDTO subscribeDTO) {
+        Patient patient = patientService.subscribe(subscribeDTO);
+        return patient == null ? new ResponseEntity<String>("You are allerady subscribed to this pharmacy.",HttpStatus.BAD_REQUEST)
+                : new ResponseEntity<Patient>(patient, HttpStatus.CREATED);
+    }
+
+    @PostMapping(value = "/unsubscribe")
+    public ResponseEntity unSubscribeToPharmacy(@RequestBody SubscribeDTO subscribeDTO) {
+        Patient patient = patientService.unsubscribe(subscribeDTO);
+        return patient == null ? new ResponseEntity<String>(HttpStatus.BAD_REQUEST)
+                : new ResponseEntity<Patient>(patient, HttpStatus.CREATED);
     }
 }

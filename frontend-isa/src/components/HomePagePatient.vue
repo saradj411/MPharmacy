@@ -120,7 +120,7 @@
  
     <tbody>
       <tr>
-        <th scope="row"></th>
+       
         <td><router-link :to="{ path: '/Home/'+pharmacy.idPharm}" v-slot="{href, navigate}" custom>
            <b-link style="font-size: 30px;margin-left:50px;" :href="href" @click="navigate"  elevation="1">
               {{pharmacy.name}}
@@ -129,10 +129,14 @@
       <td>Grade:{{pharmacy.avgGrade}} </td>
       </tr>
     <tr>
-      <th></th>
+      
       <td >Address  </td>   
        <td>{{pharmacy.address}}</td>
 
+    </tr>
+    
+    <tr> 
+    <td colspan="3"><button class="btn btn-primary" style="width:100%" v-on:click = "subscribe(pharmacy.idPharm)"> SUBSCRIBE </button></td>
     </tr>
    
   </tbody>
@@ -143,30 +147,28 @@
       <!--PHARMACIES TO WHICH YOU SUBSCRIBE-->
   <div v-if="showTable"  style="float:right;margin-left:30px;">
      <h4 style="margin-bottom:30px;margin-top:30px;margin-right:60px">PHARMACIES TO WHICH YOU SUBSCRIBE:</h4>    
- <div style="background: #a7c1c9; width: 500px;margin-right:50px;"  v-for="pharmacy in this.pharmacies1"  v-bind:key="pharmacy.idPharm">
+ <div style="background: #a7c1c9; width: 500px;"  v-for="pharmacy in this.pharmacies1"  v-bind:key="pharmacy.idPharm">
       
 <table  style="" id="table2" class="table" >
  
     <tbody>
       <tr>
-        <th scope="row"></th>
+        
         <td><router-link :to="{ path: '/Home/'+pharmacy.idPharm}" v-slot="{href, navigate}" custom>
-           <b-link style="font-size: 30px;margin-left:50px;" :href="href" @click="navigate"  elevation="1">
+           <b-link style="font-size: 30px;" :href="href" @click="navigate"  elevation="1">
               {{pharmacy.name}}
             </b-link >
          </router-link></td>
       <td>Grade:{{pharmacy.avgGrade}} </td>
       </tr>
     <tr>
-      <th></th>
       <td >Address  </td>   
        <td>{{pharmacy.address}}</td>
 
     </tr>
    <tr>
-      <th></th>
-      <td ></td>   
-        <td><button class="btn btn-danger btn-sm" v-on:click = "unsubscribe(pharmacy.idPharm)">Unsubscribe</button></td>
+     
+        <td colspan="2"><button class="btn btn-danger btn" style="width: 100%;" v-on:click = "unsubscribe(pharmacy.idPharm)">UNSUBSCRIBE</button></td>
 
     </tr>
   </tbody>
@@ -1846,11 +1848,62 @@ methods:{
                      
                         alert("Grading is currently not possible");
                         console.log(res)
-                    })
+                    });
       },
       unsubscribe: function(idPharmacy){
         console.log(idPharmacy)
       //OVDJE POZVATI FUNKCIJU ZA ODJAVU APOTEKA
+
+      const info =
+        {
+          idPharmacy: idPharmacy,
+          idPatient: this.id
+          
+        }
+
+        console.log(idPharmacy);
+
+        this.axios.post('/patient/unsubscribe', info,
+            {
+                headers: 
+                {
+                    'Authorization': `Bearer ` + localStorage.getItem('accessToken')
+                }}).then(response => 
+                {
+                    alert("Successfully unsubscribed.");
+                    console.log(response.data);
+                    this.$router.go(0);                  
+                }).catch(res => {
+                    alert(res.response.data);
+                    
+                }); 
+      },
+      subscribe: function(idPharmacy)
+      {
+        //subscribe to pharmacy
+        const info =
+        {
+          idPharmacy: idPharmacy,
+          idPatient: this.id
+          
+        }
+
+        console.log(idPharmacy);
+
+        this.axios.post('/patient/subscribe', info,
+            {
+                headers: 
+                {
+                    'Authorization': `Bearer ` + localStorage.getItem('accessToken')
+                }}).then(response => 
+                {
+                    alert("Successfully subscribed.");
+                    console.log(response.data);
+                    this.$router.go(0);                  
+                }).catch(res => {
+                    alert(res.response.data);
+                    
+                }); 
       }
          
           
