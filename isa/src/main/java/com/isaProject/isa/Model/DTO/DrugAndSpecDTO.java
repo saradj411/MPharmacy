@@ -15,6 +15,8 @@ public class DrugAndSpecDTO {
     private String drugType;
     private DrugFormat format;
     private String manufacturer;
+    private Integer points;
+    private Set<Integer> alternatives;
 
     //For specification
     private String contraindications;
@@ -22,7 +24,48 @@ public class DrugAndSpecDTO {
     private Integer recommendedDose;
     private String ingredients;
 
+    public DrugAndSpecDTO(String name, String code, boolean recipeNeed, String drugType, DrugFormat format, String manufacturer, Integer points) {
+        this.name = name;
+        this.code = code;
+        this.recipeNeed = recipeNeed;
+        this.drugType = drugType;
+        this.format = format;
+        this.manufacturer = manufacturer;
+        this.points = points;
+    }
+
+    public DrugAndSpecDTO(String name, String code, boolean recipeNeed, String drugType, DrugFormat format, String manufacturer, Integer points, Set<Integer> alternatives, String contraindications, String structure, Integer recommendedDose, String ingredients) {
+        this.name = name;
+        this.code = code;
+        this.recipeNeed = recipeNeed;
+        this.drugType = drugType;
+        this.format = format;
+        this.manufacturer = manufacturer;
+        this.points = points;
+        this.alternatives = alternatives;
+        this.contraindications = contraindications;
+        this.structure = structure;
+        this.recommendedDose = recommendedDose;
+        this.ingredients = ingredients;
+    }
+
     public DrugAndSpecDTO() {}
+
+    public Integer getPoints() {
+        return points;
+    }
+
+    public void setPoints(Integer points) {
+        this.points = points;
+    }
+
+    public Set<Integer> getAlternatives() {
+        return alternatives;
+    }
+
+    public void setAlternatives(Set<Integer> alternatives) {
+        this.alternatives = alternatives;
+    }
 
     public DrugAndSpecDTO(String name, String code, boolean recipeNeed, String drugType, DrugFormat format, String manufacturer, String contraindications, String structure, Integer recommendedDose, String ingredients) {
         this.name = name;
@@ -126,10 +169,12 @@ public class DrugAndSpecDTO {
                 ", drugType='" + drugType + '\'' +
                 ", format=" + format +
                 ", manufacturer='" + manufacturer + '\'' +
+                ", points=" + points +
+                ", alternatives=" + alternatives +
                 ", contraindications='" + contraindications + '\'' +
                 ", structure='" + structure + '\'' +
                 ", recommendedDose=" + recommendedDose +
-                ", ingredients=" + ingredients +
+                ", ingredients='" + ingredients + '\'' +
                 '}';
     }
 }

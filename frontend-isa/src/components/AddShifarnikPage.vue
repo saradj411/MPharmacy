@@ -43,7 +43,15 @@
                  <tr><!-- OVO CE BITI DROP DOWN LSTA-->
                      <td> <h4> Format: </h4> </td>
                      <td>
-                     <input type="text" v-model="format" :class="{'input--error':!format}" class="form-control" placeholder="Enter phone nubmer"  aria-label="Enter format" aria-describedby="addon-wrapping">
+                      <select v-model="format" :select="format" class="form-control" placeholder="Enter phone nubmer">
+                        <option value="TABLET"> Tablete </option>
+                        <option value="CAPSULE"> Kapsule </option>
+                        <option value="GEL"> Gel </option>
+                        <option value="CREME"> Krema </option>
+                        <option value="VACCINE"> Vakcina </option>
+                        <option value="INJECTION"> Injection </option>
+                        <option value="LIQUID"> Liquid </option>
+                     </select> 
                      </td>   
                  </tr>
  
@@ -53,6 +61,28 @@
                      <input type="text" v-model="manufacturer" :class="{'input--error':!manufacturer}" class="form-control" placeholder="Enter manufacturer"  aria-label="Enter city" aria-describedby="addon-wrapping">
                      </td>   
                  </tr>
+                 <tr>
+                    <td> <h4> Points: </h4> </td>
+                    <td>
+                    <input type="text" v-model="points" :class="{'input--error':!points}" class="form-control" placeholder="Enter points"  aria-label="Enter points" aria-describedby="addon-wrapping">
+                    </td>   
+                </tr>
+                <tr>
+                    <td> <h4> Alternatives: </h4> </td>
+                    <td>
+                        <multiselect
+
+                        v-model="selected"
+
+                        :multiple="true"
+
+                        :options="alter">
+
+                        </multiselect>
+
+                  
+                    </td>   
+                </tr>
                  <br>
                  <tr>
                      <td  colspan="2"><h4>Specification about drug: </h4></td>
@@ -82,6 +112,8 @@
                     <input type="text" v-model="ingredients" :class="{'input--error':!ingredients}" class="form-control" placeholder="Enter ingredients"  aria-label="Enter password" aria-describedby="addon-wrapping">
                     </td>   
                 </tr>
+
+                
                  <tr>
                      <td colspan="2">
                          <div id="errorMessage" > 
@@ -92,11 +124,14 @@
                  </tr>
                  <tr>        
                      <td colspan="2">
-                         <button class = "btn btn-primary btn-xs"  :disabled="!name || !code || !drugType || !format || !manufacturer || !contraindications
-                         || !structure || !recommendedDose || !ingredients"  style="margin:auto; margin-left:38px;background: #000;margin-top: 10px; width: 200px;" v-on:click="addShifarnik">Confirm</button>
+                         <button class = "btn btn-primary btn-xs" :disabled="!name || !code || !drugType || !format || !manufacturer || !contraindications
+                         || !structure || !recommendedDose || !ingredients"   style="margin:auto; margin-left:38px;background: #000;margin-top: 10px; width: 200px;" v-on:click="addShifarnik">Confirm</button>
                      
                      </td>
+                 <!--
                  
+                 
+                 -->
                  </tr>
              </table>
          </div>
@@ -136,10 +171,11 @@
 
 </style>
 <script>
-
 import { required } from 'vuelidate/lib/validators'
+import Multiselect from 'vue-multiselect'
 
 export default{
+     components: { Multiselect },
     data()
     {
         return{
@@ -154,10 +190,17 @@ export default{
             structure : "",
             recommendedDose : "",
             ingredients : "",
+            points:"",
+            alter: [],
 
             accessToken: localStorage.getItem('accessToken'),
             expiresIn: localStorage.getItem('expiresIn'),
-            id : this.$route.params.id
+            id : this.$route.params.id,
+            selected: null,
+            idAlternative: [],
+            alternative:[]
+
+            
             
 
         }
@@ -202,8 +245,14 @@ export default{
                 this.recepieNeeded = false;
             }
 
-            console.log(this.recepieNeeded);
-            
+            //console.log(this.selected);
+            this.selected.forEach(value => 
+            {
+                var part = value.split(':'); 
+                this.idAlternative.push(part[0]);
+
+            })
+             console.log(this.idAlternative);
             const drugAndSpecInfo = 
             {
                 name : this.name,
@@ -212,6 +261,8 @@ export default{
                 drugType : this.drugType,
                 format : this.format,
                 manufacturer :this.manufacturer,
+                points: this.points,
+                alternatives: this.idAlternative,
 
                 contraindications : this.contraindications,
                 structure : this.structure,
@@ -219,9 +270,9 @@ export default{
                 ingredients : this.ingredients
             }    
             var accessToken = localStorage.getItem('accessToken');
-            console.log("TOKEN PREUZEN:" +  accessToken);  
+            console.log(drugAndSpecInfo);  
             
-            this.axios.post('drug/addDrugAndSpecification', drugAndSpecInfo ,
+           this.axios.post('drug/addDrugAndSpecification', drugAndSpecInfo ,
             {
                 
                 headers: 
@@ -238,7 +289,7 @@ export default{
                 }).catch(res => {
                     console.log("Nije uzeo token..");
                     alert(res.response.data.message);
-                });     
+                });    
 
             }
             
@@ -249,7 +300,27 @@ export default{
     mounted()
     {
         var accessToken = localStorage.getItem('accessToken');
-        console.log(accessToken.substr(1).slice(0, -1));
+        //console.log(accessToken.substr(1).slice(0, -1));
+
+        
+            this.axios.get('/drug/alternative',
+            {
+                headers: 
+                {
+                    'Authorization': `Bearer ` + accessToken
+                }}).then(response => 
+                {
+                    this.alternative = response.data;
+                    response.data.forEach( value => 
+                    {
+                        
+                        this.alter.push(value.idDrug +": " +value.name);  
+                    });
+
+                    
+                }).catch(res => {
+                    alert(res.response.data.message);
+                }); 
 
 
         
@@ -257,3 +328,4 @@ export default{
     
 }  
 </script>
+<style src="vue-multiselect/dist/vue-multiselect.min.css">

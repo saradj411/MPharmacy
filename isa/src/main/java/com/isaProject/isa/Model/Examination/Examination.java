@@ -81,6 +81,8 @@ public class Examination {
 //@JsonManagedReference
     private Therapy therapy;
 
+    private Integer pointsForExamination;
+
     public Integer getIdExamination() {
         return idExamination;
     }
@@ -209,6 +211,24 @@ public class Examination {
         this.therapy = therapy;
     }
 
+    public Examination(Integer idExamination, LocalDate date, Boolean canceled, LocalTime startTime, LocalTime endTime, double price, String report, Boolean isScheduled, Pharmacy pharmacy, Patient patient, Staff staff, ExaminationType type, ExaminationStatus status, Therapy therapy, Integer pointsForExamination) {
+        this.idExamination = idExamination;
+        this.date = date;
+        this.canceled = canceled;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.price = price;
+        this.report = report;
+        this.isScheduled = isScheduled;
+        this.pharmacy = pharmacy;
+        this.patient = patient;
+        this.staff = staff;
+        this.type = type;
+        this.status = status;
+        this.therapy = therapy;
+        this.pointsForExamination = pointsForExamination;
+    }
+
     public Examination(Integer idExamination, LocalDate date, boolean canceled, LocalTime startTime, LocalTime endTime, double price, String report, Boolean isScheduled, Pharmacy pharmacy, Patient patient, Staff staff, ExaminationType type, ExaminationStatus status, Therapy therapy) {
         this.idExamination = idExamination;
         this.date = date;
@@ -227,6 +247,14 @@ public class Examination {
     }
     public Examination(){
 
+    }
+
+    public Integer getPointsForExamination() {
+        return pointsForExamination;
+    }
+
+    public void setPointsForExamination(Integer pointsForExamination) {
+        this.pointsForExamination = pointsForExamination;
     }
 
     public Boolean getCanceled() {

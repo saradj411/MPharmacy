@@ -1,6 +1,7 @@
 package com.isaProject.isa.Services.Implementations;
 
 
+import com.isaProject.isa.Model.DTO.AlternativeDrugDTO;
 import com.isaProject.isa.Model.DTO.DermatologistForCreateDTO;
 import com.isaProject.isa.Model.DTO.DrugDTO;
 import com.isaProject.isa.Model.DTO.DrugNewDTO;
@@ -121,6 +122,17 @@ public class DrugService implements IDrugService {
         return drugRepository.findAll();
     }
 
+    public List<AlternativeDrugDTO> alternativeDrugs()
+    {
+        List<AlternativeDrugDTO> alterList = new ArrayList<AlternativeDrugDTO>();
+        for (Drug d: findAll()) {
+            AlternativeDrugDTO a = new AlternativeDrugDTO(d.getIdDrug(), d.getName());
+            alterList.add(a);
+        }
+
+        return  alterList;
+    }
+
     @Override
     public void update(Drug drug) {
         Drug d = drugRepository.getOne(drug.getIdDrug());
@@ -144,6 +156,14 @@ public class DrugService implements IDrugService {
         d.setFormat(drugDTO.Format());
         d.setManufacturer(drugDTO.getManufacturer());
         d.setRecipeNeed(drugDTO.isRecipeNeed());
+        d.setPoints(drugDTO.getPoints());
+        Set<Drug>alternative = new HashSet<Drug>();
+        for (Integer id : drugDTO.getAlternativeDrugs()) {
+            Drug drug = findById(id);
+            alternative.add(drug);
+        }
+        d.setAlternativeDrugs(alternative);
+
         return drugRepository.save(d);
     }
 }

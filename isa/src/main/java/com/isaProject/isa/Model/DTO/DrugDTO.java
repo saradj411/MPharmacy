@@ -1,5 +1,6 @@
 package com.isaProject.isa.Model.DTO;
 
+import com.isaProject.isa.Model.Drugs.Drug;
 import com.isaProject.isa.Model.Drugs.DrugFormat;
 import com.isaProject.isa.Model.Pharmacy.Pharmacy;
 import lombok.NoArgsConstructor;
@@ -7,8 +8,9 @@ import lombok.NoArgsConstructor;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
-@NoArgsConstructor
 public class DrugDTO implements Serializable {
     private String name;
 
@@ -26,6 +28,40 @@ public class DrugDTO implements Serializable {
 
     private Pharmacy pharmacy;
     private Integer idPharm;
+    private Integer points;
+    private Set<Integer> alternativeDrugs;
+
+    public String getCode() {
+        return code;
+    }
+
+    public Set<Integer> getAlternativeDrugs() {
+        return alternativeDrugs;
+    }
+
+    public void setAlternativeDrugs(Set<Integer> alternativeDrugs) {
+        this.alternativeDrugs = alternativeDrugs;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public DrugFormat getFormat() {
+        return format;
+    }
+
+    public void setFormat(DrugFormat format) {
+        this.format = format;
+    }
+
+    public Integer getPoints() {
+        return points;
+    }
+
+    public void setPoints(Integer points) {
+        this.points = points;
+    }
 
     public Integer getIdPharm() {
         return idPharm;
@@ -35,6 +71,20 @@ public class DrugDTO implements Serializable {
         this.idPharm = idPharm;
     }
 
+    public DrugDTO(){}
+
+    public DrugDTO(String name, String code, String drugType, DrugFormat format, String manufacturer, Integer quantity, Integer idPharm, Integer points,
+                   Set<Integer> alternativeDrugs) {
+        this.name = name;
+        this.code = code;
+        this.drugType = drugType;
+        this.format = format;
+        this.manufacturer = manufacturer;
+        this.quantity = quantity;
+        this.idPharm = idPharm;
+        this.points = points;
+        this.alternativeDrugs = alternativeDrugs;
+    }
     public DrugDTO(String name, String code, String drugType, DrugFormat format, String manufacturer, Integer quantity, Integer idPharm) {
         this.name = name;
         this.code = code;
@@ -45,13 +95,15 @@ public class DrugDTO implements Serializable {
         this.idPharm = idPharm;
     }
 
-    public DrugDTO(String name, String code, boolean recipeNeed, String drugType, DrugFormat format, String manufacturer) {
+    public DrugDTO(String name, String code, boolean recipeNeed, String drugType, DrugFormat format, String manufacturer,Integer points, Set<Integer> alternativeDrugs) {
         this.name = name;
         this.code = code;
         this.recipeNeed = recipeNeed;
         this.drugType = drugType;
         this.format = format;
         this.manufacturer = manufacturer;
+        this.points = points;
+        this.alternativeDrugs = alternativeDrugs;
     }
 
     public DrugDTO(String name, String code, boolean recipeNeed, String drugType, DrugFormat format, String manufacturer, Integer quantity, Pharmacy pharmacy) {

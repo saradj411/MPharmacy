@@ -211,19 +211,19 @@ export default
                                     else if(response.data.authorityRole === "ROLE_PHARMACY_ADMIN")
                                     {
                                         
-                                            this.$router.push('ProfileAdmin' /*+ response.data.id*/);
+                                            this.$router.push('ProfileAdmin/'  +response.data.id);
                                     }
                                     else if(response.data.authorityRole === "ROLE_PHARMACIST")
                                     {
                                         console.log("USAO U ROLE_PHARMACIST");
                                             //this.$router.push('HomePagePatient/'+ response.data.id);
-                                            this.$router.push('profilePharmacist' /*+ response.data.id*/);
+                                            this.$router.push('profilePharmacist/'+ response.data.id);
                                     }
                                     else if(response.data.authorityRole === "ROLE_DERMATOLOGIST")
                                     {
                                         console.log("USAO U DERMATOLOGA")
                                             //this.$router.push('HomePagePatient/'+ response.data.id);
-                                            this.$router.push('profileDermatologist' /*+ response.data.id*/);
+                                            this.$router.push('profileDermatologist/' + response.data.id);
                                     }
                                     else if(response.data.authorityRole === "ROLE_SUPPLIER")
                                     {

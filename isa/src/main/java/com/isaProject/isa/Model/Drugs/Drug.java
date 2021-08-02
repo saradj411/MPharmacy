@@ -48,6 +48,9 @@ public class Drug implements Serializable {
     //@JsonBackReference
     private Set<Drug> alternativeDrugs = new HashSet<Drug>();
 
+    @Column
+    private Integer points;
+
     public Drug() {
     }
 
@@ -62,6 +65,29 @@ public class Drug implements Serializable {
         this.format = format;
         this.manufacturer = manufacturer;
        // this.alternativeDrugs = alternativeDrugs;
+    }
+
+    public Drug(Integer idDrug,String name, String code, boolean recipeNeed, String drugType, DrugFormat format, String manufacturer, Integer points) {
+        this.idDrug = idDrug;
+        this.name = name;
+        this.code = code;
+        this.recipeNeed = recipeNeed;
+        this.drugType = drugType;
+        this.format = format;
+        this.manufacturer = manufacturer;
+        this.alternativeDrugs = null;
+        this.points = points;
+    }
+    public Drug(Integer idDrug,String name, String code, boolean recipeNeed, String drugType, DrugFormat format, String manufacturer, Set<Drug> alternativeDrugs, Integer points) {
+        this.idDrug = idDrug;
+        this.name = name;
+        this.code = code;
+        this.recipeNeed = recipeNeed;
+        this.drugType = drugType;
+        this.format = format;
+        this.manufacturer = manufacturer;
+        this.alternativeDrugs = alternativeDrugs;
+        this.points = points;
     }
 
     public Integer getIdDrug() {
@@ -126,6 +152,14 @@ public class Drug implements Serializable {
 
     public void setAlternativeDrugs(Set<Drug> alternativeDrugs) {
         this.alternativeDrugs = alternativeDrugs;
+    }
+
+    public Integer getPoints() {
+        return points;
+    }
+
+    public void setPoints(Integer points) {
+        this.points = points;
     }
 //rezervisani lijekovi
 

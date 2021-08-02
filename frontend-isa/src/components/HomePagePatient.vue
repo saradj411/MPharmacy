@@ -19,6 +19,7 @@
            
            <button class="btn btn-danger btn-lg" style="float:left;margin-top:15px;margin-left:10px" v-on:click = "showMarks">Grades</button>
             <button class="btn btn-danger btn-lg" style="float:left;margin-top:15px;margin-left:10px" v-on:click = "writeComplaint">Complaint</button>
+            <button class="btn btn-danger btn-lg" style="float:left;margin-top:15px;margin-left:10px" v-on:click = "logOut">Log out</button>
            
                                   
         </div>
@@ -973,7 +974,14 @@ export default {
     }
   },
   
-  mounted() {
+  mounted() {  
+
+    if(localStorage.getItem('accessToken') == null)
+    {
+     alert("Error! You dont have authorize to go to this page!");
+     window.location.href = "/";
+
+    }
     this.axios.get('/pharmacy/findAll')
         .then(response => {
                 this.pharmacies = response.data;
@@ -1877,6 +1885,13 @@ methods:{
                     alert(res.response.data);
                     
                 }); 
+      },
+      logOut: function()
+      {
+        localStorage.removeItem('accessToken');
+        localStorage.removeItem('expiresIn');
+         window.location.href = "/";
+
       },
       subscribe: function(idPharmacy)
       {

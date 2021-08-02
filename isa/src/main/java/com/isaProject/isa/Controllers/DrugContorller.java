@@ -43,6 +43,16 @@ public class DrugContorller {
                 new ResponseEntity<>(HttpStatus.NOT_FOUND) :
                 ResponseEntity.ok(drugs);
     }
+
+    @GetMapping(value = "/alternative")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<List<AlternativeDrugDTO>> alternative() {
+        List<AlternativeDrugDTO> alter= drugService.alternativeDrugs();
+        return alter == null ?
+                new ResponseEntity<>(HttpStatus.NOT_FOUND) :
+                ResponseEntity.ok(alter);
+    }
+
     @GetMapping(value = "/findById/{id}")
     public ResponseEntity<Drug> findById(@PathVariable Integer id) {
 
@@ -90,12 +100,15 @@ public class DrugContorller {
     @PostMapping("/addDrugAndSpecification")
     @PreAuthorize("hasRole('ADMIN')")
     ResponseEntity<String> addSpecificationAndDrug(@RequestBody DrugAndSpecDTO drugAndSpec) {
+        System.out.println(drugAndSpec);
         DrugDTO drugDTO = new DrugDTO(drugAndSpec.getName(),
                 drugAndSpec.getCode(),
                 drugAndSpec.isRecipeNeed(),
                 drugAndSpec.getDrugType(),
                 drugAndSpec.getFormat(),
-                drugAndSpec.getManufacturer());
+                drugAndSpec.getManufacturer(),
+                drugAndSpec.getPoints(),
+                drugAndSpec.getAlternatives());
 
         Drug u = drugService.saveForShifarnik(drugDTO);
         if(u != null)
@@ -113,6 +126,7 @@ public class DrugContorller {
         }
 
         return new ResponseEntity<>("Something went wrong!", HttpStatus.BAD_REQUEST);
+
 
     }
 
