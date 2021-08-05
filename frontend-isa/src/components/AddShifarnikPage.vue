@@ -68,6 +68,18 @@
                     <input type="text" v-model="points" :class="{'input--error':!points}" class="form-control" placeholder="Enter points"  aria-label="Enter points" aria-describedby="addon-wrapping">
                     </td>   
                 </tr>
+                 <tr>
+                    <td> <h4> Napomene: </h4> </td>
+                    <td>
+                    <input type="text" v-model="napomene" :class="{'input--error':!napomene}" class="form-control" placeholder="Enter napomena."  aria-label="Enter points" aria-describedby="addon-wrapping">
+                    </td>   
+                </tr>
+                <tr>
+                    <td> <h4> Grade: </h4> </td>
+                    <td>
+                    <input type="text" v-model="grade" :class="{'input--error':!grade}" class="form-control" placeholder="Enter napomena."  aria-label="Enter points" aria-describedby="addon-wrapping">
+                    </td>   
+                </tr>
                 <tr>
                     <td> <h4> Alternatives: </h4> </td>
                     <td>
@@ -126,7 +138,7 @@
                  <tr>        
                      <td colspan="2">
                          <button class = "btn btn-primary btn-xs" :disabled="!name || !code || !drugType || !format || !manufacturer || !contraindications
-                         || !structure || !recommendedDose || !ingredients"   style="margin:auto; margin-left:38px;background: #000;margin-top: 10px; width: 200px;" v-on:click="addShifarnik">Confirm</button>
+                         || !structure || !recommendedDose || !ingredients || !napomene || !grade"   style="margin:auto; margin-left:38px;background: #000;margin-top: 10px; width: 200px;" v-on:click="addShifarnik">Confirm</button>
                      
                      </td>
                  <!--
@@ -199,7 +211,9 @@ export default{
             id : this.$route.params.id,
             selected: null,
             idAlternative: [],
-            alternative:[]
+            alternative:[],
+            napoemen:"",
+            grade: 0,
 
             
             
@@ -272,7 +286,9 @@ export default{
                 contraindications : this.contraindications,
                 structure : this.structure,
                 recommendedDose : this.recommendedDose,
-                ingredients : this.ingredients
+                ingredients : this.ingredients,
+                napomene: this.napomene,
+                grade: this.grade
             }    
             var accessToken = localStorage.getItem('accessToken');
             console.log(drugAndSpecInfo);  
