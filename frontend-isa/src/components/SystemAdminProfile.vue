@@ -10,6 +10,9 @@
     <button class = "btn btn-primary btn-xs" v-on:click = "AddLoyalityProgram" style="margin:auto; margin-left:38px;background: #000;margin-top: 10px; width: 200px;" > Loyality program </button>
     <button class = "btn btn-primary btn-xs" v-on:click = "AddSystemAdminPage" style="margin:auto; margin-left:38px;background: #000;margin-top: 10px; width: 200px;" > Add new system administrator </button>
     <button class = "btn btn-primary btn-xs" v-on:click = "ComplainsPage" style="margin:auto; margin-left:38px;background: #000;margin-top: 10px; width: 200px;" > Complains </button>
+    <button class = "btn btn-primary btn-xs" v-on:click = "ShowAllDrugs" style="margin:auto; margin-left:38px;background: #000;margin-top: 10px; width: 200px;" > Show all drugs </button>
+    <button class = "btn btn-primary btn-xs" v-on:click = "logOut" style="margin:auto; margin-left:38px;background: #000;margin-top: 10px; width: 200px;" > Log out </button>
+    
 
 
 </div>
@@ -41,6 +44,13 @@
         }
       },
       methods:{
+          logOut: function()
+      {
+        localStorage.removeItem('accessToken');
+        localStorage.removeItem('expiresIn');
+         window.location.href = "/";
+
+      },
         AddShifarnikPage : function(){
               window.location.href = "/AddShifarnikPage/" + this.id;
           },
@@ -58,7 +68,7 @@
         },
         AddLoyalityProgram: function()
         {
-
+            window.location.href = '/LoyalityProgram/' + this.id;
         },
         AddNewPharmacyAndTheirAdmin: function()
         {
@@ -67,6 +77,10 @@
         ComplainsPage: function()
         {
 
+        },
+        ShowAllDrugs: function()
+        {
+             window.location.href = '/AllDrugs/' + this.id;
         }
 
         

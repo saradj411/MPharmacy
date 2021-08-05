@@ -1,6 +1,7 @@
 <template>
     <div >
      <div class="sifarnikHolder">
+     <button class="btn btn-dark" style="width:50%; margin-bottom:10px; margin-top:-60px;" v-on:click = "goBack"> Back to home page </button>  
      <h3>New Sifarnik: </h3>
      <br>
      <h4>About Drug: </h4>
@@ -237,7 +238,11 @@ export default{
     },
 
     methods:
-    {
+    { 
+        goBack: function()
+        {
+            window.location.href = '/SystemAdminProfile/' + this.id;
+        },
         addShifarnik : function()
         {        
             if(this.recepieNeeded === "")

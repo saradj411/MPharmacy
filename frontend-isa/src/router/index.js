@@ -64,7 +64,8 @@ import WriteComplaint from '../components/WriteComplaint.vue'
 import RegisterNewSupplier from '../components/RegisterNewSupplier'
 import SupplierHomePage from '../components/SupplierHomePage'
 import Map from '../components/Map'
-
+import LoyalityProgram from '../components/LoyalityProgram'
+import AllDrugs from '../components/AllDrugs'
 
 
 import moment from 'moment'
@@ -421,6 +422,20 @@ const routes = [
         component: Map
 
       },
+      {
+        path: '/LoyalityProgram/:id',
+        name: 'LoyalityProgram',
+        component: LoyalityProgram
+
+      },
+      
+      {
+        path: '/AllDrugs/:id',
+        name: 'AllDrugs',
+        component: AllDrugs
+
+      },
+
 
 
 
