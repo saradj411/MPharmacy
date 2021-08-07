@@ -29,6 +29,8 @@ public class DrugContorller {
     @Autowired
     private SpecificationService specificationService;
 
+
+
     @GetMapping(value = "/findAll")
     public ResponseEntity<List<Drug>> findAll() {
         List<Drug> drugs=drugService.findAll();
@@ -108,7 +110,10 @@ public class DrugContorller {
                 drugAndSpec.getFormat(),
                 drugAndSpec.getManufacturer(),
                 drugAndSpec.getPoints(),
-                drugAndSpec.getAlternatives());
+                drugAndSpec.getAlternatives(),
+                drugAndSpec.getNapomene(),
+                drugAndSpec.getGrade());
+
 
         Drug u = drugService.saveForShifarnik(drugDTO);
         if(u != null)
@@ -129,6 +134,16 @@ public class DrugContorller {
 
 
     }
+
+    @GetMapping("/drugsInfo")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<List<ShowDrugsDTO>> DrugsInfo()
+    {
+        return new ResponseEntity<>(drugService.returnInfoDrugs(), HttpStatus.OK);
+
+    }
+
+
 
 
 

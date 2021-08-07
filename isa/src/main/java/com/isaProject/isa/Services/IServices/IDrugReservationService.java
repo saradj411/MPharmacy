@@ -6,6 +6,7 @@ import com.isaProject.isa.Model.DTO.DrugReservationForViewDTO;
 import com.isaProject.isa.Model.DTO.FrontDrugReservationDTO;
 import com.isaProject.isa.Model.Drugs.Drug;
 import com.isaProject.isa.Model.Drugs.DrugReservation;
+import com.isaProject.isa.Model.Drugs.PharmacyDrugs;
 import com.isaProject.isa.Model.Users.Patient;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;

@@ -1,10 +1,7 @@
 package com.isaProject.isa.Services.Implementations;
 
-import com.isaProject.isa.Model.DTO.IngredientDTO;
 import com.isaProject.isa.Model.DTO.SpecificaitonDTO;
-import com.isaProject.isa.Model.DTO.SpecificationDTO;
 import com.isaProject.isa.Model.Drugs.Drug;
-import com.isaProject.isa.Model.Drugs.Ingredient;
 import com.isaProject.isa.Model.Drugs.Specification;
 import com.isaProject.isa.Repositories.DrugRepository;
 import com.isaProject.isa.Repositories.SpecificationRepository;
@@ -14,10 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 
 @Service
@@ -29,6 +24,9 @@ public class SpecificationService implements ISpecificationService {
 
     public @Autowired
     DrugRepository drugRepository;
+
+    @Autowired
+    DrugService drugService;
 
 
     @Override
@@ -62,5 +60,18 @@ public class SpecificationService implements ISpecificationService {
         specificationRepository.save(s);
         return s;
 
+    }
+
+    public Specification findByName(String name)
+    {
+        for(Specification spec : findAll())
+        {
+            if(spec.getDrug().getName().equals(name))
+            {
+                return  spec;
+            }
+        }
+
+    return null;
     }
 }

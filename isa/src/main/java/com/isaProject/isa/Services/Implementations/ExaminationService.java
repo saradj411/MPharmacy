@@ -1,15 +1,9 @@
 package com.isaProject.isa.Services.Implementations;
 
-import ch.qos.logback.core.net.SyslogOutputStream;
-import com.isaProject.isa.Model.DTO.ExaminationDTO;
-import com.isaProject.isa.Model.DTO.ExaminationFrontDTO;
-import com.isaProject.isa.Model.DTO.RequestForVacationDTO;
-import com.isaProject.isa.Model.DTO.FrontCreatedExaminationDTO;
+import com.isaProject.isa.Model.DTO.*;
 import com.isaProject.isa.Model.Drugs.Drug;
-import com.isaProject.isa.Model.Drugs.DrugReservation;
 import com.isaProject.isa.Model.DTO.FrontCreatedExaminationDTO;
 
-import com.isaProject.isa.Model.DTO.SchedulePharmacistExaminationDTO;
 import com.isaProject.isa.Model.Examination.Examination;
 import com.isaProject.isa.Model.Examination.ExaminationStatus;
 import com.isaProject.isa.Model.Examination.ExaminationType;
@@ -34,12 +28,7 @@ import org.springframework.stereotype.Service;
 
 import javax.mail.MessagingException;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-
 import java.util.ArrayList;
-import java.util.Date;
 
 import java.util.List;
 import java.util.Set;
@@ -83,6 +72,8 @@ public class ExaminationService implements IExaminationService {
 
     @Autowired
     RequestForVacationRepository requestForVacationRepository;
+    @Autowired
+    LoyalityProgramService loyalityProgramService;
 
     @Override
     public List<Examination> findAll() {
@@ -90,6 +81,39 @@ public class ExaminationService implements IExaminationService {
     }
 
 
+    public List<Examination> findAllOverWithoutPoints() {
+
+        List<Examination> overExamintaion = new ArrayList<Examination>();
+
+        for (Examination e: examinationRepository.findAll()) {
+            if(e.getStatus().equals(ExaminationStatus.FINISHED) && e.getPointsForExamination() == null)
+                overExamintaion.add(e);
+        }
+
+        return overExamintaion;
+    }
+
+    public Examination savePointsFromExamination(ExamPointDTO examPoinDTO)
+    {
+
+        for (Examination e: findAllOverWithoutPoints()) {
+            if(e.getIdExamination().equals(examPoinDTO.getIdExamination()))
+            {
+                e.setPointsForExamination(examPoinDTO.getPoints());
+                addPointsToPatient(examPoinDTO, e);
+                loyalityProgramService.changeStatusOfPatient(e.getPatient());
+                examinationRepository.save(e);
+                return e;
+            }
+        }
+        return null;
+
+    }
+
+    private void addPointsToPatient(ExamPointDTO examPoinDTO, Examination e) {
+        Integer points = e.getPatient().getPoints() + examPoinDTO.getPoints();
+        e.getPatient().setPoints(points);
+    }
 
     /*
 

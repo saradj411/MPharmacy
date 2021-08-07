@@ -1,10 +1,7 @@
 package com.isaProject.isa.Services.Implementations;
 
 
-import com.isaProject.isa.Model.DTO.AlternativeDrugDTO;
-import com.isaProject.isa.Model.DTO.DermatologistForCreateDTO;
-import com.isaProject.isa.Model.DTO.DrugDTO;
-import com.isaProject.isa.Model.DTO.DrugNewDTO;
+import com.isaProject.isa.Model.DTO.*;
 import com.isaProject.isa.Model.Drugs.Drug;
 import com.isaProject.isa.Model.Drugs.DrugPricelist;
 import com.isaProject.isa.Model.Drugs.PharmacyDrugs;
@@ -16,6 +13,7 @@ import com.isaProject.isa.Repositories.*;
 import com.isaProject.isa.Services.IServices.IDrugService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -163,7 +161,45 @@ public class DrugService implements IDrugService {
             alternative.add(drug);
         }
         d.setAlternativeDrugs(alternative);
+        d.setGrade(drugDTO.getGrade());
+        d.setNapomene(drugDTO.getNapomene());
 
         return drugRepository.save(d);
     }
+
+    public List<ShowDrugsDTO> returnInfoDrugs()
+    {
+        List<ShowDrugsDTO> showDrugsList = new ArrayList<ShowDrugsDTO>();
+
+
+        for (Drug drug : findAll()) {
+            List<PharmaciesAndPriceDTO> pharmaciesAndPrice = new ArrayList<PharmaciesAndPriceDTO>();
+            for (DrugPricelist drugPricelist : drugPricelistService.findAll())
+            {
+                if(drug.getIdDrug() == drugPricelist.getDrug().getIdDrug())
+                {
+                    PharmaciesAndPriceDTO pa = new PharmaciesAndPriceDTO(
+                      drugPricelist.getPharmacy().getName(),
+                      drugPricelist.getPharmacy().getAddress(),
+                      drugPricelist.getPharmacy().getCity(),
+                      drugPricelist.getPrice()
+                    );
+                    pharmaciesAndPrice.add(pa);
+                }
+
+            }
+
+            ShowDrugsDTO showDrug = new ShowDrugsDTO(
+                    drug.getName(),
+                    drug.getDrugType(),
+                    drug.getGrade(),
+                    pharmaciesAndPrice);
+            showDrugsList.add(showDrug);
+        }
+
+        System.out.println(showDrugsList);
+        return  showDrugsList;
+    }
+
+
 }

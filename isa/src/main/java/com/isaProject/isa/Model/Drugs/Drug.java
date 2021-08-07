@@ -35,6 +35,10 @@ public class Drug implements Serializable {
     //proizvodjac
     @Column
     private String manufacturer;
+    @Column
+    private String napomene;
+    @Column
+    private double grade;
 
     //@Cascade(org.hibernate.annotations.CascadeType.DELETE)
 /*
@@ -53,6 +57,8 @@ public class Drug implements Serializable {
 
     public Drug() {
     }
+
+
 
     public Drug(Integer idDrug, String name, String code, boolean recipeNeed, String drugType, DrugFormat format, String manufacturer
             //, Set<Drug> alternativeDrugs
@@ -88,6 +94,36 @@ public class Drug implements Serializable {
         this.manufacturer = manufacturer;
         this.alternativeDrugs = alternativeDrugs;
         this.points = points;
+    }
+
+    public Drug(Integer idDrug, String name, String code, boolean recipeNeed, String drugType, DrugFormat format, String manufacturer, String napomene, double grade, Set<Drug> alternativeDrugs, Integer points) {
+        this.idDrug = idDrug;
+        this.name = name;
+        this.code = code;
+        this.recipeNeed = recipeNeed;
+        this.drugType = drugType;
+        this.format = format;
+        this.manufacturer = manufacturer;
+        this.napomene = napomene;
+        this.grade = grade;
+        this.alternativeDrugs = alternativeDrugs;
+        this.points = points;
+    }
+
+    public String getNapomene() {
+        return napomene;
+    }
+
+    public void setNapomene(String napomene) {
+        this.napomene = napomene;
+    }
+
+    public double getGrade() {
+        return grade;
+    }
+
+    public void setGrade(double grade) {
+        this.grade = grade;
     }
 
     public Integer getIdDrug() {

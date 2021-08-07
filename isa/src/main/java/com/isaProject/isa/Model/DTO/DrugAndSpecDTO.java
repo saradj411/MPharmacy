@@ -24,6 +24,9 @@ public class DrugAndSpecDTO {
     private Integer recommendedDose;
     private String ingredients;
 
+    private String napomene;
+    private double grade;
+
     public DrugAndSpecDTO(String name, String code, boolean recipeNeed, String drugType, DrugFormat format, String manufacturer, Integer points) {
         this.name = name;
         this.code = code;
@@ -34,7 +37,7 @@ public class DrugAndSpecDTO {
         this.points = points;
     }
 
-    public DrugAndSpecDTO(String name, String code, boolean recipeNeed, String drugType, DrugFormat format, String manufacturer, Integer points, Set<Integer> alternatives, String contraindications, String structure, Integer recommendedDose, String ingredients) {
+    public DrugAndSpecDTO(String name, String code, boolean recipeNeed, String drugType, DrugFormat format, String manufacturer, Integer points, Set<Integer> alternatives, String contraindications, String structure, Integer recommendedDose, String ingredients, String napomene, double grade) {
         this.name = name;
         this.code = code;
         this.recipeNeed = recipeNeed;
@@ -47,6 +50,24 @@ public class DrugAndSpecDTO {
         this.structure = structure;
         this.recommendedDose = recommendedDose;
         this.ingredients = ingredients;
+        this.napomene = napomene;
+        this.grade = grade;
+    }
+
+    public String getNapomene() {
+        return napomene;
+    }
+
+    public void setNapomene(String napomene) {
+        this.napomene = napomene;
+    }
+
+    public double getGrade() {
+        return grade;
+    }
+
+    public void setGrade(double grade) {
+        this.grade = grade;
     }
 
     public DrugAndSpecDTO() {}

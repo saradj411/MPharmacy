@@ -1,10 +1,6 @@
 package com.isaProject.isa.Controllers;
 
-import com.isaProject.isa.Model.DTO.ExaminationDTO;
-import com.isaProject.isa.Model.DTO.ExaminationFrontDTO;
-import com.isaProject.isa.Model.DTO.RequestForVacationDTO;
-import com.isaProject.isa.Model.DTO.FrontCreatedExaminationDTO;
-import com.isaProject.isa.Model.DTO.SchedulePharmacistExaminationDTO;
+import com.isaProject.isa.Model.DTO.*;
 import com.isaProject.isa.Model.Examination.Examination;
 
 import com.isaProject.isa.Services.Implementations.DrugReservationService;
@@ -20,6 +16,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.mail.MessagingException;
@@ -162,6 +159,24 @@ public class ExaminationController {
 
         examinationService.scheduledDermatologistExamination(id,idExamination);
         return new ResponseEntity<>("ajdeee", HttpStatus.CREATED);
+
+    }
+
+    @GetMapping("/getAllOverExamination")
+    @PreAuthorize("hasRole('ADMIN')")
+    ResponseEntity<List<Examination>> getAllOverExamination() {
+
+        return new ResponseEntity<List<Examination>>(examinationService.findAllOverWithoutPoints(), HttpStatus.OK);
+
+    }
+    @PostMapping("/saveExamPoints")
+    @PreAuthorize("hasRole('ADMIN')")
+    ResponseEntity<Examination> saveExamPoints(@RequestBody ExamPointDTO examPointDTO) {
+
+        Examination e = examinationService.savePointsFromExamination(examPointDTO);
+        return e == null ? new ResponseEntity(HttpStatus.BAD_REQUEST) :
+                new ResponseEntity<Examination>(e, HttpStatus.OK);
+
 
     }
     @GetMapping(value = "/getBool/{id}")

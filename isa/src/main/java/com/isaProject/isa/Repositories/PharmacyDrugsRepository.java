@@ -20,6 +20,8 @@ public interface PharmacyDrugsRepository extends JpaRepository<PharmacyDrugs, In
     @Query("select s from PharmacyDrugs s where s.id= ?1" )
     PharmacyDrugs findOneById(Integer id);
 
+    List<PharmacyDrugs> findAll();
+
 
 
 

@@ -43,12 +43,19 @@ public class DrugReservationService implements IDrugReservationService {
     DrugRepository drugRepository2;
     @Autowired
     PharmacyDrugsRepository pharmacyDrugsRepository;
+    @Autowired
+    LoyalityProgramService loyalityProgramService;
 
+    @Autowired
+    ExaminationService examinationService;
     @Autowired
     ServiceForEmail serviceForEmail;
 
     @Autowired
     PharmacistRepository pharmacistRepository;
+
+    @Autowired
+    PharmacyDrugsService pharmacyDrugsService;
 
 
 
@@ -96,15 +103,25 @@ public class DrugReservationService implements IDrugReservationService {
     }
     @Override
     public void canceling(Integer id) {
-        DrugReservation pat = drugRepository.getOne(id);
+        DrugReservation drugReservation = findById(id);
+        PharmacyDrugs pharmacyDrugs = new PharmacyDrugs();
+        for (PharmacyDrugs pd : pharmacyDrugsService.findAll()) {
+            if(pd.getPharmacy().getIdPharm() == drugReservation.getPharmacy().getIdPharm())
+                if(pd.getDrug().getIdDrug() == drugReservation.getDrug().getIdDrug())
+                {
+                    pharmacyDrugs = pd;
+                }
+        }
+        drugReservation.setCancelled(true);
+        pharmacyDrugs.setQuantity(pharmacyDrugs.getQuantity() + drugReservation.getQuantity());
+        Integer points  = drugReservation.getPatient().getPoints() - drugReservation.getDrug().getPoints();
+        drugReservation.getPatient().setPoints(points);
+        loyalityProgramService.changeStatusOfPatient(drugReservation.getPatient());
+        pharmacyDrugsRepository.save(pharmacyDrugs);
 
-        PharmacyDrugs pp=pharmacyDrugsRepository.findByIdDrugAndIfPharm(pat.getPharmacy().getIdPharm(),pat.getDrug().getIdDrug());
-        pat.setCancelled(true);
-        pp.setQuantity(pp.getQuantity()+pat.getQuantity());
-        pharmacyDrugsRepository.save(pp);
-
-        drugRepository.save(pat);
     }
+
+
 
     @Override
     public void checkReservations() {
@@ -203,13 +220,19 @@ public class DrugReservationService implements IDrugReservationService {
             d.setQuantity(1);
 
             pd.setQuantity(pd.getQuantity()-1);
+            Integer points  = d.getPatient().getPoints() + d.getDrug().getPoints();
+            d.getPatient().setPoints(points);
+            loyalityProgramService.changeStatusOfPatient(d.getPatient());
+
             DrugReservation novi=drugRepository.save(d);
             pharmacyDrugsRepository.save(pd);
+
             //pd.setDrug(novi);
             //drugRepository.save(pd);
             return novi;
 
     }
+
 
 
     @Override

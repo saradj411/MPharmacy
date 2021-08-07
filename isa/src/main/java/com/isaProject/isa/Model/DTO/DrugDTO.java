@@ -31,6 +31,38 @@ public class DrugDTO implements Serializable {
     private Integer points;
     private Set<Integer> alternativeDrugs;
 
+    private String napomene;
+    private double grade;
+
+    public DrugDTO(String name, String code, boolean recipeNeed, String drugType, DrugFormat format, String manufacturer, Integer points, Set<Integer> alternativeDrugs, String napomene, double grade) {
+        this.name = name;
+        this.code = code;
+        this.recipeNeed = recipeNeed;
+        this.drugType = drugType;
+        this.format = format;
+        this.manufacturer = manufacturer;
+        this.points = points;
+        this.alternativeDrugs = alternativeDrugs;
+        this.napomene = napomene;
+        this.grade = grade;
+    }
+
+    public String getNapomene() {
+        return napomene;
+    }
+
+    public void setNapomene(String napomene) {
+        this.napomene = napomene;
+    }
+
+    public double getGrade() {
+        return grade;
+    }
+
+    public void setGrade(double grade) {
+        this.grade = grade;
+    }
+
     public String getCode() {
         return code;
     }

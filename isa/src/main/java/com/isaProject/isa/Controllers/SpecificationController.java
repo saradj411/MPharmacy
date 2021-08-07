@@ -1,8 +1,6 @@
 package com.isaProject.isa.Controllers;
 
 
-import com.isaProject.isa.Model.DTO.IngredientDTO;
-import com.isaProject.isa.Model.DTO.SpecificationDTO;
 import com.isaProject.isa.Model.Drugs.Specification;
 import com.isaProject.isa.Services.Implementations.SpecificationService;
 import lombok.extern.slf4j.Slf4j;
@@ -10,9 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-import java.util.Set;
 
 @RestController
 @CrossOrigin
@@ -32,4 +27,16 @@ public class SpecificationController {
                 new ResponseEntity<>(HttpStatus.NOT_FOUND) :
                 ResponseEntity.ok(d);
     }
+
+    @GetMapping(value = "/findSpecByDrugName/{name}")//radiii
+    public ResponseEntity<Specification> getDrugSpecByName(@PathVariable String name) {
+        Specification specification = specificationService.findByName(name);
+        return specification == null ?
+                new ResponseEntity<>(HttpStatus.NOT_FOUND) :
+                new ResponseEntity<Specification>(specification, HttpStatus.OK);
+    }
+
+
+
+
 }

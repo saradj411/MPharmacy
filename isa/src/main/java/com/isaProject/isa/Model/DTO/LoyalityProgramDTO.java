@@ -1,75 +1,24 @@
-package com.isaProject.isa.Model.Users;
+package com.isaProject.isa.Model.DTO;
 
+import javax.persistence.Column;
 
-
-
-import javax.persistence.*;
-import java.time.LocalDate;
-
-@Entity
-@Table
-public class LoyalityProgram {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer idProgram;
-
-//poeni za svaku od kategorije
-    @Column
+public class LoyalityProgramDTO {
     private int pointsToRegular;
-
-    @Column
     private int pointsToSilver;
-
-    @Column
     private int pointsToGold;
-
-    @Column
     private int percentBronse;
-    @Column
     private int percentSilver;
-    @Column
     private int percentGold;
-    @Column
-    private LocalDate createdDate;
-    @Column
-    private Boolean isActive;
 
-    public  LoyalityProgram(){}
-    public LoyalityProgram(Integer idProgram, int pointsToRegular, int pointsToSilver, int pointsToGold, int percentBronse, int percentSilver, int percentGold, LocalDate createdDate, Boolean isActive) {
-        this.idProgram = idProgram;
+    public  LoyalityProgramDTO(){}
+    public LoyalityProgramDTO(int pointsToRegular, int pointsToSilver, int pointsToGold, int percentBronse, int percentSilver, int percentGold) {
         this.pointsToRegular = pointsToRegular;
         this.pointsToSilver = pointsToSilver;
         this.pointsToGold = pointsToGold;
         this.percentBronse = percentBronse;
         this.percentSilver = percentSilver;
         this.percentGold = percentGold;
-        this.createdDate = createdDate;
-        this.isActive = isActive;
-    }
-
-    public LocalDate getCreatedDate() {
-        return createdDate;
-    }
-
-    public void setCreatedDate(LocalDate createdDate) {
-        this.createdDate = createdDate;
-    }
-
-    public Boolean getActive() {
-        return isActive;
-    }
-
-    public void setActive(Boolean active) {
-        isActive = active;
-    }
-
-    public Integer getIdProgram() {
-        return idProgram;
-    }
-
-    public void setIdProgram(Integer idProgram) {
-        this.idProgram = idProgram;
-    }
+   }
 
     public int getPointsToRegular() {
         return pointsToRegular;

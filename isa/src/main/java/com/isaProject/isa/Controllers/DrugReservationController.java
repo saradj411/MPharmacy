@@ -119,7 +119,7 @@ public class DrugReservationController {
     public ResponseEntity<DrugReservation> createReservation(@RequestBody DrugReservationDTO drugDTO) throws MessagingException {
 
         DrugReservation drug = drugReservationService.save(drugDTO);
-        serviceForEmail.sendingMailToPatientForReservattion(drug.getIdReservation(),drug.getPatient());
+        //serviceForEmail.sendingMailToPatientForReservattion(drug.getIdReservation(),drug.getPatient());
         return new ResponseEntity<>(drug, HttpStatus.CREATED);
     }
 
