@@ -15,6 +15,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.*;
 
@@ -199,6 +201,70 @@ public class DrugService implements IDrugService {
 
         System.out.println(showDrugsList);
         return  showDrugsList;
+    }
+
+    public  List<ShowDrugsDTO> searchDrugByName(String name)
+    {
+        List<ShowDrugsDTO> allDrugs = returnInfoDrugs();
+        List<ShowDrugsDTO> searchList = new ArrayList<>();
+
+        for (ShowDrugsDTO sh: allDrugs) {
+            if(sh.getName().startsWith(name.toLowerCase(Locale.ROOT))
+                    || sh.getName().startsWith(name.toUpperCase(Locale.ROOT)))
+            {
+                searchList.add(sh);
+            }
+
+        }
+
+        return  searchList;
+
+    }
+
+    public List<ShowDrugsDTO> filtering(String sort, String drugSearch)
+    {
+
+        List<ShowDrugsDTO> forSortList = new ArrayList<>();
+        if(drugSearch.equals("empty"))
+            forSortList = returnInfoDrugs();
+        else
+            forSortList = searchDrugByName(drugSearch);
+
+
+        if(sort.equals("gradeAsc"))
+        {
+            forSortList.sort(Comparator.comparing(ShowDrugsDTO::getGrade));
+            return forSortList;
+        }
+        else if(sort.equals("gradeDesc"))
+        {
+            forSortList.sort(Comparator.comparing(ShowDrugsDTO::getGrade).reversed());
+            return forSortList;
+        }
+        else if(sort.equals("drugTypeAsc"))
+        {
+            forSortList.sort(Comparator.comparing(ShowDrugsDTO::getDrugType));
+            return forSortList;
+        }
+        else if(sort.equals("drugTypeDesc"))
+        {
+            forSortList.sort(Comparator.comparing(ShowDrugsDTO::getDrugType).reversed());
+            return forSortList;
+        }
+
+
+        return null;
+    }
+
+
+    public  Drug getByName(String name)
+    {
+        for (Drug d : findAll()) {
+            if(d.getName().equals(name))
+                return d;
+
+        }
+        return null;
     }
 
 

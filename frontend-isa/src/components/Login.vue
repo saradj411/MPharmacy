@@ -25,7 +25,8 @@
                     <input type="password" v-model="password" 
                     :class="{'input--error':!password}" 
                     class="form-control" placeholder="Enter name"  
-                    aria-label="Enter name" aria-describedby="addon-wrapping">
+                    aria-label="Enter name" aria-describedby="addon-wrapping"
+                    >
                     </td>   
                 </tr>
                 <tr>

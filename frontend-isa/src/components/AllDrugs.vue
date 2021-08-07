@@ -1,74 +1,53 @@
 <template>
 <div class="all">
-    <h1> All drugs: </h1>
-   <!-- <div class="container" >  
-  <div class="col-sm " style="margin-bottom:5px; border-style:solid; color:black;" v-for="drug in this.drugs" v-bind:key="drug.idDrug" >
-    <div>
+    <h1 style="margin-top:10px"> ALL DRUGS: </h1>
+    <div class="container">
+  <div class="row">
+    <div class="col-sm" style="font-size:20px;">
+      Searh drug: 
     </div>
-
-            <div class="container">
+    <div class="col-sm">
+     <input type="text" v-model="drugSearch" 
+                   
+                    class="form-control" placeholder="Enter drug name.."  
+                    aria-label="Enter drug name.." aria-describedby="addon-wrapping"
+                    style="width:350px; ">
+    </div>
+        
+        <div class="col-sm">
+        <button class = "btn btn-primary btn-xs"                      
+                        style="margin:auto;background: #000; width: 200px;" v-on:click="search(drugSearch)" > Search </button>
+                 
+    
+      </div>
+  </div>
+                </div>
+                <div class="container" style="margin-top:10px;">
                 <div class="row">
-                    <div class="col-sm" style="width:100%">
-                        <div class="row">
-                                <div class="col-sm">
-                            Name: 
-                            </div>
-                            <div class="col-sm">
-                                {{drug.name}}
-                                </div>                               
-                        </div>
-                         <div class="row">
-                                <div class="col-sm">
-                            Type:
-                            </div>
-                            <div class="col-sm">
-                                 {{drug.drugType}}
-                                </div>                               
-                        </div>
-                         <div class="row">
-                                <div class="col-sm">
-                            Grade:
-                            </div>
-                            <div class="col-sm">
-                                 {{drug.grade}}
-                                </div>                               
-                        </div>
-
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
+                    <div class="col-sm"> <button class = "btn btn-primary btn-xs"                      
+                        style="margin:auto; background: #000; width: 200px;" v-on:click="filter('gradeAsc')" > Grade ascending </button>
+                 
+  
                     </div>
                     <div class="col-sm">
-                        <div class="row" v-for="p in drug.pharmaciesAndPriceDTO" v-bind:key="p.name">
-                                  <div class="col-sm">
-                            {{p.name}} <br>
-                            {{p.address}}, {{p.city}}
-                            </div>
-                            <div class="col-sm">
-                                 {{p.price}} din
-                                </div>                                
-                        </div>
-
-                  
-                  
+                    <button class = "btn btn-primary btn-xs"                     
+                        style="margin:auto; background: #000; width: 200px;"
+                         v-on:click="filter('gradeDesc')" > Grade descendign </button>
+                 
                     </div>
-                
+                    <div class="col-sm"> <button class = "btn btn-primary btn-xs"                     
+                        style="margin:auto; background: #000; width: 200px;"
+                         v-on:click="filter('drugTypeAsc')" > Drug type ascending </button>
+                    </div>
+                    <div class="col-sm">
+                     <button class = "btn btn-primary btn-xs"                     
+                        style="margin:auto; background: #000; width: 200px;"
+                         v-on:click="filter('drugTypeDesc')" > Drug type descendign </button>
+                    </div>
                 </div>
-            </div>
-
-
-
-   
-    </div>
-    </div>-->
+                </div>
 <!-- PROBA -->
-    <div class="col-sm-4" style="" v-for="drug in this.drugs" v-bind:key="drug.idDrug">
+    <div class="" style="width: 500px; margin: 10px; display: inline-table" v-for="drug in this.drugs" v-bind:key="drug.idDrug">
         <div class="panel panel-prmary" style="text-align: left;">   
             <div class="panel-heading" style="border-style:solid;" >  
             <table style="width:100%;">
@@ -95,16 +74,18 @@
               
             <div class="panel-body" style="text-align:center;"  v-for="p in drug.pharmaciesAndPriceDTO" v-bind:key="p.name" >            
                 
-                <table style="width:100%; text-align:center;">
+                <table style="text-align:center;">
                     <tr>
-                    <td rowspan="2" style="width:70%; text-align:center; margin: 0 auto;">
-                         <h3>{{p.name}} </h3> 
+                    <td rowspan="2" style="width:200px; text-align:left; padding-left:10px; margin: 0 auto;">
+                         <h3>{{p.name}}  </h3> 
                                                
                     </td>
-                    </tr> 
-                <tr>
+                     
+                        <td rowspan="2" style="width:150px; text-align: left; font-size:20px;"> {{p.price}} din</td>
                     
-                    <td style="width:30%; text-align: left;">
+                    
+                    
+                    <td style="text-align: left;">
                         <tr>
                         {{p.address}},</tr>
                         <tr>
@@ -123,13 +104,72 @@
                         
 <!-- SPECIFICATION -->
 
-            <div class="panel-body" style="text-align:center;" >            
+            <div class="panel-body" style="background-color:#fcfcfc;" v-show="drug.name == selected && selected != ''"  >            
                 
-                <h1>DASD</h1>
+                <h4  style="text-align:center;">Specification about drug: </h4>
+                <table >
+                <tr  style="border-top: 1px solid;">
+                    <td style="width: 300px; padding-left:10px;"> Recomended dose: </td>
+                    <td style="width: 400px; padding-left:10px;">{{ spec.recommendedDose }}</td>
+                </tr>
+                <tr  style="border-top: 1px solid;">
+                    <td style="padding-left:10px;">Structure: </td>
+                    <td style="padding-left:10px;">{{ spec.structure }}</td>
+                </tr>
+                <tr  style="border-top: 1px solid;">
+                    <td style="padding-left:10px;"> Contraindications:</td>
+                    <td style="padding-left:10px;">{{spec.contraindications}}</td>
+                </tr>
+                 <tr  style="border-top: 1px solid;">
+                    <td style="padding-left:10px;"> Ingredients:</td>
+                    <td style="padding-left:10px;">{{spec.ingredients}}</td>
+                </tr>
+                <tr  style="border-top: 1px solid;">
+                    <td style="padding-left:10px;"> Manufacturer:</td>
+                    <td style="padding-left:10px;">{{spec.drug.manufacturer}}</td>
+                </tr >
+                <tr  style="border-top: 1px solid;">
+                    <td style="padding-left:10px;"> Alternative drugs:</td>
+                    <td style="padding-left:10px;">
+                        <table>
+                            <tr v-show ="selected != '' && spec.drug.alternativeDrugs.length == 0"> Doesn't have alternative drugs. </tr>
+                            <tr v-for="d in spec.drug.alternativeDrugs" v-bind:key="d.idDrug" >
+                                <td style=""> {{d.name}} </td>
+                            </tr>
+                        
+                        </table>
+                    </td>
+                </tr>
+                <tr  style="border-top: 1px solid;">
+                    <td style="padding-left:10px;"> You should know:</td>
+                    <td style="padding-left:10px;">{{spec.drug.napomene}}</td>
+                </tr>
+
+
+                <tr>
+
+                </tr>
+                </table>
                      
                 
 
             </div>
+
+
+            <div class="panel-body" style="background-color:#fcfcfc;" v-show="drug.pharmaciesAndPriceDTO.length != 0 &&  user.authorityRole == 'ROLE_PATIENT'"  >            
+                <button class="btn btn-danger" style="width:100%;" v-on:click="showPharmacies(drug.name)" > Reserve </button> 
+            </div>
+            <div class="panel-body" style="background-color:#fcfcfc;" v-if="drug.name == reservDrugSelected && reservDrugSelected != ''">            
+                <h5 style="padding: 10px; font-size: 19px; text-align:center;" > Please select in which pharmacy you want to reserve. </h5>
+               <table>
+                <tr v-for="p in drug.pharmaciesAndPriceDTO" v-bind:key="p.name" style="width:100%;  border-top: 1px solid;" >
+                    <td style="width:100%; padding-left: 20px;" > {{p.name}} </td>
+                    <td style="width:100%"> <button class="btn btn-danger" style="width:100%;" v-on:click="reserveDrug(drug, p)" > Reserve </button> </td>
+                
+                </tr>
+               </table>
+            </div>
+
 
 
 
@@ -148,68 +188,154 @@
 <script>
 export default {
       data() {
-        return {              
-            userAuth: localStorage.getItem('accessToken'), 
+        return {             
+            
             id : this.$route.params.id,
             drugs: [],
-            spec: {},
+            spec: {
+                contraindications: "",
+                drug: {},
+                idSpec: 0,
+                ingredients: "",
+                recommendedDose: 0,
+                structure: ""
+            },
+            accessToken: localStorage.getItem('accessToken'),
+            hasSpec: "",
+            selected: "",
+            drugSearch: "",
+            allDrugs: [],
+            fil: "",
+            reservDrugSelected: "",
+            user: {}
+
                         
            
         }
       },
       methods:{
-          getSpec: function(name)
+          showPharmacies: function(name)
           {
+              this.reservDrugSelected = name;
               
-            console.log(name);
-            this.axios.get('specification/findSpecByDrugName/' + this.name, { 
+          },
+          reserveDrug: function(drug, p)
+          {
+              console.log(drug.name);
+              console.log(p.name);
+
+                 this.axios.get('/drug/getByName/' + drug.name, { 
             headers: {                    
-                    'Authorization': `Bearer ` + accessToken,
+                    'Authorization': `Bearer ` +  this.accessToken,                    
+                }
+            }).then(response => {
+                  console.log(response.data);
+                  //window.location.href = "/ReserveDrug/"+ response.data.idDrug +"/"+this.id;
+            }).catch(res => {
+                          console.log(res.response.data.message);
+                          alert("Greska");
+                    });
+
+          },
+          getSpec: function(name)
+          {           
+            this.selected = name;
+            this.axios.get('specification/findSpecByDrugName/' + name, { 
+            headers: {                    
+                    'Authorization': `Bearer ` +  this.accessToken,
                     
                 }
             }).then(response => {
-
                   this.spec = response.data;
-                  console.log(this.spec);
-
             }).catch(res => {
-                          alert("Token expired!");
-                          window.location.href = '/login';
                           console.log(res.response.data.message);
                     });
 
 
         
-        }       
-          }
+        }  ,
+        search: function(drugSearch)
+        {
+            if(drugSearch != "")
+            {
+            this.axios.get('drug/searchByName/' + drugSearch, { 
+            headers: {                    
+                    'Authorization': `Bearer ` +  this.accessToken,                    
+                }
+            }).then(response => {
+                  this.drugs = response.data;
+            }).catch(res => {
+                       
+                          console.log(res.response.data.message);
+                    });
+            }
+            else
+            {
+                this.drugs = this.allDrugs;
+            }
+        },
+        
+        filter: function(sortType)
+        {
+            console.log(sortType);
+                if(this.drugSearch == "")
+                     this.fil = "empty";
+                else
+                    this.fil = this.drugSearch;
+
+
+            this.axios.get('/drug/sort/' + sortType +'/'+ this.fil, { 
+            headers: {                    
+                    'Authorization': `Bearer ` +  this.accessToken,                    
+                }
+            }).then(response => {
+                  this.drugs = response.data;
+            }).catch(res => {
+                          console.log(res.response.data.message);
+                    });
+        }
+          
           
     },
     mounted() {
-     var accessToken = localStorage.getItem('accessToken');
-    this.axios.get('drug/drugsInfo/',{ 
+     
+
+     this.axios.get('drug/drugsInfo/',{ 
             headers: {                    
-                    'Authorization': `Bearer ` + accessToken,
+                    'Authorization': `Bearer ` + this.accessToken,
                     
                 }
             }).then(response => {
 
                   this.drugs = response.data;
-                  console.log(this.drugs);
+                  this.allDrugs = response.data;
 
             }).catch(res => {
-                          alert("Token expired!");
-                          window.location.href = '/login';
+                        
                           console.log(res.response.data.message);
                     });
 
 
-        
-        }       
+        this.axios.get('user/findById/'+ this.id ,{ 
+            headers: {
+                    'Access-Control-Allow-Headers': 'Origin, Content-Type, X-Auth-Token',
+                    'Authorization': `Bearer ` + this.accessToken,
+                    'Access-Control-Allow-Origin': '*',
+                 
+                }
+            }).then(response => {
 
+                  this.user = response.data;
+                  console.log(this.user);
 
-       
+            }).catch(res => {
+                          alert("Token expired!");
+                          //window.location.href = '/login';
+                          console.log(res.response.data.message);
+                    });
         
-         
+        }  
+        
     }
 
 </script>
@@ -252,10 +378,10 @@ export default {
 }
 
 tr{    
-    width:100%;
+ 
 }
 td
 {
-    width: 100%;
+    
 }
 </style>

@@ -133,7 +133,7 @@ public class PatientService implements IPatientService {
     }
     @Override
     public Set<Integer> findDrugsForGrade(Integer id) {
-        Patient patient=patientRepository.findById(id).get();
+        Patient patient = patientRepository.findById(id).get();
 
         List<ERecipe> eRecipes=eRecipeRepository.findAll();
 

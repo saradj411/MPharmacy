@@ -61,9 +61,13 @@ export default {
   data() {
     return {
         id : this.$route.params.id,
+        
+        pharmacyName: this.$rout.params.pharmacyName,
         idPatient : this.$route.params.idPatient,
+
        pharmacyDrug : [],
-       reserveDate:null
+       reserveDate:null,
+       pharmacy: {},
       
       
        
@@ -73,6 +77,19 @@ export default {
   methods:{
   
     createReservation : function(){
+
+      this.axios.post('/pharmacy/getByName/'+ this.pharmacyName,{ 
+                        })
+                .then(response => {
+                        console.log(response.data);
+                        this.pharmacy = response.data;
+                })
+                .catch(response => {
+                      console.log(response);
+                 }); 
+
+
+
             const reservation = {
             drug:this.pharmacyDrug.drug.idDrug,
             patient : this.idPatient,
@@ -91,10 +108,11 @@ export default {
            if(odabrani<currentDate){
              alert("Choose a date from the future!")
            }else{
-           
+           console.log(reservation);
+
          
-            alert("Wait a second!")
-           this.axios.post('/reservation/create',reservation,{ 
+         
+           /*this.axios.post('/reservation/create',reservation,{ 
                         })
                 .then(response => {
                        alert("Reservation created!");
@@ -104,7 +122,7 @@ export default {
                 .catch(response => {
                        alert("It is not possible reserve");
                         console.log(response);
-                 }); 
+                 }); */
         }
         }
       },

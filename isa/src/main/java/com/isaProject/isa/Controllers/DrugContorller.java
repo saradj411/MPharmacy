@@ -16,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.websocket.server.PathParam;
 import java.util.List;
 
 @RestController
@@ -136,13 +137,36 @@ public class DrugContorller {
     }
 
     @GetMapping("/drugsInfo")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("!hasRole('SUPPLIER')")
     public ResponseEntity<List<ShowDrugsDTO>> DrugsInfo()
     {
         return new ResponseEntity<>(drugService.returnInfoDrugs(), HttpStatus.OK);
 
     }
 
+    @GetMapping("/searchByName/{drugName}")
+    @PreAuthorize("!hasRole('SUPPLIER')")
+    public ResponseEntity<List<ShowDrugsDTO>> searchByName(@PathVariable String drugName)
+    {
+        return new ResponseEntity<>(drugService.searchDrugByName(drugName), HttpStatus.OK);
+
+    }
+
+    @GetMapping("/sort/{sortType}/{drugSearch}")
+    @PreAuthorize("!hasRole('SUPPLIER')")
+    public ResponseEntity<List<ShowDrugsDTO>> filtering(@PathVariable String sortType, @PathVariable String drugSearch)
+    {
+        return new ResponseEntity<>(drugService.filtering(sortType, drugSearch), HttpStatus.OK);
+
+    }
+
+    @GetMapping("/getByName/{name}")
+    @PreAuthorize("!hasRole('SUPPLIER')")
+    public ResponseEntity<Drug> getByName(@PathVariable String name)
+    {
+        return new ResponseEntity<>(drugService.getByName(name), HttpStatus.OK);
+
+    }
 
 
 

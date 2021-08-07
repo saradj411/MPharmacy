@@ -1385,7 +1385,7 @@ methods:{
       showAllDrugs: function(){
           if(!this.moze){
            alert("Scheduling is not possible! You have more than 3 penalties!")
-         }else{
+         }else{/*
         this.showTable=false
         this.showReserveTable=false
        this.showDermExam=false
@@ -1408,7 +1408,9 @@ methods:{
             this.showGradeDermatologist=false
         this.showGradePharmacist=false
         this.showGradePharmacy=false
-        this.showGradeDrug=false
+        this.showGradeDrug=false*/
+          window.location.href = '/AllDrugs/' + this.id;
+
          }
       },
       canceling:
