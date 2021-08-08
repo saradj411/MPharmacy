@@ -222,6 +222,15 @@ public class PharmacyController {
                 ResponseEntity.ok(addressDTO);
     }
 
+    @PreAuthorize("hasRole('PATIENT')")
+    @GetMapping("/getByName/{pharmacyName}")
+    public ResponseEntity<Pharmacy> getByName(@PathVariable String pharmacyName)
+    {
+        return new ResponseEntity<Pharmacy>(pharmacyService.getByName(pharmacyName), HttpStatus.OK);
+
+
+    }
+
 
 
 }

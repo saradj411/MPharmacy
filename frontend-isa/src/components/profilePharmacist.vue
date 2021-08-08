@@ -27,6 +27,12 @@
                               
                   <button class = "btn btn-primary btn-xs" style="margin:auto; margin-left:38px;background:#474A8A" v-on:click = "inssuing">Issuing the reserved drug</button>
                      </span>
+                     <span style="float: left; margin-top: 20px;">
+                  <button class = "btn btn-primary btn-xs" style="margin:auto; margin-left:38px;background:#474A8A" v-on:click = "erec">Create eRecepie</button>
+                     </span>
+<span style="float: left; margin-top: 20px;">
+                  <button class = "btn btn-primary btn-xs" style="margin:auto; margin-left:38px;background:#474A8A" v-on:click = "logOut">Log out</button>
+                     </span>
 
                      
                 <span style="float: left; margin-top: 20px;">
@@ -124,6 +130,7 @@ export default {
         user: {
                
     },
+    id: this.$route.params.id,
     pharmacy : {}
     }
   },
@@ -133,7 +140,7 @@ export default {
 
 
 
-        this.axios.get('pharmacist/findById/'+333,{ 
+        this.axios.get('pharmacist/findById/'+this.id,{ 
              
          }).then(response => {
                this.user=response.data;
@@ -150,15 +157,26 @@ export default {
           window.location.href = '/Clients';
         },
         clients : function(){
-          window.location.href = '/ReviewedClientsPharmacist/'+333;
+          window.location.href = '/ReviewedClientsPharmacist/'+this.id;
         },
         requestForvacation : function(){
-          window.location.href = '/RequestForVacationPharmacist/'+333;
+          window.location.href = '/RequestForVacationPharmacist/'+this.id;
         },
         
         inssuing : function(){
-          window.location.href = '/InssuingDrug/'+333;
-        }
+          window.location.href = '/InssuingDrug/'+this.id;
+        },
+        erec: function()
+        {
+          window.location.href = '/createERecepie/'+this.id;
+        },
+        logOut: function()
+      {
+        localStorage.removeItem('accessToken');
+        localStorage.removeItem('expiresIn');
+         window.location.href = "/";
+
+      },
         
 }
 }

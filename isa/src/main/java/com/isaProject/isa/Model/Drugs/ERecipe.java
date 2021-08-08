@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.isaProject.isa.Model.Pharmacy.Pharmacy;
 import com.isaProject.isa.Model.Users.Patient;
+import com.isaProject.isa.Model.Users.User;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -58,6 +59,12 @@ public class ERecipe {
     @Enumerated(EnumType.STRING)
     private ERecipeStatus status;
 
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "userID", referencedColumnName = "id")
+    //ovo jsonback ostavi!!
+    @JsonBackReference
+    private User user;
+
     public ERecipe(Integer idRecipe, String code, String name, String surname, LocalDate dateOfIssue, Set<ERecipeDrug> eRecipeDrug, Pharmacy pharmacy, Patient patient, ERecipeStatus status) {
         this.idRecipe = idRecipe;
         this.code = code;
@@ -68,6 +75,27 @@ public class ERecipe {
         this.pharmacy = pharmacy;
         this.patient = patient;
         this.status = status;
+    }
+
+    public ERecipe(Integer idRecipe, String code, String name, String surname, LocalDate dateOfIssue, Set<ERecipeDrug> eRecipeDrug, Pharmacy pharmacy, Patient patient, ERecipeStatus status, User user) {
+        this.idRecipe = idRecipe;
+        this.code = code;
+        this.name = name;
+        this.surname = surname;
+        this.dateOfIssue = dateOfIssue;
+        this.eRecipeDrug = eRecipeDrug;
+        this.pharmacy = pharmacy;
+        this.patient = patient;
+        this.status = status;
+        this.user = user;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public ERecipe() {

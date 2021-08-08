@@ -3,6 +3,7 @@ package com.isaProject.isa.Model.Drugs;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.isaProject.isa.Model.Pharmacy.Pharmacy;
+import com.isaProject.isa.Model.Users.User;
 
 import javax.persistence.*;
 
@@ -28,6 +29,9 @@ public class ERecipeDrug {
     //ovo jsonback ostavi!!
     @JsonBackReference
     private ERecipe eRecipe;
+
+
+
 
     public ERecipeDrug() {
     }

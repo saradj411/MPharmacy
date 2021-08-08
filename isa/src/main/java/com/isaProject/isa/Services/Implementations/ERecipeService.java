@@ -1,12 +1,18 @@
 package com.isaProject.isa.Services.Implementations;
 
+import com.isaProject.isa.Model.DTO.ERecipeDTO;
 import com.isaProject.isa.Model.DTO.FrontCreatedExaminationDTO;
 import com.isaProject.isa.Model.DTO.FrontERecipeDTO;
+import com.isaProject.isa.Model.Drugs.Drug;
 import com.isaProject.isa.Model.Drugs.ERecipe;
+import com.isaProject.isa.Model.Drugs.ERecipeDrug;
+import com.isaProject.isa.Model.Drugs.ERecipeStatus;
 import com.isaProject.isa.Model.Examination.Examination;
 import com.isaProject.isa.Model.Examination.ExaminationStatus;
 import com.isaProject.isa.Model.Examination.ExaminationType;
 import com.isaProject.isa.Model.Pharmacy.Pharmacy;
+import com.isaProject.isa.Model.Users.Patient;
+import com.isaProject.isa.Model.Users.User;
 import com.isaProject.isa.Repositories.ERecipeRepository;
 import com.isaProject.isa.Services.IServices.IERecipeService;
 import lombok.extern.slf4j.Slf4j;
@@ -15,10 +21,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.time.LocalDate;
+import java.util.*;
 
 @Service
 @Slf4j
@@ -27,6 +31,11 @@ public class ERecipeService implements IERecipeService {
     ERecipeRepository eRecipeRepository;
     @Autowired
     PatientService patientService;
+    @Autowired
+    UserService userService;
+    @Autowired
+    DrugService drugService;
+
     @Override
     public List<FrontERecipeDTO> findByPatient(Integer id) {
         List<ERecipe> recipes=eRecipeRepository.findAllByPatient(patientService.findById(id));
@@ -44,6 +53,43 @@ public class ERecipeService implements IERecipeService {
 
     //kreate ERecepie
 
+    public ERecipe create(List<ERecipeDTO> eRecipeDTO)
+    {
+        Patient patient = patientService.findById(eRecipeDTO.get(0).getIdPatient());
+        User user = userService.findById(eRecipeDTO.get(0).getIdWhoCreate());
+        Set<ERecipeDrug> eRecipeDrugSet = new HashSet<>();
+
+        List<Drug> drugForRecept = new ArrayList<>();
+        for(ERecipeDTO e : eRecipeDTO)
+        {
+            Drug drug = drugService.findById(e.getIdDrug());
+            ERecipeDrug eRecipeDrug = new ERecipeDrug();
+            eRecipeDrug.setName(drug.getName());
+            eRecipeDrug.setCode(drug.getCode());
+            eRecipeDrug.setQuantity(e.getQuantity());
+            eRecipeDrugSet.add(eRecipeDrug);
+            drugForRecept.add(drug);
+
+        }
+
+        ERecipe eRecipe = new ERecipe();
+        eRecipe.seteRecipeDrug(eRecipeDrugSet);
+        eRecipe.setUser(user);
+        eRecipe.setPatient(patient);
+        eRecipe.setName(patient.getName());
+        eRecipe.setSurname(patient.getSurname());
+        eRecipe.setDateOfIssue(LocalDate.now());
+        eRecipe.setCode("Hard kodirano");
+        eRecipe.setStatus(ERecipeStatus.NEW);
+
+        for(ERecipeDrug e: eRecipeDrugSet)
+        {
+            e.seteRecipe(eRecipe);
+        }
+
+        eRecipeRepository.save(eRecipe);
+        return eRecipe;
+    }
 
 
 }

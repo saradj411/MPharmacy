@@ -148,7 +148,7 @@ export default {
          }).catch(res => {
                 console.log(res);
         });   
-                             console.log("oooo"+this.id);
+                            
 
     },
       methods:{

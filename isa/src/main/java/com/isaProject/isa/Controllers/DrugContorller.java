@@ -168,6 +168,17 @@ public class DrugContorller {
 
     }
 
+    @GetMapping("/getDrugsForERecepie/{id}")
+    @PreAuthorize("hasRole('DERMATOLOGIST') || hasRole('PHARMACIST')")
+    public ResponseEntity<List<Drug>> getByName(@PathVariable Integer id)
+    {
+        return new ResponseEntity<>(drugService.getDrugsForERecepie(id), HttpStatus.OK);
+
+    }
+
+
+
+
 
 
 

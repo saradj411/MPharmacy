@@ -163,6 +163,15 @@ public class PharmacyService implements IPharmacyService {
 
         }
 
+        public Pharmacy getByName(String pharmacyName)
+        {
+            for(Pharmacy p : findAll())
+            {
+                if(p.getName().equals(pharmacyName))
+                    return  p;
+            }
+            return  null;
+        }
 
 
 

@@ -197,7 +197,25 @@ public class Drug implements Serializable {
     public void setPoints(Integer points) {
         this.points = points;
     }
-//rezervisani lijekovi
+
+    @Override
+    public String toString() {
+        return "Drug{" +
+                "idDrug=" + idDrug +
+                ", name='" + name + '\'' +
+                ", code='" + code + '\'' +
+                ", recipeNeed=" + recipeNeed +
+                ", drugType='" + drugType + '\'' +
+                ", format=" + format +
+                ", manufacturer='" + manufacturer + '\'' +
+                ", napomene='" + napomene + '\'' +
+                ", grade=" + grade +
+                ", alternativeDrugs=" + alternativeDrugs +
+                ", points=" + points +
+                '}';
+    }
+
+    //rezervisani lijekovi
 
 
     /*

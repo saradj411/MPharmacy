@@ -19,13 +19,13 @@
       <tr>
         <th scope="row"></th>
         <td>Drug:</td>
-        <td>{{pharmacyDrug.drug.name}}
+        <td>{{ this.drug.name}}
            </td>
       </tr>
     <tr>
       <th></th>
       <td >Pharmacy:</td>   
-       <td>{{pharmacyDrug.pharmacy.name}}</td>
+       <td>{{this.pharmacy.name}}</td>
 
     </tr>
     <tr>
@@ -60,16 +60,16 @@
 export default {
   data() {
     return {
-        id : this.$route.params.id,
-        
-        pharmacyName: this.$rout.params.pharmacyName,
+        id : this.$route.params.id,        
+        pharmacyName: this.$route.params.pharmacyName,
         idPatient : this.$route.params.idPatient,
 
-       pharmacyDrug : [],
+       //pharmacyDrug : [],
        reserveDate:null,
        pharmacy: {},
-      
-      
+       drug: {},
+      accessToken: localStorage.getItem('accessToken'),
+        
        
     }
   },
@@ -77,26 +77,14 @@ export default {
   methods:{
   
     createReservation : function(){
+    
 
-      this.axios.post('/pharmacy/getByName/'+ this.pharmacyName,{ 
-                        })
-                .then(response => {
-                        console.log(response.data);
-                        this.pharmacy = response.data;
-                })
-                .catch(response => {
-                      console.log(response);
-                 }); 
-
-
-
-            const reservation = {
-            drug:this.pharmacyDrug.drug.idDrug,
-            patient : this.idPatient,
-            pharmacy : this.pharmacyDrug.pharmacy.idPharm,
-            pickUpDate  :this.reserveDate,
-            idPharmacyDrug:this.id
-        }
+            const reservation = {            
+              patient : this.idPatient,
+              drug: this.drug.idDrug,
+              pharmacy : this.pharmacy.idPharm,              
+              pickUpDate  : this.reserveDate
+          }
         console.log("sasa",this.reserveDate);
        
         if(this.reserveDate===null){
@@ -112,7 +100,7 @@ export default {
 
          
          
-           /*this.axios.post('/reservation/create',reservation,{ 
+           this.axios.post('/reservation/create',reservation,{ 
                         })
                 .then(response => {
                        alert("Reservation created!");
@@ -122,15 +110,15 @@ export default {
                 .catch(response => {
                        alert("It is not possible reserve");
                         console.log(response);
-                 }); */
+                 }); 
+          }
         }
-        }
-      },
-      
+      }
+  },    
     
-},
+
 mounted() {
-        this.axios.get('/pharmacyDrugs/getById/'+this.id)
+        /*this.axios.get('/pharmacyDrugs/getById/'+this.id)
         .then(response => {
                 this.pharmacyDrug = response.data;
                 
@@ -138,8 +126,32 @@ mounted() {
                 alert("Nesto ne valja");
                 console.log(res);
         });
-
+*/ 
+    console.log("STA");
+    this.axios.get('/pharmacy/getByName/'+ this.pharmacyName,{ 
+       headers: {                    
+                    'Authorization': `Bearer ` +  this.accessToken,
+                    
+                }
+                        })
+                .then(response => {
+                        console.log("naziv apoteke:");
+                        console.log(response.data);
+                        this.pharmacy = response.data;
+                })
+                .catch(response => {
+                      console.log(response);
+                 });
         
+    this.axios.get('/drug/findById/'+ this.id,{ 
+                        })
+                .then(response => {
+                        console.log(response.data);
+                        this.drug = response.data;
+                })
+                .catch(response => {
+                      console.log(response);
+                 });
         
     }
      

@@ -230,7 +230,7 @@ export default {
                 }
             }).then(response => {
                   console.log(response.data);
-                  //window.location.href = "/ReserveDrug/"+ response.data.idDrug +"/"+this.id;
+                  window.location.href = "/ReserveDrug/"+ response.data.idDrug +"/"+ p.name +"/" + this.id;
             }).catch(res => {
                           console.log(res.response.data.message);
                           alert("Greska");
@@ -240,6 +240,7 @@ export default {
           getSpec: function(name)
           {           
             this.selected = name;
+            console.log(name);
             this.axios.get('specification/findSpecByDrugName/' + name, { 
             headers: {                    
                     'Authorization': `Bearer ` +  this.accessToken,
@@ -309,6 +310,7 @@ export default {
 
                   this.drugs = response.data;
                   this.allDrugs = response.data;
+                  console.log(this.allDrugs);
 
             }).catch(res => {
                         
@@ -326,10 +328,9 @@ export default {
             }).then(response => {
 
                   this.user = response.data;
-                  console.log(this.user);
 
             }).catch(res => {
-                          alert("Token expired!");
+                          //alert("Token expired!");
                           //window.location.href = '/login';
                           console.log(res.response.data.message);
                     });

@@ -10,7 +10,7 @@ import java.time.LocalDate;
 public class DrugReservationDTO {
 
     //private Integer quantity;
-    private Integer idPharmacyDrug;
+    //private Integer idPharmacyDrug;
     private Integer patient;
 
 
@@ -30,13 +30,13 @@ public class DrugReservationDTO {
     public DrugReservationDTO() {
     }
 
-    public DrugReservationDTO(Integer idPharmacyDrug, Integer patient, Integer drug, Integer pharmacy, LocalDate pickUpDate) {
+    /*public DrugReservationDTO(Integer idPharmacyDrug, Integer patient, Integer drug, Integer pharmacy, LocalDate pickUpDate) {
         this.idPharmacyDrug = idPharmacyDrug;
         this.patient = patient;
         this.drug = drug;
         this.pharmacy = pharmacy;
         this.pickUpDate = pickUpDate;
-    }
+    }*/
 
     public Integer getPatient() {
         return patient;
@@ -70,11 +70,11 @@ public class DrugReservationDTO {
         this.pickUpDate = pickUpDate;
     }
 
-    public Integer getIdPharmacyDrug() {
+    /*public Integer getIdPharmacyDrug() {
         return idPharmacyDrug;
     }
 
     public void setIdPharmacyDrug(Integer idPharmacyDrug) {
         this.idPharmacyDrug = idPharmacyDrug;
-    }
+    }*/
 }

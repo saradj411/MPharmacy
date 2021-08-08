@@ -66,6 +66,7 @@ import SupplierHomePage from '../components/SupplierHomePage'
 import Map from '../components/Map'
 import LoyalityProgram from '../components/LoyalityProgram'
 import AllDrugs from '../components/AllDrugs'
+import createERecepie from '../components/createERecepie'
 
 
 import moment from 'moment'
@@ -149,7 +150,7 @@ const routes = [
         component: SearchUserPharmacist
       },
       {
-        path: '/profilePharmacist',
+        path: '/profilePharmacist/:id',
         name: 'profilePharmacist',
         component: profilePharmacist
       },
@@ -284,7 +285,7 @@ const routes = [
         component: RegisterNewSystemAdmin
       },
       {
-        path:'/ReserveDrug/:id/:idPatient',
+        path:'/ReserveDrug/:id/:pharmacyName/:idPatient',
         name: 'ReserveDrug',
         component: ReserveDrug
       }
@@ -433,6 +434,13 @@ const routes = [
         path: '/AllDrugs/:id',
         name: 'AllDrugs',
         component: AllDrugs
+
+      },
+      
+      {
+        path: '/createERecepie/:id',
+        name: 'createERecepie',
+        component: createERecepie
 
       },
 

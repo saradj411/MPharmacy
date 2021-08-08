@@ -19,12 +19,20 @@
                   <button class = "btn btn-primary btn-xs" style="margin:auto; margin-left:38px;background:#474A8A" v-on:click = "clients">Reviewed clients </button>
                      </span>
 
+
                       
 
                      <span style="float: left; margin-top: 20px;">         
                               
                   <button class = "btn btn-primary btn-xs" style="margin:auto; margin-left:38px;background:#474A8A" v-on:click = "requestForvacation">Request for vacation</button>
                      </span>
+<span style="float: left; margin-top: 20px;">
+                  <button class = "btn btn-primary btn-xs" style="margin:auto; margin-left:38px;background:#474A8A" v-on:click = "erec">Create eRecepie</button>
+                     </span>
+<span style="float: left; margin-top: 20px;">
+                  <button class = "btn btn-primary btn-xs" style="margin:auto; margin-left:38px;background:#474A8A" v-on:click = "logOut">Log out</button>
+                     </span>
+
                      <span style="float: left; margin-top: 20px;">
                       <b-dropdown id="ddCommodity" name="ddCommodity" text="Examination" style="margin-left:33px; color:white;"  >
                                     
@@ -116,14 +124,15 @@
 export default {
   data() {
     return {
-      user: {}
+      user: {},
+      id: this.$route.params.id
     }
   },
   
   mounted() {
 
         
-        this.axios.get('dermatologist/findById/'+501,{ 
+        this.axios.get('dermatologist/findById/'+ this.id,{ 
              
          }).then(response => {
                this.user=response.data;
@@ -139,11 +148,22 @@ export default {
           window.location.href = '/Clients';
         },
         requestForvacation : function(){
-          window.location.href = '/RequestForVacation/'+501;
+          window.location.href = '/RequestForVacation/'+this.id;
         },
         clients : function(){
-          window.location.href = '/ReviewedClientsDermatologist/'+501;
+          window.location.href = '/ReviewedClientsDermatologist/'+this.id;
         },
+        erec: function()
+        {
+          window.location.href = '/createERecepie/'+this.id;
+        },
+        logOut: function()
+      {
+        localStorage.removeItem('accessToken');
+        localStorage.removeItem('expiresIn');
+         window.location.href = "/";
+
+      },
 
 }
 }

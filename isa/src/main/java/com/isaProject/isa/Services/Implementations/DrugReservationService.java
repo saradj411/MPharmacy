@@ -207,7 +207,7 @@ public class DrugReservationService implements IDrugReservationService {
     @Override
     public DrugReservation save(DrugReservationDTO drug) {
             DrugReservation d = new DrugReservation();
-            PharmacyDrugs pd=pharmacyDrugsRepository.findOneById(drug.getIdPharmacyDrug());
+
 
             d.setDrug(drugRepository2.findOneByIdDrug(drug.getDrug()));
             d.setPharmacy(pharmacyRepository.findOneByIdPharm(drug.getPharmacy()));
@@ -219,6 +219,7 @@ public class DrugReservationService implements IDrugReservationService {
             d.setPickedUp(false);
             d.setQuantity(1);
 
+            PharmacyDrugs pd = pharmacyDrugsService.findByIdPharmAndDrug(drug.getDrug(), drug.getPharmacy());
             pd.setQuantity(pd.getQuantity()-1);
             Integer points  = d.getPatient().getPoints() + d.getDrug().getPoints();
             d.getPatient().setPoints(points);

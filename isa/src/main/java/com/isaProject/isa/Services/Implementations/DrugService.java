@@ -7,6 +7,7 @@ import com.isaProject.isa.Model.Drugs.DrugPricelist;
 import com.isaProject.isa.Model.Drugs.PharmacyDrugs;
 import com.isaProject.isa.Model.Pharmacy.Pharmacy;
 import com.isaProject.isa.Model.Users.Dermatologist;
+import com.isaProject.isa.Model.Users.Patient;
 import com.isaProject.isa.Model.Users.Staff;
 import com.isaProject.isa.Model.Users.WorkTime;
 import com.isaProject.isa.Repositories.*;
@@ -40,6 +41,8 @@ public class DrugService implements IDrugService {
 
     @Autowired
     private PharmacyDrugsRepository pharmacyDrugsRepository;
+    @Autowired
+    PatientService patientService;
 
     @Override
     public Drug save(DrugDTO drug) {
@@ -257,14 +260,28 @@ public class DrugService implements IDrugService {
     }
 
 
-    public  Drug getByName(String name)
-    {
+    public  Drug getByName(String name) {
         for (Drug d : findAll()) {
-            if(d.getName().equals(name))
+            if (d.getName().equals(name))
                 return d;
 
         }
         return null;
+    }
+
+    public List<Drug> getDrugsForERecepie(Integer id)
+    {
+        Patient patient = patientService.findById(id);
+        List<Drug> allDrugs = drugRepository.findAll();
+        allDrugs.removeAll(patient.getAllergies());
+        List<Drug> eReceptDrug = new ArrayList<>();
+
+        for(Drug d:allDrugs)
+        {
+            if(d.isRecipeNeed() == true)
+                eReceptDrug.add(d);
+        }
+        return eReceptDrug;
     }
 
 
