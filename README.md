@@ -84,3 +84,9 @@ Ne radi spring hibernate automatsko popunjavanje baze preko skripte scheme.sql, 
 username:root
 
 password:root
+
+Dodatne napomene:
+1. Ukoliko slanje pojedinih mejlova ne bude htelo da radi. Iskljucite avast na 10 minuta, jer to iz nekog razloga blokira procese.
+2. https://myaccount.google.com/lesssecureapps?pli=1&rapt=AEjHL4MsInjIYwcSZC-USbz9it79qaL-rdDHdgfF7ZTA-cW2utOfhBDNmfs-JqI2XFEgC8QTiInfGX_hAQH0OQ6awC-GBVMUjQ stavite da bude ukljuceno za email na koji se salje bilo kakva poruka.
+
+
