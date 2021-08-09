@@ -244,7 +244,6 @@ public class ServiceForEmail{
     public void sendERecepieToPatient(ERecipe eRecipe) throws MessagingException, IOException, WriterException {
         String fileName = eRecipe.getName() + "_" +eRecipe.getSurname() + "_" + eRecipe.getDateOfIssue() +"_" + eRecipe.getIdRecipe();
         String QR_CODE_IMAGE_PATH = "./qrCodes/" + fileName +".png";
-
         createqrCodeForEReceie(eRecipe);
 
         Properties props = new Properties();
