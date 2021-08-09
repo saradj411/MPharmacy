@@ -83,6 +83,16 @@ public class ERecipeDrug {
     public void seteRecipe(ERecipe eRecipe) {
         this.eRecipe = eRecipe;
     }
+
+    @Override
+    public String toString() {
+        return "ERecipeDrug{" +
+                "id=" + id +
+                ", code='" + code + '\'' +
+                ", name='" + name + '\'' +
+                ", quantity=" + quantity +
+                '}';
+    }
 }
 /*
 ● Listu koja će sadržati za svaki prepisani lek:

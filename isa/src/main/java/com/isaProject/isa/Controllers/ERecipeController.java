@@ -1,5 +1,7 @@
 package com.isaProject.isa.Controllers;
 
+import com.google.zxing.WriterException;
+import com.google.zxing.qrcode.QRCodeWriter;
 import com.isaProject.isa.Model.DTO.ERecipeDTO;
 import com.isaProject.isa.Model.DTO.FrontERecipeDTO;
 import com.isaProject.isa.Model.Drugs.Drug;
@@ -7,6 +9,7 @@ import com.isaProject.isa.Model.Drugs.ERecipe;
 import com.isaProject.isa.Model.Examination.Examination;
 import com.isaProject.isa.Model.Pharmacy.Pharmacy;
 import com.isaProject.isa.Services.Implementations.ERecipeService;
+import com.isaProject.isa.Services.Implementations.ServiceForEmail;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,6 +17,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.mail.MessagingException;
+import java.io.IOException;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -27,7 +32,8 @@ import java.util.Set;
 public class ERecipeController {
     @Autowired
     ERecipeService eRecipeService;
-
+@Autowired
+ServiceForEmail serviceForEmail;
     @GetMapping(value = "/findByIdPatient/{id}")
     public ResponseEntity<List<FrontERecipeDTO>> findSheduledPharmacistExamination(@PathVariable Integer id) {
 
@@ -70,10 +76,22 @@ public class ERecipeController {
 
     @PostMapping("/createERecp")
     @PreAuthorize("hasRole('DERMATOLOGIST') || hasRole('PHARMACIST')")
-    public ResponseEntity<List<ERecipeDTO>> getByName(@RequestBody List<ERecipeDTO> eRecipeDTOS)
-    {
+    public ResponseEntity<List<ERecipeDTO>> getByName(@RequestBody List<ERecipeDTO> eRecipeDTOS) throws MessagingException {
         System.out.println(eRecipeDTOS);
-        return new ResponseEntity(eRecipeService.create(eRecipeDTOS), HttpStatus.OK);
+        try {
+            return new ResponseEntity(eRecipeService.create(eRecipeDTOS), HttpStatus.OK);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (WriterException e) {
+            e.printStackTrace();
+        }
+        return  new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+    @GetMapping("/downloadERecepie")
+    public ResponseEntity download() throws IOException, WriterException {
+         return ResponseEntity.status(HttpStatus.OK).body(serviceForEmail.getQRCodeImage());
 
     }
+
+
 }

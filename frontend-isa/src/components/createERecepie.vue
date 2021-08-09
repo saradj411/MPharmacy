@@ -49,7 +49,7 @@
         <div class="col-sm" >
           <button class = "btn btn-primary btn-xs"                      
                           style="margin:auto;background: #303030; width: 500px;  border-color:black;" 
-                          @click="add"> Add one more medication </button>
+                          @click="add"> Add medication </button>
             
         </div>
         
@@ -128,13 +128,12 @@ export default {
             }).then(response => {
                   console.log(response.data);
                   alert("Successeffully created eRecepi!") 
-                   window.location.href = this.$router.go(-1);  
-                  //TODO:
-                  // send to patient email to check qrcode
-                  //window.location.href = "/ReserveDrug/"+ response.data.idDrug +"/"+ p.name +"/" + this.id;
+                   window.location.href = this.$router.go(-1);
+                   
+                  
             }).catch(res => {
                           console.log(res.response.data.message);
-                          alert("Greska");
+                          alert(res.response.data.message);
                     });
     },
     add: function()

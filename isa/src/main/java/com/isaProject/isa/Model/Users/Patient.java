@@ -152,6 +152,8 @@ public class Patient extends User implements Serializable {
     public void setActionPharmacies(Set<Pharmacy> actionPharmacies) {
         this.actionPharmacies = actionPharmacies;
     }
+
+
 /*
     public Set<ERecipe> getErecipes() {
         return erecipes;

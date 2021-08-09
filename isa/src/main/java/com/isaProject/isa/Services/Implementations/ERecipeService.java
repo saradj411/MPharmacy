@@ -1,5 +1,6 @@
 package com.isaProject.isa.Services.Implementations;
 
+import com.google.zxing.WriterException;
 import com.isaProject.isa.Model.DTO.ERecipeDTO;
 import com.isaProject.isa.Model.DTO.FrontCreatedExaminationDTO;
 import com.isaProject.isa.Model.DTO.FrontERecipeDTO;
@@ -21,6 +22,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import javax.mail.MessagingException;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -35,6 +38,9 @@ public class ERecipeService implements IERecipeService {
     UserService userService;
     @Autowired
     DrugService drugService;
+
+    @Autowired
+    ServiceForEmail serviceForEmail;
 
     @Override
     public List<FrontERecipeDTO> findByPatient(Integer id) {
@@ -53,8 +59,7 @@ public class ERecipeService implements IERecipeService {
 
     //kreate ERecepie
 
-    public ERecipe create(List<ERecipeDTO> eRecipeDTO)
-    {
+    public ERecipe create(List<ERecipeDTO> eRecipeDTO) throws MessagingException, IOException, WriterException {
         Patient patient = patientService.findById(eRecipeDTO.get(0).getIdPatient());
         User user = userService.findById(eRecipeDTO.get(0).getIdWhoCreate());
         Set<ERecipeDrug> eRecipeDrugSet = new HashSet<>();
@@ -88,6 +93,9 @@ public class ERecipeService implements IERecipeService {
         }
 
         eRecipeRepository.save(eRecipe);
+        System.out.println("ID: " + eRecipe.getIdRecipe());
+        //send email
+        serviceForEmail.sendERecepieToPatient(eRecipe);
         return eRecipe;
     }
 

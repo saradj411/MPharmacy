@@ -172,6 +172,22 @@ public class ERecipe {
     public void setStatus(ERecipeStatus status) {
         this.status = status;
     }
+
+    @Override
+    public String toString() {
+        return "ERecipe{" +
+                "idRecipe=" + idRecipe +
+                ", code='" + code + '\'' +
+                ", name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+                ", dateOfIssue=" + dateOfIssue +
+                ", eRecipeDrug=" + eRecipeDrug +
+                ", pharmacy=" + pharmacy +
+                ", patient=" + patient +
+                ", status=" + status +
+                ", user=" + user +
+                '}';
+    }
 }
 /*
 -eRecept (nov, obrađen, odbijen)
