@@ -1,6 +1,7 @@
 # MPharmacy
 
 Internet softverske arhitekture
+*DODATNO UPUTSVO OD STUDENTA 4 JE SKROZ DOLE*
 
 Autori:
 
@@ -86,7 +87,7 @@ username:root
 password:root
 
 Dodatne napomene:
-1. Ukoliko slanje pojedinih mejlova ne bude htelo da radi. Iskljucite avast na 10 minuta, jer to iz nekog razloga blokira procese.
+1. Potrebno je iskljuciti avast na par minuta ukoliok se koriste funckionlnosti gde se salje na mejl, jer antivirus iz nekog razloga to blokira.
 2. https://myaccount.google.com/lesssecureapps?pli=1&rapt=AEjHL4MsInjIYwcSZC-USbz9it79qaL-rdDHdgfF7ZTA-cW2utOfhBDNmfs-JqI2XFEgC8QTiInfGX_hAQH0OQ6awC-GBVMUjQ stavite da bude ukljuceno za email na koji se salje bilo kakva poruka.
 
 
