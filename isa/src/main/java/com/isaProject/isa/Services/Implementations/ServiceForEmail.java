@@ -9,8 +9,10 @@ import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 import com.isaProject.isa.Model.DTO.ExaminationDTO;
 import com.isaProject.isa.Model.Drugs.DrugOrder;
 import com.isaProject.isa.Model.Drugs.ERecipe;
+import com.isaProject.isa.Model.Drugs.ERecipeDrug;
 import com.isaProject.isa.Model.Drugs.Offer;
 import com.isaProject.isa.Model.Examination.Examination;
+import com.isaProject.isa.Model.Pharmacy.Pharmacy;
 import com.isaProject.isa.Model.Users.Patient;
 
 import com.isaProject.isa.Model.Users.RequestForVacation;
@@ -25,10 +27,7 @@ import javax.activation.DataSource;
 import javax.activation.FileDataSource;
 import javax.imageio.ImageIO;
 import javax.mail.*;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeBodyPart;
-import javax.mail.internet.MimeMessage;
-import javax.mail.internet.MimeMultipart;
+import javax.mail.internet.*;
 import javax.mail.util.ByteArrayDataSource;
 import javax.swing.text.Document;
 import java.awt.*;
@@ -296,10 +295,6 @@ public class ServiceForEmail{
 
     }
 
-
-
-
-
     private void createqrCodeForEReceie(ERecipe eRecipe) throws IOException, WriterException {
         String fileName = eRecipe.getName() + "_" +eRecipe.getSurname() + "_" + eRecipe.getDateOfIssue() +"_"+eRecipe.getIdRecipe();
         String QR_CODE_IMAGE_PATH = "./qrCodes/" + fileName +".png";
@@ -312,7 +307,6 @@ public class ServiceForEmail{
     public static void generateQRCodeImage(ERecipe eRecipe, String filePath)
             throws WriterException, IOException {
         QRCodeWriter qrCodeWriter = new QRCodeWriter();
-
         BitMatrix bitMatrix = qrCodeWriter.encode(eRecipe.toString(), BarcodeFormat.QR_CODE, 400, 400);
 
         Path path = FileSystems.getDefault().getPath(filePath);
@@ -330,49 +324,155 @@ public class ServiceForEmail{
         return pngData;
     }
 
+    public void emailForSubscribe(Pharmacy pharmacy, String email) throws MessagingException, IOException, WriterException {
+        /*String fileName = eRecipe.getName() + "_" +eRecipe.getSurname() + "_" + eRecipe.getDateOfIssue() +"_" + eRecipe.getIdRecipe();
+        String QR_CODE_IMAGE_PATH = "./qrCodes/" + fileName +".png";
+        createqrCodeForEReceie(eRecipe);*/
+
+        Properties props = new Properties();
+        //props.setProperty("mail.transport.protocol", "smtp");
+        props.put("mail.smtp.host", "smtp.gmail.com");
+        props.put("mail.smtp.port", "587");
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.starttls.enable", "true");
+        //props.put("mail.smtp.ssl.trust", "smtp.gmail.com");
+
+        Session mailSession = Session.getInstance(props,
+                new javax.mail.Authenticator() {
+                    protected PasswordAuthentication getPasswordAuthentication() {
+                        return new PasswordAuthentication("blackcetkica@gmail.com", "maja.maja98");
+                    }
+                });
+        mailSession.setDebug(true);
+        Transport transport = mailSession.getTransport();
+
+        MimeMessage message = new MimeMessage(mailSession);
+        message.setSubject("Info from " + pharmacy.getName());
+        message.setFrom(new InternetAddress("me@sender.com"));
+        message.addRecipient(Message.RecipientType.TO,
+                new InternetAddress(email));
+
+        MimeMultipart multipart = new MimeMultipart("alternative");
+
+        BodyPart messageBodyPart = new MimeBodyPart();
+        String htmlText = "<H1>You are now subscribe our pharmacy. We will send you our new action & benefits.</H1>" +
+                "<p>Name: "+ pharmacy.getName() + "</p>" +
+                "<p>Address:"+ pharmacy.getAddress()+","+pharmacy.getCity() +".</p>";
+        messageBodyPart.setContent(htmlText, "text/html");
+
+        multipart.addBodyPart(messageBodyPart);
 
 
-/*
-    private void createqrCodeForEReceie(ERecipe eRecipe) throws IOException, WriterException {
+        message.setContent(multipart);
 
-//data that we want to store in the QR code
-        String str= "THE HABIT OF PERSISTENCE IS THE HABIT OF VICTORY.";
-//path where we want to get QR Code
-        String relativePath = "../../../../../../qrCodes/"+eRecipe.getName()+"_"+ eRecipe.getSurname()+"_"+eRecipe.getIdRecipe()+ ".png";
-        Path filePath =  Paths.get(relativePath);
-        String filePaht2 = (String) filePath;
-        System.out.println(filePath);
-        String outputFolder = "qrCodes\\";
-        String name = eRecipe.getName()+"_"+ eRecipe.getSurname()+"_"+eRecipe.getIdRecipe()+ ".png";
-        String path = "C:\\Users\\Maja\\Desktop\\Isa\\MPharmacy\\ " + eRecipe.getName()+"_"+ eRecipe.getSurname()+"_"+eRecipe.getIdRecipe()+ ".png";
-//Encoding charset to be used
-        String charset = "UTF-8";
-        Map<EncodeHintType, ErrorCorrectionLevel> hashMap = new HashMap<EncodeHintType, ErrorCorrectionLevel>();
-//generates QR code with Low level(L) error correction capability
-        hashMap.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.L);
-//invoking the user-defined method that creates the QR code
-        generateQRcode(str, filePath, charset, hashMap, 200, 200);//increase or decrease height and width accodingly
-//prints if the QR code is generated
-        System.out.println("QR Code created successfully.");
+        transport.connect();
+        transport.sendMessage(message,
+                message.getRecipients(Message.RecipientType.TO));
+        transport.close();
+
+
 
     }
 
-    public static void generateQRcode(String data, String path, String charset, Map map, int h, int w) throws WriterException, IOException
-    {
-//the BitMatrix class represents the 2D matrix of bits
-//MultiFormatWriter is a factory class that finds the appropriate Writer subclass for the BarcodeFormat requested and encodes the barcode with the supplied contents.
-        BitMatrix matrix = new MultiFormatWriter().encode(new String(data.getBytes(charset), charset), BarcodeFormat.QR_CODE, w, h);
-        MatrixToImageWriter.writeToFile(matrix, path.substring(path.lastIndexOf('.') + 1), new File(path));
+    public void emailForUnsubscribe(Pharmacy pharmacy, String email) throws MessagingException, IOException, WriterException {
+        /*String fileName = eRecipe.getName() + "_" +eRecipe.getSurname() + "_" + eRecipe.getDateOfIssue() +"_" + eRecipe.getIdRecipe();
+        String QR_CODE_IMAGE_PATH = "./qrCodes/" + fileName +".png";
+        createqrCodeForEReceie(eRecipe);*/
+
+        Properties props = new Properties();
+        //props.setProperty("mail.transport.protocol", "smtp");
+        props.put("mail.smtp.host", "smtp.gmail.com");
+        props.put("mail.smtp.port", "587");
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.starttls.enable", "true");
+        //props.put("mail.smtp.ssl.trust", "smtp.gmail.com");
+
+        Session mailSession = Session.getInstance(props,
+                new javax.mail.Authenticator() {
+                    protected PasswordAuthentication getPasswordAuthentication() {
+                        return new PasswordAuthentication("blackcetkica@gmail.com", "maja.maja98");
+                    }
+                });
+        mailSession.setDebug(true);
+        Transport transport = mailSession.getTransport();
+
+        MimeMessage message = new MimeMessage(mailSession);
+        message.setSubject("Info from " + pharmacy.getName());
+        message.setFrom(new InternetAddress("me@sender.com"));
+        message.addRecipient(Message.RecipientType.TO,
+                new InternetAddress(email));
+
+        MimeMultipart multipart = new MimeMultipart("alternative");
+
+        BodyPart messageBodyPart = new MimeBodyPart();
+        String htmlText = "<H1>You are now unsubscribe from our pharmacy. You will no longer get our notification..</H1>" +
+                "<p>Name: "+ pharmacy.getName() + "</p>" +
+                "<p>Address:"+ pharmacy.getAddress()+","+pharmacy.getCity() +".</p>";
+        messageBodyPart.setContent(htmlText, "text/html");
+
+        multipart.addBodyPart(messageBodyPart);
+
+
+        message.setContent(multipart);
+
+        transport.connect();
+        transport.sendMessage(message,
+                message.getRecipients(Message.RecipientType.TO));
+        transport.close();
+
+
 
     }
-    public static String readQRcode(String path, String charset, Map map) throws FileNotFoundException, IOException, NotFoundException
-    {
-        BinaryBitmap binaryBitmap = new BinaryBitmap(new HybridBinarizer(new BufferedImageLuminanceSource(ImageIO.read(new FileInputStream(path)))));
-        Result rslt = new MultiFormatReader().decode(binaryBitmap);
-        return rslt.getText();
+
+    public void sendVerification(String email) throws MessagingException {
+
+        Properties props = new Properties();
+        //props.setProperty("mail.transport.protocol", "smtp");
+        props.put("mail.smtp.host", "smtp.gmail.com");
+        props.put("mail.smtp.port", "587");
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.starttls.enable", "true");
+        //props.put("mail.smtp.ssl.trust", "smtp.gmail.com");
+
+        Session mailSession = Session.getInstance(props,
+                new javax.mail.Authenticator() {
+                    protected PasswordAuthentication getPasswordAuthentication() {
+                        return new PasswordAuthentication("blackcetkica@gmail.com", "maja.maja98");
+                    }
+                });
+        mailSession.setDebug(true);
+        Transport transport = mailSession.getTransport();
+
+        MimeMessage message = new MimeMessage(mailSession);
+        message.setSubject("Verify your email");
+        message.setFrom(new InternetAddress("me@sender.com"));
+        message.addRecipient(Message.RecipientType.TO,
+                new InternetAddress(email));
+
+        MimeMultipart multipart = new MimeMultipart("alternative");
+
+        BodyPart messageBodyPart = new MimeBodyPart();
+        String htmlText = "<H1> Welcome to our pharmacy comunity.. we are glade to have you.</H1>" +
+                "<p> You can now se what we have in offer, schedule your examination and so more.. </p>" +
+                "<a href='http://localhost:3000/login'>Click on this to go to your account. </a>" +
+                "<p> You are welcome here. </p>";
+
+        messageBodyPart.setContent(htmlText, "text/html");
+
+        multipart.addBodyPart(messageBodyPart);
+
+
+        message.setContent(multipart);
+
+        transport.connect();
+        transport.sendMessage(message,
+                message.getRecipients(Message.RecipientType.TO));
+        transport.close();
+
+
+
     }
 
-*/
 
     /*
 
