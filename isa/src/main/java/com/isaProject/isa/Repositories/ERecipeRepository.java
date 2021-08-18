@@ -9,4 +9,5 @@ import java.util.List;
 
 public interface ERecipeRepository extends JpaRepository<ERecipe, Integer> {
     List<ERecipe> findAllByPatient(Patient patient);
+
 }

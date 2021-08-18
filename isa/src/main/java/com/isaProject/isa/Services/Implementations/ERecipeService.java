@@ -1,13 +1,8 @@
 package com.isaProject.isa.Services.Implementations;
 
 import com.google.zxing.WriterException;
-import com.isaProject.isa.Model.DTO.ERecipeDTO;
-import com.isaProject.isa.Model.DTO.FrontCreatedExaminationDTO;
-import com.isaProject.isa.Model.DTO.FrontERecipeDTO;
-import com.isaProject.isa.Model.Drugs.Drug;
-import com.isaProject.isa.Model.Drugs.ERecipe;
-import com.isaProject.isa.Model.Drugs.ERecipeDrug;
-import com.isaProject.isa.Model.Drugs.ERecipeStatus;
+import com.isaProject.isa.Model.DTO.*;
+import com.isaProject.isa.Model.Drugs.*;
 import com.isaProject.isa.Model.Examination.Examination;
 import com.isaProject.isa.Model.Examination.ExaminationStatus;
 import com.isaProject.isa.Model.Examination.ExaminationType;
@@ -38,25 +33,33 @@ public class ERecipeService implements IERecipeService {
     UserService userService;
     @Autowired
     DrugService drugService;
-
     @Autowired
     ServiceForEmail serviceForEmail;
+    @Autowired
+    DrugPricelistService drugPricelistService;
+    @Autowired
+    PharmacyDrugsService pharmacyDrugsService;
 
     @Override
     public List<FrontERecipeDTO> findByPatient(Integer id) {
         List<ERecipe> recipes=eRecipeRepository.findAllByPatient(patientService.findById(id));
         List<FrontERecipeDTO> newList=new ArrayList<>();
         for(ERecipe e:recipes){
+            if(e.getPharmacy() != null)
 
-            FrontERecipeDTO exDTO=new FrontERecipeDTO(e.getIdRecipe(),e.getCode(),e.getName(),
+            {FrontERecipeDTO exDTO=new FrontERecipeDTO(e.getIdRecipe(),e.getCode(),e.getName(),
                     e.getSurname(),e.getDateOfIssue(),e.geteRecipeDrug(),e.getPharmacy().getName(),
                     e.getStatus()
                     );
-                    newList.add(exDTO);
+                    newList.add(exDTO);}
                 }
         return newList;
     }
 
+    public List<ERecipe> findAll()
+    {
+        return eRecipeRepository.findAll();
+    }
     //kreate ERecepie
 
     public ERecipe create(List<ERecipeDTO> eRecipeDTO) throws MessagingException, IOException, WriterException {
@@ -84,6 +87,7 @@ public class ERecipeService implements IERecipeService {
         eRecipe.setName(patient.getName());
         eRecipe.setSurname(patient.getSurname());
         eRecipe.setDateOfIssue(LocalDate.now());
+
         eRecipe.setCode("Hard kodirano");
         eRecipe.setStatus(ERecipeStatus.NEW);
 
@@ -100,4 +104,66 @@ public class ERecipeService implements IERecipeService {
     }
 
 
+    public ERecipeWithUserDTO showERecepieQRcode(Integer idRecepie) {
+
+        ERecipe e = new ERecipe();
+
+        for(ERecipe erec : findAll()) {
+                if(erec.getIdRecipe() == idRecepie && erec.getStatus().equals(ERecipeStatus.NEW))
+                    e = erec;
+
+        }
+        User u = userService.findById(e.getUser().getId());
+        return new ERecipeWithUserDTO(e,u);
+
+
+    }
+
+    public User retaValUser(Integer idRecepie) {
+        ERecipe e = findOne(idRecepie);
+        User user = userService.findById(e.getUser().getId());
+        return user;
+    }
+
+    public ERecipe findOne(Integer idRecepie)
+    {
+        for(ERecipe e : findAll()) {
+            if(e.getIdRecipe() == idRecepie)
+                return e;
+        }
+        return  null;
+    }
+
+    /*public List<BuyDrugDTO> getAllPharamcyForERecept(Integer idRecepie)
+    {
+           ERecipe eRecipe = findOne(idRecepie);
+
+           for(PharmacyDrugs pharmacyDrugs : pharmacyDrugsService.findAll())
+           {
+               for(ERecipeDrug eRecipeDrug : eRecipe.geteRecipeDrug())
+               {
+                   if(pharmacyDrugs.getDrug().getIdDrug() == eRecipeDrug.getId() && pharmacyDrugs.getQuantity() > eRecipeDrug.getQuantity())
+                   {
+                       ApotekaICena  apotekaICena = new ApotekaICena();
+                       apotekaICena.setPharmacy(pharmacyDrugs.getPharmacy());
+                       apotekaICena.setPrice(getPrice(idDrug, idPharmacy));
+                   }
+               }
+           }return  null;
+    }*/
+
+    public boolean buyDrug (Integer idERec, Integer idPharmacy)
+    {
+        ERecipe eRecipe = new ERecipe();
+        for(ERecipe e : eRecipeRepository.findAll())
+        {
+            if(e.getIdRecipe() == idERec)
+                eRecipe = e;
+
+        }
+        eRecipe.setStatus(ERecipeStatus.PROCESSED);
+        //set quantity to new number
+        return true;
+
+    }
 }

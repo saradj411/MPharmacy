@@ -23,7 +23,7 @@
     "vue-chartjs": "^3.5.1",
     "vue-chartkick": "^0.6.1",
     "vue-multiselect": "^2.1.6",
-    "vue-qrcode-reader": "^2.3.16",
+    "vue-qrcode-reader": "^2.3.18",
     "vue-router": "^3.5.1",
     "vue-yandex-maps": "^0.10.10",
     "vue2-timepicker": "^1.1.6",

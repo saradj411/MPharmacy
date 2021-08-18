@@ -44,4 +44,7 @@ public class Dermatologist extends Staff implements  Serializable{
     public void setPharmacies(Set<Pharmacy> pharmacies) {
         this.pharmacies = pharmacies;
     }
+
+
+
 }

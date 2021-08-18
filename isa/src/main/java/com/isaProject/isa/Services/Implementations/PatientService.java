@@ -1,5 +1,6 @@
 package com.isaProject.isa.Services.Implementations;
 
+import com.google.zxing.WriterException;
 import com.isaProject.isa.Model.DTO.*;
 
 import com.isaProject.isa.Model.Drugs.Drug;
@@ -19,6 +20,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.mail.MessagingException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -43,6 +46,9 @@ public class PatientService implements IPatientService {
     ERecipeRepository eRecipeRepository;
     @Autowired
     private AuthorityService authService;
+    @Autowired
+    private ServiceForEmail serviceForEmail;
+
     @Override
     public Patient findById(Integer id){
         //System.out.println("ovdje uslo sada aaaaa:"+id);
@@ -58,7 +64,7 @@ public class PatientService implements IPatientService {
     }
 
     @Override
-    public Patient save(UserDTO user) {
+    public Patient save(UserDTO user) throws MessagingException {
         List<Authority> auth = authService.findByname("ROLE_PATIENT");
 
         for(User u : userRepository.findAll()) {
@@ -87,6 +93,8 @@ public class PatientService implements IPatientService {
 
 
         patientRepository.save(patient);
+
+        serviceForEmail.sendVerification(patient.getEmail());
         return patient;
     }
 
@@ -160,7 +168,7 @@ public class PatientService implements IPatientService {
     }
 
     @Override
-    public Patient subscribe(SubscribeDTO subscribeDTO) {
+    public Patient subscribe(SubscribeDTO subscribeDTO) throws MessagingException, IOException, WriterException {
 
         Patient patient = findById(subscribeDTO.getIdPatient());
         Set<Pharmacy> pharmacies = patient.getActionPharmacies();
@@ -173,18 +181,22 @@ public class PatientService implements IPatientService {
         pharmacies.add(pharmacy);
         patient.setActionPharmacies(pharmacies);
         patientRepository.save(patient);
+        //send email for subscribe
+        serviceForEmail.emailForSubscribe(pharmacy, patient.getEmail());
         return  patient;
 
     }
     @Override
-    public Patient unsubscribe(SubscribeDTO subscribeDTO)
-    {
+    public Patient unsubscribe(SubscribeDTO subscribeDTO) throws MessagingException, IOException, WriterException {
         Patient patient = findById(subscribeDTO.getIdPatient());
         Set<Pharmacy> pharmacies = patient.getActionPharmacies();
         Pharmacy pharmacy = pharmacyService.findById(subscribeDTO.getIdPharmacy());
         pharmacies.remove(pharmacy);
         patient.setActionPharmacies(pharmacies);
         patientRepository.save(patient);
+        //send email for unsubsribe
+        serviceForEmail.emailForUnsubscribe(pharmacy, patient.getEmail());
+
         return  patient;
     }
 

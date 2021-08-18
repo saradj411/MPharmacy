@@ -67,7 +67,7 @@ import Map from '../components/Map'
 import LoyalityProgram from '../components/LoyalityProgram'
 import AllDrugs from '../components/AllDrugs'
 import createERecepie from '../components/createERecepie'
-
+import eRecepieBuy from '../components/eRecepieBuy'
 
 import moment from 'moment'
 
@@ -441,6 +441,12 @@ const routes = [
         path: '/createERecepie/:id',
         name: 'createERecepie',
         component: createERecepie
+
+      },
+      {
+        path: '/eRecepieBuy/:id/:idRec',
+        name: 'eRecepieBuy',
+        component: eRecepieBuy
 
       },
 

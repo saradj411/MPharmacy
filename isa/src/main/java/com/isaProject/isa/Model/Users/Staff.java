@@ -91,4 +91,6 @@ public class Staff extends User{
     public void setVacation(Set<Vacation> vacation) {
         this.vacation = vacation;
     }
+
+
 }

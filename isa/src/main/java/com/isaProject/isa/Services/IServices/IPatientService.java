@@ -1,5 +1,6 @@
 package com.isaProject.isa.Services.IServices;
 
+import com.google.zxing.WriterException;
 import com.isaProject.isa.Model.DTO.FrontCreatedExaminationDTO;
 import com.isaProject.isa.Model.DTO.SubscribeDTO;
 import com.isaProject.isa.Model.DTO.UserDTO;
@@ -9,13 +10,15 @@ import com.isaProject.isa.Model.Users.Dermatologist;
 import com.isaProject.isa.Model.Users.Patient;
 import com.isaProject.isa.Model.Users.Pharmacist;
 
+import javax.mail.MessagingException;
+import java.io.IOException;
 import java.util.List;
 import java.util.Set;
 
 public interface IPatientService {
     Patient findById(Integer id);
     List<Patient> findAll ();
-    Patient save(UserDTO user);
+    Patient save(UserDTO user) throws MessagingException;
     void saveAllergy(Integer idDrug,Integer idPatient);
     void update(Patient patient);
     Set<FrontCreatedExaminationDTO> findSheduledDermatologistExamination(Integer id);
@@ -35,6 +38,6 @@ public interface IPatientService {
     Set<Integer> findPharmaciesForGrade(Integer id);
     Set<Integer> findDrugsForGrade(Integer id);
 
-    Patient subscribe(SubscribeDTO subscribeDTO);
-    Patient unsubscribe(SubscribeDTO subscribeDTO);
+    Patient subscribe(SubscribeDTO subscribeDTO) throws MessagingException, IOException, WriterException;
+    Patient unsubscribe(SubscribeDTO subscribeDTO) throws MessagingException, IOException, WriterException;
 }

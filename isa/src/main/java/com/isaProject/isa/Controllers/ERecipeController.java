@@ -1,13 +1,11 @@
 package com.isaProject.isa.Controllers;
 
 import com.google.zxing.WriterException;
-import com.google.zxing.qrcode.QRCodeWriter;
 import com.isaProject.isa.Model.DTO.ERecipeDTO;
+import com.isaProject.isa.Model.DTO.ERecipeWithUserDTO;
 import com.isaProject.isa.Model.DTO.FrontERecipeDTO;
-import com.isaProject.isa.Model.Drugs.Drug;
-import com.isaProject.isa.Model.Drugs.ERecipe;
-import com.isaProject.isa.Model.Examination.Examination;
-import com.isaProject.isa.Model.Pharmacy.Pharmacy;
+import com.isaProject.isa.Model.Drugs.DrugPricelist;
+import com.isaProject.isa.Model.Users.User;
 import com.isaProject.isa.Services.Implementations.ERecipeService;
 import com.isaProject.isa.Services.Implementations.ServiceForEmail;
 import lombok.extern.slf4j.Slf4j;
@@ -22,7 +20,6 @@ import java.io.IOException;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Set;
 
 @RestController
 @CrossOrigin
@@ -34,7 +31,8 @@ public class ERecipeController {
     ERecipeService eRecipeService;
 @Autowired
 ServiceForEmail serviceForEmail;
-    @GetMapping(value = "/findByIdPatient/{id}")
+
+   @GetMapping(value = "/findByIdPatient/{id}")
     public ResponseEntity<List<FrontERecipeDTO>> findSheduledPharmacistExamination(@PathVariable Integer id) {
 
         List<FrontERecipeDTO> d= eRecipeService.findByPatient(id);
@@ -92,6 +90,35 @@ ServiceForEmail serviceForEmail;
          return ResponseEntity.status(HttpStatus.OK).body(serviceForEmail.getQRCodeImage());
 
     }
+
+    @GetMapping("/showERecepieQRcode/{idRecepie}")
+    @PreAuthorize("hasRole('PATIENT')")
+    public ResponseEntity<ERecipeWithUserDTO> showERecepieQRcode(@PathVariable Integer idRecepie) throws IOException, WriterException {
+       return  new ResponseEntity<ERecipeWithUserDTO>(eRecipeService.showERecepieQRcode(idRecepie), HttpStatus.OK);
+
+    }
+
+    @GetMapping("/retValUser/{idRecepie}")
+    @PreAuthorize("hasRole('PATIENT')")
+    public ResponseEntity<User> retValUser(@PathVariable Integer idRecepie) throws IOException, WriterException {
+        return  new ResponseEntity<User>(eRecipeService.retaValUser(idRecepie), HttpStatus.OK);
+
+    }
+
+    /*@GetMapping("/getPharmacyWhereToBuy/{name}/{q}")
+    @PreAuthorize("hasRole('PATIENT')")
+    public ResponseEntity<List<DrugPricelist>> getPharmacyWhereToBuy(@PathVariable String name, @PathVariable Integer q)
+        {
+        return  new ResponseEntity(eRecipeService.getAllPharamcyForERecept(name,q), HttpStatus.OK);
+    }
+
+    /*@GetMapping("/buyDrug/{idRec}/{idPharmacy}")
+    @PreAuthorize("hasRole('PATIENT')")
+    public ResponseEntity buyDrug(@PathVariable Integer idRec, @PathVariable Integer idPharmacy)
+    {
+        return  new ResponseEntity(eRecipeService.buyDrug(idRec,idPharmacy), HttpStatus.OK);
+    }*/
+
 
 
 }

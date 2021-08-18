@@ -7,15 +7,13 @@ insert into pharmacy values (505,'Detelinara',3.5,'Novi Sad',1500,'Srbija','opis
 
 
 #drug
-
-    insert into drug values (501,'sifra 1','tableta','TABLET','proizvodjac 1','probiotik',true);
-    insert into drug values (502,'sifra 2','kapsula','CAPSULE','proizvodjac 2','paracetamol',true);
-    insert into drug values (503,'sifra 3','tableta','TABLET','proizvodjac 3','andol',false);
-    insert into drug values (504,'sifra 4','kapsula','CAPSULE','proizvodjac 4','ampril',true);
-    insert into drug values (505,'sifra 5','prasak','INJECTION','proizvodjac 5','aspirin',false);
-    insert into drug values (506,'sifra 6','tableta','TABLET','proizvodjac 6','brufen',false);
-    insert into drug values (507,'sifra 7','sprej','GEL','proizvodjac 7','mometazonfuorat',true);
-
+insert into drug values (501,'sifra 1','tableta','TABLET',8,'proizvodjac 1','probiotik','nap1',10,true);
+insert into drug values (502,'sifra 2','kapsula','CAPSULE',6,'proizvodjac 2','paracetamol','nap2',20,true);
+ insert into drug values (503,'sifra 3','tableta','TABLET',7,'proizvodjac 3','andol','nap1',10,false);
+insert into drug values (504,'sifra 4','kapsula','CAPSULE',5,'proizvodjac 4','ampril','nap13',15,true);
+insert into drug values (505,'sifra 5','prasak','INJECTION',8,'proizvodjac 5','aspirin','nap3',12,false);
+insert into drug values (506,'sifra 6','tableta','TABLET',10,'proizvodjac 6','brufen','naa',22,false);
+insert into drug values (507,'sifra 7','sprej','GEL',7,'proizvodjac 7','mometazonfuorat','nap1',10,true);
 #pharmacy_drugs
     insert into pharmacy_drugs values (501,50,503,503);
     insert into pharmacy_drugs values (502,8,504,501);
@@ -237,11 +235,8 @@ insert into action_patient_pharmacy values(508,504);
 insert into action_patient_pharmacy values(510,502);
 insert into action_patient_pharmacy values(510,501);
 
-
-
-
-insert into erecipe values(500,"12345",'2021-05-24','Ana',"NEW",'Mikic',508,501);
-insert into erecipe values(501,"12346",'2021-05-22','Ana',"NEW",'Mikic',508,501);
+insert into erecipe values(500,"12345",'2021-05-24','Ana',"NEW",'Mikic',508,501,511);
+insert into erecipe values(501,"12346",'2021-05-22','Ana',"NEW",'Mikic',508,501,511);
 
 insert into erecipe_drug values(500,"sifra 1",'probiotik',7,501);
 insert into erecipe_drug values(501,"sifra 2",'paracetamol',8,501);
@@ -378,61 +373,29 @@ insert into work_time values(577,'2021-07-29','19:00:00','06:30:00',504,506);
 
 
 
-insert into examination values(550,false,'2020-05-20','09:00:00',true,600,'info1','08:00:00','FINISHED','DERMATOLOGIST_EXAMINATION',508,501,501,null);
-insert into examination values(551,false,'2020-05-23','11:00:00',true,880,'info2','09:30:00','FINISHED','DERMATOLOGIST_EXAMINATION',508,501,504,501);
-insert into examination values(553,false,'2020-01-20','09:00:00',true,600,'info1','08:00:00','FINISHED','DERMATOLOGIST_EXAMINATION',507,501,501,null);
-insert into examination values(554,false,'2020-02-23','11:00:00',true,880,'info2','09:30:00','FINISHED','DERMATOLOGIST_EXAMINATION',507,501,504,502);
-
-insert into examination values(555,false,'2020-03-27','12:00:00',true,1050,'info2','10:30:00','FINISHED','PHARMACIST_EXAMINATION',508,501,511,null);
-insert into examination values(559,false,'2020-03-26','12:00:00',true,1050,'info2','10:30:00','FINISHED','PHARMACIST_EXAMINATION',507,501,511,503);
-insert into examination values(556,false,'2020-08-29','11:00:00',true,1030,'info2','09:30:00','FINISHED','DERMATOLOGIST_EXAMINATION',510,501,501,null);
-insert into examination values(557,false,'2020-08-27','12:00:00',true,1050,'info2','10:30:00','FINISHED','DERMATOLOGIST_EXAMINATION',510,501,504,504);
 
 
+insert into examination values(550,false,'2020-05-20','09:00:00',true,null,600,'info1','08:00:00','FINISHED','DERMATOLOGIST_EXAMINATION',508,501,501,null);insert into examination values(550,false,'2020-05-20','09:00:00',true,600,'info1','08:00:00','FINISHED','DERMATOLOGIST_EXAMINATION',508,501,501,null);
 
+insert into examination values(551,false,'2020-05-23','11:00:00',true,null,880,'info2','09:30:00','FINISHED','DERMATOLOGIST_EXAMINATION',508,501,504,501);
+insert into examination values(553,false,'2020-01-20','09:00:00',true,null,600,'info1','08:00:00','FINISHED','DERMATOLOGIST_EXAMINATION',507,501,501,null);
+insert into examination values(554,false,'2020-02-23','11:00:00',true,null,880,'info2','09:30:00','FINISHED','DERMATOLOGIST_EXAMINATION',507,501,504,502);
 
-
-
-
-
-
-insert into examination values(500,false,'2021-07-23','09:00:00',false,600,'info1','08:00:00','CREATED','DERMATOLOGIST_EXAMINATION',null,501,501,null);
-insert into examination values(505,false,'2021-07-22','11:00:00',false,880,'info2','09:30:00','CREATED','DERMATOLOGIST_EXAMINATION',null,501,501,null);
-insert into examination values(510,false,'2021-07-29','11:00:00',false,1030,'info2','09:30:00','CREATED','DERMATOLOGIST_EXAMINATION',null,501,501,null);
-
-insert into examination values(511,false,'2021-07-27','12:00:00',false,1050,'info2','10:30:00','CREATED','DERMATOLOGIST_EXAMINATION',null,501,504,null);
-insert into examination values(501,false,'2021-07-22','11:00:00',false,880,'info2','09:30:00','CREATED','DERMATOLOGIST_EXAMINATION',null,501,504,null);
-
-
-
-insert into examination values(506,false,'2021-07-22','11:00:00',false,1000,'info2','09:30:00','CREATED','PHARMACIST_EXAMINATION',null,501,511,null);
-insert into examination values(509,false,'2021-08-27','12:00:00',false,1050,'info2','10:30:00','CREATED','PHARMACIST_EXAMINATION',null,501,511,null);
-insert into examination values(508,false,'2021-07-23','11:00:00',false,1000,'info2','09:30:00','CREATED','PHARMACIST_EXAMINATION',null,501,511,null);
-
-insert into examination values(542,false,'2021-08-28','12:00:00',false,1050,'info2','10:30:00','CREATED','PHARMACIST_EXAMINATION',null,501,511,null);
-insert into examination values(503,false,'2021-07-22','11:00:00',false,880,'info2','09:30:00','CREATED','PHARMACIST_EXAMINATION',null,503,502,null);
-insert into examination values(504,false,'2021-07-22','11:00:00',false,880,'info2','09:30:00','CREATED','PHARMACIST_EXAMINATION',null,504,506,null);
-
-
-
-
-
-
-
-
-
-
-
-
-insert into examination values(502,false,'2021-06-20','09:00:00',true,600,'info1','08:00:00','SCHEDULED','DERMATOLOGIST_EXAMINATION',508,501,501,null);
-insert into examination values(507,false,'2021-07-22','11:00:00',true,880,'info2','09:30:00','SCHEDULED','DERMATOLOGIST_EXAMINATION',508,501,504,null);
-
-insert into examination values(544,false,'2021-07-20','09:00:00',true,600,'info1','08:00:00','SCHEDULED','DERMATOLOGIST_EXAMINATION',508,501,501,null);
-insert into examination values(541,false,'2021-07-23','11:00:00',true,880,'info2','09:30:00','SCHEDULED','DERMATOLOGIST_EXAMINATION',508,501,504,null);
-
-insert into examination values(512,false,'2021-08-22','12:00:00',true,600,"infoo",'10:30:00','SCHEDULED','PHARMACIST_EXAMINATION',510,501,333,null);
-insert into examination values(513,false,'2021-07-22','12:00:00',true,600,"infoo",'10:30:00','SCHEDULED','PHARMACIST_EXAMINATION',508,501,333,null);
-
+insert into examination values(555,false,'2020-03-27','12:00:00',true,null,1050,'info2','10:30:00','FINISHED','PHARMACIST_EXAMINATION',508,501,511,null);
+insert into examination values(559,false,'2020-03-26','12:00:00',true,null,1050,'info2','10:30:00','FINISHED','PHARMACIST_EXAMINATION',507,501,511,503);
+insert into examination values(556,false,'2020-08-29','11:00:00',true,null,1030,'info2','09:30:00','FINISHED','DERMATOLOGIST_EXAMINATION',510,501,501,null);
+insert into examination values(557,false,'2020-08-27','12:00:00',true,null,1050,'info2','10:30:00','FINISHED','DERMATOLOGIST_EXAMINATION',510,501,504,504);
+insert into examination values(500,false,'2021-07-23','09:00:00',false,null,600,'info1','08:00:00','CREATED','DERMATOLOGIST_EXAMINATION',null,501,501,null);
+insert into examination values(505,false,'2021-07-22','11:00:00',false,null,880,'info2','09:30:00','CREATED','DERMATOLOGIST_EXAMINATION',null,501,501,null);
+insert into examination values(510,false,'2021-07-29','11:00:00',false,null,1030,'info2','09:30:00','CREATED','DERMATOLOGIST_EXAMINATION',null,501,501,null);
+insert into examination values(511,false,'2021-07-27','12:00:00',false,null,1050,'info2','10:30:00','CREATED','DERMATOLOGIST_EXAMINATION',null,501,504,null);
+insert into examination values(501,false,'2021-07-22','11:00:00',false,null,880,'info2','09:30:00','CREATED','DERMATOLOGIST_EXAMINATION',null,501,504,null);
+insert into examination values(506,false,'2021-07-22','11:00:00',false,null,1000,'info2','09:30:00','CREATED','PHARMACIST_EXAMINATION',null,501,511,null);
+insert into examination values(509,false,'2021-08-27','12:00:00',false,null,1050,'info2','10:30:00','CREATED','PHARMACIST_EXAMINATION',null,501,511,null);
+insert into examination values(508,false,'2021-07-23','11:00:00',false,null,1000,'info2','09:30:00','CREATED','PHARMACIST_EXAMINATION',null,501,511,null);
+insert into examination values(542,false,'2021-08-28','12:00:00',false,null,1050,'info2','10:30:00','CREATED','PHARMACIST_EXAMINATION',null,501,511,null);
+insert into examination values(503,false,'2021-07-22','11:00:00',false,null,880,'info2','09:30:00','CREATED','PHARMACIST_EXAMINATION',null,503,502,null);
+insert into examination values(1,false,'2021-07-22','11:00:00',false,null,880,'info2','09:30:00','CREATED','PHARMACIST_EXAMINATION',null,504,506,null);
 
 
 

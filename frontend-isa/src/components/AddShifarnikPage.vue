@@ -194,7 +194,7 @@ export default{
         return{
             name : "",
             code : "",
-            recepieNeeded : "",
+            recepieNeeded : false,
             drugType : "",
             format : "",
             manufacturer : "",
@@ -258,12 +258,7 @@ export default{
             window.location.href = '/SystemAdminProfile/' + this.id;
         },
         addShifarnik : function()
-        {        
-            if(this.recepieNeeded === "")
-            {
-                this.recepieNeeded = false;
-            }
-
+        {    
             //console.log(this.selected);
             this.selected.forEach(value => 
             {

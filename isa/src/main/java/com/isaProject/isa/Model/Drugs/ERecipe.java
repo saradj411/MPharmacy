@@ -59,7 +59,7 @@ public class ERecipe {
     @Enumerated(EnumType.STRING)
     private ERecipeStatus status;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "userID", referencedColumnName = "id")
     //ovo jsonback ostavi!!
     @JsonBackReference
@@ -178,12 +178,8 @@ public class ERecipe {
         return "ERecipe{" +
                 "idRecipe=" + idRecipe +
                 ", code='" + code + '\'' +
-                ", name='" + name + '\'' +
-                ", surname='" + surname + '\'' +
                 ", dateOfIssue=" + dateOfIssue +
                 ", eRecipeDrug=" + eRecipeDrug +
-                ", pharmacy=" + pharmacy +
-                ", patient=" + patient +
                 ", status=" + status +
                 ", user=" + user +
                 '}';

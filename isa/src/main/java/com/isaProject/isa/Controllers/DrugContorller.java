@@ -106,7 +106,7 @@ public class DrugContorller {
         System.out.println(drugAndSpec);
         DrugDTO drugDTO = new DrugDTO(drugAndSpec.getName(),
                 drugAndSpec.getCode(),
-                drugAndSpec.isRecipeNeed(),
+                true,
                 drugAndSpec.getDrugType(),
                 drugAndSpec.getFormat(),
                 drugAndSpec.getManufacturer(),

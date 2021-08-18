@@ -19,6 +19,7 @@
            
            <button class="btn btn-danger btn-lg" style="float:left;margin-top:15px;margin-left:10px" v-on:click = "showMarks">Grades</button>
             <button class="btn btn-danger btn-lg" style="float:left;margin-top:15px;margin-left:10px" v-on:click = "writeComplaint">Complaint</button>
+            
             <button class="btn btn-danger btn-lg" style="float:left;margin-top:15px;margin-left:10px" v-on:click = "logOut">Log out</button>
            
                                   
@@ -500,9 +501,31 @@
       </div> 
 
        <!--eRECEPIE!-->
-  <div v-if="showERecipe"  style="float:left;margin-left:30px;">
-     <h4 style="margin:30px">eRECEPIE:</h4>    
- <div style="background: #a7c1c9;margin-left:30px;"  v-for="recipe in this.recepies"  v-bind:key="recipe.idRecipe">
+  <div v-if="showERecipe"  style="float:left;margin-left:30px; margin-bottom:140px;">
+  
+  
+
+  <div class="divRecepti" >
+      <h4 style="margin:30px"> Upload qrCode:</h4> 
+      <!--<p class="decode-result">Last result: <b>{{ result }}</b></p>-->
+
+     
+
+      <table class="table">
+  <tbody>
+    <tr>
+    <td> Please select your image with qrCode: </td>
+    <td> <qrcode-capture @decode="onDecode" /> </td>
+    </tr>
+  </tbody>
+  </table>
+ </div>
+   
+
+
+   <!-- *************************************************** -->  
+     <h4 style="margin:30px; margin-top:250px; "> eRECEPIE buy:</h4>    
+ <div style="background: #a7c1c9;margin-left:30px; "  v-for="recipe in this.recepies"  v-bind:key="recipe.idRecipe">
       
 <table  style="" id="table2" class="table" >
  
@@ -841,18 +864,12 @@
           <th></th>
           <td></td>
           <td><button class="btn btn-danger btn-sm"  v-on:click = "confrimPharmacy(g2.grade,g2.idPharmacy,g2.idPatient)">Confrim</button></td>
-          
-
+ 
         </tr>
-        
-  </tbody>
-</table>
-           </div>
-
+          </tbody>
+</table></div>
 
       </div> 
-
-
 
       <!-------GRADES DRUUUUUUUUUUG!-->
 
@@ -899,10 +916,13 @@
 </template>
 
 <script>
+import { QrcodeCapture } from 'vue-qrcode-reader'
 export default {
+   components: { QrcodeCapture },
   data() {
     return {
-
+      result: {},
+      showRECEPT: false,
       idPharm2:null,
       date2:null,
       time2:null,
@@ -1066,7 +1086,7 @@ export default {
                 this.recepies= response.data;
                 
          }).catch(res => {
-                alert("Nesto ne valja");
+                alert("Nesto ne valja recdepti");
                 console.log(res);
         });
         this.axios.get('/examination/findCreatedPharmacistExamination')
@@ -1132,6 +1152,18 @@ export default {
                
 },
 methods:{
+   onDecode (result) {
+    this.showRECEPT = true;
+    var split = result.split(',');
+    var firstSplit = split[0].split('=');
+    var idRec = firstSplit[1];   
+
+     window.location.href = '/eRecepieBuy/'+this.id+"/"+idRec;  
+          
+
+
+
+        },
      myProfile : function(){
           window.location.href = "/ProfilePatient/"+this.id;
       },
@@ -1139,32 +1171,32 @@ methods:{
           window.location.href = "/WriteComplaint/"+this.id;
       },
       showPharmacyGrade:function(){
-        
+        this.showRECEPT = false;
         this.showGradeDermatologist=false
         this.showGradePharmacist=false
         this.showGradePharmacy=true
         this.showGradeDrug=false
 
       },
-      showDermatologistGrade:function(){
+      showDermatologistGrade:function(){this.showRECEPT = false;
         this.showGradeDermatologist=true
         this.showGradePharmacist=false
         this.showGradePharmacy=false
         this.showGradeDrug=false
       },
-      showPharmacistGrade:function(){
+      showPharmacistGrade:function(){this.showRECEPT = false;
         this.showGradeDermatologist=false
         this.showGradePharmacist=true
         this.showGradePharmacy=false
         this.showGradeDrug=false
       },
-      showDrugsGrade:function(){
+      showDrugsGrade:function(){this.showRECEPT = false;
         this.showGradeDermatologist=false
         this.showGradePharmacist=false
         this.showGradePharmacy=false
         this.showGradeDrug=true
       },
-      showMarks: function(){
+      showMarks: function(){this.showRECEPT = false;
         this.showMarksBar=true
         this.showTable=false
         this.showReserveTable=false
@@ -1190,7 +1222,7 @@ methods:{
         this.showGradeDrug=false
        //this.showSearchPharmacy=true
       },
-       showPharmacies: function(){
+       showPharmacies: function(){this.showRECEPT = false;
          this.showMarksBar=false
         this.showTable=true
         this.showReserveTable=false
@@ -1219,7 +1251,7 @@ methods:{
        //this.showSearchPharmacy=true
       },
       showReservation:
-       function(){
+       function(){this.showRECEPT = false;
          this.showMarksBar=false
         this.showTable=false
         this.showReserveTable=true
@@ -1246,6 +1278,7 @@ methods:{
       },
       showConsultation:
        function(){
+        this.showRECEPT = false;
         this.showTable=false
         this.showReserveTable=false
         this.showDermExam=false
@@ -1298,6 +1331,7 @@ methods:{
       },
       showExamination:
        function(){
+         this.showRECEPT = false;
         this.showTable=false
         this.showReserveTable=false
        this.showDermExam=true
@@ -1327,6 +1361,7 @@ methods:{
          if(!this.moze){
            alert("Scheduling is not possible!You have more than 3 penalties!")
          }else{
+           this.showRECEPT = false;
         this.showTable=false
         this.showReserveTable=false
        this.showDermExam=false
@@ -1356,7 +1391,7 @@ methods:{
       function(){
          if(!this.moze){
            alert("Scheduling is not possible! You have more than 3 penalties!")
-         }else{
+         }else{ this.showRECEPT = false;
         this.showTable=false
         this.showReserveTable=false
        this.showDermExam=false
@@ -1861,8 +1896,7 @@ methods:{
                     });
       },
       unsubscribe: function(idPharmacy){
-        console.log(idPharmacy)
-      //OVDJE POZVATI FUNKCIJU ZA ODJAVU APOTEKA
+        alert("Please wait a few moments..");
 
       const info =
         {
@@ -1897,6 +1931,7 @@ methods:{
       },
       subscribe: function(idPharmacy)
       {
+        alert("Please wait a few moments..");
         //subscribe to pharmacy
         const info =
         {
@@ -1921,10 +1956,24 @@ methods:{
                     alert(res.response.data);
                     
                 }); 
-      }
+      },
+      /**************************************/
          
           
 
 }
 }
 </script>
+
+<style>
+.divRecepti
+{
+  background-color:white;
+  width: 100%;
+  position: absolute;
+   background: rgb(167, 193, 201);
+   margin-top:30px;
+   
+}
+
+</style>

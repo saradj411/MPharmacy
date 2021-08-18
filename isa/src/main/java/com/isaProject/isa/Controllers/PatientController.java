@@ -1,6 +1,7 @@
 package com.isaProject.isa.Controllers;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.google.zxing.WriterException;
 import com.isaProject.isa.Model.DTO.*;
 import com.isaProject.isa.Model.DTO.FrontCreatedExaminationDTO;
 import com.isaProject.isa.Model.Pharmacy.Pharmacy;
@@ -17,6 +18,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.web.bind.annotation.*;
 
+import javax.mail.MessagingException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -58,7 +61,6 @@ public class PatientController {
     {
         try
         {
-            System.out.println(userDTO.getEmail());
             Patient u = patientService.save(userDTO);
             return  u == null ? new ResponseEntity<>(HttpStatus.IM_USED) :
                     ResponseEntity.ok(u);
@@ -215,14 +217,14 @@ public class PatientController {
 
 
     @PostMapping(value = "/subscribe")
-    public ResponseEntity subscribeToPharmacy(@RequestBody SubscribeDTO subscribeDTO) {
+    public ResponseEntity subscribeToPharmacy(@RequestBody SubscribeDTO subscribeDTO) throws MessagingException, IOException, WriterException {
         Patient patient = patientService.subscribe(subscribeDTO);
         return patient == null ? new ResponseEntity<String>("You are allerady subscribed to this pharmacy.",HttpStatus.BAD_REQUEST)
                 : new ResponseEntity<Patient>(patient, HttpStatus.CREATED);
     }
 
     @PostMapping(value = "/unsubscribe")
-    public ResponseEntity unSubscribeToPharmacy(@RequestBody SubscribeDTO subscribeDTO) {
+    public ResponseEntity unSubscribeToPharmacy(@RequestBody SubscribeDTO subscribeDTO) throws MessagingException, IOException, WriterException {
         Patient patient = patientService.unsubscribe(subscribeDTO);
         return patient == null ? new ResponseEntity<String>(HttpStatus.BAD_REQUEST)
                 : new ResponseEntity<Patient>(patient, HttpStatus.CREATED);

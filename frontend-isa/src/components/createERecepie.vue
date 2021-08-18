@@ -37,7 +37,9 @@
 
     
     <div class="row" >
+   
      <div class="col-sm" style="margin-bottom:10px; margin-top:10px;">
+      <h4> Medication list: </h4>
       <lable type="text" style="font-size:22px;" v-for="a in this.forRecept" v-bind:key="a" class="form-control">
         {{a.drugName}} - {{ a.quantity}}kom
       </lable>
@@ -121,6 +123,7 @@ export default {
   methods:{
     eRecept: function()
     {
+      alert("Please wait a few seconds..");
        this.axios.post('/erecipe/createERecp' ,this.forRecept, { 
             headers: {                    
                     'Authorization': `Bearer ` +  this.accessToken,                    
