@@ -76,11 +76,12 @@
         },
         ComplainsPage: function()
         {
-
+            window.location.href = '/Complains/' + this.id;
         },
         ShowAllDrugs: function()
         {
              window.location.href = '/AllDrugs/' + this.id;
+               
         }
 
         

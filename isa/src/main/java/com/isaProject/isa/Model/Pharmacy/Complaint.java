@@ -28,7 +28,63 @@ public class Complaint {
     @JsonBackReference
     private Patient patient;
 
-    //staff
+    public Complaint(String text, Boolean isAnswered, ComplaintAnswer answer, Patient patient) {
+        this.text = text;
+        this.isAnswered = isAnswered;
+        this.answer = answer;
+        this.patient = patient;
+    }
+
+    public  Complaint(){}
+
+    public Integer getIdComplaint() {
+        return idComplaint;
+    }
+
+    public void setIdComplaint(Integer idComplaint) {
+        this.idComplaint = idComplaint;
+    }
+
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+    }
+
+    public Boolean getAnswered() {
+        return isAnswered;
+    }
+
+    public void setAnswered(Boolean answered) {
+        isAnswered = answered;
+    }
+
+    public ComplaintAnswer getAnswer() {
+        return answer;
+    }
+
+    public void setAnswer(ComplaintAnswer answer) {
+        this.answer = answer;
+    }
+
+    public Patient getPatient() {
+        return patient;
+    }
+
+    public void setPatient(Patient patient) {
+        this.patient = patient;
+    }
+
+    public Complaint(Integer idComplaint, String text, Boolean isAnswered, ComplaintAnswer answer, Patient patient) {
+        this.idComplaint = idComplaint;
+        this.text = text;
+        this.isAnswered = isAnswered;
+        this.answer = answer;
+        this.patient = patient;
+    }
+//staff
 
 
 }

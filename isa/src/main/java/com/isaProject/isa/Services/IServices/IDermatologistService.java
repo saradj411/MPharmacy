@@ -19,7 +19,7 @@ public interface IDermatologistService {
     Dermatologist findById(Integer id);
     List<Dermatologist> findAll ();
 
-    Dermatologist save(DermatologistDTO dermatologist);
+    Dermatologist save(DermDTO dermatologist);
     //String delete(Dermatologist dermatologist);
     Set<PatientDTO> findAllPatients(Integer id) ;
 

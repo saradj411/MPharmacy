@@ -275,7 +275,7 @@ može obrisati)
     }
 
 
-    @Override
+
     public Dermatologist save(DermatologistDTO dermDTO) {
         System.out.println("Usao u servis");
         List<Authority> auth = authService.findByname("ROLE_DERMATOLOGIST");
@@ -304,7 +304,7 @@ može obrisati)
 
         User newUser = userRepository.save(d);
 
-        if(dermDTO.getDate() != null
+       /* if(dermDTO.getDate() != null
                 && dermDTO.getStartTime() != null
                 && dermDTO.getEndTime() != null
                 && dermDTO.getPharmacyID() != null)
@@ -323,7 +323,7 @@ može obrisati)
                     .toLocalDate();
 */
 
-            workTimeDTO.setDate(date);
+        /*    workTimeDTO.setDate(date);
             workTimeDTO.setStartTime(dermDTO.getStartTime());
             workTimeDTO.setEndTime(dermDTO.getEndTime());
             workTimeDTO.setStaff(staff);
@@ -337,7 +337,7 @@ može obrisati)
             d.setWorkTime(new HashSet<WorkTime>());
 
             return d;
-        }
+        }*/
 
         return d;
     }
