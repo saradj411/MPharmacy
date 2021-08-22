@@ -2,6 +2,7 @@ package com.isaProject.isa.Services.Implementations;
 
 import com.isaProject.isa.Model.DTO.ComplainDTO;
 import com.isaProject.isa.Model.Pharmacy.Complaint;
+import com.isaProject.isa.Model.Pharmacy.ComplaintAnswer;
 import com.isaProject.isa.Model.Pharmacy.PharmacyComplaint;
 import com.isaProject.isa.Model.Pharmacy.StaffComplaint;
 import com.isaProject.isa.Repositories.ComplainRepository;
@@ -10,6 +11,7 @@ import com.isaProject.isa.Services.IServices.IComplainService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -58,6 +60,16 @@ public class ComplainService implements IComplainService {
     @Override
     public List<Complaint> findAll() {
         return  complainRepository.findAll();
+    }
+
+    public List<Complaint> notAnsweredComplainfindAll() {
+        List<Complaint> notAnsweredComplain = new ArrayList<>();
+        for(Complaint c : findAll())
+        {
+            if(c.getAnswered() == null)
+                notAnsweredComplain.add(c);
+        }
+        return  notAnsweredComplain;
     }
 
     @Override

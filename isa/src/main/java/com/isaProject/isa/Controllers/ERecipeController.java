@@ -105,20 +105,48 @@ ServiceForEmail serviceForEmail;
 
     }
 
-    /*@GetMapping("/getPharmacyWhereToBuy/{name}/{q}")
+    @GetMapping("/getPharmacyForRecept/{id}")
     @PreAuthorize("hasRole('PATIENT')")
-    public ResponseEntity<List<DrugPricelist>> getPharmacyWhereToBuy(@PathVariable String name, @PathVariable Integer q)
-        {
-        return  new ResponseEntity(eRecipeService.getAllPharamcyForERecept(name,q), HttpStatus.OK);
+    public ResponseEntity<List<DrugPricelist>> getPharmacyForRecept(@PathVariable Integer id)
+    {
+        return  new ResponseEntity(eRecipeService.getDrugInPharmacyByErecepie(id), HttpStatus.OK);
     }
 
-    /*@GetMapping("/buyDrug/{idRec}/{idPharmacy}")
+    @GetMapping("/buyDrug/{idRec}/{idPharmacy}")
     @PreAuthorize("hasRole('PATIENT')")
-    public ResponseEntity buyDrug(@PathVariable Integer idRec, @PathVariable Integer idPharmacy)
-    {
-        return  new ResponseEntity(eRecipeService.buyDrug(idRec,idPharmacy), HttpStatus.OK);
-    }*/
+    public ResponseEntity buyDrug(@PathVariable Integer idRec, @PathVariable Integer idPharmacy) throws MessagingException {
+        if(eRecipeService.buyDrugInPharmacy(idPharmacy,idRec))
+            return new ResponseEntity(HttpStatus.OK);
+        else
+            return new ResponseEntity(HttpStatus.BAD_REQUEST);
+    }
 
+    @GetMapping("/sortPriceAsc/{idRec}")
+    @PreAuthorize("hasRole('PATIENT')")
+    public ResponseEntity sortPriceAsc(@PathVariable Integer idRec)
+    {
+            return new ResponseEntity(eRecipeService.sortByPriceAsc(idRec), HttpStatus.OK);
+    }
+    @GetMapping("/sortPriceDesc/{idRec}")
+    @PreAuthorize("hasRole('PATIENT')")
+    public ResponseEntity sortPriceDesc(@PathVariable Integer idRec)
+    {
+        return new ResponseEntity(eRecipeService.sortByPriceDesc(idRec), HttpStatus.OK);
+    }
+
+    @GetMapping("/sortNameAsc/{idRec}")
+    @PreAuthorize("hasRole('PATIENT')")
+    public ResponseEntity sortNameAsc(@PathVariable Integer idRec)
+    {
+        return new ResponseEntity(eRecipeService.sortByNameAsc(idRec), HttpStatus.OK);
+    }
+
+    /*@GetMapping("/sortNameDesc/{idRec}")
+    @PreAuthorize("hasRole('PATIENT')")
+    public ResponseEntity sortNameDesc(@PathVariable Integer idRec)
+    {
+        return new ResponseEntity(eRecipeService.sortByNameDesc(idRec), HttpStatus.OK);
+    }*/
 
 
 }

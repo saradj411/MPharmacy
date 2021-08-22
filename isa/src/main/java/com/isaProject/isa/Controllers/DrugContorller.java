@@ -104,6 +104,12 @@ public class DrugContorller {
     @PreAuthorize("hasRole('ADMIN')")
     ResponseEntity<String> addSpecificationAndDrug(@RequestBody DrugAndSpecDTO drugAndSpec) {
         System.out.println(drugAndSpec);
+        for(Drug d : drugService.findAll())
+        {
+            if(d.getName().equals(drugAndSpec.getName()))
+                return new ResponseEntity<>("Drug with this name already exists!", HttpStatus.BAD_REQUEST);
+        }
+
         DrugDTO drugDTO = new DrugDTO(drugAndSpec.getName(),
                 drugAndSpec.getCode(),
                 true,

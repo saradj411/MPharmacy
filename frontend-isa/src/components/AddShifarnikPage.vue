@@ -259,13 +259,17 @@ export default{
         },
         addShifarnik : function()
         {    
-            //console.log(this.selected);
+            if(this.selected != null){
             this.selected.forEach(value => 
             {
                 var part = value.split(':'); 
                 this.idAlternative.push(part[0]);
 
             })
+            }
+            else{
+                this.idAlternative = [];
+            }
              console.log(this.idAlternative);
             const drugAndSpecInfo = 
             {
@@ -299,12 +303,10 @@ export default{
                 {                  
                     console.log(response);
                     alert("Drug and specification are successeffully added!");                                               
-                   window.location.href = '/SystemAdminProfile/'+this.id;
-                    
-                    //Odkomentarisati ovo kad se obavi verifikacija mejla
+                   window.location.href = '/SystemAdminProfile/'+this.id;                    
                 }).catch(res => {
-                    console.log("Nije uzeo token..");
-                    alert(res.response.data.message);
+                    alert(res.response.data);                    
+                   console.log(res.response);
                 });    
 
             }

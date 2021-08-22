@@ -92,7 +92,7 @@
                 <div v-for="order in drug_order"
                     v-bind:key ="order.idOrder"
             >
-                 <div class="order" v-if="sta(order.timeLimit)" >
+                 <div class="order" >
                         <h2  style="font-size:22px;" class="form-control" > ID Order: {{order.idOrder }} </h2>
                         <h2  style="font-size:22px;" class="form-control">Pharmacy: {{order.pharmacyId}} - {{ order.pharmacyName }}  </h2>
                         <h3  style="font-size:22px;" class="form-control"> What we need: </h3>
@@ -112,8 +112,8 @@
                              
                         </div>
 
-                    <button  v-if="sta(order.timeLimit)"  class="btn btn-primary btn-xs" @click="showModalOffer(order)"  style="margin:auto; margin-left:700px; margin-top:-400px; background: #000; width: 400px; font-size:22px;" >See all offers </button>
-                    <button   v-if="sta(order.timeLimit)" class="btn btn-primary btn-xs"  @click="showModal(order)" style="margin:auto; margin-left:700px;background: #000; margin-top:-350px; width: 400px; font-size:22px;" >Create new offer </button>
+                    <button    class="btn btn-primary btn-xs" @click="showModalOffer(order)"  style="margin:auto; margin-left:700px; margin-top:-400px; background: #000; width: 400px; font-size:22px;" >See all offers </button>
+                    <button    class="btn btn-primary btn-xs"  @click="showModal(order)" style="margin:auto; margin-left:700px;background: #000; margin-top:-350px; width: 400px; font-size:22px;" >Create new offer </button>
     
                 </div>
   

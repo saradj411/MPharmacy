@@ -10,10 +10,12 @@ import com.isaProject.isa.Model.Pharmacy.Pharmacy;
 import com.isaProject.isa.Model.Users.Patient;
 import com.isaProject.isa.Model.Users.User;
 import com.isaProject.isa.Repositories.ERecipeRepository;
+import com.isaProject.isa.Repositories.PharmacyDrugsRepository;
 import com.isaProject.isa.Services.IServices.IERecipeService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
 
@@ -39,6 +41,11 @@ public class ERecipeService implements IERecipeService {
     DrugPricelistService drugPricelistService;
     @Autowired
     PharmacyDrugsService pharmacyDrugsService;
+    @Autowired
+    PharmacyDrugsRepository pharmacyDrugsRepository;
+
+    @Autowired
+    PharmacyService pharmacyService;
 
     @Override
     public List<FrontERecipeDTO> findByPatient(Integer id) {
@@ -134,36 +141,168 @@ public class ERecipeService implements IERecipeService {
         return  null;
     }
 
-    /*public List<BuyDrugDTO> getAllPharamcyForERecept(Integer idRecepie)
+    public List<PharmacyDrugsDTO> showPharmacyWithDrugs()
     {
-           ERecipe eRecipe = findOne(idRecepie);
+        List<Pharmacy> allPharmacy = pharmacyService.findAll();
+        List<PharmacyDrugs> pharmacyDrugs = pharmacyDrugsService.findAll();
 
-           for(PharmacyDrugs pharmacyDrugs : pharmacyDrugsService.findAll())
-           {
-               for(ERecipeDrug eRecipeDrug : eRecipe.geteRecipeDrug())
-               {
-                   if(pharmacyDrugs.getDrug().getIdDrug() == eRecipeDrug.getId() && pharmacyDrugs.getQuantity() > eRecipeDrug.getQuantity())
-                   {
-                       ApotekaICena  apotekaICena = new ApotekaICena();
-                       apotekaICena.setPharmacy(pharmacyDrugs.getPharmacy());
-                       apotekaICena.setPrice(getPrice(idDrug, idPharmacy));
-                   }
-               }
-           }return  null;
-    }*/
+        List<PharmacyDrugsDTO> pharmacyDrugsDTOS = new ArrayList<>();
 
-    public boolean buyDrug (Integer idERec, Integer idPharmacy)
+        // pretraga na osnovu apoteke koji lekovi postoje sve, da bude na jednom mestu.
+        // uklju7cuje i quanitty koji nam je potreban za izdavanje erecepta
+
+        for(Pharmacy p : allPharmacy)
+        {
+            PharmacyDrugsDTO pharmacyListWithDrugs = new PharmacyDrugsDTO();
+            pharmacyListWithDrugs.setPharmacy(p);
+            List<DrugInfoDTO> drugsList = new ArrayList<>();
+            for(PharmacyDrugs pd : pharmacyDrugs)
+            {
+                if(p.getIdPharm() == pd.getPharmacy().getIdPharm()) {
+                    DrugInfoDTO drugInfoDTO = new DrugInfoDTO();
+                    drugInfoDTO.setDrug(pd.getDrug());
+                    drugInfoDTO.setQuantity(pd.getQuantity());
+                    drugsList.add(drugInfoDTO);
+                }
+            }
+            pharmacyListWithDrugs.setDrugs(drugsList);
+            pharmacyDrugsDTOS.add(pharmacyListWithDrugs);
+        }
+
+        for(PharmacyDrugsDTO pdDTOS : pharmacyDrugsDTOS)
+        {
+            for(DrugPricelist drugPricelist : drugPricelistService.findAll())
+            {
+                if(drugPricelist.getPharmacy().getIdPharm() == pdDTOS.getPharmacy().getIdPharm())
+                {
+                    for(DrugInfoDTO drugInfoDTO : pdDTOS.getDrugs())
+                    {
+                        if(drugInfoDTO.getDrug().getIdDrug() == drugPricelist.getDrug().getIdDrug())
+                            drugInfoDTO.setPrice(drugPricelist.getPrice());
+                    }
+                }
+            }
+        }
+        System.out.println("APOTEKE SA LEKOVIMA: ");
+        System.out.println(pharmacyDrugsDTOS);
+        return  pharmacyDrugsDTOS;
+    }
+
+    public List<TotalPriceDTO> sortByPriceAsc(Integer idRecepie)
     {
+        List<TotalPriceDTO> totalPriceDTOS =  getDrugInPharmacyByErecepie(idRecepie);
+        totalPriceDTOS.sort(Comparator.comparing(TotalPriceDTO::getTotalPrice));
+        return  totalPriceDTOS;
+    }
+    public List<TotalPriceDTO> sortByPriceDesc(Integer idRecepie)
+    {
+        List<TotalPriceDTO> totalPriceDTOS =  getDrugInPharmacyByErecepie(idRecepie);
+        totalPriceDTOS.sort(Comparator.comparing(TotalPriceDTO::getTotalPrice).reversed());
+        return  totalPriceDTOS;
+    }
+
+    public List<TotalPriceDTO> sortByNameAsc(Integer idRecepie)
+    {
+        List<TotalPriceDTO> totalPriceDTOS =  getDrugInPharmacyByErecepie(idRecepie);
+
+        //totalPriceDTOS.sort(Comparator.comparing(PharmacyDrugsDTO::getPharmacy));
+        //totalPriceDTOS.sort(Comparator.comparing(PharmacyDrugsDTO::getPharmacy::comparing(Pharmacy::getName)));
+
+        return  totalPriceDTOS;
+    }
+
+
+    public List<TotalPriceDTO> getDrugInPharmacyByErecepie(Integer id)
+    {
+        List<TotalPriceDTO> totalPriceDTOS = new ArrayList<>();
         ERecipe eRecipe = new ERecipe();
         for(ERecipe e : eRecipeRepository.findAll())
         {
-            if(e.getIdRecipe() == idERec)
+            if(e.getIdRecipe() == id)
                 eRecipe = e;
+        }
+
+        Integer number = 0;
+        List<PharmacyDrugsDTO> newList = new ArrayList<>();
+
+        for(PharmacyDrugsDTO pdDTOS :  showPharmacyWithDrugs())
+        {
+            for(ERecipeDrug eRecipeDrug : eRecipe.geteRecipeDrug())
+            {
+                for(DrugInfoDTO drugInfoDTO : pdDTOS.getDrugs())
+                {
+                    if(eRecipeDrug.getName().equals(drugInfoDTO.getDrug().getName())
+                    && eRecipeDrug.getQuantity() <= drugInfoDTO.getQuantity())
+                    {
+                        number++;
+                    }
+                }
+            }
+
+            double price = 0;
+
+
+            if(number == eRecipe.geteRecipeDrug().size())
+            {
+                PharmacyDrugsDTO pharmacyDrugsDTOnew = new PharmacyDrugsDTO();
+                pharmacyDrugsDTOnew.setPharmacy(pdDTOS.getPharmacy());
+                List<DrugInfoDTO> drugInfoDTOSListNew = new ArrayList<>();
+                TotalPriceDTO totalPriceDTO = new TotalPriceDTO();
+
+
+                for(ERecipeDrug eRecipeDrug : eRecipe.geteRecipeDrug())
+                {
+                    for(DrugInfoDTO drugInfoDTO : pdDTOS.getDrugs())
+                    {
+                        if(eRecipeDrug.getName().equals(drugInfoDTO.getDrug().getName())
+                                && eRecipeDrug.getQuantity() <= drugInfoDTO.getQuantity())
+                        {
+                            drugInfoDTO.setQuantity(eRecipeDrug.getQuantity());
+                            price += (eRecipeDrug.getQuantity() * drugInfoDTO.getPrice());
+                            drugInfoDTOSListNew.add(drugInfoDTO);
+                        }
+                    }
+                }
+                pharmacyDrugsDTOnew.setDrugs(drugInfoDTOSListNew);;
+                totalPriceDTO.setTotalPrice(price);
+                totalPriceDTO.setPharmacyDrugsDTOList(pharmacyDrugsDTOnew);
+                totalPriceDTOS.add(totalPriceDTO);
+                number = 0;
+                price = 0;
+            }
+            else
+            {    number = 0;
+                 price = 0;
+            }
 
         }
-        eRecipe.setStatus(ERecipeStatus.PROCESSED);
-        //set quantity to new number
-        return true;
+
+
+        return  totalPriceDTOS;
+    }
+
+
+    public boolean buyDrugInPharmacy(Integer idPharamcy, Integer idRecepie) throws MessagingException {
+        ERecipe eRecipe = findOne(idRecepie);
+        for( ERecipeDrug eRecipeDrug : eRecipe.geteRecipeDrug())
+        {
+            PharmacyDrugs pharmacyDrugs = pharmacyDrugsService.findByIdPharmAndDrugName(eRecipeDrug.getName(),idPharamcy);
+            if(pharmacyDrugs != null)
+            {
+                Integer q = pharmacyDrugs.getQuantity() - eRecipeDrug.getQuantity();
+                pharmacyDrugs.setQuantity(q);
+                pharmacyDrugsRepository.save(pharmacyDrugs);
+
+            }
+            else
+            {
+                return false;
+            }
+        }
+        eRecipe.setPharmacy(pharmacyService.findById(idPharamcy));
+        serviceForEmail.sendERecepieVerification(eRecipe.getPatient(),pharmacyService.findById(idPharamcy));
+        eRecipeRepository.save(eRecipe);
+        return  true;
 
     }
 }

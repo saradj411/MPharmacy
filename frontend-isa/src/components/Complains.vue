@@ -1,118 +1,95 @@
 <template>
 <div>
     <h1> All complains </h1>
+    <h4 v-if="this.complains.length == 0"> You dont answer to all complain. </h4>
     <div class="complain" v-for="c in this.complains"
         v-bind:key="c.idComplaint">   
              
-            <table> 
+            <table style="margin-top:100px;"> 
              <tr  style="font-size:22px;" class="form-control">
               <td style="margine:20px; width:600px; font-size:22px;"> ID complain: </td>
-              <td style="margine:20px; width:600px; font-size:22px;">
-                  <input type="text" v-model="c.idComplaint" :id="'id_' + c.idComplaint"                                   
-                                    class="form-control" 
-                                    aria-label="Enter phone nubmer"
-                                    :disabled="true"
-                                    aria-describedby="addon-wrapping">   </td>
+              <td style="margine:20px; width:600px; font-size:22px;"> {{ c.idComplaint}}  </td>
             </tr >
             <tr  style="font-size:22px;" class="form-control">
-              <td style="margine:20px; width:600px; font-size:22px;"> Patien: </td>
-              <td style="margine:20px; width:600px; font-size:22px;">
-                  <!--<input type="text" v-model="" :id="'patien_' + c.idComplaint"                                   
-                                    class="form-control" 
-                                    aria-label="Enter phone nubmer"
-                                    :disabled="true"
-                                    aria-describedby="addon-wrapping">  --> </td>
+              <td style="margine:20px; width:600px; font-size:22px;"> For: </td>
+              <td style="margine:20px; width:600px; font-size:22px;"> {{c.staff.name}} {{ c.staff.surname}}</td>
+             
             </tr >
-                               
+            <tr  style="font-size:22px;" class="form-control">
+             <td style="margine:20px; width:600px; font-size:22px;"> Text: </td>
+             <td style="margine:20px; width:600px; font-size:22px;"> {{c.text}} </td>
+            </tr>
+               <tr  style="font-size:22px;" class="form-control">
+                <button class = "btn btn-primary btn-xs"                      
+                            style="margin:auto;  background: #000; width: 200px;"
+                            @click="showModalOffer(c)"  > Create an answer </button>
+                    
+               </tr>                
              </table>
-                         
-
-           
-            <!--<div v-for="offer in this.offerList"
-                v-bind:key="offer.idOffer">
-
-             <table v-if="prosledjena.idOrder==offer.idOrder" style="" id="table2" class="table" >
-                <tbody  >
-                    
-                    <tr style="font-size:22px;color:#0D184F;">
-                    <td colspan="2" style=" width:200px;" >Total price:</td>
-                    <td colspan="2"><input type="text" v-model="offer.totalPrice" :id="'price_' + offer.idOffer"
-                                    :class="{'input--error':!offer.totalPrice}"
-                                    class="form-control" 
-                                    aria-label="Enter phone nubmer"
-                                    :disabled="true"
-                                    aria-describedby="addon-wrapping">  
-                                  
-                                  </td>                               
-                    
-                    </tr>
-                    <tr style="font-size:22px;color:#0D184F;">
-                    <td colspan="2">Delivery date:</td>
-                    <td colspan="2"><input type="localdate" v-model="offer.deliveryDate" 
-                                    :class="{'input--error':!offer.deliveryDate}"
-                                    :disabled="true"
-                                    class="form-control" :id="'deliverDate_' +offer.idOffer"                                    
-                                    aria-label="Enter phone nubmer"                                
-                                    aria-describedby="addon-wrapping"> </td>
-                    
-                    </tr>
-                    <tr style="font-size:22px;color:#0D184F;">
-                    <td colspan="2" style=" width:200px;" >Status:</td>
-                    <td colspan="2"><input type="text" v-model="offer.offerStatus" :id="'status_' + offer.idOffer"
-                                    class="form-control" 
-                                    aria-label="Enter phone nubmer"
-                                    :disabled="true"
-                                    aria-describedby="addon-wrapping">  
-                                  
-                                  </td>                               
-                    
-                    </tr>
-
-
-                    </tbody>
-                    <tr>                  
-                    <td>
-                    <button class="btn btn-primary btn-xs"
-                            style="margin:auto; background: #000; width:250px;"
-                            @click="editOffer(offer)" :id="'edit_'+offer.idOffer"
-                            > Edit </button>
-                    </td>
-                      <td>
-                    <button class="btn btn-primary btn-xs"
-                             style="margin:auto; ;background: #000;  width:250px;"
-                             @click="saveOffer(offer)" :disabled="!isDisabled" 
-                             :id="'save'+offer.idOffer"
-                             > Save </button>
-                    </td>
-                    <td>
-                    <button class="btn btn-primary btn-xs"
-                             style="margin:auto; ;background: #000;  width:250px;"
-                             @click="cancelEditOffer(offer)" :disabled="!isDisabled"
-                             :id="'cancel_'+offer.idOffer"
-                             > Cancel </button>
-                    </td>
-                    <td>
-                    <button class="btn btn-primary btn-xs"
-                             style="margin:auto; ;background: #000;  width:250px;"
-                             :id="'delete'+offer.idOffer"
-                             @click ="deleteOffer(offer)" > Delete </button>
-                    </td>
-
-                   
-                    </tr>
-                    <tr>
-                   
-                    </tr>
-                    <tr></tr>
-                </table>
-        
-
-
-            </div>-->
+             <br>
+             
                  
 
 
     </div>
+
+<!-- Answer oon complain modal  -->
+
+  <b-modal ref="my-modal" hide-footer title="Enter your answer: " style="width:800px; height: 100%;">
+        <div class="d-block text-center ">            
+             <!--<div v-for="order in drug_order"
+                    v-bind:key ="order.idOrder">
+                    <h1 v-if="order.idOrder == prosledjena"> {{ order.idOrder }}: {{order.pharmacyName - order.pharmacyId}} </h1>
+            </div>--> 
+
+         
+            <div>
+                             <table> 
+                             <tr  style="font-size:22px;" class="form-control">
+                                <td style="margine:20px; width:600px; font-size:22px;" > Text: </td>
+                                   <td style="margine:20px; width:600px; font-size:22px; height:30px;"> 
+                                       
+                                        <p><b>{{this.prosledjena.text}}</b></p>
+                                    </td>  
+                            </tr >
+
+                            <tr  style="font-size:22px;" class="form-control">
+                                <td style="margine:20px; width:600px; font-size:22px;" > Patient: </td>
+                                   <td style="margine:20px; width:600px; font-size:22px; height:30px;"> 
+                                       
+                                        <p><b>{{this.patient.name}} {{this.patient.surname}}</b></p>
+                                    </td>  
+                            </tr >
+
+                            <tr  style="font-size:22px;" class="form-control">
+                                <td style="margine:20px; width:600px; font-size:22px;" > Patient: </td>
+                                   <td style="margine:20px; width:600px; font-size:22px; height:30px;"> 
+                                       
+                                        <p><b>{{this.staff.name}} {{this.staff.surname}}</b></p>
+                                    </td>  
+                            </tr >
+                                <tr  style="font-size:22px; height: 170px;" class="form-control">
+                                <td style="margine:20px; width:600px; font-size:22px;" > Answer: </td>
+                                   <td style="margine:20px; width:600px; font-size:22px; height:30px;">                                        
+                                       <b-form-textarea   id="textarea" v-model="textAnswer"
+                                      placeholder="Enter yout complain..." style="font-size:22px;" rows="4" max-rows="10"></b-form-textarea>
+                                    </td>  
+                            </tr >
+                                
+
+                            </table>
+
+                            
+                    </div>
+
+        </div>
+        <button class="btn btn-primary btn-xs" style="margin:auto; margin-left:40px; background: #000; margin-top:10px; width:400px;"  @click="sendAnswer" > Send answer </button>
+        <button class="btn btn-primary btn-xs" style="margin:auto; margin-left:40px;background: #000;  width:400px;"   @click="cancelModal"> Close </button>
+        </b-modal>
+
+
+
+
 
 </div>
 </template>
@@ -125,34 +102,27 @@ export default {
      
          id : this.$route.params.id,
          complains: [],
-         staffComplains: []
+         staffComplains: [],
+         prosledjena: {},
+         patient: {},
+         staff: {},
+         textAnswer: "",
+         token: localStorage.getItem('accessToken'),
          
         
 
     }
   },
   methods:
+  { sendAnswer()
   {
-    /*sendOffer()
-    {
-        console.log("DER");
+      console.log(this.token);
 
-        var vrsta = document.getElementById("people").value;
-      
-        var name = document.getElementById("employee").value;
-        var deo = name.split("-");
-      
-        if(vrsta == "PHARMACY")
-        {
-          const complaintPharmacy = 
-            {
-                idPatient : this.id,                
-                idPharmacy : deo[0],
-                idStaff : null,
-                text : this.textComplain
-            }
-            console.log(complaintPharmacy);
-              this.axios.post('/complaint/save', complaintPharmacy,
+        //console.log(accessToken.substr(1).slice(0, -1));
+
+        alert("Please wait a few seconds..");
+        this.$refs['my-modal'].toggle('#toggle-btn')
+            this.axios.get('/complaint/saveAnswer/'+this.prosledjena.idComplaint+'/'+this.textAnswer,
                 {
                     headers: 
                     {
@@ -160,91 +130,29 @@ export default {
                     }}).then(response => 
                     {
                         
-                        alert("Successfully added complain! ");
-                        console.log(response.data);
-                         window.location.href = '/HomePagePatient/'+this.id;             
+                        alert("Successfully added answer! ");
+                        console.log(response.data);                        
+                         window.location.href = this.$router.go(-1);
+                                 
                     }).catch(res => {
                         alert(res.response.data.message);
                     });
-            
-        }
-        else
-        {
-            const complaintStaff = 
-            {
-                idPatient : this.id,                
-                idPharmacy : null,
-                idStaff : deo[0],
-                text : this.textComplain
-            }
-            console.log(complaintStaff);
-            this.axios.post('/complaint/save', complaintStaff,
-                {
-                    headers: 
-                    {
-                        'Authorization': `Bearer ` + localStorage.getItem('accessToken')
-                    }}).then(response => 
-                    {
-                        
-                        alert("Successfully added complain! ");
-                        console.log(response.data);
-                         window.location.href = '/HomePagePatient/'+this.id;             
-                    }).catch(res => {
-                        alert(res.response.data.message);
-                    });
-
-
-        }
-          
-
+  },
+      cancelModal() {       
            
-    },
-
-    /*changeOption: function(event)
-        {   
-            this.key = event.target.value;
-
-            if(this.key == "PHARMACY")
-            {              
-              document.getElementById("employee").length = 0; 
-              for(var pharmacy in this.pharmacies)
-                { 
-                  var optionPharmacy = document.createElement("option");
-                  optionPharmacy.text = this.pharmacies[pharmacy].idPharmacy+"-"+ this.pharmacies[pharmacy].name;
-                  optionPharmacy.value = this.pharmacies[pharmacy].idPharmacy+"-"+ this.pharmacies[pharmacy].name;
-                  var select = document.getElementById("employee");
-                  select.appendChild(optionPharmacy);
-                }
-            }else if(this.key == "DERMATOLOGIST")
-            {
-               document.getElementById("employee").length = 0;           
-                     
-                for(var dermatologist in this.dermatologist)
-                {     
-                      
-                      var optionDerma = document.createElement("option");
-                      optionDerma.text = this.dermatologist[dermatologist].idDermatologist+"-"+ this.dermatologist[dermatologist].name+" "+this.dermatologist[dermatologist].surname;
-                      optionDerma.value = this.dermatologist[dermatologist].idDermatologist+"-"+ this.dermatologist[dermatologist].name+" "+this.dermatologist[dermatologist].surname;
-                      var selectD = document.getElementById("employee");
-                      selectD.appendChild(optionDerma);            
-
-                }
-            }else if(this.key == "PHARMACIEST")
-            {
-                        document.getElementById("employee").length = 0; 
-                      for(var pharmaciest in this.pharmaciest)
-                    {       
-                        console.log("pharmaciest" , this.pharmaciest[pharmaciest].name);
-                        var optionpharmaciest = document.createElement("option");
-                        optionpharmaciest.text =this.pharmaciest[pharmaciest].idPharmacist+"-"+ this.pharmaciest[pharmaciest].name+" "+this.pharmaciest[pharmaciest].surname;
-                        optionpharmaciest.value =this.pharmaciest[pharmaciest].idPharmacist+"-"+ this.pharmaciest[pharmaciest].name+" "+this.pharmaciest[pharmaciest].surname;
-                        var selectpharmaciest = document.getElementById("employee");
-                        selectpharmaciest.appendChild(optionpharmaciest);
-                }
-                 
-            }
-            
-        },*/
+            this.$refs['my-modal'].toggle('#toggle-btn')
+        },
+        showModalOffer(c)
+            {  
+                console.log("Udje");
+                this.prosledjena = c;
+                this.patient = c.patient;
+                this.staff = c.staff;
+                console.log("LISTA OFFERSA: ");
+                console.log(this.prosledjena);              
+                this.$refs['my-modal'].show()
+                
+            }    
   },
   
   mounted() {
@@ -296,6 +204,10 @@ export default {
     background-color: white;
     width: 500px;
     height: 100px;
+}
+.d-block
+{
+    height: 310px;
 }
 
 </style>

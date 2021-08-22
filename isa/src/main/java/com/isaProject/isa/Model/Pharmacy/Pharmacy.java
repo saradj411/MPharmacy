@@ -240,4 +240,6 @@ public class  Pharmacy implements Serializable {
     public void setPostalCode(Integer postalCode) {
         this.postalCode = postalCode;
     }
+
+
 }

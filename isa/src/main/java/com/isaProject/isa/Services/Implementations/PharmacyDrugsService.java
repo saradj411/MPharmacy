@@ -118,4 +118,20 @@ obrisati)
         return null;
     }
 
+    public PharmacyDrugs findByIdPharmAndDrugName(String drugName, Integer idPharmacy)
+    {
+        for (PharmacyDrugs pd : findAll()) {
+            System.out.println("Baza idDrug: " + pd.getDrug().getName());
+            System.out.println("Params drug" + drugName);
+            System.out.println("Baza idPharm: " +pd.getPharmacy().getIdPharm());
+            System.out.println("Params pharm" + idPharmacy);
+            if(pd.getDrug().getName().equals(drugName))
+                if(pd.getPharmacy().getIdPharm().equals(idPharmacy))
+                    return pd;
+
+        }
+
+        return null;
+    }
+
 }

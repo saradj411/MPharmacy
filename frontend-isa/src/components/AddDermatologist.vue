@@ -144,6 +144,7 @@ id : this.$route.params.id,
                         console.log(response.data);
                 })
                 .catch(res => {
+                   console.log(res.response.data.message);
                     alert(res.response.data.message);
                  });    
       },

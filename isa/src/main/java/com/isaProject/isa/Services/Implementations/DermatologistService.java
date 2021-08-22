@@ -246,6 +246,11 @@ može obrisati)
         return dermatologistRepository.findAll();
     }
 
+    @Override
+    public Dermatologist save(DermDTO dermatologist) {
+        return null;
+    }
+
 
     @Override
     public Set<PatientDTO> findAllPatients(Integer id) {

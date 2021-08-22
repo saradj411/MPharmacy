@@ -25,7 +25,7 @@ public class Complaint {
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "patientId", referencedColumnName = "id")
-    @JsonBackReference
+    //@JsonBackReference
     private Patient patient;
 
     public Complaint(String text, Boolean isAnswered, ComplaintAnswer answer, Patient patient) {

@@ -473,6 +473,99 @@ public class ServiceForEmail{
 
     }
 
+    public void sendEmailAnswerComplain(String text, Patient patient) throws MessagingException {
+      Properties props = new Properties();
+        //props.setProperty("mail.transport.protocol", "smtp");
+        props.put("mail.smtp.host", "smtp.gmail.com");
+        props.put("mail.smtp.port", "587");
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.starttls.enable", "true");
+        //props.put("mail.smtp.ssl.trust", "smtp.gmail.com");
+
+        Session mailSession = Session.getInstance(props,
+                new javax.mail.Authenticator() {
+                    protected PasswordAuthentication getPasswordAuthentication() {
+                        return new PasswordAuthentication("blackcetkica@gmail.com", "maja.maja98");
+                    }
+                });
+        mailSession.setDebug(true);
+        Transport transport = mailSession.getTransport();
+
+        MimeMessage message = new MimeMessage(mailSession);
+        message.setSubject("Complain answer:");
+        message.setFrom(new InternetAddress("me@sender.com"));
+        message.addRecipient(Message.RecipientType.TO,
+                new InternetAddress(patient.getEmail()));
+
+        MimeMultipart multipart = new MimeMultipart("alternative");
+
+        BodyPart messageBodyPart = new MimeBodyPart();
+        String htmlText = "<H4> Dear " +patient.getName() +" " + patient.getSurname() +",</H4>" +
+                "<p>" + text + "</p>" +
+                "<p> System admin. </p>";
+
+        messageBodyPart.setContent(htmlText, "text/html");
+
+        multipart.addBodyPart(messageBodyPart);
+
+
+        message.setContent(multipart);
+
+        transport.connect();
+        transport.sendMessage(message,
+                message.getRecipients(Message.RecipientType.TO));
+        transport.close();
+
+
+
+    }
+
+    public void sendERecepieVerification(Patient patient, Pharmacy pharmacy) throws MessagingException {
+        Properties props = new Properties();
+        //props.setProperty("mail.transport.protocol", "smtp");
+        props.put("mail.smtp.host", "smtp.gmail.com");
+        props.put("mail.smtp.port", "587");
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.starttls.enable", "true");
+        //props.put("mail.smtp.ssl.trust", "smtp.gmail.com");
+
+        Session mailSession = Session.getInstance(props,
+                new javax.mail.Authenticator() {
+                    protected PasswordAuthentication getPasswordAuthentication() {
+                        return new PasswordAuthentication("blackcetkica@gmail.com", "maja.maja98");
+                    }
+                });
+        mailSession.setDebug(true);
+        Transport transport = mailSession.getTransport();
+
+        MimeMessage message = new MimeMessage(mailSession);
+        message.setSubject("eRecepie approved");
+        message.setFrom(new InternetAddress("me@sender.com"));
+        message.addRecipient(Message.RecipientType.TO,
+                new InternetAddress(patient.getEmail()));
+
+        MimeMultipart multipart = new MimeMultipart("alternative");
+
+        BodyPart messageBodyPart = new MimeBodyPart();
+        String htmlText = "<H4> Dear " +patient.getName() +" " + patient.getSurname() +",</H4>" +
+                "<p>You successeffuly buy drugs in " + pharmacy.getName() + ". </p>" +
+                "<p> System admin. </p>";
+
+        messageBodyPart.setContent(htmlText, "text/html");
+
+        multipart.addBodyPart(messageBodyPart);
+
+
+        message.setContent(multipart);
+
+        transport.connect();
+        transport.sendMessage(message,
+                message.getRecipients(Message.RecipientType.TO));
+        transport.close();
+
+
+    }
+
 
     /*
 
