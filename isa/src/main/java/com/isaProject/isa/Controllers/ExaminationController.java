@@ -171,10 +171,10 @@ public class ExaminationController {
     }
     @PostMapping("/saveExamPoints")
     @PreAuthorize("hasRole('ADMIN')")
-    ResponseEntity<Examination> saveExamPoints(@RequestBody ExamPointDTO examPointDTO) {
+    ResponseEntity saveExamPoints(@RequestBody ExamPointDTO examPointDTO) {
 
         Examination e = examinationService.savePointsFromExamination(examPointDTO);
-        return e == null ? new ResponseEntity(HttpStatus.BAD_REQUEST) :
+        return e == null ? new ResponseEntity("This points has been changed by another admin.", HttpStatus.BAD_REQUEST) :
                 new ResponseEntity<Examination>(e, HttpStatus.OK);
 
 

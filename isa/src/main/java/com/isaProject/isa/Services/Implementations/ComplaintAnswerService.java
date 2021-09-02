@@ -26,9 +26,13 @@ public class ComplaintAnswerService{
     public List<ComplaintAnswer> findAll() { return  complaintAnswerRepository.findAll(); }
 
     public ComplaintAnswer createAnswer(Integer id, String text) throws MessagingException {
+
+
         ComplaintAnswer complaintAnswer = new ComplaintAnswer();
         complaintAnswer.setTextAnswer(text);
         Complaint complaint = complainService.findById(id);
+        if(complaint.getAnswered() != null)
+            return null;
         complaint.setAnswered(true);
         complaintAnswer.setComplaint(complaint);
         complaintAnswerRepository.save(complaintAnswer);

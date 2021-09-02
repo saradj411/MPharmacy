@@ -173,9 +173,9 @@ export default
                          window.location.href = '/login';
                     }
                     else
-                    {
-                        console.log(res.response.data.message);
-                        alert("Greska. Mozda nemate pristup ovoj stranici!");
+                    {                       
+                        alert(res.response.data);                        
+                        this.$router.go();
                     }
                    
                     

@@ -118,7 +118,7 @@ ServiceForEmail serviceForEmail;
         if(eRecipeService.buyDrugInPharmacy(idPharmacy,idRec))
             return new ResponseEntity(HttpStatus.OK);
         else
-            return new ResponseEntity(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity("Pharmacy doesnt have this drugs anymore.",HttpStatus.BAD_REQUEST);
     }
 
     @GetMapping("/sortPriceAsc/{idRec}")

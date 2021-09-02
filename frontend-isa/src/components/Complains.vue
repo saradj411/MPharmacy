@@ -1,9 +1,10 @@
 <template>
 <div>
     <h1> All complains </h1>
-    <h4 v-if="this.complains.length == 0"> You dont answer to all complain. </h4>
+    <h4 v-if="this.complains.length === 0"> You dont answer to all complain. </h4>
+
     <div class="complain" v-for="c in this.complains"
-        v-bind:key="c.idComplaint">   
+        v-bind:key="c.idComplaint"> 
              
             <table style="margin-top:100px;"> 
              <tr  style="font-size:22px;" class="form-control">
@@ -12,7 +13,8 @@
             </tr >
             <tr  style="font-size:22px;" class="form-control">
               <td style="margine:20px; width:600px; font-size:22px;"> For: </td>
-              <td style="margine:20px; width:600px; font-size:22px;"> {{c.staff.name}} {{ c.staff.surname}}</td>
+              <td style="margine:20px; width:600px; font-size:22px;" v-if="c.staff != null"> {{c.staff.name}} {{ c.staff.surname}}</td>
+              <td style="margine:20px; width:600px; font-size:22px;" v-if="c.pharmacy != null"> {{c.pharmacy.name}}</td>
              
             </tr >
             <tr  style="font-size:22px;" class="form-control">
@@ -62,10 +64,11 @@
                             </tr >
 
                             <tr  style="font-size:22px;" class="form-control">
-                                <td style="margine:20px; width:600px; font-size:22px;" > Patient: </td>
+                                <td style="margine:20px; width:600px; font-size:22px;" > To who: </td>
                                    <td style="margine:20px; width:600px; font-size:22px; height:30px;"> 
                                        
-                                        <p><b>{{this.staff.name}} {{this.staff.surname}}</b></p>
+                                        <p v-if="this.staff != null"><b>{{this.staff.name}} {{this.staff.surname}}</b></p>
+                                        <p v-if="this.pharmacy != null"><b>{{this.pharmacy.name}}</b></p>
                                     </td>  
                             </tr >
                                 <tr  style="font-size:22px; height: 170px;" class="form-control">
@@ -107,6 +110,7 @@ export default {
          patient: {},
          staff: {},
          textAnswer: "",
+         pharmacy: {},
          token: localStorage.getItem('accessToken'),
          
         
@@ -135,7 +139,8 @@ export default {
                          window.location.href = this.$router.go(-1);
                                  
                     }).catch(res => {
-                        alert(res.response.data.message);
+                        alert(res.response.data);
+                         this.$router.go();
                     });
   },
       cancelModal() {       
@@ -147,7 +152,18 @@ export default {
                 console.log("Udje");
                 this.prosledjena = c;
                 this.patient = c.patient;
-                this.staff = c.staff;
+                if(c.staff != null)
+                {
+                    this.staff = c.staff;
+                    this.pharmacy = {};
+                }
+                else
+                {
+                    this.pharmacy = c.pharmacy;
+                     this.staff = {};
+                }
+               
+                
                 console.log("LISTA OFFERSA: ");
                 console.log(this.prosledjena);              
                 this.$refs['my-modal'].show()
@@ -166,6 +182,9 @@ export default {
                 }
             }).then(response => {
 
+
+
+                console.log("PRIAZ ZLABI");
                   this.complains = response.data;
                   console.log(this.complains);
 

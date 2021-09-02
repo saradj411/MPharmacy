@@ -99,6 +99,8 @@ public class ExaminationService implements IExaminationService {
         for (Examination e: findAllOverWithoutPoints()) {
             if(e.getIdExamination().equals(examPoinDTO.getIdExamination()))
             {
+                if(e.getPointsForExamination() != null)
+                    return null;
                 e.setPointsForExamination(examPoinDTO.getPoints());
                 addPointsToPatient(examPoinDTO, e);
                 loyalityProgramService.changeStatusOfPatient(e.getPatient());

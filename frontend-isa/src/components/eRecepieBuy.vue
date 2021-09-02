@@ -188,7 +188,8 @@ export default
                                 window.location.href = "/HomePagePatient/"+this.id;
 
                               }).catch(res => {
-                                  alert(res.response.data);                            
+                                  alert(res.response.data); 
+                                  this.$router.go();                        
                               });  
 
     

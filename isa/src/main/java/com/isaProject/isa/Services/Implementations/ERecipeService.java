@@ -287,10 +287,22 @@ public class ERecipeService implements IERecipeService {
 
     public boolean buyDrugInPharmacy(Integer idPharamcy, Integer idRecepie) throws MessagingException {
         ERecipe eRecipe = findOne(idRecepie);
+
+        for( ERecipeDrug eRecipeDrugChecked : eRecipe.geteRecipeDrug())
+        {
+            PharmacyDrugs pharmacyDrugsChecked = pharmacyDrugsService.findByIdPharmAndDrugName(eRecipeDrugChecked.getName(),idPharamcy);
+            if(pharmacyDrugsChecked == null || (pharmacyDrugsChecked.getQuantity()-eRecipeDrugChecked.getQuantity()) < 0 ) {
+
+                    return false;
+                }
+
+        }
+
+
         for( ERecipeDrug eRecipeDrug : eRecipe.geteRecipeDrug())
         {
             PharmacyDrugs pharmacyDrugs = pharmacyDrugsService.findByIdPharmAndDrugName(eRecipeDrug.getName(),idPharamcy);
-            if(pharmacyDrugs != null)
+            if(pharmacyDrugs != null )
             {
                 Integer q = pharmacyDrugs.getQuantity() - eRecipeDrug.getQuantity();
                 pharmacyDrugs.setQuantity(q);
@@ -299,6 +311,7 @@ public class ERecipeService implements IERecipeService {
             }
             else
             {
+
                 return false;
             }
         }

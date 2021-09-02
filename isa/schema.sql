@@ -55,6 +55,8 @@ insert into drug values (510,'sifra 10','tableta','TABLET',6,'DOO Komerc','press
     insert into pharmacy_drugs values (528,34,510,502);
     insert into pharmacy_drugs values (529,7,510,501);
 
+    insert into pharmacy_drugs values (1,1,507,503);
+
 
 
 
@@ -89,7 +91,7 @@ insert into drug values (510,'sifra 10','tableta','TABLET',6,'DOO Komerc','press
     insert into drug_pricelist values (516,'2021-11-10',100,'2020-08-17',502,504);
     insert into drug_pricelist values (517,'2021-12-12',256,'2020-08-22',503,504);
 
-
+    insert into drug_pricelist values (533,'2021-12-12',256,'2020-08-10',507,503);
     insert into drug_pricelist values (518,'2021-12-12',500,'2020-09-01',505,501); -- Aspirin
     insert into drug_pricelist values (519,'2021-12-13',300,'2020-08-31',505,502);
     insert into drug_pricelist values (520,'2021-12-10',260,'2020-08-31',505,504);

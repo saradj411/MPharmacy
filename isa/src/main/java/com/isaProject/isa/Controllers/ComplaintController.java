@@ -66,10 +66,10 @@ public class ComplaintController {
 
     @GetMapping(value = "/saveAnswer/{id}/{text}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<ComplaintAnswer> saveAnswer(@PathVariable Integer id, @PathVariable String text) throws MessagingException {
+    public ResponseEntity saveAnswer(@PathVariable Integer id, @PathVariable String text) throws MessagingException {
         ComplaintAnswer complaintA = complaintAnswerService.createAnswer(id,text);
         return complaintA != null ? new ResponseEntity<ComplaintAnswer>(complaintA, HttpStatus.CREATED)
-                : new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+                : new ResponseEntity<String>("This complaint is answered by another admin right now.", HttpStatus.BAD_REQUEST);
 
     }
 
