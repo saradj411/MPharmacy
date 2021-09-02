@@ -276,8 +276,18 @@ mounted() {
                         'Authorization': `Bearer ` + this.accessToken,
                         
                     }}).then(response => 
-                    {                    
+                    { 
+
+                      console.log(response.data.eRecipe.status);                   
                       this.result = response.data;
+
+                      if(this.result.eRecipe.status == "PROCESSED")
+                      {
+                        alert("You already buy this drugs.");
+                        window.location.href = "/HomePagePatient/"+this.id;
+
+                      }
+                      else{
 
                       this.axios.get('/erecipe/getPharmacyForRecept/'+this.idRec,
                             {
@@ -287,13 +297,19 @@ mounted() {
                               
                           }}).then(response => 
                           {     
-                            console.log("APOTEKE");   
                             this.pharmaciesWithDrugs = response.data;
-                            console.log(this.pharmaciesWithDrugs);      
+                          if(this.pharmaciesWithDrugs.length == 0)
+                      {
+                        alert("Pharmacies doesnt have all drugs you need. Sorry.");
+                        window.location.href = "/HomePagePatient/"+this.id;
+
+                      }
+
+                                
                           }).catch(res => {
                               alert(res.response.data);                            
                           });                        
-                                            
+                      }              
         
                     }).catch(res => {
                        // alert(res.response.data);

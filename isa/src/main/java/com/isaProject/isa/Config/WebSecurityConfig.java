@@ -334,7 +334,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/workTime/findFreeStaffByPharmacy").permitAll()
 
                 .antMatchers("/drugOrder/**").permitAll()
-                //ove zakomentarisati jer imau AUtorizaciju
+
                 .antMatchers("/adminstrator/findAll").permitAll()
                 .antMatchers("/offer/**").permitAll()
                 .antMatchers("/user/findByEmail/**").permitAll()
@@ -342,15 +342,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/patient/savePatient").permitAll()
                 .antMatchers("/erecipe/downloadERecepie").permitAll()
                 .antMatchers("/erecipe/getPharmacyWhereToBuy").permitAll()
-
-                //.antMatchers("/adminstrator/savePharmacyAdmin").permitAll()
-                /*.antMatchers("/user/saveSupplier")
-                .permitAll().antMatchers("/user/findAll")
-                .permitAll().antMatchers("/drug/**")
-                .permitAll()antMatchers("/specification/**")
-
-
-                .permitAll()*/
+                .antMatchers("drug/drugsInfoDrugsInfoNeregistrovani").permitAll()
 
                 // za svaki drugi zahtev korisnik mora biti autentifikovan
                 .anyRequest().authenticated().and()

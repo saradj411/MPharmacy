@@ -151,6 +151,14 @@ public class DrugContorller {
 
     }
 
+    @GetMapping("/drugsInfoDrugsInfoNeregistrovani")
+    public ResponseEntity<List<ShowDrugsDTO>> DrugsInfoNeregistrovani()
+    {
+        return new ResponseEntity<>(drugService.returnInfoDrugs(), HttpStatus.OK);
+
+    }
+
+
     @GetMapping("/searchByName/{drugName}")
     @PreAuthorize("!hasRole('SUPPLIER')")
     public ResponseEntity<List<ShowDrugsDTO>> searchByName(@PathVariable String drugName)

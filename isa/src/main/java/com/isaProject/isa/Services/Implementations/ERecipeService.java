@@ -116,10 +116,13 @@ public class ERecipeService implements IERecipeService {
         ERecipe e = new ERecipe();
 
         for(ERecipe erec : findAll()) {
-                if(erec.getIdRecipe() == idRecepie && erec.getStatus().equals(ERecipeStatus.NEW))
+                if(erec.getIdRecipe() == idRecepie)
+                {
                     e = erec;
-
+                    break;
+                }
         }
+
         User u = userService.findById(e.getUser().getId());
         return new ERecipeWithUserDTO(e,u);
 

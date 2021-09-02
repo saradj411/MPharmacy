@@ -166,15 +166,15 @@
                     </div>
 
         </div>
-        <button class="btn btn-primary btn-xs" style="margin:auto; margin-left:40px; background: #000; margin-top:10px; width:400px;"  @click="addOffer" :disabled="!price || !date"> Add </button>
+        <button class="btn btn-primary btn-xs" style="margin:auto; margin-left:40px; background: #000; margin-top:400px; width:400px;"  @click="addOffer" :disabled="!price || !date"> Add </button>
         <button class="btn btn-primary btn-xs" style="margin:auto; margin-left:40px;background: #000;  width:400px;"   @click="cancelModal"> Close </button>
         </b-modal>
 
     </div>
     <!-- MODAL ZA SEE ALL OFFERS -->
 
-    <b-modal ref="offers-modal" hide-footer size="xl" title="Large Modal " style="width:800px;">
-        <div class="d-block text-center"> 
+    <b-modal ref="offers-modal" hide-footer size="xl" title="Large Modal " style="width:800px; background-color:white; height:1000px;">
+        <div class="d-block text-center" style="background-color:white; height: 100%"> 
             <h2> ID order: {{prosledjena.idOrder}}  </h2>           
             <h2> Pharmacy: {{prosledjena.pharmacyId}} - {{prosledjena.pharmacyName}} </h2>
             <table> 
@@ -687,5 +687,10 @@ data()
     .modal-dialog
     {
         width:1000px;
+    }
+    .modal-body
+    {
+        height: fit-content;
+        height: 100%;
     }
 </style>

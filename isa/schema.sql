@@ -16,27 +16,47 @@ insert into drug values (506,'sifra 6','tableta','TABLET',10,'proizvodjac 6','br
 insert into drug values (507,'sifra 7','sprej','GEL',7,'proizvodjac 7','mometazonfuorat','nap1',10,true);
 insert into drug values (508,'sifra 8','kapsula','CAPSULE',3,'proizvodjac 8','gentamicin','nap34',5,true);
 
-
-
+insert into drug values (509,'sifra 9','kapsula','CAPSULE',3,'DOO Komerc','flonidan','aaam',8,true);
+insert into drug values (510,'sifra 10','tableta','TABLET',6,'DOO Komerc','pressing','amaa',10,true);
 #pharmacy_drugs
 #id_quantity_idDrug_idPharmacy
     insert into pharmacy_drugs values (501,50,503,503);
     insert into pharmacy_drugs values (502,8,504,501);
-    insert into pharmacy_drugs values (503,6,505,503);
+    insert into pharmacy_drugs values (503,6,505,503); -- Aspirin imamo u svim apotekama
     insert into pharmacy_drugs values (504,90,506,504);
     insert into pharmacy_drugs values (505,3,507,502);
     insert into pharmacy_drugs values (506,5,503,501);
-    insert into pharmacy_drugs values (507,8,504,502);    
-    insert into pharmacy_drugs values (508,8,507,501);        
+    insert into pharmacy_drugs values (507,8,504,502);
+    insert into pharmacy_drugs values (508,8,507,501);
     insert into pharmacy_drugs values (520,6,506,501);
     insert into pharmacy_drugs values (511,30,508,502);
     insert into pharmacy_drugs values (512,15,508,504);
     insert into pharmacy_drugs values (514,12,507,504);
-    insert into pharmacy_drugs values (515,40,501,501);  
-    insert into pharmacy_drugs values (516,3,501,503);        
+    insert into pharmacy_drugs values (515,40,501,501);
+    insert into pharmacy_drugs values (516,3,501,503);
     insert into pharmacy_drugs values (517,30,502,503);
     insert into pharmacy_drugs values (518,22,502,504);
     insert into pharmacy_drugs values (519,21,503,504);
+    insert into pharmacy_drugs values (534,60,505,504); -- Aspirin imamo u svim apotekama
+    insert into pharmacy_drugs values (521,14,505,501);
+    insert into pharmacy_drugs values (522,54,505,502);
+    insert into pharmacy_drugs values (523,25,505,505);
+
+
+    insert into pharmacy_drugs values (524,10,509,501); -- flonidan ima u svim
+    insert into pharmacy_drugs values (530,11,509,502);
+    insert into pharmacy_drugs values (531,13,509,503);
+    insert into pharmacy_drugs values (532,45,509,504);
+    insert into pharmacy_drugs values (533,34,509,505);
+
+    insert into pharmacy_drugs values (525,10,510,505); -- PResing ima u svim
+    insert into pharmacy_drugs values (526,16,510,504);
+    insert into pharmacy_drugs values (527,190,510,503);
+    insert into pharmacy_drugs values (528,34,510,502);
+    insert into pharmacy_drugs values (529,7,510,501);
+
+
+
 
 #altervnative_drugs
     insert into alternative_drug values (505,501);
@@ -58,17 +78,34 @@ insert into drug values (508,'sifra 8','kapsula','CAPSULE',3,'proizvodjac 8','ge
     insert into drug_pricelist values (505,'2021-12-01',300,'2020-04-07',507,502);
     insert into drug_pricelist values (506,'2021-09-09',280,'2020-04-01',503,501);
     insert into drug_pricelist values (507,'2021-11-01',300,'2020-07-07',504,502);
-    insert into drug_pricelist values (510,'2021-11-01',286,'2020-07-07',506,501);
+    insert into drug_pricelist values (532,'2021-11-01',286,'2020-07-07',506,501);
     insert into drug_pricelist values (509,'2021-11-01',300,'2020-07-07',507,501);
     insert into drug_pricelist values (510,'2021-11-01',500,'2020-08-01',508,502);
-    insert into drug_pricelist values (509,'2021-11-01',300,'2020-08-11',508,504);
-    insert into drug_pricelist values (509,'2021-11-01',260,'2020-08-20',507,504);
-    insert into drug_pricelist values (509,'2021-09-01',650,'2020-07-07',501,501);
-    insert into drug_pricelist values (509,'2021-12-01',301,'2020-08-03',501,503);
-    insert into drug_pricelist values (509,'2021-08-12',240,'2020-06-01',502,503);
-    insert into drug_pricelist values (509,'2021-11-10',100,'2020-08-17',502,504);
-    insert into drug_pricelist values (509,'2021-12-12',256,'2020-08-22',503,504);
+    insert into drug_pricelist values (511,'2021-11-01',300,'2020-08-11',508,504);
+    insert into drug_pricelist values (512,'2021-11-01',260,'2020-08-20',507,504);
+    insert into drug_pricelist values (513,'2021-09-01',650,'2020-07-07',501,501);
+    insert into drug_pricelist values (514,'2021-12-01',301,'2020-08-03',501,503);
+    insert into drug_pricelist values (515,'2021-08-12',240,'2020-06-01',502,503);
+    insert into drug_pricelist values (516,'2021-11-10',100,'2020-08-17',502,504);
+    insert into drug_pricelist values (517,'2021-12-12',256,'2020-08-22',503,504);
 
+
+    insert into drug_pricelist values (518,'2021-12-12',500,'2020-09-01',505,501); -- Aspirin
+    insert into drug_pricelist values (519,'2021-12-13',300,'2020-08-31',505,502);
+    insert into drug_pricelist values (520,'2021-12-10',260,'2020-08-31',505,504);
+    insert into drug_pricelist values (521,'2021-10-12',600,'2020-08-30',505,505);
+
+    insert into drug_pricelist values (522,'2021-10-12',179,'2020-08-30',509,501); --flonidan
+    insert into drug_pricelist values (524,'2021-10-05',200,'2020-09-01',509,502);
+    insert into drug_pricelist values (523,'2021-10-21',366,'2020-09-02',509,503);
+    insert into drug_pricelist values (525,'2021-10-10',574,'2020-08-23',509,504);
+    insert into drug_pricelist values (526,'2021-11-15',566,'2020-08-31',509,505);
+
+    insert into drug_pricelist values (527,'2021-09-30',544,'2020-08-31',510,505); -- presing
+    insert into drug_pricelist values (528,'2021-09-19',73,'2020-08-31',510,504);
+    insert into drug_pricelist values (529,'2021-10-12',199,'2020-09-01',510,503);
+    insert into drug_pricelist values (530,'2021-11-30',344,'2020-08-20',510,502);
+    insert into drug_pricelist values (531,'2021-12-12',266,'2020-08-26',510,501);
 
 
 
@@ -106,9 +143,7 @@ insert into drug values (508,'sifra 8','kapsula','CAPSULE',3,'proizvodjac 8','ge
     insert into user_authority values(501, 4);
     insert into user_authority values(502, 3);
     insert into user_authority values(503, 2);
-    insert into user_authority values(111, 2);
     insert into user_authority values(123, 6);
-
     insert into user_authority values(504, 4);
     insert into user_authority values(505, 2);
     insert into user_authority values(506, 3);
@@ -161,7 +196,6 @@ insert into drug values (508,'sifra 8','kapsula','CAPSULE',3,'proizvodjac 8','ge
 
  #pharmacy_admin
     insert into pharmacy_admin values(503,501);
-    insert into pharmacy_admin values(111,502);
 
     #dermatologists_in_pharmacies
     # id dermatologa, id apoteke
@@ -172,13 +206,20 @@ insert into drug values (508,'sifra 8','kapsula','CAPSULE',3,'proizvodjac 8','ge
     insert into dermatologists_in_pharmacies values(501,502);
 
 
-
-#specification
+--specification
+--id_spec, contraindications, ingredients, recommended_dose, structure, drug_code
 insert into specification values (500,'iritacija sinusa','sastojak 1, sastojak 2',4,'sastav 1','sifra 1');
 insert into specification values (501,'iritacija oka','sastojak 1',6,'sastav 2','sifra 2');
 insert into specification values (502,'nema','sastojak 3, sastojak 2',7,'sastav 3','sifra 3');
 insert into specification values (503,'iritacija sinusa','sastojak 13',2,'sastav 4','sifra 4');
 insert into specification values (504,'nema','sastojak 4',9,'sastav 5','sifra 5');
+
+insert into specification values (505,'Lose po dijabeticare.','sastojak 4',9,'sastav 1','sifra 6');
+insert into specification values (506,'nema','sastojak 4',9,'sastav 2','sifra 7');
+insert into specification values (507,'Ne znamo.','sastojak 4',9,'sastav 32','sifra 8');
+insert into specification values (508,'Moguce povracanje','sastojak 4',9,'sastav 43','sifra 9');
+insert into specification values (509,'Prekomerno spavanje.','sastojak 4',1,'sastav 25','sifra 10');
+
 
 
 #ingredient
@@ -372,9 +413,6 @@ insert into work_time values(545,'2021-07-28','19:00:00','06:30:00',503,502);
 insert into work_time values(546,'2021-07-28','19:00:00','06:30:00',503,502);
 insert into work_time values(547,'2021-07-29','19:00:00','06:30:00',503,502);
 
-
-
-
 #work_timelimit
 #farmaceut 506
 insert into work_time values(570,'2021-07-22','19:00:00','06:30:00',504,506);
@@ -388,14 +426,7 @@ insert into work_time values(575,'2021-07-28','19:00:00','06:30:00',504,506);
 insert into work_time values(576,'2021-07-28','19:00:00','06:30:00',504,506);
 insert into work_time values(577,'2021-07-29','19:00:00','06:30:00',504,506);
 
-
-
-
-
-
-
-
-insert into examination values(550,false,'2020-05-20','09:00:00',true,null,600,'info1','08:00:00','FINISHED','DERMATOLOGIST_EXAMINATION',508,501,501,null);insert into examination values(550,false,'2020-05-20','09:00:00',true,600,'info1','08:00:00','FINISHED','DERMATOLOGIST_EXAMINATION',508,501,501,null);
+insert into examination values(550,false,'2020-05-20','09:00:00',true,null,600,'info1','08:00:00','FINISHED','DERMATOLOGIST_EXAMINATION',508,501,501,null);
 
 insert into examination values(551,false,'2020-05-23','11:00:00',true,null,880,'info2','09:30:00','FINISHED','DERMATOLOGIST_EXAMINATION',508,501,504,501);
 insert into examination values(553,false,'2020-01-20','09:00:00',true,null,600,'info1','08:00:00','FINISHED','DERMATOLOGIST_EXAMINATION',507,501,501,null);
@@ -417,5 +448,4 @@ insert into examination values(542,false,'2021-08-28','12:00:00',false,null,1050
 insert into examination values(503,false,'2021-07-22','11:00:00',false,null,880,'info2','09:30:00','CREATED','PHARMACIST_EXAMINATION',null,503,502,null);
 insert into examination values(1,false,'2021-07-22','11:00:00',false,null,880,'info2','09:30:00','CREATED','PHARMACIST_EXAMINATION',null,504,506,null);
 
-
-
+insert into loyality_program value(1, '2021-09-01',1,10,15,20,10,20,30)

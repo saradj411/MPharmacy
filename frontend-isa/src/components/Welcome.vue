@@ -4,15 +4,6 @@
   <div  id="registration" style="background-image: url(https://image.freepik.com/free-photo/pharmacists-showing-medicine-bottle-discussing-prescription-drug-pharmacy_8087-2630.jpg);background-repeat: no-repeat;
   background-size: 150% 111%;  height: 1100px">
 
-<div  style="background: #B0B3D6; height: 70px; margin-top: 10px">
-
- <button class = "btn btn-primary btn-xs" style="margin:auto; margin-left:38px;background:#474A8A " v-on:click = "profileDermatologist">Profil dermatologa</button>
- <button class = "btn btn-primary btn-xs" style="margin:auto; margin-left:38px;background:#474A8A " v-on:click = "profilePharmacist">Profil farmaceuta</button>
- <button class = "btn btn-primary btn-xs" style="margin:auto; margin-left:38px;background:#474A8A " v-on:click = "profileAdmin" >Profil administratora apoteke</button>
-
-<button class = "btn btn-primary btn-xs" style="margin:auto; margin-left:38px;background:#474A8A " v-on:click = "profilePatient" >Patient profil</button>
-
-</div>
    <div style="background: #B0B3D6; height: 70px; margin-top: 10px">
 
       <span style="float:left; margin: 15px;">
