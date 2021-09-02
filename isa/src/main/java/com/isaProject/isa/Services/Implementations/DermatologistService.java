@@ -20,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.mail.MessagingException;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -37,7 +38,8 @@ public class DermatologistService implements IDermatologistService {
     DermatologistRepository dermatologistRepository;
     @Autowired
      PasswordEncoder passwordEncoder;
-
+@Autowired
+ServiceForEmail serviceForEmail;
     @Autowired
      AuthorityService authService;
      @Autowired
@@ -148,41 +150,6 @@ može obrisati)
     @Override
     public String delete(Dermatologist dermatologist, Integer idPharm) {
         String message = "";
-
-/*
-        if(examinationService.getExaminationByIdStaff(dermatologist.getId())){
-            dermatologistRepository.delete(dermatologist);
-            return  "Dermatoloist is  deleted!";
-
-        }
-
-
-        for (Examination examination : examinationRepository.findAll()) {
-            if (examination.getScheduled()){
-
-            }else {
-                if(examination.getStaff().getId().equals(dermatologist.getId())){
-                    if(examination.getType().equals(ExaminationType.DERMATOLOGIST_EXAMINATION)){
-                        dermatologistRepository.delete(dermatologist);
-
-                        for (WorkTime workTimeDermatologist : workTimeRepository.findAll()) {
-                            if (workTimeDermatologist.getStaff().getId() == dermatologist.getId()) {
-                                workTimeRepository.delete(workTimeDermatologist);
-
-                            }
-                        }
-                        message = "Dermatoloist is deleted!";
-
-                    }
-                }
-            }
-
-
-
-
-        }
-        */
-
         Staff staff=staffRepository.getOne(dermatologist.getId());
         Pharmacy p=pharmacyService.findById(idPharm);
         List<Examination>lista=examinationRepository.findAll();
@@ -195,8 +162,6 @@ može obrisati)
         if (newList.size()==0){
             message="The dermatologist was not deleted because he has an appointment ";
         }else {
-
-
             //obrisi sve examinationse.
             for (Examination e:examinationRepository.findAll()) {
                 if (e.getStaff().getId().equals(dermatologist.getId())) {
@@ -208,67 +173,62 @@ može obrisati)
                         e.setPrice(0.0);
                         dermatologist.getExaminations().remove(e);
                         examinationRepository.delete(e);
-
-
                     }
                 }
-
-
             }}
         dermatologist.getPharmacies().remove(p);
-
         dermatologistRepository.save(dermatologist);
         message="The dermatologist was deleted ";
-
-
-
-
-
-
-
         return message;
-
-
     }
-
-
 
     @Override
     public Dermatologist findById(Integer id) {
-        //veki skontalaaa
         Dermatologist dermatologist=dermatologistRepository.findById(id).get();
         return dermatologist;
     }
 
     @Override
     public List<Dermatologist> findAll() {
-
         return dermatologistRepository.findAll();
     }
 
     @Override
-    public Dermatologist save(DermDTO dermatologist) {
-        return null;
-    }
+    public Dermatologist save(DermDTO dermDTO) throws MessagingException {
+        System.out.println("Usao u servis");
+        List<Authority> auth = authService.findByname("ROLE_DERMATOLOGIST");
+        for(User d : userRepository.findAll())
+        {
+            if(d.getEmail().equals(dermDTO.getEmail())) {
+                System.out.println("nasaoistog");
+                return null;
+            }
+        }
 
+        Dermatologist d = new Dermatologist();
+        d.setName(dermDTO.getName());
+        d.setSurname(dermDTO.getSurname());
+        d.setEmail(dermDTO.getEmail());
+        String pass = "123";
+        d.setPassword(passwordEncoder.encode(pass));
+        d.setAddress(dermDTO.getAddress());
+        d.setPhoneNumber(dermDTO.getPhoneNumber());
+        d.setCity(dermDTO.getCity());
+        d.setCountry(dermDTO.getCountry());
+        d.setAuthorities(auth);
+        d.setAccountEnabled(false);
+
+        d.setAvgGrade(dermDTO.getAvgGrade());
+        serviceForEmail.sendRegistrationEmail(d.getEmail(), d.getName(), d.getSurname());
+        Dermatologist newUser = dermatologistRepository.save(d);
+
+        return newUser;
+    }
 
     @Override
     public Set<PatientDTO> findAllPatients(Integer id) {
-        /*//proslijedim id dermatologa
-        List<Examination> examinations=examinationRepository.findAll();
-        List<Patient> patients=new ArrayList<>();
-        for (Examination e:examinations){
-            if(e.getStaff().getIdUser().equals(id)){
-                System.out.println("Pacijent je :" +e.getPatient().getName());
-                //nasla pregled proslijedjenog dermatologa
-                patients.add(e.getPatient());
-            }
-        }
-        return patients;*/
         Set<PatientDTO> patients=new HashSet<>();
-
         List<Examination>list=examinationRepository.find(id);
-
         System.out.println("Stampa id "+id);
         for(Examination l:list){
             System.out.println("Pacijent je "+ l.getPatient().getName());
@@ -278,8 +238,6 @@ može obrisati)
         }
         return  patients;
     }
-
-
 
     public Dermatologist save(DermatologistDTO dermDTO) {
         System.out.println("Usao u servis");
@@ -308,42 +266,6 @@ može obrisati)
         d.setAvgGrade(dermDTO.getAvgGrade());
 
         User newUser = userRepository.save(d);
-
-       /* if(dermDTO.getDate() != null
-                && dermDTO.getStartTime() != null
-                && dermDTO.getEndTime() != null
-                && dermDTO.getPharmacyID() != null)
-        {
-            Pharmacy pharmacy = pharmacyService.findById(dermDTO.getPharmacyID());
-            Staff staff = staffRepository.getOne(newUser.getId());
-
-            HashSet<WorkTime> workTimeList = new HashSet<WorkTime>();
-            HashSet<Pharmacy> pharmacies = new HashSet<Pharmacy>();
-            pharmacies.add(pharmacy);
-
-            WorkTimeDTO workTimeDTO = new WorkTimeDTO();
-            LocalDate date = (dermDTO.getDate());
-                    /*.toInstant()
-                    .atZone(ZoneId.systemDefault())
-                    .toLocalDate();
-*/
-
-        /*    workTimeDTO.setDate(date);
-            workTimeDTO.setStartTime(dermDTO.getStartTime());
-            workTimeDTO.setEndTime(dermDTO.getEndTime());
-            workTimeDTO.setStaff(staff);
-            workTimeDTO.setPharmacy(pharmacy);
-
-            d.setPharmacies(pharmacies);
-
-            WorkTime workTime = workTimeService.save(workTimeDTO);
-
-            workTimeList.add(workTime);
-            d.setWorkTime(new HashSet<WorkTime>());
-
-            return d;
-        }*/
-
         return d;
     }
 

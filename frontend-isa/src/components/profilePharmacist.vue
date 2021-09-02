@@ -28,11 +28,15 @@
                   <button class = "btn btn-primary btn-xs" style="margin:auto; margin-left:38px;background:#474A8A" v-on:click = "inssuing">Issuing the reserved drug</button>
                      </span>
                      <span style="float: left; margin-top: 20px;">
+                     <button class = "btn btn-primary btn-xs" style="margin:auto; margin-left:38px;background:#474A8A" v-on:click = "ShowAllDrugs">Show All Drugs</button>
+                     </span>
+                     <span style="float: left; margin-top: 20px;">
                   <button class = "btn btn-primary btn-xs" style="margin:auto; margin-left:38px;background:#474A8A" v-on:click = "erec">Create eRecepie</button>
                      </span>
 <span style="float: left; margin-top: 20px;">
                   <button class = "btn btn-primary btn-xs" style="margin:auto; margin-left:38px;background:#474A8A" v-on:click = "logOut">Log out</button>
                      </span>
+                     
 
                      
                 <span style="float: left; margin-top: 20px;">
@@ -177,6 +181,11 @@ export default {
          window.location.href = "/";
 
       },
+       ShowAllDrugs: function()
+        {
+             window.location.href = '/AllDrugs/' + this.id;
+               
+        },
         
 }
 }

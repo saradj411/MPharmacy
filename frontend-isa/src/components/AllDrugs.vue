@@ -22,29 +22,30 @@
       </div>
   </div>
                 </div>
+                
                 <div class="container" style="margin-top:10px;">
-                <div class="row">
-                    <div class="col-sm"> <button class = "btn btn-primary btn-xs"                      
-                        style="margin:auto; background: #000; width: 200px;" v-on:click="filter('gradeAsc')" > Grade ascending </button>
-                 
-  
+                    <div class="row">
+                        <div class="col-sm"> <button class = "btn btn-primary btn-xs"                      
+                            style="margin:auto; background: #000; width: 200px;" v-on:click="filter('gradeAsc')" > Grade ascending </button>
+                    
+    
+                        </div>
+                        <div class="col-sm">
+                        <button class = "btn btn-primary btn-xs"                     
+                            style="margin:auto; background: #000; width: 200px;"
+                            v-on:click="filter('gradeDesc')" > Grade descendign </button>
+                    
+                        </div>
+                        <div class="col-sm"> <button class = "btn btn-primary btn-xs"                     
+                            style="margin:auto; background: #000; width: 200px;"
+                            v-on:click="filter('drugTypeAsc')" > Drug type ascending </button>
+                        </div>
+                        <div class="col-sm">
+                        <button class = "btn btn-primary btn-xs"                     
+                            style="margin:auto; background: #000; width: 200px;"
+                            v-on:click="filter('drugTypeDesc')" > Drug type descendign </button>
+                        </div>
                     </div>
-                    <div class="col-sm">
-                    <button class = "btn btn-primary btn-xs"                     
-                        style="margin:auto; background: #000; width: 200px;"
-                         v-on:click="filter('gradeDesc')" > Grade descendign </button>
-                 
-                    </div>
-                    <div class="col-sm"> <button class = "btn btn-primary btn-xs"                     
-                        style="margin:auto; background: #000; width: 200px;"
-                         v-on:click="filter('drugTypeAsc')" > Drug type ascending </button>
-                    </div>
-                    <div class="col-sm">
-                     <button class = "btn btn-primary btn-xs"                     
-                        style="margin:auto; background: #000; width: 200px;"
-                         v-on:click="filter('drugTypeDesc')" > Drug type descendign </button>
-                    </div>
-                </div>
                 </div>
 <!-- PROBA -->
     <div class="" style="width: 500px; margin: 10px; display: inline-table" v-for="drug in this.drugs" v-bind:key="drug.idDrug">

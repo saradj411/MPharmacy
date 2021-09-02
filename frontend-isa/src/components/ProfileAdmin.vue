@@ -201,14 +201,15 @@ export default {
              name: "",
              address: "",
              description: "opis 1",
-             avgGrade :""
+             avgGrade :"",
+             id : this.$route.params.id,
 
     }
     }
   },
   
   mounted() {
-        this.axios.get('/adminstrator/findById/'+503,{ 
+        this.axios.get('/adminstrator/findById/'+this.id,{ 
              
          }).then(response => {
                this.user=response.data;
@@ -217,13 +218,13 @@ export default {
                        alert("ne valja.");
                        console.log(res);
         });
-        this.axios.get('/adminstrator/findPharm/'+503,{ 
+        this.axios.get('/adminstrator/findPharm/'+this.id,{ 
              
          }).then(response => {
                this.pharmacy=response.data;
 
          }).catch(res => {
-                       alert("ne valja.");
+                      // alert("ne valja.");
                        console.log(res);
         });
         

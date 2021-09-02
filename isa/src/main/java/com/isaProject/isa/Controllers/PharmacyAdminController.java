@@ -20,6 +20,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.mail.MessagingException;
 import java.util.*;
 
 @RestController
@@ -111,8 +112,7 @@ koji su unapred definisani.
 
     @PostMapping(value = "/savePharmacyAdmin", consumes={"application/json"})
     @PreAuthorize("hasRole('ADMIN')")
-    ResponseEntity<PharmacyAdmin> update(@RequestBody PharmacyAdminDTO pharmacyAdminDTO)
-    {
+    ResponseEntity<PharmacyAdmin> update(@RequestBody PharmacyAdminDTO pharmacyAdminDTO) throws MessagingException {
         PharmacyAdmin pharmAdmin = pharmacyAdminService.save(pharmacyAdminDTO);
         return pharmAdmin != null ? new ResponseEntity<>(pharmAdmin, HttpStatus.CREATED)
         : new ResponseEntity<>(HttpStatus.BAD_REQUEST);

@@ -306,7 +306,7 @@ export default{
                    window.location.href = '/SystemAdminProfile/'+this.id;                    
                 }).catch(res => {
                     alert(res.response.data);                    
-                   console.log(res.response);
+                   console.log(res.response.data);
                 });    
 
             }

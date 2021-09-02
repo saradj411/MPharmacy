@@ -141,6 +141,7 @@ public class UserController {
 
     }
 
+
     @PostMapping(value =  "/updateUser")
     @PreAuthorize("hasRole('SUPPLIER') or hasRole('PATIENT') or hasROLE('ADMIN')")
     public ResponseEntity<User> update(@RequestBody User user) throws MessagingException {

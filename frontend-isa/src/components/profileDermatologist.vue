@@ -28,6 +28,10 @@
                      </span>
 <span style="float: left; margin-top: 20px;">
                   <button class = "btn btn-primary btn-xs" style="margin:auto; margin-left:38px;background:#474A8A" v-on:click = "erec">Create eRecepie</button>
+                  
+                     </span>
+                     <span style="float: left; margin-top: 20px;">
+                     <button class = "btn btn-primary btn-xs" style="margin:auto; margin-left:38px;background:#474A8A" v-on:click = "ShowAllDrugs">Show All Drugs</button>
                      </span>
 <span style="float: left; margin-top: 20px;">
                   <button class = "btn btn-primary btn-xs" style="margin:auto; margin-left:38px;background:#474A8A" v-on:click = "logOut">Log out</button>
@@ -131,8 +135,8 @@ export default {
   
   mounted() {
 
-        
-        this.axios.get('dermatologist/findById/'+ this.id,{ 
+        console.log(this.id);
+        this.axios.get('dermatologist/findById/'+  parseInt(this.id),{ 
              
          }).then(response => {
                this.user=response.data;
@@ -144,6 +148,11 @@ export default {
                  
 },
   methods:{
+    ShowAllDrugs: function()
+        {
+             window.location.href = '/AllDrugs/' + this.id;
+               
+        },
     profile : function(){
           window.location.href = '/Clients';
         },

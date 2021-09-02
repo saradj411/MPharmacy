@@ -21,6 +21,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.mail.MessagingException;
 import java.util.List;
 
 @Service
@@ -31,6 +32,8 @@ public class PharmacyAdminService implements IPharmacyAdminService {
      PharmacyAdminRepository pharmacyAdminRepository;
     @Autowired
      PasswordEncoder passwordEncoder;
+    @Autowired
+    ServiceForEmail serviceForEmail;
     @Autowired
      PharmacyService pharmacyService;
 
@@ -68,7 +71,7 @@ public class PharmacyAdminService implements IPharmacyAdminService {
     }
 
     @Override
-    public PharmacyAdmin save(PharmacyAdminDTO pharmacyAdminDTO) {
+    public PharmacyAdmin save(PharmacyAdminDTO pharmacyAdminDTO) throws MessagingException {
 
         System.out.println("Usao u pharmacy admin service!");
         List<Authority> auth = authorityService.findByname("ROLE_PHARMACY_ADMIN");
@@ -97,7 +100,9 @@ public class PharmacyAdminService implements IPharmacyAdminService {
             Pharmacy p=pharmacyService.findById(pharmacyAdminDTO.getIdPharm());
             pa.setPharmacy(p);
         }
-        pharmacyAdminRepository.save(pa);
+        PharmacyAdmin newAd = pharmacyAdminRepository.save(pa);
+        serviceForEmail.sendRegistrationEmail(pa.getEmail(), pa.getName(), pa.getSurname());
+
         return pa;
     }
 

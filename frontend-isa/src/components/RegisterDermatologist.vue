@@ -82,7 +82,7 @@
                 <br>
             </table>
 
-            <div class="workTime">
+            <!--<div class="workTime">
             <h1>Work time (Optional): </h1>
             <br>
                     <table id="loginTable">
@@ -116,10 +116,11 @@
                     
                     </table>
                     <br>
-                    <button class = "btn btn-primary btn-xs" :disabled="!name || !surname || !email || !address || !phoneNumber || !city
+                   
+            </div>-->
+             <button class = "btn btn-primary btn-xs" :disabled="!name || !surname || !email || !address || !phoneNumber || !city
                     || !country || !avgGrade"    style="margin:auto; margin-left:38px;background: #000;margin-top: 10px; width: 200px;" v-on:click="registerDerm">Confirm</button>
                 
-            </div>
         </div>
     </div>
 </div>
@@ -209,8 +210,7 @@ export default{
                 headers: 
                 {
                     'Authorization': `Bearer ` + localStorage.getItem('accessToken'),
-                    'Expires' : localStorage.getItem('expiresIn'),
-                    'Content-Type' : 'application/json'
+                
                 }}).then(response => 
                 {
                     alert("Successfully registered new dermatologist.");
@@ -218,9 +218,9 @@ export default{
                     this.$router.push('/SystemAdminProfile/'+this.id);                    
                 }).catch(res => {
                     console.log(res.response.data.message);
-                    alert("Greska. Proverite podatke.");
+                    alert(res.response.data);
                     
-                });                     
+                });                    
        }                        
     },
     mounted()

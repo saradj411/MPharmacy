@@ -69,7 +69,7 @@ import LoyalityProgram from '../components/LoyalityProgram'
 import AllDrugs from '../components/AllDrugs'
 import createERecepie from '../components/createERecepie'
 import eRecepieBuy from '../components/eRecepieBuy'
-
+import AddSystemAdminPage from '../components/AddSystemAdminPage'
 import moment from 'moment'
 
 
@@ -455,6 +455,12 @@ const routes = [
         path: '/eRecepieBuy/:id/:idRec',
         name: 'eRecepieBuy',
         component: eRecepieBuy
+
+      },
+      {
+        path: '/AddSystemAdminPage/:id',
+        name: 'AddSystemAdminPage',
+        component: AddSystemAdminPage
 
       },
 

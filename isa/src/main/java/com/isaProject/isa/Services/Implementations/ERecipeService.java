@@ -300,6 +300,7 @@ public class ERecipeService implements IERecipeService {
             }
         }
         eRecipe.setPharmacy(pharmacyService.findById(idPharamcy));
+        eRecipe.setStatus(ERecipeStatus.PROCESSED);
         serviceForEmail.sendERecepieVerification(eRecipe.getPatient(),pharmacyService.findById(idPharamcy));
         eRecipeRepository.save(eRecipe);
         return  true;

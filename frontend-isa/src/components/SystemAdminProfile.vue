@@ -56,7 +56,7 @@
           },
         AddSystemAdminPage: function()
         {
-            this.$router.push('/RegisterNewPharmacy/' + this.id);
+            this.$router.push('/AddSystemAdminPage/' + this.id);
         },
         AddDermatologistPage: function()
         {

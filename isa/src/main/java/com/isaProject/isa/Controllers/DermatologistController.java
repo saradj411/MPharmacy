@@ -18,6 +18,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
+import javax.mail.MessagingException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -27,7 +28,7 @@ import java.util.Set;
 //produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE
 @RestController
 @CrossOrigin
-@RequestMapping(value="/dermatologist", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value="/dermatologist")
 @Slf4j
 public class DermatologistController {
 
@@ -308,10 +309,9 @@ Ukoliko se korisnik ne pojavi na pregledu, dobija 1 penal.
 
     }
 
-    @PostMapping(value = "/saveDermatologist", consumes={"application/json"})
+    @PostMapping(value = "/saveDermatologist")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<Dermatologist> saveDermatologist(@RequestBody DermDTO dermDTO)
-    {
+    public ResponseEntity<Dermatologist> saveDermatologist(@RequestBody DermDTO dermDTO) throws MessagingException {
         System.out.println("Usao " + dermDTO.getName());
         Dermatologist d = dermatologistService.save(dermDTO);
         return d == null ? new ResponseEntity("Account with this email aleray exists!", HttpStatus.BAD_REQUEST)

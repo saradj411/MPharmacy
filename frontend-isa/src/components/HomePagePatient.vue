@@ -19,6 +19,7 @@
            
            <button class="btn btn-danger btn-lg" style="float:left;margin-top:15px;margin-left:10px" v-on:click = "showMarks">Grades</button>
             <button class="btn btn-danger btn-lg" style="float:left;margin-top:15px;margin-left:10px" v-on:click = "writeComplaint">Complaint</button>
+            <button class="btn btn-danger btn-lg" style="float:left;margin-top:15px;margin-left:10px" v-on:click = "ShowAllDrugs">Show all drugs</button>
             
             <button class="btn btn-danger btn-lg" style="float:left;margin-top:15px;margin-left:10px" v-on:click = "logOut">Log out</button>
            
@@ -1007,7 +1008,7 @@ export default {
                 this.pharmacies = response.data;
                 
          }).catch(res => {
-                alert("Nesto ne valja");
+                alert("Nesto ne valja pharmacy find all");
                 console.log(res);
         });
 
@@ -1017,7 +1018,7 @@ export default {
                 this.pharmacies1 = response.data;
                 
          }).catch(res => {
-                alert("Nesto ne valja");
+                alert("Nesto ne valja findActionPharmacy");
                 console.log(res);
         });
 
@@ -1027,7 +1028,7 @@ export default {
                 this.reservations = response.data;
                 
          }).catch(res => {
-                alert("Nesto ne valja");
+                alert("Nesto ne valja reservation/findById");
                 console.log(res);
         });
 
@@ -1036,7 +1037,7 @@ export default {
                 this.pickedReservations = response.data;
                 
          }).catch(res => {
-                alert("Nesto ne valja");
+                alert("Nesto ne valja /reservation/findPickedById");
                 console.log(res);
         });
         this.axios.get('/reservation/findCanceledById/'+this.id)
@@ -1044,7 +1045,7 @@ export default {
                 this.canceledReservations = response.data;
                 
          }).catch(res => {
-                alert("Nesto ne valja");
+                alert("Nesto ne valja reservation/findCanceledById");
                 console.log(res);
         });
          this.axios.get('/patient/findSheduledDermatologistExamination/'+this.id)
@@ -1052,7 +1053,7 @@ export default {
                 this.dermatologistScheduledExamination = response.data;
                 
          }).catch(res => {
-                alert("Nesto ne valja");
+                alert("Nesto ne valja patient/findSheduledDermatologistExamination");
                 console.log(res);
         });
          this.axios.get('/patient/findSheduledPharmacistExamination/'+this.id)
@@ -1060,7 +1061,7 @@ export default {
                 this.pharmacistScheduledExamination= response.data;
                 
          }).catch(res => {
-                alert("Nesto ne valja");
+                alert("Nesto ne valj a patient/findSheduledPharmacistExamination");
                 console.log(res);
         });
 
@@ -1069,7 +1070,7 @@ export default {
                 this.dermatologistFinishedExamination = response.data;
                 
          }).catch(res => {
-                alert("Nesto ne valja");
+                alert("Nesto ne valja findFinishedDermatologistExamination");
                 console.log(res);
         });
          this.axios.get('/patient/findFinishedPharmacistExamination/'+this.id)
@@ -1077,7 +1078,7 @@ export default {
                 this.pharmacistFinishedExamination= response.data;
                 
          }).catch(res => {
-                alert("Nesto ne valja");
+                alert("Nesto ne valja findFinishedPharmacistExamination");
                 console.log(res);
         });
 
@@ -1094,7 +1095,7 @@ export default {
                 this.dermatologistCreatedExamination= response.data;
                 
          }).catch(res => {
-                alert("Nesto ne valja");
+                alert("Nesto ne valja findCreatedPharmacistExamination ");
                 console.log(res);
         });
         this.axios.get('/pharmacyDrugs/getAll')
@@ -1111,7 +1112,7 @@ export default {
                 this.dermatologistGrades = response.data;
                 
          }).catch(res => {
-                alert("Nesto ne valja");
+                alert("Nesto ne valja findDermatologistForGrade");
                 console.log(res);
         });
          this.axios.get('/grade/findPharmacistForGrade/'+this.id)
@@ -1119,25 +1120,25 @@ export default {
                 this.pharmacistGrades = response.data;
                 
          }).catch(res => {
-                alert("Nesto ne valja");
+                alert("Nesto ne valja findPharmacistForGrade");
                 console.log(res);
         });
 
-         this.axios.get('/grade/findPharmaciesForGrade/'+this.id)
+         this.axios.get('/grade/findPharmaciesForGrade/'+this.id) //DRUGI ALERT
         .then(response => {
                 this.pharmacyGrade = response.data;
                 
          }).catch(res => {
-                alert("Nesto ne valja");
+                alert("Nesto ne valja findPharmaciesForGrade" );
                 console.log(res);
         });
 
-         this.axios.get('/grade/findDrugsForGrade/'+this.id)
+         this.axios.get('/grade/findDrugsForGrade/'+this.id) //PRVA GRESKA
         .then(response => {
                 this.drugGrades = response.data;
                 
          }).catch(res => {
-                alert("Nesto ne valja");
+                alert("Nesto ne valja findDrugsForGrade");
                 console.log(res);
         });
       this.axios.get('/patient/moreThan3/'+this.id)
@@ -1145,7 +1146,7 @@ export default {
                 this.moze = response.data;
                 console.log(this.moze)
          }).catch(res => {
-                alert("Nesto ne valja");
+                alert("Nesto ne valja patient/moreThan3");
                 console.log(res);
         });
               
@@ -1543,7 +1544,11 @@ methods:{
               
           })
       },
-      
+      ShowAllDrugs: function()
+        {
+             window.location.href = '/AllDrugs/' + this.id;
+               
+        },
       searchFreePharmacy: function(date,time){
         if(this.date===null){
           console.log("ssaa",this.date)

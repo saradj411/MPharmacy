@@ -120,21 +120,19 @@ public class UserService implements IUserService {
             if(u.getEmail().equals(userDTO.getEmail()))
                 return null;
         }
-        String newPassword = "SRECKOSOJIC";
 
-        System.out.println("Lozinka: " + newPassword );
         User u = new User();
         u.setName(userDTO.getName());
         u.setSurname(userDTO.getSurname());
         u.setEmail(userDTO.getEmail());
-        u.setPassword(passwordEncoder.encode(newPassword));
+        u.setPassword(passwordEncoder.encode("123"));
         u.setAddress(userDTO.getAddress());
         u.setPhoneNumber(userDTO.getPhoneNumber());
         u.setCity(userDTO.getCity());
         u.setCountry(userDTO.getCountry());
         u.setAccountEnabled(false);
         u.setAuthorities(auth);
-        //serviceForEmail.sendEmailForPasswordChange(userDTO.getEmail(),newPassword);
+
 
         return userRepository.save(u);
     }

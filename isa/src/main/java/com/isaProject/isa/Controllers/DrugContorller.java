@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.websocket.server.PathParam;
 import java.util.List;
+import java.util.Locale;
 
 @RestController
 @CrossOrigin
@@ -106,7 +107,7 @@ public class DrugContorller {
         System.out.println(drugAndSpec);
         for(Drug d : drugService.findAll())
         {
-            if(d.getName().equals(drugAndSpec.getName()))
+            if(d.getName().toLowerCase(Locale.ROOT).equals(drugAndSpec.getName().toLowerCase(Locale.ROOT)))
                 return new ResponseEntity<>("Drug with this name already exists!", HttpStatus.BAD_REQUEST);
         }
 

@@ -225,7 +225,8 @@ public class PatientService implements IPatientService {
 
         for(ERecipe er:eRecipes){
             if(er.getPatient().getId().equals(id)){
-                list.add(er.getPharmacy().getIdPharm());
+                if(er.getPharmacy() != null)
+                    list.add(er.getPharmacy().getIdPharm());
             }
         }
         return list;

@@ -6,6 +6,7 @@ import com.isaProject.isa.Model.Users.Dermatologist;
 import com.isaProject.isa.Model.Users.Patient;
 import com.isaProject.isa.Model.Users.WorkTime;
 
+import javax.mail.MessagingException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Date;
@@ -19,7 +20,7 @@ public interface IDermatologistService {
     Dermatologist findById(Integer id);
     List<Dermatologist> findAll ();
 
-    Dermatologist save(DermDTO dermatologist);
+    Dermatologist save(DermDTO dermatologist) throws MessagingException;
     //String delete(Dermatologist dermatologist);
     Set<PatientDTO> findAllPatients(Integer id) ;
 

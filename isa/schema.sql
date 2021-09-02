@@ -1,30 +1,42 @@
 
-insert into pharmacy values (501,'Detelinara',3.5,'Novi Sad',550,'Srbija','opis5','Jankovic',2, 21000, 'Street 2', 'Novi Sad');
-insert into pharmacy values (502,'Detelinara',3.5,'Novi Sad',600,'Srbija','opis5','Benu',2, 21000, 'Street 2', 'Novi Sad');
-insert into pharmacy values (503,'Detelinara',3.5,'Novi Sad',800,'Srbija','opis5','Zegin',2, 21000, 'Street 2', 'Novi Sad');
-insert into pharmacy values (504,'Detelinara',3.5,'Novi Sad',1050,'Srbija','opis5','Srbotrade',2, 21000, 'Street 2', 'Novi Sad');
-insert into pharmacy values (505,'Detelinara',3.5,'Novi Sad',1500,'Srbija','opis5','DedaPharm',2, 21000, 'Street 2', 'Novi Sad');
+insert into pharmacy values (501,'Novosadska 3',7,'Novi Sad',550,'Srbija','opis5','Jankovic',2, 21000, 'Street 2', 'Novi Sad');
+insert into pharmacy values (502,'Gagarinova 10',8,'Novi Sad',600,'Srbija','opis5','Benu',2, 21000, 'Street 2', 'Novi Sad');
+insert into pharmacy values (503,'Bore Stankovica 2',6,'Novi Sad',800,'Srbija','opis5','Zegin',2, 21000, 'Street 2', 'Novi Sad');
+insert into pharmacy values (504,'Knez Mihajlova 23',9,'Novi Sad',1050,'Srbija','opis5','Srbotrade',2, 21000, 'Street 2', 'Novi Sad');
+insert into pharmacy values (505,'Bore Petrovica 1',10,'Novi Sad',1500,'Srbija','opis5','DedaPharm',2, 21000, 'Street 2', 'Novi Sad');
 
 
 #drug
 insert into drug values (501,'sifra 1','tableta','TABLET',8,'proizvodjac 1','probiotik','nap1',10,true);
 insert into drug values (502,'sifra 2','kapsula','CAPSULE',6,'proizvodjac 2','paracetamol','nap2',20,true);
- insert into drug values (503,'sifra 3','tableta','TABLET',7,'proizvodjac 3','andol','nap1',10,false);
+insert into drug values (503,'sifra 3','tableta','TABLET',7,'proizvodjac 3','andol','nap1',10,false);
 insert into drug values (504,'sifra 4','kapsula','CAPSULE',5,'proizvodjac 4','ampril','nap13',15,true);
-insert into drug values (505,'sifra 5','prasak','INJECTION',8,'proizvodjac 5','aspirin','nap3',12,false);
+insert into drug values (505,'sifra 5','prasak','INJECTION',8,'proizvodjac 5','aspirin','nap3',12,true);
 insert into drug values (506,'sifra 6','tableta','TABLET',10,'proizvodjac 6','brufen','naa',22,false);
 insert into drug values (507,'sifra 7','sprej','GEL',7,'proizvodjac 7','mometazonfuorat','nap1',10,true);
+insert into drug values (508,'sifra 8','kapsula','CAPSULE',3,'proizvodjac 8','gentamicin','nap34',5,true);
+
+
+
 #pharmacy_drugs
+#id_quantity_idDrug_idPharmacy
     insert into pharmacy_drugs values (501,50,503,503);
     insert into pharmacy_drugs values (502,8,504,501);
     insert into pharmacy_drugs values (503,6,505,503);
     insert into pharmacy_drugs values (504,90,506,504);
     insert into pharmacy_drugs values (505,3,507,502);
-    insert into pharmacy_drugs values (506,5,503,503);
-    insert into pharmacy_drugs values (507,8,504,502);
-    insert into pharmacy_drugs values (508,8,507,501);
-    insert into pharmacy_drugs values (509,8,507,504);
-    insert into pharmacy_drugs values (510,8,507,502);
+    insert into pharmacy_drugs values (506,5,503,501);
+    insert into pharmacy_drugs values (507,8,504,502);    
+    insert into pharmacy_drugs values (508,8,507,501);        
+    insert into pharmacy_drugs values (520,6,506,501);
+    insert into pharmacy_drugs values (511,30,508,502);
+    insert into pharmacy_drugs values (512,15,508,504);
+    insert into pharmacy_drugs values (514,12,507,504);
+    insert into pharmacy_drugs values (515,40,501,501);  
+    insert into pharmacy_drugs values (516,3,501,503);        
+    insert into pharmacy_drugs values (517,30,502,503);
+    insert into pharmacy_drugs values (518,22,502,504);
+    insert into pharmacy_drugs values (519,21,503,504);
 
 #altervnative_drugs
     insert into alternative_drug values (505,501);
@@ -36,7 +48,6 @@ insert into drug values (507,'sifra 7','sprej','GEL',7,'proizvodjac 7','mometazo
     insert into alternative_drug values (506,501);
     insert into alternative_drug values (506,504);
 
-
 #drug_pricelist
     #id,end,price,start,drug_id,pharmacy_id
 
@@ -47,31 +58,39 @@ insert into drug values (507,'sifra 7','sprej','GEL',7,'proizvodjac 7','mometazo
     insert into drug_pricelist values (505,'2021-12-01',300,'2020-04-07',507,502);
     insert into drug_pricelist values (506,'2021-09-09',280,'2020-04-01',503,501);
     insert into drug_pricelist values (507,'2021-11-01',300,'2020-07-07',504,502);
-insert into drug_pricelist values (510,'2021-11-01',286,'2020-07-07',506,501);
-insert into drug_pricelist values (509,'2021-11-01',300,'2020-07-07',507,501);
+    insert into drug_pricelist values (510,'2021-11-01',286,'2020-07-07',506,501);
+    insert into drug_pricelist values (509,'2021-11-01',300,'2020-07-07',507,501);
+    insert into drug_pricelist values (510,'2021-11-01',500,'2020-08-01',508,502);
+    insert into drug_pricelist values (509,'2021-11-01',300,'2020-08-11',508,504);
+    insert into drug_pricelist values (509,'2021-11-01',260,'2020-08-20',507,504);
+    insert into drug_pricelist values (509,'2021-09-01',650,'2020-07-07',501,501);
+    insert into drug_pricelist values (509,'2021-12-01',301,'2020-08-03',501,503);
+    insert into drug_pricelist values (509,'2021-08-12',240,'2020-06-01',502,503);
+    insert into drug_pricelist values (509,'2021-11-10',100,'2020-08-17',502,504);
+    insert into drug_pricelist values (509,'2021-12-12',256,'2020-08-22',503,504);
+
 
 
 
 
  #user
     #id_user,address,city,country,email,name,password,phone_number,surname,avg,loyality,penali,points,id faarmacije u kojoj farmaceut radi,id apoteke za farmaceuta apoteke
-    insert into users values (501,1,'Deletinara','Novi Sad','Srbija','dermatologistpharmacy@gmail.com','Kristina','lozinka1','066589145','Mucibabic');
-    insert into users values (502,1,'Bulevar kneza Milosa','Novi Sad','Srbija','sara@gmail.com','Sara','lozinka2','066589111','Djuric');
-    insert into users values (503,1,'Bulevar oslobodjenja','Novi Sad','Srbija','vekim@gmail.com','Verica','lozinka3','066589335','Mucibabic');
-    insert into users values (504,1,'Cara Urosa','Novi Sad','Srbija','majam@gmail.com','Maja','lozinka4','066589335','Milenkovic');
-    insert into users values (505,1,'Bulevar cara Lazara','Novi Sad','Srbija','marija@gmail.com','Marija','lozinka5','066589935','Maric');
-    insert into users values (506,1,'Aleksa Santic','Novi Sad','Srbija','luka@gmail.com','Luka','lozinka6','066589011','Lukic');
-    insert into users values (507,1,'Apatinska','Novi Sad','Srbija','mika@gmail.com','Mika','lozinka7','066589331','Mikic');
-    insert into users values (508,1,'Backa','Novi Sad','Srbija','patient0874@gmail.com','Ana','lozinka8','066589371','Mikic');
-    insert into users values (509,1,'Cara Milosa','Novi Sad','Srbija','urosm@gmail.com','Uros','lozinka9','066589335','Milenkovic');
-    insert into users values (510,1,'Bulevar cara Lazara','Novi Sad','Srbija','luna@gmail.com','Luna','lozinka10','066589371','Mikic');
-    insert into users values (511,1,'Bulevar kneza Milosa','Novi Sad','Srbija','maki@gmail.com','Maki','lozinka11','066589111','Djuric');
-    insert into users values (333,1,'Bulevar kneza Milosa','Novi Sad','Srbija','pharmacistpharmacy33@gmail.com ','Sara','lozinka2','066589111','Djuric');
-    insert into users values (559,1,'Bulevar kneza Milosa','Novi Sad','Srbija','veki@gmail.com','Veki','pasword','066589111','V');
-    insert into users values (533,1,'Cara Milosa','Novi Sad','Srbija','ivanm@gmail.com','Ivan','lozinka9','066589335','Milenkovic');
+    insert into users values (501,1,'Deletinara','Novi Sad','Srbija','dermatologistpharmacy@gmail.com','Kristina','$2a$10$sqes3IpPL4mBgAAmimisyOWj5DlqPRndrJFNFw9zWiJjyNa5ozKS6','066589145','Mucibabic');
+    insert into users values (502,1,'Bulevar kneza Milosa','Novi Sad','Srbija','sara@gmail.com','Sara','$2a$10$sqes3IpPL4mBgAAmimisyOWj5DlqPRndrJFNFw9zWiJjyNa5ozKS6','066589111','Djuric');
+    insert into users values (503,1,'Bulevar oslobodjenja','Novi Sad','Srbija','vekim@gmail.com','Verica','$2a$10$sqes3IpPL4mBgAAmimisyOWj5DlqPRndrJFNFw9zWiJjyNa5ozKS6','066589335','Mucibabic');
+    insert into users values (504,1,'Cara Urosa','Novi Sad','Srbija','majam@gmail.com','Maja','$2a$10$sqes3IpPL4mBgAAmimisyOWj5DlqPRndrJFNFw9zWiJjyNa5ozKS6','066589335','Milenkovic');
+    insert into users values (505,1,'Bulevar cara Lazara','Novi Sad','Srbija','marija@gmail.com','Marija','$2a$10$sqes3IpPL4mBgAAmimisyOWj5DlqPRndrJFNFw9zWiJjyNa5ozKS6','066589935','Maric');
+    insert into users values (506,1,'Aleksa Santic','Novi Sad','Srbija','luka@gmail.com','Luka','$2a$10$sqes3IpPL4mBgAAmimisyOWj5DlqPRndrJFNFw9zWiJjyNa5ozKS6','066589011','Lukic');
+    insert into users values (507,1,'Apatinska','Novi Sad','Srbija','mika@gmail.com','Mika','$2a$10$sqes3IpPL4mBgAAmimisyOWj5DlqPRndrJFNFw9zWiJjyNa5ozKS6','066589331','Mikic');
+    insert into users values (508,1,'Backa','Novi Sad','Srbija','patient0874@gmail.com','Ana','loz$2a$10$sqes3IpPL4mBgAAmimisyOWj5DlqPRndrJFNFw9zWiJjyNa5ozKS6inka8','066589371','Mikic');
+    insert into users values (509,1,'Cara Milosa','Novi Sad','Srbija','urosm@gmail.com','Uros','$2a$10$sqes3IpPL4mBgAAmimisyOWj5DlqPRndrJFNFw9zWiJjyNa5ozKS6','066589335','Milenkovic');
+    insert into users values (510,1,'Bulevar cara Lazara','Novi Sad','Srbija','luna@gmail.com','Luna','$2a$10$sqes3IpPL4mBgAAmimisyOWj5DlqPRndrJFNFw9zWiJjyNa5ozKS6','066589371','Mikic');
+    insert into users values (511,1,'Bulevar kneza Milosa','Novi Sad','Srbija','maki@gmail.com','Maki','$2a$10$sqes3IpPL4mBgAAmimisyOWj5DlqPRndrJFNFw9zWiJjyNa5ozKS6','066589111','Djuric');
+    insert into users values (333,1,'Bulevar kneza Milosa','Novi Sad','Srbija','pharmacistpharmacy33@gmail.com ','Sara','$2a$10$sqes3IpPL4mBgAAmimisyOWj5DlqPRndrJFNFw9zWiJjyNa5ozKS6','066589111','Djuric');
+    insert into users values (559,1,'Bulevar kneza Milosa','Novi Sad','Srbija','veki@gmail.com','Veki','$2a$10$sqes3IpPL4mBgAAmimisyOWj5DlqPRndrJFNFw9zWiJjyNa5ozKS6','066589111','V');
+    insert into users values (533,1,'Cara Milosa','Novi Sad','Srbija','ivanm@gmail.com','Ivan','$2a$10$sqes3IpPL4mBgAAmimisyOWj5DlqPRndrJFNFw9zWiJjyNa5ozKS6','066589335','Milenkovic');
     insert into users values (512,1,'Gagarinova 3','Novi Sad','Srbija','majamilenkovic98@gmail.com','Dejan','$2a$10$sqes3IpPL4mBgAAmimisyOWj5DlqPRndrJFNFw9zWiJjyNa5ozKS6','066589371','Dekic');
-    insert into users values (111,1,'Gagarinova 3','Novi Sad','Srbija','majamilenkovic98@gmail.com','Niki','$2a$10$sqes3IpPL4mBgAAmimisyOWj5DlqPRndrJFNFw9zWiJjyNa5ozKS6','066589371','Nikic');
-    insert into users values (123,1,'Deletinara','Novi Sad','Srbija','supplierpharmacy33@gmail.com','Ivana','lozinka1','066589145','Mucibabic');
+    insert into users values (123,1,'Deletinara','Novi Sad','Srbija','supplierpharmacy33@gmail.com','Ivana','$2a$10$sqes3IpPL4mBgAAmimisyOWj5DlqPRndrJFNFw9zWiJjyNa5ozKS6','066589145','Mucibabic');
 
 
  #Authority_table
@@ -237,6 +256,7 @@ insert into action_patient_pharmacy values(510,501);
 
 insert into erecipe values(500,"12345",'2021-05-24','Ana',"NEW",'Mikic',508,501,511);
 insert into erecipe values(501,"12346",'2021-05-22','Ana',"NEW",'Mikic',508,501,511);
+
 
 insert into erecipe_drug values(500,"sifra 1",'probiotik',7,501);
 insert into erecipe_drug values(501,"sifra 2",'paracetamol',8,501);

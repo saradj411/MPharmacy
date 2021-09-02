@@ -1,9 +1,11 @@
 <template>
    <div >
     <div class="loginHolder">
-    <h1 >Register patient: </h1>
+    
     <br>
-        <div class="loginDiv">
+        <div class="userInfo">
+        <h1 >Register new admins: </h1>
+        <br>
             <table id="loginTable">
                 <tr>
                     <td><h4 > Name: </h4> </td>
@@ -55,19 +57,7 @@
                     <td>
                     <input type="text" v-model="country" :class="{'input--error':!country}"  class="form-control" placeholder="Enter country"  aria-label="Enter phone nubmer" aria-describedby="addon-wrapping">
                     </td>   
-                </tr>
-                 <tr>
-                    <td> <h4> Password: </h4> </td>
-                    <td>
-                    <input type="password" id="password" v-model="password" :class="{'input--error':!password}" class="form-control" placeholder="Enter password"  aria-label="Enter password" aria-describedby="addon-wrapping">
-                    </td>   
-                </tr>
-                 <tr>
-                    <td> <h4> Repeat password: </h4> </td>
-                    <td>
-                    <input type="Password" v-model="rePassword" :class="{'input--error':!rePassword}" class="form-control" placeholder="Enter password"  aria-label="Enter password" aria-describedby="addon-wrapping">
-                    </td>   
-                </tr>
+                </tr>                                 
                 <tr>
                     <td colspan="2">
                         <div id="errorMessage" > 
@@ -76,21 +66,25 @@
                         
                     </td>
                 </tr>
+                <br>
                 <tr>        
                     <td colspan="2">
-                        <button class = "btn btn-primary btn-xs"  :disabled="!name || !surname || !email || !address || !phoneNumber           || !city
-                        || !country || !password || (!rePassword)"  style="margin:auto; margin-left:38px;background: #000;margin-top: 10px; width: 200px;" v-on:click="registerPatient">Confirm</button>
-                    
+                        
                     </td>
                 
                 </tr>
+                <br>
             </table>
+           
+             <button class = "btn btn-primary btn-xs" :disabled="!name || !surname || !email || !address || !phoneNumber || !city
+                    || !country"    style="margin:auto; margin-left:38px;background: #000;margin-top: 10px; width: 200px;" v-on:click="regAdmin">Confirm</button>
+                
         </div>
     </div>
 </div>
 </template>
 <script> 
-import { required, sameAs } from 'vuelidate/lib/validators'
+import { required } from 'vuelidate/lib/validators'
 
 export default{
     data()
@@ -99,13 +93,20 @@ export default{
             name : "",
             surname : "",
             email : "",
-            password : "",
             address : "",
             phoneNumber : "",
             city : "",
-            country : "",
-            rePassword : "",
-            errorMessage : ""
+            country : "",  
+
+            date: "",
+            startTime: "",
+            endTime: "",          
+            staff: {},        
+            errorMessage : "",
+            pharmacyID: {},
+
+            id : this.$route.params.id,
+            pharmacies : []
 
         }
     },
@@ -131,73 +132,57 @@ export default{
         },
         country : {
             required            
-        },
-        password : {
-            required            
-        },
-        rePassword:
-        {
-            sameAsPassword: sameAs('password')
-        }
+        }        
 
 
     },
 
     methods:
     {
-        registerPatient : function()
-        {
-            alert("Please wait a few moments..");
-            console.log(this.name);
-            if(this.password != this.rePassword)
-            {
-                console.log("DAL RADI");
-                document.getElementById("errorMessage").innerHTML  = 'Password are not maching!';
-                document.getElementById("errorMessage").style = "font-size:20px; color: red;";
-                this.password = "";
-                this.rePassword = "";
-            }
-            else
-            { 
-                console.log("Prosao");
-                document.getElementById("errorMessage").innerHTML  = 'Succeseffully!';
-                const patientInfo = 
-            {
+        regAdmin : function()
+        {   
+                const admin = { 
+            
                 name : this.name,
                 surname : this.surname,
-                email : this.email,
-                password : this.password,
+                email : this.email,                
                 address : this.address,
                 phoneNumber : this.phoneNumber,
                 city : this.city,
-                country : this.country
-            }            
+                country : this.country,
+                          }
+            console.log( admin );
 
-            this.axios.post('patient/savePatient', patientInfo,
+            this.axios.post('user/saveAdmin', admin,
             {
                 headers: 
                 {
-                    
+                    'Authorization': `Bearer ` + localStorage.getItem('accessToken'),
+                
                 }}).then(response => 
                 {
-                    alert("Successfully registered new patient. Please check your email for verification!");
+                    alert("Successfully registered new admin.");
                     console.log(response.data);
-                    this.$router.push('/');
-                    //Odkomentarisati ovo kad se obavi verifikacija mejla
+                    this.$router.push('/SystemAdminProfile/'+this.id);                    
                 }).catch(res => {
-                    alert(res.response.data.message);
-                });     
-
-            }
-            
-
-              
-        }
+                    console.log(res.response.data.message);
+                    alert(res.response.data);
+                    
+                });                 
+       }                        
     },
     mounted()
     {
+        this.axios.get('/pharmacy/findAll')
+        .then(response => {
+                this.pharmacies = response.data;
+                
+         }).catch(res => {
+                alert("Apoteke nisu pronadjene!");
+                console.log(res);
+        });   
 
-    },
+    }
     
 }  
 </script>
@@ -211,15 +196,19 @@ export default{
     .loginHolder
     {
         margin: 0 auto;
-        margin-top: 100px;
+        margin-top: 80px;
     }
-    .loginDiv
+    .userInfo
     {
         margin: 0 auto;
         display: block;
         
         width: 600px;
-        height: 300px;
+        height: 450px;
+    }
+    .workTime
+    {
+
     }
     #loginTable
     {
