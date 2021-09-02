@@ -14,9 +14,6 @@ Verica Mucibabic-Student 3
 Maja Milenkovic-Student 4
 
 
-Napomena: Student 4 nije radio, tako da trenutno nema odradjen funkcionalan login, samim tim ni autorizacija.
-Kada se pokrene aplikacija na vrhu postoje dugmici preko kojih se dolazi na pocetnu stranicu svakog od korisnika.
-
 Mejlovi korisnika:
 
 Patient id 508: patient0874@gmail.com (lozinka: patient98)
@@ -87,7 +84,8 @@ username:root
 password:root
 
 Dodatne napomene:
-1. Potrebno je iskljuciti avast na par minuta ukoliok se koriste funckionlnosti gde se salje na mejl, jer antivirus iz nekog razloga to blokira.
+1. Potrebno je iskljuciti avast radi testiranja jer blokira slanje email-ova.
 2. https://myaccount.google.com/lesssecureapps?pli=1&rapt=AEjHL4MsInjIYwcSZC-USbz9it79qaL-rdDHdgfF7ZTA-cW2utOfhBDNmfs-JqI2XFEgC8QTiInfGX_hAQH0OQ6awC-GBVMUjQ stavite da bude ukljuceno za email na koji se salje bilo kakva poruka.
+3. Svakom korisniku u bazi sistema se pristupa sa lozinkom 123
 
 
